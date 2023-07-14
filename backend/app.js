@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import { connectDB } from "./src/infra/db.js";
 
-import { registerRoutes } from "./src/routes/registerRoutes.js";
+import { userRoutes } from "./src/routes/userRoutes.js";
 
 import dotenv from "dotenv"
 dotenv.config()
@@ -34,7 +34,7 @@ app.get("/", async (req, res) => {
 });
 
 // Routes
-registerRoutes(app)
+userRoutes(app)
 
 app.listen(PORT, () => {
   console.log(`API ready to use in -> localhost:${PORT}`);

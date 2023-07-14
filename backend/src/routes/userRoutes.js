@@ -1,14 +1,45 @@
 import twilio from "twilio"
 import { User } from "../models/User.js"
+import jwt from "jsonwebtoken"
 
-export const registerRoutes = (app) => {
+export const userRoutes = (app) => {
   //variaveis globais para funcionamento da API Twilio
   const accountSid = process.env.TWILIO_ACCOUNT_SID
   const authToken = process.env.TWILIO_AUTH_TOKEN
   const verifySid = process.env.TWILIO_VERIFY_SID
-  const client = twilio(accountSid, authToken);
+  const client = twilio(accountSid, authToken)
+  const secretKey = process.env.SECRET_KEY
 
-  app.post("/send_email", async (req, res) => {
+  async function userExists(email) {
+    const user = await User.findOne({ email: email })
+    if (user) {
+      return user
+    }
+    else {
+      return false
+    }
+  }
+
+  function createToken(userId) {
+    const payload = {
+      userId: userId
+    }
+    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' })
+    return token
+  }
+
+  async function logout() {
+    localStorage.removeItem("token")
+    localStorage.removeItem("nome")
+    localStorage.removeItem("email")
+  }
+
+  function usuarioAutenticado() {
+    return localStorage.getItem("token") != undefined ? true : false
+
+  }
+
+  app.post("/send_code", async (req, res) => {
     try {
       let exist
       let email = req.body.email
@@ -26,7 +57,7 @@ export const registerRoutes = (app) => {
               from: 'stancapdb@gmail.com',
               from_name: 'Stancap'
             }, to: email, channel: 'email'
-          }) 
+          })
         const verificationStatus = verification.status
         console.log(`verification.status: ${verificationStatus}`)
         res.status(202).json({
@@ -37,7 +68,7 @@ export const registerRoutes = (app) => {
     } catch (error) { res.send(error.message) }
   })
 
-  app.post("/check_email", async (req, res) => {
+  app.post("/check_code", async (req, res) => {
     try {
       let email = req.body.email
       let otpCode = req.body.code
@@ -100,6 +131,33 @@ export const registerRoutes = (app) => {
     } catch (error) { res.send(error.message) }
   })
 
+  app.post("/login", async (req, res) => {
+    try {
+      const email = req.body.email
+      const password = req.body.password
+
+      const user = await userExists(email)
+
+      if (user.password == password) {
+        const token = createToken(user._id)
+        localStorage.setItem("email", user.email)
+        localStorage.setItem("token", token)
+
+        res.send({ message: "Logado com sucesso" })
+      } else {
+        res.send({ message: "Login/Senha incorretos" })
+      }
+
+    } catch (error) { res.status.send(error) }
+
+  })
+
+
+
+
+
+
+
   app.post("/change_password_send", async (req, res) => {
     try {
       const email = req.body.email
@@ -110,13 +168,13 @@ export const registerRoutes = (app) => {
       if (exist == 1) { // verifica se algum usuario foi encontrado
         // funcao que envia o codigo para o email
         const verification = await client.verify.v2.services(verifySid)
-        .verifications.create({
-          channelConfiguration: {
-            template_id: 'd-ab018621f4d84d32a83a746a5f69053e',
-            from: 'stancapdb@gmail.com',
-            from_name: 'Stancap'
-          }, to: email, channel: 'email'
-        }) 
+          .verifications.create({
+            channelConfiguration: {
+              template_id: 'd-ab018621f4d84d32a83a746a5f69053e',
+              from: 'stancapdb@gmail.com',
+              from_name: 'Stancap'
+            }, to: email, channel: 'email'
+          })
         res.status(200).send({ message: "Código de verificação enviado para o e-mail" })
       } else if (exist == 0) { // verifica se algum usuario foi encontrado
         res.status(404).send({ message: "E-mail não encontrado" })
