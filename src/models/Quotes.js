@@ -1,7 +1,14 @@
 import mongoose from "mongoose"
+
 const QuoteSchema = new mongoose.Schema(
     {
-
+        quoteType: {
+            type: String
+        },
+        quotes: {
+            type: Array,
+            items: { type: String }
+        },
         quote: {
             type: String
         },
@@ -10,6 +17,15 @@ const QuoteSchema = new mongoose.Schema(
             items: { type: String }
         },
         author: {
+            type: String
+        },
+        date: {
+            type: String
+        },
+        source: {
+            type: String
+        },
+        fromId: {
             type: String
         }
 
