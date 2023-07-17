@@ -16,6 +16,7 @@ function LoginForm() {
 
         console.log('Email:', email);
         console.log('Senha:', password);
+        
     }
 
     return (
