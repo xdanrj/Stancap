@@ -37,5 +37,5 @@ app.get("/", async (req, res) => {
 userRoutes(app)
 
 app.listen(PORT, () => {
-  console.log(`API ready to use in -> localhost:${PORT}`);
+  console.log(`API ready to use in -> http://localhost:${PORT}`);
 });

@@ -140,15 +140,14 @@ export const userRoutes = (app) => {
 
       if (user.password == password) {
         const token = createToken(user._id)
-        localStorage.setItem("email", user.email)
-        localStorage.setItem("token", token)
-
-        res.send({ message: "Logado com sucesso" })
+        
+        const response = [user, {token: token}]
+        res.status(200).send(response)
       } else {
         res.send({ message: "Login/Senha incorretos" })
       }
 
-    } catch (error) { res.status.send(error) }
+    } catch (error) { res.status(404).send(error) }
 
   })
 
