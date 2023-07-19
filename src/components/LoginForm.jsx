@@ -2,21 +2,37 @@ import React from "react"
 import { useState } from "react"
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 
 import "./LoginForm.css"
 
+import userServices from "../services/userServices";
 
+const userService = new userServices()
 
 function LoginForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const navigate = useNavigate()
+    const [form, setForm] = useState([])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        console.log('Email:', email);
-        console.log('Senha:', password);
+        try{
+            const response = await userService.login(form)
         
+            if(response === true){
+                alert('Logado com sucesso')
+                navigate('/quotes')
+            }
+            else {
+                alert(response)
+            }
+        } catch (error) {
+            //alert(error.response.data.error)
+        }
+        
+    }
+    const handleChange = (e) => {
+        setForm({...form, [e.target.name]: e.target.value})
     }
 
     return (
@@ -25,9 +41,9 @@ function LoginForm() {
                 <Form.Label>Email:</Form.Label>
 
                 <Form.Control
+                    name="email"
                     type="email"         
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleChange}
                 />
 
             </Form.Group>
@@ -36,9 +52,9 @@ function LoginForm() {
                 <Form.Label>Senha:</Form.Label>
 
                 <Form.Control
+                    name="password"
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handleChange}
                 />
 
             </Form.Group>

@@ -1,26 +1,39 @@
-import twilio from "twilio"
 import { User } from "../models/User.js"
-import jwt from "jsonwebtoken"
 import axios from "axios"
+
 
 export default class userServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: process.env.APP_API_URL
+            baseURL: "http://localhost:3000"
         })
     }
+   
+    async login(dados) {
+        
+        const response = await this.axios.post('/login', dados)
 
-    async login (dados) {
-        const {data} = await this.axios.post('/login', dados)
+        // se recebeu um objeto com "{token}"
+        if (response.data.token) {
+            localStorage.setItem("email", response.data.email)
+            localStorage.setItem("token", response.data.token)
+            return true
 
-        if (data.status == 200) {
-        localStorage.setItem("email", data.user.email)
-        localStorage.setItem("token", data.token)
-
-        return true
+        // se não: já retorna a "{message}" da API
+        } else {
+            console.log("response.data.message", response.data.message)
+            return response.data.message
         }
+    }
 
-        return
+    usuarioAutenticado() {
+        return localStorage.getItem("token") != undefined ? true : false
+    }
+
+    async logout() {
+        localStorage.removeItem("token")
+        localStorage.removeItem("nome")
+        localStorage.removeItem("email")
     }
 
 }

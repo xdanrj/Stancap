@@ -2,6 +2,7 @@ import twilio from "twilio"
 import { User } from "../models/User.js"
 import jwt from "jsonwebtoken"
 
+
 export const userRoutes = (app) => {
   //variaveis globais para funcionamento da API Twilio
   const accountSid = process.env.TWILIO_ACCOUNT_SID
@@ -18,25 +19,6 @@ export const userRoutes = (app) => {
     else {
       return false
     }
-  }
-
-  function createToken(userId) {
-    const payload = {
-      userId: userId
-    }
-    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' })
-    return token
-  }
-
-  async function logout() {
-    localStorage.removeItem("token")
-    localStorage.removeItem("nome")
-    localStorage.removeItem("email")
-  }
-
-  function usuarioAutenticado() {
-    return localStorage.getItem("token") != undefined ? true : false
-
   }
 
   app.post("/send_code", async (req, res) => {
@@ -131,23 +113,30 @@ export const userRoutes = (app) => {
     } catch (error) { res.send(error.message) }
   })
 
+
+  function createToken(userId) {
+    const payload = {
+        userId: userId
+    }
+    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' })
+    return token
+}
+
   app.post("/login", async (req, res) => {
     try {
       const email = req.body.email
       const password = req.body.password
-
       const user = await userExists(email)
-
+      
       if (user.password == password) {
         const token = createToken(user._id)
-        
-        const response = [user, {token: token}]
-        res.status(200).send(response)
-      } else {
-        res.send({ message: "Login/Senha incorretos" })
+        res.send({email: email, token: token})
+
+      } else if(user.password != password) {
+        res.send({message: "Login/Senha incorreto(s)"})
       }
 
-    } catch (error) { res.status(404).send(error) }
+    } catch (error) { res.send({error: error}) }
 
   })
 
