@@ -1,4 +1,5 @@
 import { User } from "../models/User";
+import userExists from "./commonFunctions";
 
 export const loginAndRegisterRoutes = (app) => {
 
@@ -22,10 +23,9 @@ export const loginAndRegisterRoutes = (app) => {
 
     app.post("/send_code", async (req, res) => {
         try {
-            let exist
             let email = req.body.email
             //verifica se o email ja existe no DB
-            exist = await User.findOne({ email: email })
+            let exist = userExists({ email: email })
             if (exist) {
                 return res.status(409)
                     .send({ message: "E-mail já cadastrado" });
@@ -50,32 +50,37 @@ export const loginAndRegisterRoutes = (app) => {
     })
 
     app.post("/check_code", async (req, res) => {
-        try {
+        try { 
             let email = req.body.email
             let otpCode = req.body.code
 
-            const verification_check = await client.verify.v2.services(verifySid)
-                .verificationChecks
-                .create({ to: email, code: otpCode })
+            const exist = userExists({ email: email })
 
-            const verificationCheckStatus = verification_check.status
+            if (!exist) {
+                
+                const verification_check = await client.verify.v2.services(verifySid)
+                    .verificationChecks
+                    .create({ to: email, code: otpCode })
 
-            //caso o codigo verificado por email seja aprovado, cria o User por enquanto apenas com o email:
-            if (verificationCheckStatus == "approved") {
-                const newUser = new User({
-                    email: email,
-                    verifiedUser: true
-                })
-                const savedUser = await newUser.save()
+                const verificationCheckStatus = verification_check.status
 
-                res.status(202).json({
-                    message: "E-mail verificado com sucesso",
-                    response: savedUser
-                })
-            } else {
-                res.status(202).json({
-                    message: "Código por e-mail não verificado: tente novamente"
-                })
+                //caso o codigo verificado por email seja aprovado, cria o User por enquanto apenas com o email:
+                if (verificationCheckStatus == "approved") {
+                    const newUser = new User({
+                        email: email,
+                        verifiedUser: true
+                    })
+                    const savedUser = await newUser.save()
+
+                    res.status(202).json({
+                        message: "E-mail verificado com sucesso",
+                        response: savedUser
+                    })
+                } else {
+                    res.status(202).json({
+                        message: "Código por e-mail não verificado: tente novamente"
+                    })
+                }
             }
         } catch (error) { res.send(error.message) }
     })

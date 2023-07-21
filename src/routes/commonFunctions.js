@@ -1,8 +1,8 @@
 import { User } from "../models/User"
 
-
-export default async function userExists(email) {
-    const user = await User.findOne({ email: email })
+// recebe como parametro um unico objeto (propriedade: valorPropriedade)
+export default async function userExists(proprietyTarget) {
+    const user = await User.findOne({ proprietyTarget })
     if (user) {
       return user
     }
