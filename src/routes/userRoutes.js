@@ -11,12 +11,6 @@ export const userRoutes = (app) => {
   const client = twilio(accountSid, authToken)
   const secretKey = process.env.SECRET_KEY
 
-  
-
-  
-
-  
-
   async function functionSelectUser(body) {
     let property = Object.keys(body)[0]
     let target = body[property]
