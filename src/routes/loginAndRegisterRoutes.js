@@ -1,7 +1,14 @@
-import { User } from "../models/User.js";
-import userExists from "./commonFunctions.js";
+import twilio from "twilio"
+import { User } from "../models/User.js.js";
+import userExists from "./commonFunctions.js.js";
 
 export const loginAndRegisterRoutes = (app) => {
+    //variaveis globais para funcionamento da API Twilio
+    const accountSid = process.env.TWILIO_ACCOUNT_SID
+    const authToken = process.env.TWILIO_AUTH_TOKEN
+    const verifySid = process.env.TWILIO_VERIFY_SID
+    const client = twilio(accountSid, authToken)
+    const secretKey = process.env.SECRET_KEY
 
     app.post("/login", async (req, res) => {
         try {
@@ -25,7 +32,8 @@ export const loginAndRegisterRoutes = (app) => {
         try {
             let email = req.body.email
             //verifica se o email ja existe no DB
-            let exist = userExists({ email: email })
+            let exist = await userExists({ email: email })
+            console.log("exist: ", exist)
             if (exist) {
                 return res.status(409)
                     .send({ message: "E-mail já cadastrado" });
@@ -54,10 +62,10 @@ export const loginAndRegisterRoutes = (app) => {
             let email = req.body.email
             let otpCode = req.body.code
 
-            const exist = userExists({ email: email })
+            const exist = await userExists({ email: email })
 
             if (!exist) {
-
+                
                 const verification_check = await client.verify.v2.services(verifySid)
                     .verificationChecks
                     .create({ to: email, code: otpCode })
