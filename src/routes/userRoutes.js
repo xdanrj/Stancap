@@ -1,6 +1,7 @@
 import twilio from "twilio"
 import { User } from "../models/User.js"
 import jwt from "jsonwebtoken"
+import { selectUser } from "./commonFunctions.js"
 
 
 export const userRoutes = (app) => {
@@ -11,74 +12,49 @@ export const userRoutes = (app) => {
   const client = twilio(accountSid, authToken)
   const secretKey = process.env.SECRET_KEY
 
-  async function functionSelectUser(body) {
-    let property = Object.keys(body)[0]
-    let target = body[property]
-    let query = {[property]: target}
-
-    const foundUser = await User.find(query)
-    const quantity = foundUser.length
-    
-    if (!User.schema.obj
-        .hasOwnProperty(property)) {
-        message = "Nome de propriedade inexistente"
-    }
-    else if (property == "password") {
-        message = "Acesso negado"
-    } else {
-        if (quantity > 0) {
-            message = "Sucesso"
-        } else {
-            message = "Nenhum estudante encontrado"
-        }
-    }
-    return { query: query, quantity: quantity, message: message, response: foundUser }
-}
-
-async function functionEditUser(query, body) {
+  async function functionEditUser(query, body) {
     const entries = Object.entries(body)
     const data = Object.fromEntries(entries.slice(1))
 
     if (query.quantity > 1) {
-        await User.updateMany(
-            query.query,
-            { ...data }
-        )
+      await User.updateMany(
+        query.query,
+        { ...data }
+      )
     }
     else if (query.quantity == 1) {
-        await User.updateOne(
-            query.query,
-            { ...data },
-        )
+      await User.updateOne(
+        query.query,
+        { ...data },
+      )
     }
     return query
-}
+  }
 
-async function functionDeleteUser(query) {
+  async function functionDeleteUser(query) {
     if (query.quantity > 1) {
-        await User.deleteMany(
-            query.query
-        )
+      await User.deleteMany(
+        query.query
+      )
     }
     else if (query.quantity == 1) {
-        await User.deleteOne(
-            query.query
-        )
+      await User.deleteOne(
+        query.query
+      )
     }
     return query
-}
+  }
 
-app.patch("/edit_user", async (req, res) => {
+  app.patch("/edit_user", async (req, res) => {
     try {
-        const selectedUser = await functionSelectUser(req.body)
-        const response = await functionEditUser(selectedUser, req.body)
-        res.send(response)
-    } catch (error) { res.json(error.message) }
-})
-
-
-
-
+      const selectedUser = await selectUser(req.body)
+      const response = await functionEditUser(selectedUser, req.body)
+      res.send(response)
+    } catch (error) {
+      res.send(error.message)
+      console.log(error)
+    }
+  })
 
   app.post("/change_password_send", async (req, res) => {
     try {

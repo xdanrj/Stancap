@@ -1,6 +1,6 @@
 import twilio from "twilio"
 import { User } from "../models/User.js";
-import userExists from "./commonFunctions.js";
+import { userExists } from "./commonFunctions.js";
 
 export const loginAndRegisterRoutes = (app) => {
     //variaveis globais para funcionamento da API Twilio
@@ -14,7 +14,7 @@ export const loginAndRegisterRoutes = (app) => {
         try {
             const email = req.body.email
             const password = req.body.password
-            const user = await userExists(email)
+            const user = await userExists({email: email})
 
             if (user.password == password) {
                 const token = createToken(user._id)
@@ -74,15 +74,10 @@ export const loginAndRegisterRoutes = (app) => {
 
                 //caso o codigo verificado por email seja aprovado, cria o User por enquanto apenas com o email:
                 if (verificationCheckStatus == "approved") {
-                    const newUser = new User({
-                        email: email,
-                        verifiedUser: true
-                    })
-                    const savedUser = await newUser.save()
 
                     res.status(202).json({
                         message: "E-mail verificado com sucesso",
-                        response: savedUser
+                        response: email
                     })
                 } else {
                     res.status(202).json({
@@ -98,29 +93,24 @@ export const loginAndRegisterRoutes = (app) => {
         try {
             const email = req.body.email
             const password = req.body.password
-            const selectedUser = await User.findOne({ email: email })
-            // caso o email exista e seja verificado:
-            if (selectedUser) {
-                if (selectedUser.verifiedUser === true) {
-                    const newUser = await User.findOneAndUpdate(
-                        // filter
-                        { email: email },
-                        // update
-                        { password: password },
-                        // options
-                        { new: true }
-                    )
-                    const savedUser = await newUser.save()
+            const username = req.body.username
+            const selectedUser = await userExists({email: email})
+            // caso o email seja novo (condição redundante pois a rota "/register" só será acessada caso a verificação por código (rota anterior) seja bem sucedida)
+            if (!selectedUser) {
+                const newUser = new User({
+                    // email será auto preenchido puxando no localStorage
+                    username: username,
+                    email: email,
+                    password: password
+                })
+                const savedUser = await newUser.save()
 
-                    res.send({
-                        message: "Usuário cadastrado com sucesso",
-                        response: savedUser
-                    })
-                } else if (selectedUser.verifiedUser === false) {
-                    res.send({ message: "E-mail não verificado: abortar cadastro" });
-                }
-            } else {
-                res.send({ message: "E-mail não encontrado" });
+                res.send({
+                    message: "Usuário cadastrado com sucesso",
+                    response: savedUser
+                })
+            } else if (selectedUser) {
+                res.send({ message: "E-mail já cadastrado" });
             }
         } catch (error) { res.send(error.message) }
     })

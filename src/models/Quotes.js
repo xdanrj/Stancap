@@ -2,9 +2,13 @@ import mongoose from "mongoose"
 
 const QuoteSchema = new mongoose.Schema(
     {
-        quote: {
+        quotes: {
             type: Array,
-            items: { type: String }
+            items: {
+                type: Array,
+                quote: { type: String },
+                author: { type: String }
+            }
         },
         tags: {
             type: Array,
