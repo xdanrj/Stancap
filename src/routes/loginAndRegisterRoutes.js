@@ -95,7 +95,6 @@ export const loginAndRegisterRoutes = (app) => {
             const email = req.body.email
             const username = req.body.username
             const password = req.body.password
-            const username = req.body.username
             const selectedUser = await userExists({email: email})
             // caso o email seja novo (condição redundante pois a rota "/register" só será acessada caso a verificação por código (rota anterior) seja bem sucedida)
             if (!selectedUser) {

@@ -2,6 +2,7 @@ import twilio from "twilio"
 import { User } from "../models/User.js"
 import jwt from "jsonwebtoken"
 import { selectUser } from "./commonFunctions.js"
+import { Quotes } from "../models/Quotes.js"
 
 
 export const userRoutes = (app) => {
@@ -45,6 +46,20 @@ export const userRoutes = (app) => {
     return query
   }
 
+  app.get("/all_users", async (req, res) => {
+    const response = Quotes.find()
+    res.send({response: response})
+  })
+
+  app.get("/search_user", async (req, res) => {
+    try {
+      const foundUser = await selectUser(req.body)
+      res.send({response: foundUser.response})
+    } catch (error) {
+      res.send(error.message)
+    }
+  })
+
   app.patch("/edit_user", async (req, res) => {
     try {
       const selectedUser = await selectUser(req.body)
@@ -52,7 +67,6 @@ export const userRoutes = (app) => {
       res.send(response)
     } catch (error) {
       res.send(error.message)
-      console.log(error)
     }
   })
 
