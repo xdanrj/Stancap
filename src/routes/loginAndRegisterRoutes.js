@@ -1,5 +1,5 @@
-import { User } from "../models/User";
-import userExists from "./commonFunctions";
+import { User } from "../models/User.js";
+import userExists from "./commonFunctions.js";
 
 export const loginAndRegisterRoutes = (app) => {
 
@@ -7,7 +7,7 @@ export const loginAndRegisterRoutes = (app) => {
         try {
             const email = req.body.email
             const password = req.body.password
-            const user = await userExists(email)
+            const user = await userExists({ email: email })
 
             if (user.password == password) {
                 const token = createToken(user._id)
@@ -50,14 +50,14 @@ export const loginAndRegisterRoutes = (app) => {
     })
 
     app.post("/check_code", async (req, res) => {
-        try { 
+        try {
             let email = req.body.email
             let otpCode = req.body.code
 
             const exist = userExists({ email: email })
 
             if (!exist) {
-                
+
                 const verification_check = await client.verify.v2.services(verifySid)
                     .verificationChecks
                     .create({ to: email, code: otpCode })
@@ -67,8 +67,7 @@ export const loginAndRegisterRoutes = (app) => {
                 //caso o codigo verificado por email seja aprovado, cria o User por enquanto apenas com o email:
                 if (verificationCheckStatus == "approved") {
                     const newUser = new User({
-                        email: email,
-                        verifiedUser: true
+                        email: email
                     })
                     const savedUser = await newUser.save()
 
@@ -88,33 +87,36 @@ export const loginAndRegisterRoutes = (app) => {
 
     app.post("/register", async (req, res) => {
         try {
+            // na rota anterior o email verificado sera guardado no localstorage
             const email = req.body.email
+            const username = req.body.username
             const password = req.body.password
-            const selectedUser = await User.findOne({ email: email })
-            // caso o email exista e seja verificado:
-            if (selectedUser) {
-                if (selectedUser.verifiedUser === true) {
-                    const newUser = await User.findOneAndUpdate(
-                        // filter
-                        { email: email },
-                        // update
-                        { password: password },
-                        // options
-                        { new: true }
-                    )
-                    const savedUser = await newUser.save()
+            const selectedUser = await userExists({ email: email })
+            // caso o email seja novo:
+            if (!selectedUser) {
+                const newUser = new User(
+                    // filter
+                    { email: email },
+                    // update
+                    { username: username },
+                    { password: password },
+                    // options
+                    { new: true }
+                )
+                const savedUser = await newUser.save()
 
-                    res.send({
-                        message: "Usuário cadastrado com sucesso",
-                        response: savedUser
-                    })
-                } else if (selectedUser.verifiedUser === false) {
-                    res.send({ message: "E-mail não verificado: abortar cadastro" });
-                }
+                res.send({
+                    message: "Usuário cadastrado com sucesso",
+                    response: savedUser
+                })
+
             } else {
-                res.send({ message: "E-mail não encontrado" });
+                res.send({ message: "E-mail já registrado" });
             }
-        } catch (error) { res.send(error.message) }
+        } catch (error) {
+            res.send({ message: error.message })
+            console.log(error)
+        }
     })
 
     function createToken(userId) {

@@ -1,4 +1,4 @@
-import { User } from "../models/User"
+import { User } from "../models/User.js"
 
 // recebe como parametro um unico objeto (propriedade: valorPropriedade)
 export default async function userExists(proprietyTarget) {

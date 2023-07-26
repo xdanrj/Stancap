@@ -11,12 +11,6 @@ export const userRoutes = (app) => {
   const client = twilio(accountSid, authToken)
   const secretKey = process.env.SECRET_KEY
 
-  
-
-  
-
-  
-
   async function functionSelectUser(body) {
     let property = Object.keys(body)[0]
     let target = body[property]
@@ -81,10 +75,6 @@ app.patch("/edit_user", async (req, res) => {
         res.send(response)
     } catch (error) { res.json(error.message) }
 })
-
-
-
-
 
   app.post("/change_password_send", async (req, res) => {
     try {
