@@ -65,7 +65,7 @@ export const loginAndRegisterRoutes = (app) => {
             const exist = await userExists({ email: email })
 
             if (!exist) {
-
+                
                 const verification_check = await client.verify.v2.services(verifySid)
                     .verificationChecks
                     .create({ to: email, code: otpCode })
@@ -91,7 +91,9 @@ export const loginAndRegisterRoutes = (app) => {
 
     app.post("/register", async (req, res) => {
         try {
+            // na rota anterior o email verificado sera guardado no localstorage
             const email = req.body.email
+            const username = req.body.username
             const password = req.body.password
             const username = req.body.username
             const selectedUser = await userExists({email: email})
@@ -112,7 +114,10 @@ export const loginAndRegisterRoutes = (app) => {
             } else if (selectedUser) {
                 res.send({ message: "E-mail já cadastrado" });
             }
-        } catch (error) { res.send(error.message) }
+        } catch (error) {
+            res.send({ message: error.message })
+            console.log(error)
+        }
     })
 
     function createToken(userId) {
