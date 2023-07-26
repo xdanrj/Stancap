@@ -1,7 +1,9 @@
+import { ObjectId } from "mongodb"
 import mongoose from "mongoose"
 
 const QuoteSchema = new mongoose.Schema(
     {
+        
         quotes: {
             type: Array,
             items: {
@@ -26,7 +28,6 @@ const QuoteSchema = new mongoose.Schema(
         fromId: {
             type: String
         }
-
     }
 )
 

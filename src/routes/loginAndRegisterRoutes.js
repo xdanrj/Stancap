@@ -49,7 +49,7 @@ export const loginAndRegisterRoutes = (app) => {
                     })
                 const verificationStatus = verification.status
                 console.log(`verification.status: ${verificationStatus}`)
-                res.status(202).json({
+                res.status(202).send({
                     message: "Código de verificação enviado para o e-mail",
                     response: verificationStatus
                 })
@@ -75,12 +75,12 @@ export const loginAndRegisterRoutes = (app) => {
                 //caso o codigo verificado por email seja aprovado, cria o User por enquanto apenas com o email:
                 if (verificationCheckStatus == "approved") {
 
-                    res.status(202).json({
+                    res.status(202).send({
                         message: "E-mail verificado com sucesso",
                         response: email
                     })
                 } else {
-                    res.status(202).json({
+                    res.status(202).send({
                         message: "Código por e-mail não verificado: tente novamente"
                     })
                 }

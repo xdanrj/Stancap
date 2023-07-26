@@ -37,7 +37,7 @@ export const quotesRoutes = (app) => {
       }
 
     app.get("/all_quotes", async (req, res) => {
-        const response = Quotes.find()
+        const response = await Quotes.find()
         res.send({response: response})
     })
 
@@ -58,6 +58,14 @@ export const quotesRoutes = (app) => {
         } catch (error) {
           res.send(error.message)
         }
+      })
+
+      app.delete("/delete_quote", async (req, res) => {
+        try {
+          const selectedQuote = await selectQuote(req.body)
+          const response = await functionDeleteQuote(selectedQuote)
+          res.status(200).send(response)
+        } catch (error) { res.send({message: error.message}) }
       })
 
     app.post("/add_quote", async (req,res) => {

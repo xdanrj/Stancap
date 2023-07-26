@@ -23,7 +23,7 @@ export async function selectUser(body) {
       if (quantity > 0) {
           message = "Sucesso"
       } else {
-          message = "Nenhum estudante encontrado"
+          message = "Nenhum usuário encontrado"
       }
   }
   return { query: query, quantity: quantity, message: message, response: foundUser }
@@ -65,7 +65,7 @@ export async function userExists(proprietyTarget) {
         if (quantity > 0) {
             message = "Sucesso"
         } else {
-            message = "Nenhum estudante encontrado"
+            message = "Nenhuma quote encontrada"
         }
     }
     return { query: query, quantity: quantity, message: message, response: foundQuote }

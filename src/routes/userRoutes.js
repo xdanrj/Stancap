@@ -47,7 +47,7 @@ export const userRoutes = (app) => {
   }
 
   app.get("/all_users", async (req, res) => {
-    const response = Quotes.find()
+    const response = await User.find()
     res.send({response: response})
   })
 
@@ -65,9 +65,15 @@ export const userRoutes = (app) => {
       const selectedUser = await selectUser(req.body)
       const response = await functionEditUser(selectedUser, req.body)
       res.send(response)
-    } catch (error) {
-      res.send(error.message)
-    }
+    } catch (error) { res.send({message: error.message}) }
+  })
+
+  app.delete("/delete_user", async (req, res) => {
+    try {
+      const selectedUser = await selectUser(req.body)
+      const response = await functionDeleteUser(selectedUser)
+      res.status(200).send(response)
+    } catch (error) { res.send({message: error.message}) }
   })
 
   app.post("/change_password_send", async (req, res) => {
