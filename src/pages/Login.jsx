@@ -1,7 +1,5 @@
 import React from "react"
-import LoginForm from "../components/LoginForm"
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import LoginForm from "../components/Login/LoginForm"
 
 function Login() {
     return (

@@ -1,5 +1,5 @@
 import React from "react"
-import QuoteContainer from "../components/QuoteContainer"
+import QuoteContainer from "../components/Quote/QuoteContainer"
 
 
 

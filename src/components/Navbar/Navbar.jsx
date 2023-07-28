@@ -18,6 +18,7 @@ function NavbarComponent() {
                         Logado como: <a href="#login">Joao Silva</a>
                         <Nav.Link href="/login">Login</Nav.Link>
                         <Nav.Link href="/quotes">Quotes</Nav.Link>
+                        <Nav.Link href="/register">Register</Nav.Link>
                     </Navbar.Text>
                 </Navbar.Collapse>
             </Container>

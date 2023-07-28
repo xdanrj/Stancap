@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 import "./LoginForm.css"
 
-import loginAndRegisterServices from "../services/loginAndRegisterServices"
+import loginAndRegisterServices from "../../services/loginAndRegisterServices"
+
 
 const loginAndRegisterService = new loginAndRegisterServices()
 
