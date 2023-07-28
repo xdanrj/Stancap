@@ -2,9 +2,9 @@ import React from 'react'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Home from './src/pages/Home';
-import Quotes from './src/pages/Quotes';
-import Login from './src/pages/Login';
+import Home from './pages/Home';
+import Quotes from './pages/Quotes';
+import Login from './pages/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {

@@ -1,4 +1,3 @@
-import React from "react"
 import { useState } from "react"
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -6,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 import "./LoginForm.css"
 
-import { loginAndRegisterInstance } from "../services/loginAndRegisterServices";
+import loginAndRegisterServices from "../services/loginAndRegisterServices"
 
-//const loginAndRegisterService = new loginAndRegisterServices()
+const loginAndRegisterService = new loginAndRegisterServices()
 
 function LoginForm() {
     const navigate = useNavigate()
@@ -17,7 +16,7 @@ function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            const response = await loginAndRegisterInstance.login(form)
+            const response = await loginAndRegisterServices.login(form)
         
             if(response === true){
                 alert('Logado com sucesso')
@@ -27,7 +26,7 @@ function LoginForm() {
                 alert(response)
             }
         } catch (error) {
-            //alert(error.response.data.error)
+            alert(error.response.data.error)
         }
         
     }
@@ -60,7 +59,6 @@ function LoginForm() {
             </Form.Group>
             <Button type="submit">Enviar</Button>
         </Form>
-
     )
 }
 

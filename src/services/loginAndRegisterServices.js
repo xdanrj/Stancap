@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from "axios"
 
-export class loginAndRegisterServices extends loginAndRegisterInstance{
+export default class loginAndRegisterServices{
     constructor() {
         this.axios = axios.create({
             baseURL: "http://localhost:3000"

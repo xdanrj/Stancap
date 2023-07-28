@@ -1,5 +1,3 @@
-import { User } from "../models/User.js"
-import axios from "axios"
 
 
 export default class userServices {
@@ -9,8 +7,6 @@ export default class userServices {
         })
     }
    
-    
-
     usuarioAutenticado() {
         return localStorage.getItem("token") != undefined ? true : false
     }

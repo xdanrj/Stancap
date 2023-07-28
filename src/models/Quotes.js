@@ -1,9 +1,9 @@
-import { ObjectId } from "mongodb"
 import mongoose from "mongoose"
+
+// Obs.: Toda propriedade que não for explícita se refere à Quote. Por ex.: "author" e "date" é "author" e "date" da Quote. "uploadByUser" e "uploadDate" são explícitas logo se refere ao Upload em si e não à Quote.
 
 const QuoteSchema = new mongoose.Schema(
     {
-        
         quotes: {
             type: Array,
             items: {
@@ -16,18 +16,12 @@ const QuoteSchema = new mongoose.Schema(
             type: Array,
             items: { type: String }
         },
-        author: {
-            type: String
-        },
-        date: {
-            type: String
-        },
-        source: {
-            type: String
-        },
-        fromId: {
-            type: String
-        }
+        author: { type: String },
+        context: { type: String },
+        source: { type: String },
+        date: { type: Date },
+        uploadDate: { type: Date },
+        uploadByUser: { type: String }
     }
 )
 
