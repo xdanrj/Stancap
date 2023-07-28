@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 import "./LoginForm.css"
 
-import loginAndRegisterServices from "../services/loginAndRegisterServices";
+import { loginAndRegisterInstance } from "../services/loginAndRegisterServices";
 
-const loginAndRegisterServices = new loginAndRegisterServices()
+//const loginAndRegisterService = new loginAndRegisterServices()
 
 function LoginForm() {
     const navigate = useNavigate()
@@ -17,7 +17,7 @@ function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            const response = await loginAndRegisterServices.login(form)
+            const response = await loginAndRegisterInstance.login(form)
         
             if(response === true){
                 alert('Logado com sucesso')

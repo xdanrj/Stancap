@@ -1,8 +1,6 @@
 import axios from "axios";
-import { User } from "../models/User";
 
-
-export default class loginAndRegisterServices {
+export class loginAndRegisterServices extends loginAndRegisterInstance{
     constructor() {
         this.axios = axios.create({
             baseURL: "http://localhost:3000"
@@ -11,7 +9,6 @@ export default class loginAndRegisterServices {
 
     async login(dados) {
         const response = await this.axios.post('/login', dados)
-
         // se recebeu um objeto com "{token}"
         if (response.data.token) {
             localStorage.setItem("email", response.data.email)
