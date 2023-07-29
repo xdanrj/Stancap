@@ -7,9 +7,26 @@ export default class loginAndRegisterServices{
         })
     }
 
+    async sendCode(email) {
+        const response = await this.axios.post('/send_code', email)
+        // se enviou o code com sucesso:
+        if (response.status === 202) {
+            return true
+        }
+        else if (response.status != 202 ){
+            return response.data.message
+        }
+    }
+    
+    async checkCode(dados) {
+        const response = await this.axios.post('/check_code', dados)
+        
+    }
+
     async login(dados) {
+        console.log("dados: ", dados)
         const response = await this.axios.post('/login', dados)
-        // se recebeu um objeto com "{token}"
+        // se recebeu um objeto com "{token}":
         if (response.data.token) {
             localStorage.setItem("email", response.data.email)
             localStorage.setItem("token", response.data.token)

@@ -12,12 +12,12 @@ const loginAndRegisterService = new loginAndRegisterServices()
 
 function LoginForm() {
     const navigate = useNavigate()
-    const [form, setForm] = useState([])
+    const [loginForm, setLoginForm] = useState([])
 
-    const handleSubmit = async (e) => {
+    const handleSubmitLogin = async (e) => {
         e.preventDefault();
         try{
-            const response = await loginAndRegisterServices.login(form)
+            const response = await loginAndRegisterService.login(loginForm)
         
             if(response === true){
                 alert('Logado com sucesso')
@@ -27,16 +27,17 @@ function LoginForm() {
                 alert(response)
             }
         } catch (error) {
-            alert(error.response.data.error)
+            alert(error)
+            //error.response.data.error
         }
         
     }
     const handleChange = (e) => {
-        setForm({...form, [e.target.name]: e.target.value})
+        setLoginForm({...loginForm, [e.target.name]: e.target.value})
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmitLogin}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email:</Form.Label>
 
