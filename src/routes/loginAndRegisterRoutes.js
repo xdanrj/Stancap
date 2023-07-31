@@ -75,13 +75,13 @@ export const loginAndRegisterRoutes = (app) => {
                 //caso o codigo verificado por email seja aprovado, cria o User por enquanto apenas com o email:
                 if (verificationCheckStatus == "approved") {
 
-                    res.status(202).send({
+                    res.send({
                         message: "E-mail verificado com sucesso",
                         response: email
                     })
                 } else {
-                    res.status(202).send({
-                        message: "Código por e-mail não verificado: tente novamente"
+                    res.send({
+                        message: "Código inválido ou expirado: tente novamente"
                     })
                 }
             }
@@ -91,7 +91,7 @@ export const loginAndRegisterRoutes = (app) => {
 
     app.post("/register", async (req, res) => {
         try {
-            // na rota anterior o email verificado sera guardado no localstorage
+            // na rota anterior o email verificado sera guardado no localstorage (??nao sei, hein?? ignorar isso aqui talvez?)
             const email = req.body.email
             const username = req.body.username
             const password = req.body.password
@@ -106,7 +106,7 @@ export const loginAndRegisterRoutes = (app) => {
                 })
                 const savedUser = await newUser.save()
 
-                res.send({
+                res.status(201).send({
                     message: "Usuário cadastrado com sucesso",
                     response: savedUser
                 })

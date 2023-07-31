@@ -14,7 +14,8 @@ function RegisterForm() {
     const navigate = useNavigate()
 
     // definição dos valores
-    const [loginForm, setLoginForm] = useState([])
+    const [loginData, setLoginData] = useState([])
+    const [registerData, setRegisterData] = useState([])
     const [email, setEmail] = useState()
     const [code, setCode] = useState()
 
@@ -55,79 +56,89 @@ function RegisterForm() {
         } catch (error) { alert(error.response.data.error) }
     }
 
-    const handleSubmitLogin = async (e) => {
+    const handleSubmitRegister = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginAndRegisterService.register(loginForm)
-
+            const response = await loginAndRegisterService.register(registerData)
             if (response === true) {
-                alert('Logado com sucesso')
-                navigate('/quotes')
+                alert('Usuário cadastrado com sucesso')
+                // envia para a pagina de login
+                navigate('/login')
             }
-            else {
-                alert(response)
-            }
-        } catch (error) {
-            alert(error.response.data.error)
-        }
-
+    } catch (error) {
+        alert(error.response.data.error)
+    }
     }
 
     // handleChange de todos os inputs
-    const handleChange = (e) => {
-        setLoginForm({ ...loginForm, [e.target.name]: e.target.value })
-    }
     const handleEmailChange = (e) => {
         setEmail(e.target.value)
     }
     const handleCodeChange = (e) => {
         setCode(e.target.value)
     }
+    const handleRegisterChange = (e) => {
+        setRegisterData( {...registerData, [e.target.name]: e.target.value} )
+    }
 
     return (
         <>
             {sendCodeForm && (
+                <>
                 <Form onSubmit={handleSubmitSendCode}>
                     <Form.Group className="mb-3" controlId="formSendCode">
                         <Form.Label>Email:</Form.Label>
                         <Form.Control
                             name="email"
                             type="email"
-                            onChange={handleChange}
+                            onChange={handleEmailChange}
                         />
                         <Button type="submit">Enviar código</Button>
                     </Form.Group>
                 </Form>
+                </>
             )}
 
             {checkCodeForm && (
-                <Form onSubmit={handleSubmit}>
+                <>
+                <Form onSubmit={handleSubmitCheckCode}>
                     <Form.Label>Código:</Form.Label>
                     <Form.Control
                         name="code"
                         type="text"
-                        onChange={handleChange}
+                        onChange={handleCodeChange}
                     />
                     <Button type="submit">Verificar</Button>
                 </Form>
+                </>
             )}
 
             {registerForm && (
-                <Form onSubmit={handleSubmit}>
+                <>
+                <h1>Você poderá logar usando e-mail ou username</h1>
+                <Form onSubmit={handleSubmitRegister}>
+                    <Form.Label>E-mail:</Form.Label>
+                    <Form.Control
+                        name="email"
+                        type="email"
+                        value={email}
+                        disabled
+                    />
                     <Form.Label>Username:</Form.Label>
                     <Form.Control
                         name="username"
                         type="text"
-                        onChange={handleChange}
+                        onChange={handleRegisterChange}
                     />
                     <Form.Label>Senha:</Form.Label>
                     <Form.Control
                         name="password"
                         type="password"
-                        onChange={handleChange}
+                        onChange={handleRegisterChange}
                     />
                     <Button type="submit">Registrar</Button>
                 </Form>
+                </>
             )}
         </>
     )

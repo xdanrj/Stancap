@@ -12,14 +12,14 @@ const loginAndRegisterService = new loginAndRegisterServices()
 
 function LoginForm() {
     const navigate = useNavigate()
-    const [loginForm, setLoginForm] = useState([])
+    const [loginData, setLoginData] = useState([])
 
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
-        try{
-            const response = await loginAndRegisterService.login(loginForm)
-        
-            if(response === true){
+        try {
+            const response = await loginAndRegisterService.login(loginData)
+
+            if (response === true) {
                 alert('Logado com sucesso')
                 navigate('/quotes')
             }
@@ -27,13 +27,11 @@ function LoginForm() {
                 alert(response)
             }
         } catch (error) {
-            alert(error)
-            //error.response.data.error
+            alert(error.response.data.error)
         }
-        
     }
-    const handleChange = (e) => {
-        setLoginForm({...loginForm, [e.target.name]: e.target.value})
+    const handleLoginChange = (e) => {
+        setLoginData( { ...loginData, [e.target.name]: e.target.value })
     }
 
     return (
@@ -44,7 +42,7 @@ function LoginForm() {
                 <Form.Control
                     name="email"
                     type="email"         
-                    onChange={handleChange}
+                    onChange={handleLoginChange}
                 />
 
             </Form.Group>
@@ -55,7 +53,7 @@ function LoginForm() {
                 <Form.Control
                     name="password"
                     type="password"
-                    onChange={handleChange}
+                    onChange={handleLoginChange}
                 />
 
             </Form.Group>
