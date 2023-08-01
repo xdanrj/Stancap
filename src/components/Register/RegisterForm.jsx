@@ -7,7 +7,6 @@ import "./GeralRegisterForm.css"
 
 import loginAndRegisterServices from "../../services/loginAndRegisterServices"
 
-// RASCUNHO: <Form.Group className="mb-3" controlId="formBasicUsername">
 const loginAndRegisterService = new loginAndRegisterServices()
 
 function RegisterForm() {
@@ -28,8 +27,10 @@ function RegisterForm() {
         e.preventDefault()
         try {
             const response = await loginAndRegisterService.sendCode(email)
+            console.log("responseRESPONSE: ", response)
 
             if (response === true) {
+                console.log("foi enviado hein")
                 alert('Código enviado com sucesso')
                 setSendCodeForm(false)
                 setCheckCodeForm(true)
@@ -60,6 +61,7 @@ function RegisterForm() {
         e.preventDefault();
         try {
             const response = await loginAndRegisterService.register(registerData)
+            console.log("handleSubmitRegister response: ", response)
             if (response === true) {
                 alert('Usuário cadastrado com sucesso')
                 // envia para a pagina de login

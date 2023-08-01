@@ -35,8 +35,9 @@ export async function selectUser(body) {
 // US3R 3XISTS AQUI
 export async function userExists(proprietyTarget) {
     console.log(`proprietyTarget: ${proprietyTarget}`)
-    const user = await User.findOne({ proprietyTarget })
+    const user = await User.findOne( proprietyTarget )
     if (user) {
+     
       return user
     }
     else {

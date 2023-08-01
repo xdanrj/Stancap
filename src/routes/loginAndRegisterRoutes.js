@@ -1,6 +1,7 @@
 import twilio from "twilio"
 import { User } from "../models/User.js";
 import { userExists } from "./commonFunctions.js";
+import jwt from "jsonwebtoken"
 
 export const loginAndRegisterRoutes = (app) => {
     //variaveis globais para funcionamento da API Twilio
@@ -15,11 +16,11 @@ export const loginAndRegisterRoutes = (app) => {
             const email = req.body.email
             const password = req.body.password
             const user = await userExists({email: email})
-
+            console.log("user.password: ", user.password)
             if (user.password == password) {
                 const token = createToken(user._id)
+                
                 res.send({ email: email, token: token })
-
             } else if (user.password != password) {
                 res.send({ message: "Login/Senha incorreto(s)" })
             }
@@ -39,6 +40,7 @@ export const loginAndRegisterRoutes = (app) => {
                     .send({ message: "E-mail já cadastrado" });
             }
             else if (!exist) {
+                console.log("entrou no !exist")
                 const verification = await client.verify.v2.services(verifySid)
                     .verifications.create({
                         channelConfiguration: {
@@ -47,9 +49,10 @@ export const loginAndRegisterRoutes = (app) => {
                             from_name: 'Stancap'
                         }, to: email, channel: 'email'
                     })
+                    console.log("tinindum")
                 const verificationStatus = verification.status
                 console.log(`verification.status: ${verificationStatus}`)
-                res.status(202).send({
+                res.send({
                     message: "Código de verificação enviado para o e-mail",
                     response: verificationStatus
                 })

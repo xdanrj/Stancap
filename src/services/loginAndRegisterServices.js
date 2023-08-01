@@ -10,10 +10,10 @@ export default class loginAndRegisterServices {
     async sendCode(email) {
         const response = await this.axios.post('/send_code', email)
         // se enviou o code com sucesso (recebeu status 202):
-        if (response.status === 202) {
+        if (response.data.response) {
             return true
         }
-        else if (response.status != 202) {
+        else {
             return response.data.message
         }
     }
@@ -32,6 +32,7 @@ export default class loginAndRegisterServices {
     async register(dados) {
         const response = await this.axios.post('/register', dados)
         // se recebeu um objeto com "{response}":
+        console.log("registerService response: ", response)
         if (response.data.response) {
             return true
         }

@@ -7,7 +7,6 @@ import "./LoginForm.css"
 
 import loginAndRegisterServices from "../../services/loginAndRegisterServices"
 
-
 const loginAndRegisterService = new loginAndRegisterServices()
 
 function LoginForm() {
@@ -32,6 +31,7 @@ function LoginForm() {
     }
     const handleLoginChange = (e) => {
         setLoginData( { ...loginData, [e.target.name]: e.target.value })
+        console.log(loginData)
     }
 
     return (
@@ -44,18 +44,15 @@ function LoginForm() {
                     type="email"         
                     onChange={handleLoginChange}
                 />
-
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Senha:</Form.Label>
-
                 <Form.Control
                     name="password"
                     type="password"
                     onChange={handleLoginChange}
                 />
-
             </Form.Group>
             <Button type="submit">Enviar</Button>
         </Form>
