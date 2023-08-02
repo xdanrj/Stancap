@@ -8,11 +8,8 @@ export default class loginAndRegisterServices {
     }
 
     async sendCode(email) {
-        
         const response = await this.axios.post('/send_code', email)
-        
         // se enviou o code com sucesso (recebeu status 202):
-       
         if (response.data.response) {
             return true
         }
@@ -47,17 +44,14 @@ export default class loginAndRegisterServices {
     }
 
     async login(dados) {
-            
             const response = await this.axios.post('/login', dados)
             // se recebeu um objeto com "{token}":
             if (response.data.token) {
                 localStorage.setItem("email", response.data.email)
                 localStorage.setItem("token", response.data.token)
                 return true
-
                 // se não: já retorna a "{message}" da API
-            } else {
-                
+            } else {  
                 return response.data.message
             }
         }

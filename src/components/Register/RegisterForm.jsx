@@ -61,8 +61,8 @@ function RegisterForm() {
             
             if (response === true) {
                 alert('Usuário cadastrado com sucesso')
-                // envia para a pagina de login
-                navigate('/login')
+                // envia para a pagina de login e preenche auto. o email
+                navigate(`/login?email=${encodeURIComponent(email.email)}`)
             }
     } catch (error) {
         alert(error.response.data.error)

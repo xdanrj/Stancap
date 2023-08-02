@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "./LoginForm.css"
 
@@ -10,8 +10,19 @@ import loginAndRegisterServices from "../../services/loginAndRegisterServices"
 const loginAndRegisterService = new loginAndRegisterServices()
 
 function LoginForm() {
+    const location = useLocation()
     const navigate = useNavigate()
     const [loginData, setLoginData] = useState([])
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search)
+        const emailParam = searchParams.get("email")
+
+        if (emailParam) {
+            setLoginData({ ...loginData, [email]: emailParam })
+        }
+    }, [location.search])
+
 
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
@@ -30,7 +41,7 @@ function LoginForm() {
         }
     }
     const handleLoginChange = (e) => {
-        setLoginData({...loginData, [e.target.name]: e.target.value })
+        setLoginData({ ...loginData, [e.target.name]: e.target.value })
         console.log(loginData)
     }
 
@@ -41,7 +52,7 @@ function LoginForm() {
 
                 <Form.Control
                     name="email"
-                    type="email"         
+                    type="email"
                     onChange={handleLoginChange}
                 />
             </Form.Group>
