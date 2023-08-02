@@ -8,8 +8,11 @@ export default class loginAndRegisterServices {
     }
 
     async sendCode(email) {
+        
         const response = await this.axios.post('/send_code', email)
+        
         // se enviou o code com sucesso (recebeu status 202):
+       
         if (response.data.response) {
             return true
         }
@@ -19,7 +22,9 @@ export default class loginAndRegisterServices {
     }
 
     async checkCode(dados) {
-        const response = await this.axios.post('/check_code', dados)
+        const emailAndCode = {...dados.email, ...dados.code}
+        console.log("emailAndCode: ", emailAndCode)
+        const response = await this.axios.post('/check_code', emailAndCode)
         // se recebeu um objeto com "{response}":
         if (response.data.response) {
             return true
@@ -32,7 +37,7 @@ export default class loginAndRegisterServices {
     async register(dados) {
         const response = await this.axios.post('/register', dados)
         // se recebeu um objeto com "{response}":
-        console.log("registerService response: ", response)
+        
         if (response.data.response) {
             return true
         }
@@ -42,7 +47,7 @@ export default class loginAndRegisterServices {
     }
 
     async login(dados) {
-            console.log("dados: ", dados)
+            
             const response = await this.axios.post('/login', dados)
             // se recebeu um objeto com "{token}":
             if (response.data.token) {
@@ -52,7 +57,7 @@ export default class loginAndRegisterServices {
 
                 // se não: já retorna a "{message}" da API
             } else {
-                console.log("response.data.message", response.data.message)
+                
                 return response.data.message
             }
         }

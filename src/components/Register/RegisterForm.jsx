@@ -14,9 +14,9 @@ function RegisterForm() {
 
     // definição dos valores
     const [loginData, setLoginData] = useState([])
+    const [email, setEmail] = useState([])
+    const [code, setCode] = useState([])
     const [registerData, setRegisterData] = useState([])
-    const [email, setEmail] = useState()
-    const [code, setCode] = useState()
 
     // visibilidade dos Forms
     const [sendCodeForm, setSendCodeForm] = useState(true)
@@ -27,10 +27,7 @@ function RegisterForm() {
         e.preventDefault()
         try {
             const response = await loginAndRegisterService.sendCode(email)
-            console.log("responseRESPONSE: ", response)
-
             if (response === true) {
-                console.log("foi enviado hein")
                 alert('Código enviado com sucesso')
                 setSendCodeForm(false)
                 setCheckCodeForm(true)
@@ -44,7 +41,7 @@ function RegisterForm() {
     const handleSubmitCheckCode = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginAndRegisterService.checkCode({ email, code })
+            const response = await loginAndRegisterService.checkCode( { email, code } )
 
             if (response === true) {
                 alert('Código verificado com sucesso')
@@ -61,7 +58,7 @@ function RegisterForm() {
         e.preventDefault();
         try {
             const response = await loginAndRegisterService.register(registerData)
-            console.log("handleSubmitRegister response: ", response)
+            
             if (response === true) {
                 alert('Usuário cadastrado com sucesso')
                 // envia para a pagina de login
@@ -74,13 +71,15 @@ function RegisterForm() {
 
     // handleChange de todos os inputs
     const handleEmailChange = (e) => {
-        setEmail(e.target.value)
+        setEmail({...email, [e.target.name]: e.target.value })
     }
     const handleCodeChange = (e) => {
-        setCode(e.target.value)
+        setCode({ ...code, [e.target.name]: e.target.value })
     }
     const handleRegisterChange = (e) => {
-        setRegisterData( {...registerData, [e.target.name]: e.target.value} )
+        setRegisterData( {...registerData, [e.target.name]: e.target.value, 
+        email: email.email} )
+        console.log("registerData: ", registerData)
     }
 
     return (
@@ -117,13 +116,13 @@ function RegisterForm() {
 
             {registerForm && (
                 <>
-                <h1>Você poderá logar usando e-mail ou username</h1>
+                <h4>Você poderá logar usando e-mail ou username</h4>
                 <Form onSubmit={handleSubmitRegister}>
                     <Form.Label>E-mail:</Form.Label>
                     <Form.Control
                         name="email"
                         type="email"
-                        value={email}
+                        value={email.email}
                         disabled
                     />
                     <Form.Label>Username:</Form.Label>

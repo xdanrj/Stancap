@@ -30,7 +30,7 @@ function LoginForm() {
         }
     }
     const handleLoginChange = (e) => {
-        setLoginData( { ...loginData, [e.target.name]: e.target.value })
+        setLoginData({...loginData, [e.target.name]: e.target.value })
         console.log(loginData)
     }
 

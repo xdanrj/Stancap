@@ -34,10 +34,8 @@ export async function selectUser(body) {
 // Essa função permite selecionar qualquer usuário usando qualquer propriedade como filtro. Recebe como parâmetro um único OBJETO (propriedade: valorPropriedade)
 // US3R 3XISTS AQUI
 export async function userExists(proprietyTarget) {
-    console.log(`proprietyTarget: ${proprietyTarget}`)
     const user = await User.findOne( proprietyTarget )
     if (user) {
-     
       return user
     }
     else {
@@ -77,7 +75,6 @@ export async function userExists(proprietyTarget) {
   // Essa função permite selecionar qualquer quote usando qualquer propriedade como filtro. Recebe como parâmetro um único OBJETO (propriedade: valorPropriedade)
   // QU0T3 3X1STS AQUI
   export async function quoteExists(proprietyTarget) {
-      console.log(`proprietyTarget: ${proprietyTarget}`)
       const quote = await Quotes.findOne({ proprietyTarget })
       if (quote) {
         return quote

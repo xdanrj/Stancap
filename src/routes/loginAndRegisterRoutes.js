@@ -11,36 +11,47 @@ export const loginAndRegisterRoutes = (app) => {
     const client = twilio(accountSid, authToken)
     const secretKey = process.env.SECRET_KEY
 
+    app.get("/testando", async (req, res) => {
+        try {
+            res.send({
+                accountSid: accountSid,
+                authToken: authToken,
+                verifySid: verifySid,
+                client: client,
+                secretKey: secretKey
+            })
+        } catch (error) {
+            res.send({ error: error })
+        }
+    })
+
     app.post("/login", async (req, res) => {
         try {
             const email = req.body.email
             const password = req.body.password
-            const user = await userExists({email: email})
-            console.log("user.password: ", user.password)
+            const user = await userExists({ email: email })
+            
             if (user.password == password) {
                 const token = createToken(user._id)
-                
+
                 res.send({ email: email, token: token })
             } else if (user.password != password) {
                 res.send({ message: "Login/Senha incorreto(s)" })
             }
-
         } catch (error) { res.send({ error: error }) }
 
     })
-
     app.post("/send_code", async (req, res) => {
         try {
-            let email = req.body.email
+            const email = req.body.email
             //verifica se o email ja existe no DB
             let exist = await userExists({ email: email })
-            console.log("exist: ", exist)
+            
             if (exist) {
-                return res.status(409)
+                res.status(409)
                     .send({ message: "E-mail já cadastrado" });
             }
             else if (!exist) {
-                console.log("entrou no !exist")
                 const verification = await client.verify.v2.services(verifySid)
                     .verifications.create({
                         channelConfiguration: {
@@ -49,7 +60,7 @@ export const loginAndRegisterRoutes = (app) => {
                             from_name: 'Stancap'
                         }, to: email, channel: 'email'
                     })
-                    console.log("tinindum")
+                
                 const verificationStatus = verification.status
                 console.log(`verification.status: ${verificationStatus}`)
                 res.send({
@@ -66,18 +77,13 @@ export const loginAndRegisterRoutes = (app) => {
             let otpCode = req.body.code
 
             const exist = await userExists({ email: email })
-
             if (!exist) {
-                
                 const verification_check = await client.verify.v2.services(verifySid)
                     .verificationChecks
                     .create({ to: email, code: otpCode })
-
                 const verificationCheckStatus = verification_check.status
-
                 //caso o codigo verificado por email seja aprovado, cria o User por enquanto apenas com o email:
                 if (verificationCheckStatus == "approved") {
-
                     res.send({
                         message: "E-mail verificado com sucesso",
                         response: email
@@ -91,14 +97,13 @@ export const loginAndRegisterRoutes = (app) => {
         } catch (error) { res.send(error.message) }
     })
 
-
     app.post("/register", async (req, res) => {
         try {
             // na rota anterior o email verificado sera guardado no localstorage (??nao sei, hein?? ignorar isso aqui talvez?)
             const email = req.body.email
             const username = req.body.username
             const password = req.body.password
-            const selectedUser = await userExists({email: email})
+            const selectedUser = await userExists({ email: email })
             // caso o email seja novo (condição redundante pois a rota "/register" só será acessada caso a verificação por código (rota anterior) seja bem sucedida)
             if (!selectedUser) {
                 const newUser = new User({
@@ -118,7 +123,7 @@ export const loginAndRegisterRoutes = (app) => {
             }
         } catch (error) {
             res.send({ message: error.message })
-            console.log(error)
+            
         }
     })
 
