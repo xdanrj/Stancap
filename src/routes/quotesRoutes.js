@@ -46,7 +46,7 @@ export const quotesRoutes = (app) => {
           const foundQuote = await selectQuote(req.body)
           res.send({response: foundQuote.response})
         } catch (error) {
-          res.send(error.message)
+          res.send({message: error})
         }
       })
 
@@ -56,7 +56,7 @@ export const quotesRoutes = (app) => {
           const response = await functionEditQuote(selectedQuote, req.body)
           res.send(response)
         } catch (error) {
-          res.send(error.message)
+          res.send({message: error})
         }
       })
 
@@ -65,7 +65,7 @@ export const quotesRoutes = (app) => {
           const selectedQuote = await selectQuote(req.body)
           const response = await functionDeleteQuote(selectedQuote)
           res.status(200).send(response)
-        } catch (error) { res.send({message: error.message}) }
+        } catch (error) { res.send({message: error}) }
       })
 
     app.post("/add_quote", async (req,res) => {

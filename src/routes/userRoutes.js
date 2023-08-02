@@ -56,7 +56,7 @@ export const userRoutes = (app) => {
       const foundUser = await selectUser(req.body)
       res.send({response: foundUser.response})
     } catch (error) {
-      res.send(error.message)
+      res.send({message: error})
     }
   })
 
@@ -65,7 +65,7 @@ export const userRoutes = (app) => {
       const selectedUser = await selectUser(req.body)
       const response = await functionEditUser(selectedUser, req.body)
       res.send(response)
-    } catch (error) { res.send({message: error.message}) }
+    } catch (error) { res.send({message: error}) }
   })
 
   app.delete("/delete_user", async (req, res) => {
@@ -73,7 +73,7 @@ export const userRoutes = (app) => {
       const selectedUser = await selectUser(req.body)
       const response = await functionDeleteUser(selectedUser)
       res.status(200).send(response)
-    } catch (error) { res.send({message: error.message}) }
+    } catch (error) { res.send({message: error}) }
   })
 
   app.post("/change_password_send", async (req, res) => {
@@ -98,7 +98,7 @@ export const userRoutes = (app) => {
         res.status(404).send({ message: "E-mail não encontrado" })
       }
 
-    } catch (error) { res.status(500).send(error) }
+    } catch (error) { res.status(500).send({message: error}) }
   })
 
   app.post("/change_password_check", async (req, res) => {
@@ -115,7 +115,7 @@ export const userRoutes = (app) => {
       } else {
         res.status(401).send({ message: "Código de verificação incorreto" })
       }
-    } catch (error) { res.status(500).send(error) }
+    } catch (error) { res.status(500).send({message: error}) }
   })
 
 }

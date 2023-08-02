@@ -21,7 +21,7 @@ export const loginAndRegisterRoutes = (app) => {
                 secretKey: secretKey
             })
         } catch (error) {
-            res.send({ error: error })
+            res.send({ message: error })
         }
     })
 
@@ -38,7 +38,7 @@ export const loginAndRegisterRoutes = (app) => {
             } else if (user.password != password) {
                 res.send({ message: "Login/Senha incorreto(s)" })
             }
-        } catch (error) { res.send({ error: error }) }
+        } catch (error) { res.send({ message: error }) }
 
     })
     app.post("/send_code", async (req, res) => {
@@ -68,7 +68,7 @@ export const loginAndRegisterRoutes = (app) => {
                     response: verificationStatus
                 })
             }
-        } catch (error) { res.send(error.message) }
+        } catch (error) { res.send({message: error}) }
     })
 
     app.post("/check_code", async (req, res) => {
@@ -94,7 +94,7 @@ export const loginAndRegisterRoutes = (app) => {
                     })
                 }
             }
-        } catch (error) { res.send(error.message) }
+        } catch (error) { res.send({message: error}) }
     })
 
     app.post("/register", async (req, res) => {
@@ -122,7 +122,7 @@ export const loginAndRegisterRoutes = (app) => {
                 res.send({ message: "E-mail já cadastrado" });
             }
         } catch (error) {
-            res.send({ message: error.message })
+            res.send({message: error})
             
         }
     })
