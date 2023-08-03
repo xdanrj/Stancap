@@ -23,7 +23,6 @@ function LoginForm() {
         }
     }, [location.search])
 
-
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
         try {
@@ -45,11 +44,11 @@ function LoginForm() {
         console.log(loginData)
     }
 
+
     return (
         <Form onSubmit={handleSubmitLogin}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email:</Form.Label>
-
+                <Form.Label>E-mail:</Form.Label>
                 <Form.Control
                     name="email"
                     type="email"
@@ -65,6 +64,7 @@ function LoginForm() {
                     onChange={handleLoginChange}
                 />
             </Form.Group>
+            <Button onClick={"/change_password"}>Esqueci minha senha</Button>
             <Button type="submit">Enviar</Button>
         </Form>
     )

@@ -41,7 +41,7 @@ function RegisterForm() {
     const handleSubmitCheckCode = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginAndRegisterService.checkCode( { email, code } )
+            const response = await loginAndRegisterService.checkCode({ email, code })
 
             if (response === true) {
                 alert('Código verificado com sucesso')
@@ -58,27 +58,37 @@ function RegisterForm() {
         e.preventDefault();
         try {
             const response = await loginAndRegisterService.register(registerData)
-            
+
             if (response === true) {
                 alert('Usuário cadastrado com sucesso')
+                console.log(`AUTO LOGIN INFOS: email: ${email.email} password: ${registerData.password}`)
+                await loginAndRegisterService.login({
+                    email: email.email,
+                    password: registerData.password
+                })
+                navigate('/quotes')
+
+
                 // envia para a pagina de login e preenche auto. o email
-                navigate(`/login?email=${encodeURIComponent(email.email)}`)
+                //navigate(`/login?email=${encodeURIComponent(email.email)}`)
             }
-    } catch (error) {
-        alert(error.response.data.error)
-    }
+        } catch (error) {
+            alert(error.response.data.error)
+        }
     }
 
     // handleChange de todos os inputs
     const handleEmailChange = (e) => {
-        setEmail({...email, [e.target.name]: e.target.value })
+        setEmail({ ...email, [e.target.name]: e.target.value })
     }
     const handleCodeChange = (e) => {
         setCode({ ...code, [e.target.name]: e.target.value })
     }
     const handleRegisterChange = (e) => {
-        setRegisterData( {...registerData, [e.target.name]: e.target.value, 
-        email: email.email} )
+        setRegisterData({
+            ...registerData, [e.target.name]: e.target.value,
+            email: email.email
+        })
         console.log("registerData: ", registerData)
     }
 
@@ -86,59 +96,59 @@ function RegisterForm() {
         <>
             {sendCodeForm && (
                 <>
-                <Form onSubmit={handleSubmitSendCode}>
-                    <Form.Group className="mb-3" controlId="formSendCode">
-                        <Form.Label>Email:</Form.Label>
-                        <Form.Control
-                            name="email"
-                            type="email"
-                            onChange={handleEmailChange}
-                        />
-                        <Button type="submit">Enviar código</Button>
-                    </Form.Group>
-                </Form>
+                    <Form onSubmit={handleSubmitSendCode}>
+                        <Form.Group className="mb-3" controlId="formSendCode">
+                            <Form.Label>Email:</Form.Label>
+                            <Form.Control
+                                name="email"
+                                type="email"
+                                onChange={handleEmailChange}
+                            />
+                            <Button type="submit">Enviar código</Button>
+                        </Form.Group>
+                    </Form>
                 </>
             )}
 
             {checkCodeForm && (
                 <>
-                <Form onSubmit={handleSubmitCheckCode}>
-                    <Form.Label>Código:</Form.Label>
-                    <Form.Control
-                        name="code"
-                        type="text"
-                        onChange={handleCodeChange}
-                    />
-                    <Button type="submit">Verificar</Button>
-                </Form>
+                    <Form onSubmit={handleSubmitCheckCode}>
+                        <Form.Label>Código:</Form.Label>
+                        <Form.Control
+                            name="code"
+                            type="text"
+                            onChange={handleCodeChange}
+                        />
+                        <Button type="submit">Verificar</Button>
+                    </Form>
                 </>
             )}
 
             {registerForm && (
                 <>
-                <h4>Você poderá logar usando e-mail ou username</h4>
-                <Form onSubmit={handleSubmitRegister}>
-                    <Form.Label>E-mail:</Form.Label>
-                    <Form.Control
-                        name="email"
-                        type="email"
-                        value={email.email}
-                        disabled
-                    />
-                    <Form.Label>Username:</Form.Label>
-                    <Form.Control
-                        name="username"
-                        type="text"
-                        onChange={handleRegisterChange}
-                    />
-                    <Form.Label>Senha:</Form.Label>
-                    <Form.Control
-                        name="password"
-                        type="password"
-                        onChange={handleRegisterChange}
-                    />
-                    <Button type="submit">Registrar</Button>
-                </Form>
+                    <h4>Você poderá logar usando e-mail ou username</h4>
+                    <Form onSubmit={handleSubmitRegister}>
+                        <Form.Label>E-mail:</Form.Label>
+                        <Form.Control
+                            name="email"
+                            type="email"
+                            value={email.email}
+                            disabled
+                        />
+                        <Form.Label>Username:</Form.Label>
+                        <Form.Control
+                            name="username"
+                            type="text"
+                            onChange={handleRegisterChange}
+                        />
+                        <Form.Label>Senha:</Form.Label>
+                        <Form.Control
+                            name="password"
+                            type="password"
+                            onChange={handleRegisterChange}
+                        />
+                        <Button type="submit">Registrar</Button>
+                    </Form>
                 </>
             )}
         </>
