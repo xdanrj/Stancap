@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import "./GeralRegisterForm.css"
 
 import loginAndRegisterServices from "../../services/loginAndRegisterServices"
-
 const loginAndRegisterService = new loginAndRegisterServices()
 
 function RegisterForm() {
@@ -42,7 +41,6 @@ function RegisterForm() {
         e.preventDefault();
         try {
             const response = await loginAndRegisterService.checkCode({ email, code })
-
             if (response === true) {
                 alert('Código verificado com sucesso')
                 setCheckCodeForm(false)

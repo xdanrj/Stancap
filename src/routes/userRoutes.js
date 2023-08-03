@@ -1,9 +1,6 @@
 import twilio from "twilio"
 import { User } from "../models/User.js"
-import jwt from "jsonwebtoken"
-import { selectUser } from "./commonFunctions.js"
-import { Quotes } from "../models/Quotes.js"
-
+import { selectUser, userExists } from "./commonFunctions.js"
 
 export const userRoutes = (app) => {
   //variaveis globais para funcionamento da API Twilio
@@ -48,15 +45,15 @@ export const userRoutes = (app) => {
 
   app.get("/all_users", async (req, res) => {
     const response = await User.find()
-    res.send({response: response})
+    res.send({ response: response })
   })
 
   app.get("/search_user", async (req, res) => {
     try {
       const foundUser = await selectUser(req.body)
-      res.send({response: foundUser.response})
+      res.send({ response: foundUser.response })
     } catch (error) {
-      res.send({message: error})
+      res.send({ message: error })
     }
   })
 
@@ -65,7 +62,7 @@ export const userRoutes = (app) => {
       const selectedUser = await selectUser(req.body)
       const response = await functionEditUser(selectedUser, req.body)
       res.send(response)
-    } catch (error) { res.send({message: error}) }
+    } catch (error) { res.send({ message: error }) }
   })
 
   app.delete("/delete_user", async (req, res) => {
@@ -73,18 +70,14 @@ export const userRoutes = (app) => {
       const selectedUser = await selectUser(req.body)
       const response = await functionDeleteUser(selectedUser)
       res.status(200).send(response)
-    } catch (error) { res.send({message: error}) }
+    } catch (error) { res.send({ message: error }) }
   })
 
   app.post("/change_password_send", async (req, res) => {
     try {
       const email = req.body.email
-
-      // procura no banco de dados se o usuario existe
-      const exist = await User.findOne({ email: email }).count()
-
-      if (exist == 1) { // verifica se algum usuario foi encontrado
-        // funcao que envia o codigo para o email
+      const selectedUser = await userExists({ email: email })
+      if (selectedUser) {
         const verification = await client.verify.v2.services(verifySid)
           .verifications.create({
             channelConfiguration: {
@@ -93,12 +86,14 @@ export const userRoutes = (app) => {
               from_name: 'Stancap'
             }, to: email, channel: 'email'
           })
-        res.status(200).send({ message: "Código de verificação enviado para o e-mail" })
-      } else if (exist == 0) { // verifica se algum usuario foi encontrado
+        res.status(200).send({
+          message: "Código de verificação enviado para o e-mail",
+          response: selectedUser
+        })
+      } else {
         res.status(404).send({ message: "E-mail não encontrado" })
       }
-
-    } catch (error) { res.status(500).send({message: error}) }
+    } catch (error) { res.status(500).send({ message: error }) }
   })
 
   app.post("/change_password_check", async (req, res) => {
@@ -109,13 +104,25 @@ export const userRoutes = (app) => {
 
       const verification_check = await client.verify.v2.services(verifySid).verificationChecks.create({ to: email, code: otpCode })
 
-      if (verification_check.status == "approved") { // verificacao se o codigo esta certo
-        const user = await User.updateOne({ email: email }, { $set: { password: newPassword } })
-        res.status(202).send({ message: "Senha alterada com sucesso" })
+      if (verification_check.status == "approved") {
+        const selectedUser = await User.updateOne(
+          { email: email },
+          { password: newPassword })
+        res.status(202).send({
+          message: "Senha alterada com sucesso",
+          response: selectedUser
+        })
       } else {
-        res.status(401).send({ message: "Código de verificação incorreto" })
+        res.status(401).send({ message: "Código de verificação incorreto ou expirado" })
       }
-    } catch (error) { res.status(500).send({message: error}) }
+    } catch (error) { res.status(500).send({ message: error }) }
   })
+
+  /*app.post("/new_password", async (req, res) => {
+    try {
+      
+    } catch (error) { res.send({ message: error }) }
+      
+  })*/
 
 }

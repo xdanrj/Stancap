@@ -19,7 +19,7 @@ export default class loginAndRegisterServices {
     }
 
     async checkCode(dados) {
-        const emailAndCode = {...dados.email, ...dados.code}
+        const emailAndCode = { ...dados.email, ...dados.code }
         console.log("emailAndCode: ", emailAndCode)
         const response = await this.axios.post('/check_code', emailAndCode)
         // se recebeu um objeto com "{response}":
@@ -34,7 +34,7 @@ export default class loginAndRegisterServices {
     async register(dados) {
         const response = await this.axios.post('/register', dados)
         // se recebeu um objeto com "{response}":
-        
+
         if (response.data.response) {
             return true
         }
@@ -44,15 +44,45 @@ export default class loginAndRegisterServices {
     }
 
     async login(dados) {
-            const response = await this.axios.post('/login', dados)
-            // se recebeu um objeto com "{token}":
-            if (response.data.token) {
-                localStorage.setItem("email", response.data.email)
-                localStorage.setItem("token", response.data.token)
-                return true
-                // se não: já retorna a "{message}" da API
-            } else {  
-                return response.data.message
-            }
+        const response = await this.axios.post('/login', dados)
+        // se recebeu um objeto com "{token}":
+        if (response.data.token) {
+            localStorage.setItem("email", response.data.email)
+            localStorage.setItem("token", response.data.token)
+            return true
+            // se não: já retorna a "{message}" da API
+        } else {
+            return response.data.message
         }
     }
+
+    async newPasswordSendCode(email) {
+        const response = await this.axios.post('/change_password_send', email)
+        if (response.data.response) {
+            return true
+        }
+        else {
+            return response.data.message
+        }
+    }
+
+    async newPasswordCheckCode(dados) {
+        const response = await this.axios.post('/change_password_check', dados)
+        if (response.data.response) {
+            return true
+        }
+        else {
+            return response.data.message
+        }
+    }
+    async newPassword(dados) {
+        const response = await this.axios.post('/edit_user', dados)
+        if (response.data.response) {
+            return true
+        }
+        else {
+            return response.data.message
+        }
+    }
+
+}
