@@ -69,7 +69,7 @@ export const userRoutes = (app) => {
     try {
       const selectedUser = await selectUser(req.body)
       const response = await functionDeleteUser(selectedUser)
-      res.status(200).send(response)
+      res.send(response)
     } catch (error) { res.send({ message: error }) }
   })
 
@@ -86,14 +86,14 @@ export const userRoutes = (app) => {
               from_name: 'Stancap'
             }, to: email, channel: 'email'
           })
-        res.status(200).send({
+        res.send({
           message: "Código de verificação enviado para o e-mail",
           response: selectedUser
         })
       } else {
-        res.status(404).send({ message: "E-mail não encontrado" })
+        res.send({ message: "E-mail não encontrado" })
       }
-    } catch (error) { res.status(500).send({ message: error }) }
+    } catch (error) { res.send({ message: error }) }
   })
 
   app.post("/change_password_check", async (req, res) => {
@@ -108,14 +108,14 @@ export const userRoutes = (app) => {
         const selectedUser = await User.updateOne(
           { email: email },
           { password: newPassword })
-        res.status(202).send({
+        res.send({
           message: "Senha alterada com sucesso",
           response: selectedUser
         })
       } else {
-        res.status(401).send({ message: "Código de verificação incorreto ou expirado" })
+        res.send({ message: "Código de verificação incorreto ou expirado" })
       }
-    } catch (error) { res.status(500).send({ message: error }) }
+    } catch (error) { res.send({ message: error }) }
   })
 
   /*app.post("/new_password", async (req, res) => {

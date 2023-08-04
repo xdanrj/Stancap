@@ -64,7 +64,7 @@ export const quotesRoutes = (app) => {
         try {
           const selectedQuote = await selectQuote(req.body)
           const response = await functionDeleteQuote(selectedQuote)
-          res.status(200).send(response)
+          res.send(response)
         } catch (error) { res.send({message: error}) }
       })
 

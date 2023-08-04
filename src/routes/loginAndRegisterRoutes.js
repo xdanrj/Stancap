@@ -48,7 +48,7 @@ export const loginAndRegisterRoutes = (app) => {
             let exist = await userExists({ email: email })
             
             if (exist) {
-                res.status(409)
+                res
                     .send({ message: "E-mail já cadastrado" });
             }
             else if (!exist) {
@@ -114,7 +114,7 @@ export const loginAndRegisterRoutes = (app) => {
                 })
                 const savedUser = await newUser.save()
 
-                res.status(201).send({
+                res.send({
                     message: "Usuário cadastrado com sucesso",
                     response: savedUser
                 })

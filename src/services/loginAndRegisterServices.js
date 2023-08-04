@@ -9,7 +9,7 @@ export default class loginAndRegisterServices {
 
     async sendCode(email) {
         const response = await this.axios.post('/send_code', email)
-        // se enviou o code com sucesso (recebeu status 202):
+        // se enviou o code com sucesso:
         if (response.data.response) {
             return true
         }
@@ -19,7 +19,10 @@ export default class loginAndRegisterServices {
     }
 
     async checkCode(dados) {
-        const emailAndCode = { ...dados.email, ...dados.code }
+        const emailAndCode = {
+            ...dados.email,
+            ...dados.code
+        }
         console.log("emailAndCode: ", emailAndCode)
         const response = await this.axios.post('/check_code', emailAndCode)
         // se recebeu um objeto com "{response}":
@@ -67,7 +70,13 @@ export default class loginAndRegisterServices {
     }
 
     async newPasswordCheckCode(dados) {
-        const response = await this.axios.post('/change_password_check', dados)
+        console.log("OLHA OS DADOS: ", dados)
+        const emailAndCode = {
+            ...dados.email,
+            ...dados.code
+        }
+        console.log("emailAndCode: ", emailAndCode)
+        const response = await this.axios.post('/change_password_check', emailAndCode)
         if (response.data.response) {
             return true
         }

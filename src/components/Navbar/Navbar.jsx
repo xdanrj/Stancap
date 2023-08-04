@@ -19,6 +19,7 @@ function NavbarComponent() {
                         <Nav.Link href="/login">Login</Nav.Link>
                         <Nav.Link href="/quotes">Quotes</Nav.Link>
                         <Nav.Link href="/register">Register</Nav.Link>
+                        <Nav.Link href="/new_password">New Password</Nav.Link>
                     </Navbar.Text>
                 </Navbar.Collapse>
             </Container>

@@ -1,7 +1,13 @@
 import { useState } from "react";
-import { Form, useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 
-function ChangePasswordForm() {
+
+import loginAndRegisterServices from "../../services/loginAndRegisterServices"
+const loginAndRegisterService = new loginAndRegisterServices()
+
+function NewPasswordForm() {
     const navigate = useNavigate()
 
     // definição dos valores
@@ -17,7 +23,7 @@ function ChangePasswordForm() {
     const handleSubmitSendCode = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginAndRegisterService.sendCode(email)
+            const response = await loginAndRegisterService.newPasswordSendCode(email)
             if (response === true) {
                 alert('Código enviado com sucesso')
                 setSendCodeForm(false)
@@ -26,13 +32,13 @@ function ChangePasswordForm() {
             else {
                 alert(response)
             }
-        } catch (error) { alert(error.response.data.error) }
+        } catch (error) { alert(error) }
     }
 
     const handleSubmitCheckCode = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginAndRegisterService.checkCode({ email, code })
+            const response = await loginAndRegisterService.newPasswordCheckCode({ email, code })
             if (response === true) {
                 alert('Código verificado com sucesso')
                 setCheckCodeForm(false)
@@ -41,7 +47,7 @@ function ChangePasswordForm() {
             else {
                 alert(response)
             }
-        } catch (error) { alert(error.response.data.error) }
+        } catch (error) { alert(error) }
     }
 
     const handleSubmitNewPassword = async (e) => {
@@ -49,7 +55,7 @@ function ChangePasswordForm() {
         try {
             const response = await loginAndRegisterService.newPassword({ email, password: newPassword.newPassword})
             
-        } catch (error) { alert(error.response.data.error) }
+        } catch (error) { alert(error) }
     }
 
     const handleEmailChange = (e) => {
@@ -74,6 +80,7 @@ function ChangePasswordForm() {
                                 type="email"
                                 onChange={handleEmailChange}
                             ></Form.Control>
+                            <Button type="submit">Enviar código</Button>
                         </Form.Group>
                     </Form>
                 </>
@@ -89,6 +96,7 @@ function ChangePasswordForm() {
                                 type="text"
                                 onChange={handleCodeChange}
                             ></Form.Control>
+                            <Button type="submit">Verificar</Button>
                         </Form.Group>
                     </Form>
                 </>
@@ -111,9 +119,12 @@ function ChangePasswordForm() {
                                 onChange={handleNewPasswordChange}
                             ></Form.Control>
                         </Form.Group>
+                        <Button type="submit">Alterar senha</Button>
                     </Form>
                 </>
             )}
         </>
     )
 }
+
+export default NewPasswordForm

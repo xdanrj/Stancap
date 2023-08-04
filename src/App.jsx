@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Quotes from './pages/Quotes';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import NewPassword from './pages/NewPassword';
 import Testes from './components/Testes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
         <Route path="/testes" element={<Testes/>} />
+        <Route path="/new_password" element={<NewPassword/>} />
       </Routes>
     </Router>
   )
