@@ -36,7 +36,7 @@ function LoginForm() {
                 alert(response)
             }
         } catch (error) {
-            alert(error.response.data.error)
+            alert(error)
         }
     }
     const handleLoginChange = (e) => {

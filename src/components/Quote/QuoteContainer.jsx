@@ -8,13 +8,21 @@ import "./QuoteContainer.css"
 const quoteService = new quoteServices()
 
 
-function QuoteContainer() {
+async function QuoteContainer() {
+    const serviceResponse = await quoteService.getAllQuotes()
+    const quotes = serviceResponse.data.response
+    console.log(quotes)
+    console.log("tipo de quotes", typeof(quotes))
     return (
-        <Card className="bg-secondary">
-
-            <Card.Text>aaaaeasbesae</Card.Text>
+        <>
+        {quotes.map(quote => (
+        <Card className="bg-secondary" key={quote.id}>
+            <Card.Text>QuoteID: {quote.id}</Card.Text>
+            <Card.Text>QuoteTexto: {quote.quotes}</Card.Text>
 
         </Card>
+        ))}
+        </>
     )
 }
 

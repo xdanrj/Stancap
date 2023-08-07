@@ -1,5 +1,3 @@
-
-
 export default class userServices {
     constructor() {
         this.axios = axios.create({
@@ -12,8 +10,8 @@ export default class userServices {
     }
 
     async logout() {
-        localStorage.removeItem("token")
-        localStorage.removeItem("nome")
         localStorage.removeItem("email")
+        localStorage.removeItem("username")
+        localStorage.removeItem("token")
     }
 }
