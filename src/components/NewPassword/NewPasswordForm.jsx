@@ -13,7 +13,7 @@ function NewPasswordForm() {
     // definição dos valores
     const [email, setEmail] = useState()
     const [code, setCode] = useState()
-    const [newPassword, setNewPassword] = useState()
+    const [newPassword, setNewPassword] = useState({password: '', confirmPassword: ''})
 
     // visibilidade dos Forms
     const [sendCodeForm, setSendCodeForm] = useState(true)
@@ -42,7 +42,7 @@ function NewPasswordForm() {
             if (response === true) {
                 alert('Código verificado com sucesso')
                 setCheckCodeForm(false)
-                setRegisterForm(true)
+                setNewPasswordForm(true)
             }
             else {
                 alert(response)
@@ -53,8 +53,20 @@ function NewPasswordForm() {
     const handleSubmitNewPassword = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginAndRegisterService.newPassword({ email, password: newPassword.newPassword})
-            
+            console.log(`email: ${email.email} // newPassword.password: ${newPassword.password} // newPassword.confirmPassword: ${newPassword.confirmPassword}`)
+            console.log("OBJETO EMAIL SECO: ", email)
+            console.log("OBJETO NEWPASSWORD SECO: ", newPassword)
+            if (newPassword.password == newPassword.confirmPassword) {
+                
+                const response = await loginAndRegisterService.newPassword({ ...email, password: newPassword.password })
+                console.log("response: ", response)
+                if (response === true) {
+                    alert('Senha alterada com sucesso')
+                    navigate('/quotes')
+                }
+            } else {
+                alert(response)
+            }
         } catch (error) { alert(error) }
     }
 
@@ -67,6 +79,8 @@ function NewPasswordForm() {
     const handleNewPasswordChange = (e) => {
         setNewPassword({ ...newPassword, [e.target.name]: e.target.value })
     }
+
+    const isPasswordMatching = newPassword.password === newPassword.confirmPassword && newPassword.password !== ''
 
     return (
         <>
@@ -119,7 +133,7 @@ function NewPasswordForm() {
                                 onChange={handleNewPasswordChange}
                             ></Form.Control>
                         </Form.Group>
-                        <Button type="submit">Alterar senha</Button>
+                        <Button type="submit" disabled={!isPasswordMatching}>Alterar senha</Button>
                     </Form>
                 </>
             )}

@@ -34,7 +34,7 @@ export const loginAndRegisterRoutes = (app) => {
             if (user.password == password) {
                 const token = createToken(user._id)
 
-                res.send({ email: email, token: token })
+                res.send({ email: email, username: user.username, token: token })
             } else if (user.password != password) {
                 res.send({ message: "Login/Senha incorreto(s)" })
             }

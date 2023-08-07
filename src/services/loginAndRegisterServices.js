@@ -51,6 +51,7 @@ export default class loginAndRegisterServices {
         // se recebeu um objeto com "{token}":
         if (response.data.token) {
             localStorage.setItem("email", response.data.email)
+            localStorage.setItem("username", response.data.username)
             localStorage.setItem("token", response.data.token)
             return true
             // se não: já retorna a "{message}" da API
@@ -85,7 +86,8 @@ export default class loginAndRegisterServices {
         }
     }
     async newPassword(dados) {
-        const response = await this.axios.post('/edit_user', dados)
+        console.log("DADOS QUE TAO CHEGANDO PRO SERVICE: ", dados)
+        const response = await this.axios.patch('/edit_user', dados)
         if (response.data.response) {
             return true
         }

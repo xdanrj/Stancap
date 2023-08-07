@@ -6,6 +6,9 @@ import "./Navbar.css"
 
 
 function NavbarComponent() {
+
+    const username = localStorage.getItem("username")
+
     return (
         <Navbar expand="sm" fixed="top">
             <Container>
@@ -15,7 +18,7 @@ function NavbarComponent() {
                 
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text>
-                        Logado como: <a href="#login">Joao Silva</a>
+                        Logado como: <a href="#login">{username}</a>
                         <Nav.Link href="/login">Login</Nav.Link>
                         <Nav.Link href="/quotes">Quotes</Nav.Link>
                         <Nav.Link href="/register">Register</Nav.Link>

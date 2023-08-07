@@ -6,7 +6,7 @@ export default class userServices {
             baseURL: "http://localhost:3000"
         })
     }
-   
+
     usuarioAutenticado() {
         return localStorage.getItem("token") != undefined ? true : false
     }
