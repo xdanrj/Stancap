@@ -11,7 +11,7 @@ export default class quoteServices {
     async getAllQuotes(){
         const response = await this.axios.get('/all_quotes')
         if (response.data.response) {
-            return response
+            return response.data.response
         } else {
             return response.data.message
         }

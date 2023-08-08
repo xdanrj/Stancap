@@ -7,12 +7,11 @@ import "./QuoteContainer.css"
 
 const quoteService = new quoteServices()
 
-
 async function QuoteContainer() {
     const serviceResponse = await quoteService.getAllQuotes()
-    const quotes = serviceResponse.data.response
-    console.log(quotes)
-    console.log("tipo de quotes", typeof(quotes))
+    
+    console.log(serviceResponse)
+    
     return (
         <>
         {quotes.map(quote => (
