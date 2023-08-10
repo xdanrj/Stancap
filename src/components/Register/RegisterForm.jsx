@@ -95,15 +95,14 @@ function RegisterForm() {
             {sendCodeForm && (
                 <>
                     <Form onSubmit={handleSubmitSendCode}>
-                        <Form.Group className="mb-3" controlId="formSendCode">
-                            <Form.Label>Email:</Form.Label>
-                            <Form.Control
-                                name="email"
-                                type="email"
-                                onChange={handleEmailChange}
-                            />
-                            <Button type="submit">Enviar código</Button>
-                        </Form.Group>
+                        <Form.Label className="text-white">E-mail:</Form.Label>
+                        <Form.Control
+                            className="mb-3"
+                            name="email"
+                            type="email"
+                            onChange={handleEmailChange}
+                        />
+                        <Button type="submit">Enviar código</Button>
                     </Form>
                 </>
             )}
@@ -111,8 +110,9 @@ function RegisterForm() {
             {checkCodeForm && (
                 <>
                     <Form onSubmit={handleSubmitCheckCode}>
-                        <Form.Label>Código:</Form.Label>
+                        <Form.Label className="text-white">Código:</Form.Label>
                         <Form.Control
+                            className="mb-3"
                             name="code"
                             type="text"
                             onChange={handleCodeChange}
@@ -126,21 +126,24 @@ function RegisterForm() {
                 <>
                     <h4>Você poderá logar usando e-mail ou username</h4>
                     <Form onSubmit={handleSubmitRegister}>
-                        <Form.Label>E-mail:</Form.Label>
+                        <Form.Label className="text-white">E-mail:</Form.Label>
                         <Form.Control
+                            className="mb-3"
                             name="email"
                             type="email"
                             value={email.email}
                             disabled
                         />
-                        <Form.Label>Username:</Form.Label>
+                        <Form.Label className="text-white">Username:</Form.Label>
                         <Form.Control
+                            className="mb-3"
                             name="username"
                             type="text"
                             onChange={handleRegisterChange}
                         />
-                        <Form.Label>Senha:</Form.Label>
+                        <Form.Label className="text-white">Senha:</Form.Label>
                         <Form.Control
+                            className="mb-3"
                             name="password"
                             type="password"
                             onChange={handleRegisterChange}

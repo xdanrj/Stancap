@@ -1,9 +1,10 @@
+// baseURL original é: "http://localhost:3000"
 import axios from "axios"
 
 export default class loginAndRegisterServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: "http://localhost:3000"
+            baseURL: window.location.hostname === "localhost" ? "http://localhost:3000" : "http://192.168.1.65:3000"
         })
     }
 

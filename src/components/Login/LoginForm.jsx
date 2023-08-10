@@ -46,9 +46,11 @@ function LoginForm() {
 
 
     return (
+        <>
+        <h1 id="aga">h1 aqui</h1>
         <Form onSubmit={handleSubmitLogin}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>E-mail:</Form.Label>
+                <Form.Label className="text-white">E-mail:</Form.Label>
                 <Form.Control
                     name="email"
                     type="email"
@@ -57,7 +59,7 @@ function LoginForm() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Senha:</Form.Label>
+                <Form.Label className="text-white">Senha:</Form.Label>
                 <Form.Control
                     name="password"
                     type="password"
@@ -67,6 +69,7 @@ function LoginForm() {
             <Button onClick={"/change_password"}>Esqueci minha senha</Button>
             <Button type="submit">Enviar</Button>
         </Form>
+        </>
     )
 }
 

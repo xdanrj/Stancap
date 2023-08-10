@@ -1,0 +1,31 @@
+#sourceQuoteLogo{
+    width: 16%;
+}
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    #quoteContainerBody{
+        margin-top: 3vh;
+    }
+}
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {  
+    #quoteContainerBody{
+        margin-top: 7vh;
+    }
+}
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    #quoteContainerBody{
+        margin-top: 14vh;
+    }
+}
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+    #quoteContainerBody{
+        margin-top: 20vh;
+    }
+}
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) { 
+
+}

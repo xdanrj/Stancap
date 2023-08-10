@@ -23,7 +23,7 @@ function App() {
         <Route path="/new_password" element={<NewPassword/>} />
       </Routes>
     </Router>
+    
   )
 }
-
 export default App

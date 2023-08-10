@@ -4,7 +4,7 @@ import axios from "axios"
 export default class quoteServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: "http://localhost:3000"
+            baseURL: window.location.hostname === "localhost" ? "http://localhost:3000" : "http://192.168.1.65:3000"
         })
     }
 

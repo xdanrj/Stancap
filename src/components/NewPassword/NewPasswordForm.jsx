@@ -13,7 +13,7 @@ function NewPasswordForm() {
     // definição dos valores
     const [email, setEmail] = useState()
     const [code, setCode] = useState()
-    const [newPassword, setNewPassword] = useState({password: '', confirmPassword: ''})
+    const [newPassword, setNewPassword] = useState({ password: '', confirmPassword: '' })
 
     // visibilidade dos Forms
     const [sendCodeForm, setSendCodeForm] = useState(true)
@@ -57,7 +57,7 @@ function NewPasswordForm() {
             console.log("OBJETO EMAIL SECO: ", email)
             console.log("OBJETO NEWPASSWORD SECO: ", newPassword)
             if (newPassword.password == newPassword.confirmPassword) {
-                
+
                 const response = await loginAndRegisterService.newPassword({ ...email, password: newPassword.password })
                 console.log("response: ", response)
                 if (response === true) {
@@ -87,15 +87,14 @@ function NewPasswordForm() {
             {sendCodeForm && (
                 <>
                     <Form onSubmit={handleSubmitSendCode}>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>E-mail:</Form.Label>
-                            <Form.Control
-                                name="email"
-                                type="email"
-                                onChange={handleEmailChange}
-                            ></Form.Control>
-                            <Button type="submit">Enviar código</Button>
-                        </Form.Group>
+                        <Form.Label className="text-white">E-mail:</Form.Label>
+                        <Form.Control
+                            className="mb-3"
+                            name="email"
+                            type="email"
+                            onChange={handleEmailChange}
+                        ></Form.Control>
+                        <Button type="submit">Enviar código</Button>
                     </Form>
                 </>
             )}
@@ -103,36 +102,37 @@ function NewPasswordForm() {
             {checkCodeForm && (
                 <>
                     <Form onSubmit={handleSubmitCheckCode}>
-                        <Form.Group>
-                            <Form.Label>Código:</Form.Label>
-                            <Form.Control
-                                name="code"
-                                type="text"
-                                onChange={handleCodeChange}
-                            ></Form.Control>
-                            <Button type="submit">Verificar</Button>
-                        </Form.Group>
+                        <Form.Label className="text-white">Código:</Form.Label>
+                        <Form.Control
+                            className="mb-3"
+                            name="code"
+                            type="text"
+                            onChange={handleCodeChange}
+                        ></Form.Control>
+                        <Button type="submit">Verificar</Button>
                     </Form>
                 </>
             )}
             {newPasswordForm && (
                 <>
                     <Form onSubmit={handleSubmitNewPassword}>
-                        <Form.Group>
-                            <Form.Label>Nova senha:</Form.Label>
-                            <Form.Control
-                                name="password"
-                                type="password"
-                                onChange={handleNewPasswordChange}
-                            ></Form.Control>
 
-                            <Form.Label>Nova senha (novamente):</Form.Label>
-                            <Form.Control
-                                name="confirmPassword"
-                                type="password"
-                                onChange={handleNewPasswordChange}
-                            ></Form.Control>
-                        </Form.Group>
+                        <Form.Label className="text-white">Nova senha:</Form.Label>
+                        <Form.Control
+                            className="mb-3"
+                            name="password"
+                            type="password"
+                            onChange={handleNewPasswordChange}
+                        ></Form.Control>
+
+                        <Form.Label className="text-white">Nova senha (novamente):</Form.Label>
+                        <Form.Control
+                            className="mb-3"
+                            name="confirmPassword"
+                            type="password"
+                            onChange={handleNewPasswordChange}
+                        ></Form.Control>
+
                         <Button type="submit" disabled={!isPasswordMatching}>Alterar senha</Button>
                     </Form>
                 </>

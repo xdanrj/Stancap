@@ -27,34 +27,31 @@ function QuoteContainer() {
         }
         fetchQuotes()
     }, [])
-    
+
     console.log(quotes)
     return (
         <div>
-            <p>debaixo daqui é funcao</p>
             {quotes.map((data) => {
                 data.date = dayjs().format("DD/MM/YYYY")
                 return (
-                    <section className="vh-100" key={data._id}>
-                        <MDBContainer className="py-5 h-100">
+                    <>
+                    <div id="quoteContainerBody" className=""></div>
+                        <MDBContainer className="py-5 h-100 position-relative text-center" id="cardContainer" key={data._id}>
                             <MDBRow className="justify-content-center align-items-center h-100">
                                 <MDBCol md="9" lg="7" xl="5">
                                     <MDBCard className="bg-dark text-white">
+                                        <img src="../src/images/Stancap.png" id="sourceQuoteLogo" className="mx-auto position-absolute translate-middle top-0 start-50 rounded-6" />
                                         <MDBCardBody>
                                             <MDBTypography
                                                 blockquote
-                                                className="blockquote-custom px-3 pt-4 rounded-5 bg-primary"
-                                            >
-                                                <div className="blockquote-custom-icon bg-info shadow-1-strong">
-                                                    <MDBIcon fas icon="quote-left text-white" />
-                                                </div>
+                                                className="blockquote-custom pt-4 rounded-5 fs-6">
                                                 <p className="mb-0 mt-2 font-italic">
                                                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                                                     sed do eiusmod tempor incididunt ut labore et dolore magna
                                                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                                                     ullamco laboris nisi ut aliquip ex ea commodo."
                                                 </p>
-                                                <footer className="blockquote-footer pt-4 mt-4 border-top">
+                                                <footer className="blockquote-footer pt-4 mt-4 border-top text-white">
                                                     {data.author} {data.date}
 
                                                 </footer>
@@ -64,7 +61,8 @@ function QuoteContainer() {
                                 </MDBCol>
                             </MDBRow>
                         </MDBContainer>
-                    </section>
+                        <MDBIcon icon="camera" />
+                    </>
                 )
             })}
 
