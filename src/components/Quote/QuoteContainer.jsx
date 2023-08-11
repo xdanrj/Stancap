@@ -3,8 +3,8 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card"
 import quoteServices from "../../services/quoteServices";
 import dayjs from "dayjs";
-import "./QuoteContainer.css"
 
+import { SourceLogo, QuoteContainerBody } from "./QuoteStyles";
 import {
     MDBCard,
     MDBCardBody,
@@ -31,16 +31,15 @@ function QuoteContainer() {
     console.log(quotes)
     return (
         <div>
+        <QuoteContainerBody>
             {quotes.map((data) => {
                 data.date = dayjs().format("DD/MM/YYYY")
-                return (
-                    <>
-                    <div id="quoteContainerBody" className=""></div>
+                return (       
                         <MDBContainer className="py-5 h-100 position-relative text-center" id="cardContainer" key={data._id}>
                             <MDBRow className="justify-content-center align-items-center h-100">
                                 <MDBCol md="9" lg="7" xl="5">
                                     <MDBCard className="bg-dark text-white">
-                                        <img src="../src/images/Stancap.png" id="sourceQuoteLogo" className="mx-auto position-absolute translate-middle top-0 start-50 rounded-6" />
+                                        <SourceLogo src="../src/images/Stancap.png"/>
                                         <MDBCardBody>
                                             <MDBTypography
                                                 blockquote
@@ -61,12 +60,10 @@ function QuoteContainer() {
                                 </MDBCol>
                             </MDBRow>
                         </MDBContainer>
-                        <MDBIcon icon="camera" />
-                    </>
                 )
             })}
-
-        </div>
+         </QuoteContainerBody>
+         </div>
     )
 }
 export default QuoteContainer

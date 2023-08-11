@@ -10,7 +10,7 @@ function NavbarComponent() {
     const username = localStorage.getItem("username")
 
     return (
-        <Navbar expand="sm" fixed="top">
+        <Navbar expand="" fixed="top">
             <Container>
                 <Navbar.Brand href="/quotes">Navbar with text</Navbar.Brand>
                 
