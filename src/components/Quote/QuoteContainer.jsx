@@ -35,7 +35,7 @@ function QuoteContainer() {
             {quotes.map((data) => {
                 data.date = dayjs().format("DD/MM/YYYY")
                 return (       
-                        <MDBContainer className="py-5 h-100 position-relative text-center" id="cardContainer" key={data._id}>
+                        <MDBContainer className="py-5 h-100 position-relative text-center" key={data._id}>
                             <MDBRow className="justify-content-center align-items-center h-100">
                                 <MDBCol md="9" lg="7" xl="5">
                                     <MDBCard className="bg-dark text-white">
@@ -62,7 +62,7 @@ function QuoteContainer() {
                         </MDBContainer>
                 )
             })}
-         </QuoteContainerBody>
+       </QuoteContainerBody>
          </div>
     )
 }

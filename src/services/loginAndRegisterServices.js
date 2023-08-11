@@ -4,7 +4,7 @@ import axios from "axios"
 export default class loginAndRegisterServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: window.location.hostname === "localhost" ? "http://localhost:3000" : "http://192.168.1.65:3000"
+            baseURL: "http://192.168.1.89:3000"
         })
     }
 

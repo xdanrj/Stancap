@@ -1,5 +1,6 @@
 import React from "react"
-import Navbar from "react-bootstrap/Navbar"
+//import Navbar from "react-bootstrap/Navbar"
+import { Navbar } from "react-bootstrap"
 import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
 import "./Navbar.css"
@@ -10,11 +11,11 @@ function NavbarComponent() {
     const username = localStorage.getItem("username")
 
     return (
-        <Navbar expand="" fixed="top">
+        <Navbar expand="xxl" fixed="top">
             <Container>
                 <Navbar.Brand href="/quotes">Navbar with text</Navbar.Brand>
                 
-                <Navbar.Toggle />
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text>
