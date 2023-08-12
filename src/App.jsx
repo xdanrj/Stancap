@@ -8,8 +8,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import NewPassword from './pages/NewPassword';
 import Testes from './components/Testes';
-import 'bootstrap/dist/css/bootstrap.min.css';
-//import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function App() {
   return (

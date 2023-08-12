@@ -1,3 +1,4 @@
+/*
 import axios from 'axios';
 
 export default class UserServices {
@@ -36,3 +37,4 @@ export default class UserServices {
     localStorage.removeItem("email")
   }
 }
+*/

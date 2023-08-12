@@ -1,11 +1,12 @@
+import axios from "axios";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import { connectDB } from "./src/infra/db.js";
-
 import { userRoutes } from "./src/routes/userRoutes.js";
 import { quotesRoutes } from "./src/routes/quotesRoutes.js";
 import { loginAndRegisterRoutes } from "./src/routes/loginAndRegisterRoutes.js";
+import quoteServices from "./src/services/quoteServices.js";
 
 import dotenv from "dotenv"
 dotenv.config()
@@ -36,6 +37,17 @@ app.use(
     extended: true,
   })
 );
+
+/*const urls = [
+  "http://localhost:3000",
+  "http://192.168.1.65:3000",
+  "http://192.168.1.89:3000"
+];*/
+
+app.listen(3000, '0.0.0.0', () => {
+  console.log(`API ready to use in-> http://localhost:3000`);
+});
+
 //Connecting whith the database
 connectDB();
 app.get("/", async (req, res) => {
@@ -46,7 +58,3 @@ app.get("/", async (req, res) => {
 userRoutes(app)
 quotesRoutes(app)
 loginAndRegisterRoutes(app)
-
-app.listen(PORT, () => {
-  console.log(`API ready to use in -> http://localhost:${PORT}`);
-});

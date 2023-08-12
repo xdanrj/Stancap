@@ -13,8 +13,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.4.2",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.1",
+    "bootstrap-icons": "^1.10.5",
     "concurrently": "^8.2.0",
     "cors": "^2.8.5",
     "dayjs": "^1.11.9",
@@ -26,6 +28,7 @@
     "mongoose": "^7.4.1",
     "node": "^20.5.0",
     "nodemon": "^3.0.1",
+    "patch-package": "^8.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",
@@ -41,6 +44,10 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "react-error-overlay": "6.0.9",
     "vite": "^4.4.5"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   }
 }

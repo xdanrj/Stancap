@@ -3,6 +3,9 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card"
 import quoteServices from "../../services/quoteServices";
 import dayjs from "dayjs";
+import dotenv from "dotenv"
+
+import "./QuoteContainer.css"
 
 import { SourceLogo, QuoteContainerBody } from "./QuoteStyles";
 import {
@@ -36,11 +39,13 @@ function QuoteContainer() {
                 data.date = dayjs().format("DD/MM/YYYY")
                 return (       
                         <MDBContainer className="py-5 h-100 position-relative text-center" key={data._id}>
+                             
                             <MDBRow className="justify-content-center align-items-center h-100">
                                 <MDBCol md="9" lg="7" xl="5">
                                     <MDBCard className="bg-dark text-white">
                                         <SourceLogo src="../src/images/Stancap.png"/>
                                         <MDBCardBody>
+                                        
                                             <MDBTypography
                                                 blockquote
                                                 className="blockquote-custom pt-4 rounded-5 fs-6">
