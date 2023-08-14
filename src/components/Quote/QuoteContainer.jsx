@@ -8,15 +8,8 @@ import dotenv from "dotenv"
 import "./QuoteContainer.css"
 
 import { SourceLogo, QuoteContainerBody } from "./QuoteStyles";
-import {
-    MDBCard,
-    MDBCardBody,
-    MDBCol,
-    MDBContainer,
-    MDBIcon,
-    MDBRow,
-    MDBTypography,
-} from "mdb-react-ui-kit"
+import { MDBCard, MDBCardBody, MDBCol } from "mdb-react-ui-kit"
+import { MDBContainer, MDBRow, MDBTypography, Paragraph, Footer } from "./QuoteStyles";
 
 const quoteService = new quoteServices()
 
@@ -39,21 +32,19 @@ function QuoteContainer() {
                     console.log("data.quotes.length: ", data.quotes.length)
                     if (data.quotes.length === 1) {
                         return (
-                            <MDBContainer className="py-5 h-100 position-relative text-center" key={data._id}>
-                                <MDBRow className="justify-content-center align-items-center h-100">
+                            <MDBContainer fluid="true" key={data._id}>
+                                <MDBRow>
                                     <MDBCol md="9" lg="7" xl="5">
                                         <MDBCard className="bg-dark text-white">
                                             <SourceLogo src="../src/images/Stancap.png" />
                                             <MDBCardBody>
-                                                <MDBTypography
-                                                    blockquote
-                                                    className="blockquote-custom pt-4 rounded-5 fs-6">
-                                                    <p className="mb-0 mt-2 font-italic">
+                                                <MDBTypography blockquote>
+                                                    <Paragraph>
                                                         {data.quotes[0].quote}
-                                                    </p>
-                                                    <footer className="blockquote-footer pt-4 mt-4 border-top text-white">
+                                                    </Paragraph>
+                                                    <Footer>
                                                         {data.author} {data.date}
-                                                    </footer>
+                                                    </Footer>
                                                 </MDBTypography>
                                             </MDBCardBody>
                                         </MDBCard>
@@ -76,12 +67,12 @@ function QuoteContainer() {
                                                     <MDBTypography
                                                         blockquote
                                                         className="blockquote-custom pt-4 rounded-5 fs-6" key={index}>
-                                                        <p className="mb-0 mt-2 font-italic" >
+                                                        <Paragraph >
                                                             {quote.quote}
-                                                        </p>
-                                                        <footer className="blockquote-footer pt-4 mt-4 border-top text-white">
+                                                        </Paragraph>
+                                                        <Footer>
                                                             {quote.author}
-                                                        </footer>
+                                                        </Footer>
                                                     </MDBTypography>
                                                 ))}
                                             </MDBCardBody>

@@ -40,12 +40,12 @@ app.use(
 
 /*const urls = [
   "http://localhost:3000",
-  "http://192.168.1.65:3000",
-  "http://192.168.1.89:3000"
+  "PC http://192.168.1.65:3000",
+  "NOTE http://192.168.1.89:3000"
 ];*/
 
 app.listen(3000, '0.0.0.0', () => {
-  console.log(`API ready to use in-> "http://192.168.1.65:3000"`);
+  console.log(`API ready to use"`);
 });
 
 //Connecting whith the database
