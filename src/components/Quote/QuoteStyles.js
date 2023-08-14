@@ -12,3 +12,9 @@ export const SourceLogo = styled.img.attrs(() => ({
     width: 16%;
 `;
 
+export const MDBContainer = styled.attrs(() => ({
+    className: ""
+}))`
+
+`;
+
