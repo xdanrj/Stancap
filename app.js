@@ -45,7 +45,7 @@ app.use(
 ];*/
 
 app.listen(3000, '0.0.0.0', () => {
-  console.log(`API ready to use in-> http://localhost:3000`);
+  console.log(`API ready to use in-> "http://192.168.1.65:3000"`);
 });
 
 //Connecting whith the database
