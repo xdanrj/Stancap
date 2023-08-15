@@ -8,8 +8,9 @@ import dotenv from "dotenv"
 import "./QuoteContainer.css"
 
 import { SourceLogo, QuoteContainerBody } from "./QuoteStyles";
-import { MDBCard, MDBCardBody, MDBCol } from "mdb-react-ui-kit"
-import { MDBContainer, MDBRow, MDBTypography, Paragraph, Footer } from "./QuoteStyles";
+import { MDBCardBody, MDBCol } from "mdb-react-ui-kit"
+import { MDBContainer, MDBRow, MDBTypography, Paragraph, Footer, MDBCard, SecondaryParagraph } from "./QuoteStyles";
+import GlobalStyles from "../../GlobalStyles/GlobalStyles";
 
 const quoteService = new quoteServices()
 
@@ -26,16 +27,17 @@ function QuoteContainer() {
 
     return (
         <div>
+            <GlobalStyles />
             <QuoteContainerBody>
                 {quotesResponse.map((data) => {
                     data.date = dayjs().format("DD/MM/YYYY")
                     console.log("data.quotes.length: ", data.quotes.length)
                     if (data.quotes.length === 1) {
                         return (
-                            <MDBContainer fluid="true" key={data._id}>
+                            <MDBContainer key={data._id}>
                                 <MDBRow>
                                     <MDBCol md="9" lg="7" xl="5">
-                                        <MDBCard className="bg-dark text-white">
+                                        <MDBCard>
                                             <SourceLogo src="../src/images/Stancap.png" />
                                             <MDBCardBody>
                                                 <MDBTypography blockquote>
@@ -54,11 +56,9 @@ function QuoteContainer() {
                         )
                     }
                     else if (data.quotes.length > 1) {
-                        console.log("data.quotes logo abaixo: ")
-                        console.log(data.quotes)
                         return (
-                            <MDBContainer className="py-5 h-100 position-relative text-center" key={data._id}>
-                                <MDBRow className="justify-content-center align-items-center h-100">
+                            <MDBContainer key={data._id}>
+                                <MDBRow>
                                     <MDBCol md="9" lg="7" xl="5">
                                         <MDBCard className="bg-dark text-white">
                                             <SourceLogo src="../src/images/Stancap.png" />
@@ -67,9 +67,9 @@ function QuoteContainer() {
                                                     <MDBTypography
                                                         blockquote
                                                         className="blockquote-custom pt-4 rounded-5 fs-6" key={index}>
-                                                        <Paragraph >
+                                                        <SecondaryParagraph>
                                                             {quote.quote}
-                                                        </Paragraph>
+                                                        </SecondaryParagraph>
                                                         <Footer>
                                                             {quote.author}
                                                         </Footer>
@@ -88,7 +88,9 @@ function QuoteContainer() {
                     }
                 })}
             </QuoteContainerBody>
+
         </div >
+
     )
 }
 export default QuoteContainer

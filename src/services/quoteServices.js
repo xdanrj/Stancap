@@ -1,17 +1,12 @@
-
 import axios from "axios"
 
-/*
-"http://localhost:3000",
-"http://192.168.1.65:3000",
-"http://192.168.1.89:3000"
-baseURL: window.location.hostname === "localhost" ? "http://localhost:3000" : "http://192.168.1.65:3000"
-*/
+/* baseURL: window.location.hostname === "localhost" ? "http://localhost:3000" : "http://192.168.1.65:3000" */
+
 
 export default class quoteServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: "http://192.168.1.89:3000"
+            baseURL: "http://192.168.1.65:3000"
         })
     }
 
