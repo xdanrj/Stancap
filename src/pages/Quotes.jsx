@@ -1,9 +1,9 @@
 import React from "react"
-import QuoteContainer from "../components/Quote/QuoteContainer"
+import QuotesPage from "../components/Quote/QuotesPage"
 
 function Quotes() {
     return (
-        <QuoteContainer />
+        <QuotesPage />
     )
 }
 export default Quotes

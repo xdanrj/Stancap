@@ -1,41 +1,55 @@
-import React from "react"
-//import Navbar from "react-bootstrap/Navbar"
-import { Navbar } from "react-bootstrap"
-import Container from "react-bootstrap/Container"
-import Nav from "react-bootstrap/Nav"
-import "./Navbar.css"
-import { MDBIcon } from "mdb-react-ui-kit"
-import { NavbarStyle } from "./NavbarStyles"
+import React, { useState } from 'react';
+import {
+  MDBNavbar,
+  MDBContainer,
+  MDBNavbarItem,
+  MDBCollapse,
+  MDBBtn,
+  MDBIcon,
+  MDBNavbarNav,
+  MDBInputGroup
+} from 'mdb-react-ui-kit';
+import { MDBNavbarLink, MDBNavbarBrand, MDBNavbarToggler } from './NavbarStyles';
 
-function NavbarComponent() {
-    const username = localStorage.getItem("username")
-    return (
-        <NavbarStyle>
-        <Navbar expand="xxl" fixed="top">
-            <Container>
-                <Navbar.Brand href="/quotes" className="text-white">Navbar with text</Navbar.Brand>
-                
-                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                
-                <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text className="text-white"><a className="text-white" href="/login">
-                        Logado como: {username}</a>
+export default function NavbarComponent() {
+  const [showNavNoTogglerSecond, setShowNavNoTogglerSecond] = useState(false);
 
-                        <Nav.Link href="/login">Login</Nav.Link>
+  return (
+    <>
+      <MDBNavbar fixed="top" expand='lg' light bgColor='dark'>
+        <MDBContainer fluid>
+          <MDBNavbarBrand href='/quotes'>Stancapverso</MDBNavbarBrand>
+          <MDBNavbarToggler
+            type='button'
+            data-target='#navbarTogglerDemo02'
+            aria-controls='navbarTogglerDemo02'
+            aria-expanded='false'
+            aria-label='Toggle navigation'
+            onClick={() => setShowNavNoTogglerSecond(!showNavNoTogglerSecond)}>
+            <MDBIcon icon='bars' fas />
+          </MDBNavbarToggler>
+          <MDBCollapse navbar show={showNavNoTogglerSecond}>
+            <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
+              <MDBNavbarItem>
+                <MDBNavbarLink href='/quotes' className='text-white'>Quotes</MDBNavbarLink>
+              </MDBNavbarItem>
 
-                        <Nav.Link href="/quotes"><MDBIcon className='text-white' icon='quote-left' size='2x'/>Quotes</Nav.Link>
+              <MDBNavbarItem>
+                <MDBNavbarLink href='/login'>Login</MDBNavbarLink>
+              </MDBNavbarItem>
 
-                        <Nav.Link href="/edit_my_quotes"><MDBIcon className="text-white" icon="edit" size='2x'/>Edit My Quotes</Nav.Link>
+              <MDBNavbarItem>
+                <MDBNavbarLink href='/register'>Register</MDBNavbarLink>
+              </MDBNavbarItem>
 
-                        <Nav.Link href="/register">Register</Nav.Link>
-                        
-                        <Nav.Link href="/new_password">New Password</Nav.Link>
-                    </Navbar.Text>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
-        </NavbarStyle>
-    )
+              <MDBNavbarItem>
+                <MDBNavbarLink href='/new_password'>New Password</MDBNavbarLink>
+              </MDBNavbarItem>
+
+            </MDBNavbarNav>
+          </MDBCollapse>
+        </MDBContainer>
+      </MDBNavbar>
+    </>
+  );
 }
-
-export default NavbarComponent

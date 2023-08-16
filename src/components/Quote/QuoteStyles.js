@@ -3,31 +3,29 @@ import { device } from '../../GlobalStyles/device'
 import { MDBContainer as originalMDBContainer, MDBRow as originalMDBRow, MDBTypography as originalMDBTypography, MDBCard as originalMDBCard } from 'mdb-react-ui-kit';
 
 export const QuoteContainerBody = styled.div.attrs(() => ({
-    className: "position-absolute translate-middle"
+    className: "mx-auto text-center"
 }))`
     width: 100vw;
+    margin-top: 8vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-    @media ${device.mobileL} {
-        margin-top: 25vh;
-    }
-    @media ${device.tablet} {
-        margin-top: 50vh;
-    }
-    @media ${device.laptop} {
-        margin-top: 75vh;
-    }
     @media ${device.laptopL} {
-        margin-top: 70vh;
+        width: 100vw;
+        margin-top: 8vh;
     }
     
 `;
 export const Paragraph = styled.p.attrs(() => ({
     className: "mb-0 mt-2 font-italic"
 }))`
+
 `;
-export const SecondaryParagraph = styled.p.attrs(() => ({
-    className: "mb-0 mt-2 font-italic"
+export const SecondaryParagraph = styled.p.attrs((props) => ({
+    className: `mb-0 mt-2 font-italic ${props.isEven ? 'text-start' : 'text-end'}`
 }))`
+    background-color: ${({ isEven }) => (isEven ? 'blue' : 'red')};
 `;
 export const Footer = styled.footer.attrs(() => ({
     className: "blockquote-footer pt-4 mt-4 border-top text-white"
