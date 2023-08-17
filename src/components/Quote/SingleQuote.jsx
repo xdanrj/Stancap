@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react"
 import quoteServices from "../../services/quoteServices";
 import dayjs from "dayjs";
-import { SourceLogo, QuoteContainerBody } from "./QuoteStyles";
-import { MDBCardBody, MDBCol } from "mdb-react-ui-kit"
-import { MDBContainer, MDBRow, MDBTypography, Paragraph, Footer, MDBCard, SecondaryParagraph } from "./QuoteStyles";
+import { SourceLogo, QuoteContainer } from "./QuoteStyles";
+import { QuoteCard, Paragraph } from "./SingleQuoteStyles"
 
 const quoteService = new quoteServices()
 export default function SingleQuote() {
@@ -20,23 +19,16 @@ export default function SingleQuote() {
         <div>
             {quotesResponse.map((data) => {
                 data.date = dayjs().format("DD/MM/YYYY")
-                console.log("data.quotes.length: ", data.quotes.length)
                 return (
-                    < MDBContainer key={data._id} >
-                        <MDBCard>
+                    < QuoteContainer key={data._id} >
+                        <QuoteCard>
                             <SourceLogo src="../src/images/Stancap.png" />
-                            <MDBCardBody>
-                                <MDBTypography blockquote>
-                                    <Paragraph>
-                                        {data.quotes[0].quote}
-                                    </Paragraph>
-                                    <Footer>
-                                        {data.author} {data.date}
-                                    </Footer>
-                                </MDBTypography>
-                            </MDBCardBody>
-                        </MDBCard>
-                    </MDBContainer >
+                            <Paragraph>
+                                {data.quotes[0].quote}
+                            </Paragraph>
+                            {data.author} {data.date}
+                        </QuoteCard>
+                    </QuoteContainer >
                 )
             })}
         </div>

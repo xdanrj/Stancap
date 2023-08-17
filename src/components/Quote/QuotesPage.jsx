@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react"
 import quoteServices from "../../services/quoteServices";
-import dayjs from "dayjs";
-
 import SingleQuote from "./SingleQuote";
 import MultipleQuote from "./MultipleQuote";
 import GlobalStyles from "../../GlobalStyles/GlobalStyles";
-import { QuoteContainerBody } from "./QuoteStyles";
+import { QuotePageDiv } from "./QuoteStyles";
 const quoteService = new quoteServices()
 
 function QuotesPage() {
@@ -20,27 +18,25 @@ function QuotesPage() {
     }, [])
 
     return (
-        <div>
+        <QuotePageDiv>
             <GlobalStyles />
-            <QuoteContainerBody>
-                {quotesResponse.map((data) => {
-                    if (data.quotes.length === 1) {
-                        return (
-                            <SingleQuote />
-                        )
-                    }
-                    else if (data.quotes.length > 1) {
-                        return (
-                            <MultipleQuote />
-                        )
-                    } else {
-                        return (
-                            <h1>Nenhuma quote encontrada</h1>
-                        )
-                    }
-                })}
-            </QuoteContainerBody>
-        </div >
+            {quotesResponse.map((data, index) => {
+                if (data.quotes.length === 1) {
+                    return (
+                        <SingleQuote key={index}/>
+                    )
+                }
+                else if (data.quotes.length > 1) {
+                    return (
+                        <MultipleQuote key={index}/>
+                    )
+                } else {
+                    return (
+                        <h1>Nenhuma quote encontrada</h1>
+                    )
+                }
+            })}
+        </QuotePageDiv >
     )
 }
 export default QuotesPage
