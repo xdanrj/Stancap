@@ -1,5 +1,7 @@
 import axios from "axios"
-
+/*   "http://localhost:3000"
+   P "http://192.168.1.65:3000"
+   N "http://192.168.1.89:3000" */
 export default class loginAndRegisterServices {
     constructor() {
         this.axios = axios.create({
