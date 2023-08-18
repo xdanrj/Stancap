@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import quoteServices from "../../services/quoteServices";
 import dayjs from "dayjs";
-import { SourceLogo, OLDQuoteContainer } from "./QuoteStyles";
+import { SourceLogo } from "./QuoteStyles";
 
 import { QuoteContainer, BallonContainer, Ballon, Paragraph, ParagraphAutor } from "./MultipleQuoteStyles";
 const quoteService = new quoteServices()

@@ -4,7 +4,6 @@ import { device } from '../../GlobalStyles/device'
 export const QuoteContainer = styled.div.attrs(() => ({
     className: ""
 }))`
-    position: absolute;
     left: 0;
     right; 0;
     width: 100%;

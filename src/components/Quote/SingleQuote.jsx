@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import quoteServices from "../../services/quoteServices";
 import dayjs from "dayjs";
-import { SourceLogo, OLDQuoteContainer } from "./QuoteStyles";
+import { SourceLogo } from "./QuoteStyles";
 import { QuoteContainer, QuoteCard, Paragraph } from "./SingleQuoteStyles"
 
 const quoteService = new quoteServices()
@@ -21,15 +21,13 @@ export default function SingleQuote() {
                 {quotesResponse.map((data) => {
                     data.date = dayjs().format("DD/MM/YYYY")
                     return (
-                        < OLDQuoteContainer key={data._id} >
-                            <QuoteCard>
-                                <SourceLogo src="../src/images/Stancap.png" />
-                                <Paragraph>
-                                    {data.quotes[0].quote}
-                                </Paragraph>
-                                {data.author} {data.date}
-                            </QuoteCard>
-                        </OLDQuoteContainer >
+                        <QuoteCard>
+                            <SourceLogo src="../src/images/Stancap.png" />
+                            <Paragraph>
+                                {data.quotes[0].quote}
+                            </Paragraph>
+                            {data.author} {data.date}
+                        </QuoteCard>
                     )
                 })}
             </QuoteContainer>
