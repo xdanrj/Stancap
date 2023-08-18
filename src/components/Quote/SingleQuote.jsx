@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import quoteServices from "../../services/quoteServices";
 import dayjs from "dayjs";
-import { SourceLogo, QuoteContainer } from "./QuoteStyles";
-import { QuoteCard, Paragraph } from "./SingleQuoteStyles"
+import { SourceLogo, OLDQuoteContainer } from "./QuoteStyles";
+import { QuoteContainer, QuoteCard, Paragraph } from "./SingleQuoteStyles"
 
 const quoteService = new quoteServices()
 export default function SingleQuote() {
@@ -16,21 +16,23 @@ export default function SingleQuote() {
         fetchQuotes()
     }, [])
     return (
-        <div>
-            {quotesResponse.map((data) => {
-                data.date = dayjs().format("DD/MM/YYYY")
-                return (
-                    < QuoteContainer key={data._id} >
-                        <QuoteCard>
-                            <SourceLogo src="../src/images/Stancap.png" />
-                            <Paragraph>
-                                {data.quotes[0].quote}
-                            </Paragraph>
-                            {data.author} {data.date}
-                        </QuoteCard>
-                    </QuoteContainer >
-                )
-            })}
-        </div>
+        <>
+            <QuoteContainer>
+                {quotesResponse.map((data) => {
+                    data.date = dayjs().format("DD/MM/YYYY")
+                    return (
+                        < OLDQuoteContainer key={data._id} >
+                            <QuoteCard>
+                                <SourceLogo src="../src/images/Stancap.png" />
+                                <Paragraph>
+                                    {data.quotes[0].quote}
+                                </Paragraph>
+                                {data.author} {data.date}
+                            </QuoteCard>
+                        </OLDQuoteContainer >
+                    )
+                })}
+            </QuoteContainer>
+        </>
     )
 }

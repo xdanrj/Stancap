@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 import quoteServices from "../../services/quoteServices";
 import dayjs from "dayjs";
-import { SourceLogo, QuoteContainer } from "./QuoteStyles";
+import { SourceLogo, OLDQuoteContainer } from "./QuoteStyles";
 
-import { BallonContainer, Ballon, Paragraph, ParagraphAutor } from "./MultipleQuoteStyles";
+import { QuoteContainer, BallonContainer, Ballon, Paragraph, ParagraphAutor } from "./MultipleQuoteStyles";
 const quoteService = new quoteServices()
 
 export default function MultipleQuote() {
@@ -17,30 +17,31 @@ export default function MultipleQuote() {
         fetchQuotes()
     }, [])
     return (
-        <div>
-            {quotesResponse.map((data) => {
-                data.date = dayjs().format("DD/MM/YYYY")
-                return (
-                    < QuoteContainer key={data._id} >
-                        <SourceLogo src="../src/images/Stancap.png" />
-                        {data.quotes.map((quote, index) => (
-                            <>
-                            <BallonContainer key={index} iseven={index % 2 === 0}>
-                                <Ballon >
-                                    <ParagraphAutor>
-                                        {quote.author}
-                                    </ParagraphAutor>
-                                    <Paragraph >
-                                        {quote.quote}
-                                    </Paragraph>
-                                </Ballon>
-                                </BallonContainer>
-                            </>
-                        ))}
-
-                    </QuoteContainer >
-                )
-            })}
-        </div>
+        <>
+            <QuoteContainer>
+                <SourceLogo src="../src/images/Stancap.png" />
+                {quotesResponse.map((data) => {
+                    data.date = dayjs().format("DD/MM/YYYY")
+                    return (
+                        <>
+                            {data.quotes.map((quote, index) => (
+                                <>
+                                    <BallonContainer key={index} iseven={index % 2 === 0}>
+                                        <Ballon >
+                                            <ParagraphAutor>
+                                                {quote.author}
+                                            </ParagraphAutor>
+                                            <Paragraph >
+                                                {quote.quote}
+                                            </Paragraph>
+                                        </Ballon>
+                                    </BallonContainer>
+                                </>
+                            ))}
+                        </>
+                    )
+                })}
+            </QuoteContainer>
+        </>
     )
 }

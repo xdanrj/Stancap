@@ -3,7 +3,8 @@ import quoteServices from "../../services/quoteServices";
 import SingleQuote from "./SingleQuote";
 import MultipleQuote from "./MultipleQuote";
 import GlobalStyles from "../../GlobalStyles/GlobalStyles";
-import { QuotePageDiv } from "./QuoteStyles";
+
+import { QuotesPageGeral } from "./QuoteStyles";
 const quoteService = new quoteServices()
 
 function QuotesPage() {
@@ -18,7 +19,8 @@ function QuotesPage() {
     }, [])
 
     return (
-        <QuotePageDiv>
+        <>
+        <QuotesPageGeral>
             <GlobalStyles />
             {quotesResponse.map((data, index) => {
                 if (data.quotes.length === 1) {
@@ -36,7 +38,8 @@ function QuotesPage() {
                     )
                 }
             })}
-        </QuotePageDiv >
+            </QuotesPageGeral>
+            </>
     )
 }
 export default QuotesPage

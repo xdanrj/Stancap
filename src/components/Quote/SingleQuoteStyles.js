@@ -1,6 +1,15 @@
 import styled from 'styled-components'
 import { device } from '../../GlobalStyles/device'
 
+export const QuoteContainer = styled.div.attrs(() => ({
+    className: ""
+}))`
+    position: absolute;
+    left: 0;
+    right; 0;
+    width: 100%;
+`
+
 export const QuoteCard = styled.div.attrs(() => ({
     className: "bg-dark"
 }))`

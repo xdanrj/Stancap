@@ -1,14 +1,32 @@
 import styled from 'styled-components'
 import { device } from '../../GlobalStyles/device'
 
+export const QuoteContainer = styled.div.attrs(() => ({
+    className: "my-5"
+}))`
+    position: absolute;
+    left: 0;
+    right; 0;
+    width: 100%;
+`
+
+export const OLDQuoteContainer = styled.div.attrs(() => ({
+    className: ""
+}))`
+width: 70%;
+
+`
 export const BallonContainer = styled.div.attrs(() => ({
-    className: "w-75"
+    className: ""
 }))`
 background-color: ${({ iseven }) => (iseven ? 'blue' : 'red')};
+width: 70%;
+
 `
 
 export const Ballon = styled.div.attrs(() => ({
     className: ""
+    
 }))`
 
 `
