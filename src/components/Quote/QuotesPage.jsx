@@ -22,7 +22,16 @@ function QuotesPage() {
         <>
         <QuotesPageGeral>
             <GlobalStyles />
-            {quotesResponse.map((data, index) => {
+            <MultipleQuote/>
+            </QuotesPageGeral>
+            </>
+    )
+}
+export default QuotesPage
+
+
+/*
+  {quotesResponse.map((data, index) => {
                 if (data.quotes.length === 1) {
                     return (
                         <SingleQuote key={index}/>
@@ -38,8 +47,5 @@ function QuotesPage() {
                     )
                 }
             })}
-            </QuotesPageGeral>
-            </>
-    )
-}
-export default QuotesPage
+
+*/

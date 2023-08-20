@@ -3,7 +3,7 @@ import quoteServices from "../../services/quoteServices";
 import dayjs from "dayjs";
 import { SourceLogo } from "./QuoteStyles";
 
-import { QuoteContainer, BallonContainer, Ballon, Paragraph, ParagraphAutor } from "./MultipleQuoteStyles";
+import { QuoteContainer, Ballon, Paragraph, ParagraphAutor } from "./MultipleQuoteStyles";
 const quoteService = new quoteServices()
 
 export default function MultipleQuote() {
@@ -26,16 +26,14 @@ export default function MultipleQuote() {
                         <>
                             {data.quotes.map((quote, index) => (
                                 <>
-                                    <BallonContainer key={index} iseven={index % 2 === 0}>
-                                        <Ballon >
-                                            <ParagraphAutor>
-                                                {quote.author}
-                                            </ParagraphAutor>
-                                            <Paragraph >
-                                                {quote.quote}
-                                            </Paragraph>
-                                        </Ballon>
-                                    </BallonContainer>
+                                    <Ballon key={index} ballonside={index % 2 === 0}>
+                                        <ParagraphAutor>
+                                            {quote.author}
+                                        </ParagraphAutor>
+                                        <Paragraph>
+                                            {quote.quote}
+                                        </Paragraph>
+                                    </Ballon>
                                 </>
                             ))}
                         </>
