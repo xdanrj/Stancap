@@ -22,7 +22,7 @@ function QuotesPage() {
         <>
         <QuotesPageGeral>
             <GlobalStyles />
-            <MultipleQuote/>
+            <SingleQuote/>
             </QuotesPageGeral>
             </>
     )
