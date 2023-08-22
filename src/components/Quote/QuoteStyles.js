@@ -10,5 +10,5 @@ export const QuotesPageGeral = styled.div.attrs(() => ({
 export const SourceLogo = styled.img.attrs(() => ({
     className: "mx-auto position-absolute translate-middle top-0 start-50 rounded-6"
 }))`
-    width: 16%;
+    width: 15%;
 `;
