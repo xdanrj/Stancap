@@ -18,12 +18,12 @@ export default function MultipleQuote() {
     }, [])
     return (
         <>
-            <QuoteContainer>
-                <SourceLogo src="../src/images/Stancap.png" />
-                {quotesResponse.map((data) => {
-                    data.date = dayjs().format("DD/MM/YYYY")
-                    return (
-                        <>
+            {quotesResponse.map((data) => {
+                return (
+                    <>
+                        <QuoteContainer>
+                            <SourceLogo src="../src/images/Stancap.png" />
+                            data.date = dayjs().format("DD/MM/YYYY")
                             {data.quotes.map((quote, index) => (
                                 <>
                                     <Ballon key={index} ballonside={index % 2 === 0}>
@@ -36,10 +36,10 @@ export default function MultipleQuote() {
                                     </Ballon>
                                 </>
                             ))}
-                        </>
-                    )
+
+                            )
                 })}
-            </QuoteContainer>
-        </>
-    )
-}
+                        </QuoteContainer>
+                    </>
+                )
+            }
