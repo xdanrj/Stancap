@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from "react";
-import quoteServices from "../../services/quoteServices";
+import quoteServices from "../../../services/quoteServices";
 import dayjs from "dayjs";
 
-import { QuoteContainer, Ballon, Paragraph, ParagraphAutor, SourceLogo } from "./MultipleQuoteStyles";
+import { QuoteContainer, QuoteHeader, Ballon, Paragraph, ParagraphAutor, SourceLogo, InfoIcon } from "./MultipleQuoteStyles";
 const quoteService = new quoteServices();
 
-export default function MultipleQuote() {
-    const [quotesResponse, setQuotesResponse] = useState([]);
-    useEffect(() => {
-        async function fetchQuotes() {
-            const quoteService = new quoteServices();
-            const response = await quoteService.getAllQuotes();
-            setQuotesResponse(response);
-        }
-        fetchQuotes();
-    }, []);
-
+export default function MultipleQuotes({ multipleQuotes }) {
     return (
         <>
-            {quotesResponse.map((data) => {
+            {multipleQuotes.map((data) => {
                 data.date = dayjs().format("DD/MM/YYYY");
                 return (
                     <QuoteContainer key={data.id}>
-                        <SourceLogo src="../src/images/Stancap.png" />
+                        <QuoteHeader>
+                            <SourceLogo src="../src/images/Stancap.png" />
+                            <InfoIcon />
+                        </QuoteHeader>
                         {data.quotes.map((quote, index) => (
                             <Ballon key={index} ballonside={index % 2 === 0}>
                                 <ParagraphAutor>

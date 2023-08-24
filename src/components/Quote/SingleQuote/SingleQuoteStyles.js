@@ -1,19 +1,15 @@
 import styled from 'styled-components'
-import { device } from '../../GlobalStyles/device'
+import { device } from '../../../GlobalStyles/device';
 
 export const QuoteContainer = styled.div.attrs(() => ({
-    className: "py-1"
+    className: "py-1 mb-5 mx-auto"
 }))`
+    width: 100%;
     font-size: 1.1rem;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 95%;
     background-color: rgb(40, 40, 40);
     border-radius: 20px 20px 20px 20px;
-
     @media ${device.laptopL} {
-        width: 50%;
+        width: 75%;
     }
 `
 

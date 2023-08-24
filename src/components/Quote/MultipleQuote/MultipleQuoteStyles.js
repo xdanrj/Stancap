@@ -1,11 +1,36 @@
 import styled from 'styled-components'
-import { device } from '../../GlobalStyles/device'
+import { MDBIcon as originalMDBIcon } from 'mdb-react-ui-kit';
+import { device } from '../../../GlobalStyles/device';
 
 export const QuoteContainer = styled.div.attrs(() => ({
-    className: "px-2"
+    className: "px-2 py-2 mb-5"
 }))`
     width: 100%;
     background-color: rgb(51, 51, 0);
+    border-radius: 15px;
+`;
+export const QuoteHeader = styled.div.attrs(() => ({
+    className: "position-relative"
+}))`
+   
+`;
+
+export const SourceLogo = styled.img.attrs(() => ({
+    className: "position-absolute top-0 start-50 translate-middle rounded-6"
+}))`
+    margin-top: -1vh;
+    width: 5.5vh;
+`;
+
+// 
+
+export const InfoIcon = styled.i.attrs(() => ({
+    className: "bi bi-info-square-fill position-absolute top-0 start-100 translate-middle"
+}))`
+    margin-top: -1vh;
+    margin-left: -0.2vw;
+    font-size: 3vh;
+    color: grey;
 `;
 
 export const Ballon = styled.div.attrs((props) => ({
@@ -17,7 +42,6 @@ export const Ballon = styled.div.attrs((props) => ({
     margin-right: ${({ ballonside }) => (ballonside ? 'initial' : 'auto')};
     width: fit-content;
     max-width: 80%;
-    
 `;
 
 export const Paragraph = styled.p.attrs((props) => ({
@@ -33,9 +57,3 @@ export const ParagraphAutor = styled.p.attrs((props) => ({
     font-weight: bold;
 `;
 
-export const SourceLogo = styled.img.attrs(() => ({
-    className: "position-absolute translate-middle rounded-6"
-}))`
-    margin-top: -1vh;
-    width: 5.5vh;
-`;

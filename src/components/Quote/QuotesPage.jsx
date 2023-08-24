@@ -1,55 +1,71 @@
 import React, { useEffect, useState } from "react"
 import quoteServices from "../../services/quoteServices";
-import SingleQuote from "./SingleQuote";
-import MultipleQuote from "./MultipleQuote";
+import SingleQuote from "./SingleQuote/SingleQuote";
+import MultipleQuote from "./MultipleQuote/MultipleQuote";
 import GlobalStyles from "../../GlobalStyles/GlobalStyles";
 import { size } from "../../GlobalStyles/device";
 
-import { QuotesPageGeral } from "./QuoteStyles";
 const quoteService = new quoteServices()
 
 function QuotesPage() {
-    const [quotesResponse, setQuotesResponse] = useState([])
-    useEffect(() => {
-        async function fetchQuotes() {
-            const quoteService = new quoteServices()
-            const response = await quoteService.getAllQuotes()
-            setQuotesResponse(response)
-        }
-        fetchQuotes()
+  const [quotesResponse, setQuotesResponse] = useState([])
+  const [singleQuotesArray, setSingleQuotesArray] = useState([])
+  const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
 
-        function getCurrentScreenSize() {
-            const screenWidth = window.innerWidth;
-            if (screenWidth >= parseInt(size.desktop)) {
-                return "desktop";
-              } else if (screenWidth >= parseInt(size.laptopL)) {
-                return "laptopL";
-              } else if (screenWidth >= parseInt(size.laptop)) {
-                return "laptop";
-              } else if (screenWidth >= parseInt(size.tablet)) {
-                return "tablet";
-              } else if (screenWidth >= parseInt(size.mobileL)) {
-                return "mobileL";
-              } else if (screenWidth >= parseInt(size.mobileM)) {
-                return "mobileM";
-              } else {
-                return "mobileS";
-              }
-            }
-          const currentSize = getCurrentScreenSize();
-          console.log("Tamanho atual da tela:", currentSize);
-    }, [])
+  useEffect(() => {
+    async function fetchQuotes() {
+      const quoteService = new quoteServices()
+      const response = await quoteService.getAllQuotes()
+      setQuotesResponse(response)
+    };
+    fetchQuotes();
+  }, []);
 
-    return (
-        <>
-        
-            <GlobalStyles />
-            <QuotesPageGeral>
-            <MultipleQuote/>
-            </QuotesPageGeral>
-            </>
-    )
+  useEffect(() => {
+    const currentSingleQuotesArray = []
+    const currentMultipleQuotesArray = []
+    quotesResponse.forEach((data) => {
+      if (data.quotes.length === 1) {
+        currentSingleQuotesArray.push(data)
+      }
+      else if (data.quotes.length > 1) {
+        currentMultipleQuotesArray.push(data)
+      }
+    });
+    setSingleQuotesArray(currentSingleQuotesArray)
+    setMultipleQuotesArray(currentMultipleQuotesArray)
+  }, [quotesResponse])
+
+  function getCurrentScreenSize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth >= parseInt(size.desktop)) {
+      return "desktop";
+    } else if (screenWidth >= parseInt(size.laptopL)) {
+      return "laptopL";
+    } else if (screenWidth >= parseInt(size.laptop)) {
+      return "laptop";
+    } else if (screenWidth >= parseInt(size.tablet)) {
+      return "tablet";
+    } else if (screenWidth >= parseInt(size.mobileL)) {
+      return "mobileL";
+    } else if (screenWidth >= parseInt(size.mobileM)) {
+      return "mobileM";
+    } else {
+      return "mobileS";
+    }
+  };
+  const currentSize = getCurrentScreenSize();
+  console.log("Tamanho atual da tela:", currentSize);
+  // atencao: qnd terminar de corrigir o codigo, so taca o single e o multiple components no return()
+  return (
+    <>
+      <GlobalStyles />
+      <SingleQuote singleQuotes={singleQuotesArray}/>
+      <MultipleQuote multipleQuotes={multipleQuotesArray} />
+    </>
+  )
 }
+
 export default QuotesPage
 
 
