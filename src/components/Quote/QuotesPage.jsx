@@ -42,8 +42,9 @@ function QuotesPage() {
 
     return (
         <>
-        <QuotesPageGeral>
+        
             <GlobalStyles />
+            <QuotesPageGeral>
             <MultipleQuote/>
             </QuotesPageGeral>
             </>

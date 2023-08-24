@@ -2,17 +2,14 @@ import styled from 'styled-components'
 import { device } from '../../GlobalStyles/device'
 
 export const QuoteContainer = styled.div.attrs(() => ({
-    className: "my-5 px-2"
+    className: "px-2"
 }))`
-    position: absolute;
-    width: 100vw;
+    width: 100%;
     background-color: rgb(51, 51, 0);
-    left: 0;
-    right; 0;
 `;
 
 export const Ballon = styled.div.attrs((props) => ({
-    className: `mb-3 ${props.ballonside ? 'text-start' : 'text-end'}`
+    className: "text-start"
 }))`
     background-color: ${({ ballonside }) => (ballonside ? 'rgb(0, 102, 0)' : 'rgb(0, 51, 102)')};
     border-radius: ${({ ballonside }) => (ballonside ? '20px 20px 3px 20px' : '20px 20px 20px 3px')};
@@ -34,4 +31,11 @@ export const ParagraphAutor = styled.p.attrs((props) => ({
 }))`
     margin-bottom: 0;
     font-weight: bold;
+`;
+
+export const SourceLogo = styled.img.attrs(() => ({
+    className: "position-absolute translate-middle rounded-6"
+}))`
+    margin-top: -1vh;
+    width: 5.5vh;
 `;
