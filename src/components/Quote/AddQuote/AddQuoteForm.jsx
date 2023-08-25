@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Form, Col, Row } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { FormLabel } from "./AddQuoteFormStyles";
+import TagSelector from "../TagsSelector/TagsSelector";
 
 import quoteEditingServices from "../../../services/quoteServices"
 
@@ -13,38 +14,42 @@ function AddQuoteForm() {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
     return (
         <>
-        
             <Form >
-                <Form.Group>
-                    <FormLabel>Quote:</FormLabel>
-                    <Form.Control>
+                <Row>
+                    <Form.Group>
+                        <FormLabel>Quote:</FormLabel>
+                        <Form.Control>
 
-                    </Form.Control>
-                </Form.Group>
+                        </Form.Control>
+                    </Form.Group>
+                    <Col>
 
-                <Form.Group>
-                    <FormLabel>Autor:</FormLabel>
-                    <Form.Control>
+                        <FormLabel>Autor:</FormLabel>
+                        <Form.Control>
 
-                    </Form.Control>
+                        </Form.Control>
+                    </Col>
+                    <Col>
+                        <FormLabel>Data:</FormLabel>
+                        <Form.Control>
 
-                    <FormLabel>Data:</FormLabel>
-                    <Form.Control>
+                        </Form.Control>
+                    </Col>
 
-                    </Form.Control>
-                </Form.Group>
+                    <Form.Group>
+                        <FormLabel>Source:</FormLabel>
+                        <Form.Control>
 
-                <Form.Group>
-                    <FormLabel>Source:</FormLabel>
-                    <Form.Control>
+                        </Form.Control>
+                        <FormLabel>Tags:</FormLabel>
+                        <Form.Control>
+                           
 
-                    </Form.Control>
-                    <FormLabel>Tags:</FormLabel>
-                    <Form.Control>
-
-                    </Form.Control>
-                </Form.Group>
+                        </Form.Control>
+                    </Form.Group>
+                </Row>
             </Form>
+            <TagSelector/>
         </>
     )
 }
