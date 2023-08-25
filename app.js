@@ -6,7 +6,6 @@ import { connectDB } from "./src/infra/db.js";
 import { userRoutes } from "./src/routes/userRoutes.js";
 import { quotesRoutes } from "./src/routes/quotesRoutes.js";
 import { loginAndRegisterRoutes } from "./src/routes/loginAndRegisterRoutes.js";
-import quoteServices from "./src/services/quoteServices.js";
 
 import dotenv from "dotenv"
 dotenv.config()

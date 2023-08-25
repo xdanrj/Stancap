@@ -46,6 +46,10 @@ export default function NavbarComponent() {
                 <MDBNavbarLink href='/new_password'>New Password</MDBNavbarLink>
               </MDBNavbarItem>
 
+              <MDBNavbarItem>
+                <MDBNavbarLink href='/add_quote'>Add Quote</MDBNavbarLink>
+              </MDBNavbarItem>
+
             </MDBNavbarNav>
           </MDBCollapse>
         </MDBContainer>

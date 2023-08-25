@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
-import quoteServices from "../../services/quoteServices";
+import quoteEditingServices from "../../services/quoteServices";
 import SingleQuote from "./SingleQuote/SingleQuote";
 import MultipleQuote from "./MultipleQuote/MultipleQuote";
 import GlobalStyles from "../../GlobalStyles/GlobalStyles";
 import { size } from "../../GlobalStyles/device";
 
-const quoteService = new quoteServices()
+const quoteService = new quoteEditingServices()
 
 function QuotesPage() {
   const [quotesResponse, setQuotesResponse] = useState([])
@@ -14,7 +14,7 @@ function QuotesPage() {
 
   useEffect(() => {
     async function fetchQuotes() {
-      const quoteService = new quoteServices()
+      const quoteService = new quoteEditingServices()
       const response = await quoteService.getAllQuotes()
       setQuotesResponse(response)
     };

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import quoteServices from "../../../services/quoteServices";
+import quoteEditingServices from "../../../services/quoteServices";
 import dayjs from "dayjs";
 
 import { QuoteContainer, QuoteHeader, Ballon, Paragraph, ParagraphAutor, SourceLogo, InfoIcon } from "./MultipleQuoteStyles";
-const quoteService = new quoteServices();
+const quoteService = new quoteEditingServices();
 
 export default function MultipleQuotes({ multipleQuotes }) {
     return (

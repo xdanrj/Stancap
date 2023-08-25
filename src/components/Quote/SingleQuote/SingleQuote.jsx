@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
-import quoteServices from "../../../services/quoteServices";
+import quoteEditingServices from "../../../services/quoteServices";
 import dayjs from "dayjs";
 
 import { QuoteContainer, Paragraph, ParagraphAutor, ParagraphDate, FooterLine, SourceLogo } from "./SingleQuoteStyles"
 
-const quoteService = new quoteServices()
+const quoteService = new quoteEditingServices()
 
 export default function SingleQuotes({ singleQuotes }) {
     return (

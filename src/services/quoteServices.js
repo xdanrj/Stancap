@@ -1,9 +1,6 @@
 import axios from "axios"
 
-
-
-
-export default class quoteServices {
+export default class quoteEditingServices {
     constructor() {
         this.axios = axios.create({
             baseURL: "http://192.168.1.65:3000"
@@ -37,6 +34,4 @@ export default class quoteServices {
             return response.data.message
         }
     }
-
-
 }
