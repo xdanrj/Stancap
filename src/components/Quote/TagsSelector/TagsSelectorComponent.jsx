@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import { TagsInput } from 'react-tag-input-component';
 
-const TagSelectorComponent = () => {
-  const [tags, setTags] = useState([])
+import "./TagsSelectorComponent.css"
+const classNames = {
+  
+}
+
+const TagSelectorComponent = ({tags, setTags}) => {
+  
   return (
     <>
       <TagsInput
         value={tags}
         onChange={setTags}
-        name="fruits"
-        placeHolder="enter fruits"
+        name="tags"
+        placeHolder="Digite a tag e dê enter"
+        classNames="{tag: tag-cls, input: input-cls}"
       />
     </>
   )

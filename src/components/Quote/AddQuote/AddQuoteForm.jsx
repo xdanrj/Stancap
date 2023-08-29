@@ -23,8 +23,7 @@ function AddQuoteForm() {
     const [autor, setAutor] = useState()
     const [date, setDate] = useState()
     const [source, setSource] = useState()
-    
-    
+    const [tags, setTags] = useState([""])
 
     const handleAddQuote = async (e) => {
         e.preventDefault();
@@ -47,6 +46,10 @@ function AddQuoteForm() {
 
     const handleQuoteChange = (e) => {
         setQuotes( { ...quotes, [e.target.name]: e.target.value } )
+    }
+
+    const handleTagChange = (e) => {
+        setTags( { ...tags, [e.target.name]: e.target.value } )
     }
 
 
@@ -87,7 +90,8 @@ function AddQuoteForm() {
                     </FormGroup>
 
                     <FormGroup>
-                    <TagSelectorComponent />
+                        <h4>{tags}</h4>
+                    <TagSelectorComponent tags={tags} setTags={setTags}/>
                     </FormGroup>
 
                 </Row>
