@@ -6,7 +6,7 @@ export const QuoteContainer = styled.div.attrs(() => ({
     className: "px-2 py-2 mb-5"
 }))`
     width: 100%;
-    background-color: rgb(51, 51, 0);
+    background-color: rgb(50, 50, 0);
     border-radius: 15px;
 `;
 export const QuoteHeader = styled.div.attrs(() => ({
@@ -22,8 +22,6 @@ export const SourceLogo = styled.img.attrs(() => ({
     width: 5.5vh;
 `;
 
-// 
-
 export const InfoIcon = styled.i.attrs(() => ({
     className: "bi bi-info-square-fill position-absolute top-0 start-100 translate-middle"
 }))`
@@ -36,7 +34,7 @@ export const InfoIcon = styled.i.attrs(() => ({
 export const Ballon = styled.div.attrs((props) => ({
     className: "text-start"
 }))`
-    background-color: ${({ ballonside }) => (ballonside ? 'rgb(0, 102, 0)' : 'rgb(0, 51, 102)')};
+    background-color: ${({ ballonside }) => (ballonside ? 'rgb(0, 100, 0)' : 'rgb(0, 50, 100)')};
     border-radius: ${({ ballonside }) => (ballonside ? '20px 20px 3px 20px' : '20px 20px 20px 3px')};
     margin-left: ${({ ballonside }) => (ballonside ? 'auto' : 'initial')};
     margin-right: ${({ ballonside }) => (ballonside ? 'initial' : 'auto')};
