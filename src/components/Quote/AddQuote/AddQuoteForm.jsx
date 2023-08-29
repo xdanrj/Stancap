@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
 import { Form, Col, Row } from "react-bootstrap";
@@ -22,15 +23,18 @@ function AddQuoteForm() {
     const [autor, setAutor] = useState()
     const [date, setDate] = useState()
     const [source, setSource] = useState()
-    const [tags, setTags] = useState()
+    
+    
 
     const handleAddQuote = async (e) => {
         e.preventDefault();
-        try {
+        /*try {
             const response = await quoteEditingService.addQuote(quoteData)
         } catch (error) {
             alert(error)
-        }
+        }*/
+        console.log("tags logo abaixo: ")
+        console.log(tags)
     }
 
     const handleGenericChange = (e) => {
@@ -83,17 +87,13 @@ function AddQuoteForm() {
                     </FormGroup>
 
                     <FormGroup>
-                        <FloatingLabel label="Tags (separe com enter)">
-                            <Form.Control name="tags" placeholder="Digite e dê enter">
-                            </Form.Control>
-                        </FloatingLabel>
-                    </FormGroup>
                     <TagSelectorComponent />
+                    </FormGroup>
 
                 </Row>
                 <Button type="submit">Criar quote</Button>
             </Form>
-    
+        
         </>
     )
 }
