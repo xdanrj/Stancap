@@ -5,6 +5,7 @@ import { Form, Col, Row } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FloatingLabel, FormGroup } from "./AddQuoteFormStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
+import dayjs from "dayjs";
 
 import quoteEditingServices from "../../../services/quoteServices"
 
@@ -14,51 +15,64 @@ function AddQuoteForm() {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
     const [quoteData, setQuoteData] = useState({
         quotes: [],
-        autor: "",
-        date: "",
+        tags: [],
+        author: "",
+        context: "",
         source: "",
-        tags: []
+        date: "",
+        uploadDate: "",
+        uploadByUser: ""
     })
     const [quotes, setQuotes] = useState()
-    const [autor, setAutor] = useState()
+    const [author, setAuthor] = useState()
     const [date, setDate] = useState()
     const [source, setSource] = useState()
+    const [context, setContext] = useState()
     const [tags, setTags] = useState([])
 
-    const handleAddQuote = async (e) => {
+    const handleSubmitQuote = async (e) => {
         e.preventDefault();
-        /*try {
-            const response = await quoteEditingService.addQuote(quoteData)
+        try {
+
+            const response = await quoteEditingService.addQuote(readyQuoteData)
         } catch (error) {
             alert(error)
-        }*/
-        console.log("tags logo abaixo: ")
-        console.log(tags)
+        }
     }
 
     const handleGenericChange = (e) => {
         const { name, value } = e.target
-        setQuoteData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }));
-    };
+
+        setQuoteData((prevData) => {
+            if (name === "quotes") {
+                return {
+                    ...prevData,
+                    quotes: { quote: value }
+                }
+            } else {
+                return {
+                    ...prevData,
+                    [name]: value
+                }
+            }
+        })
+    }
 
     const handleQuoteChange = (e) => {
         setQuotes({ ...quotes, [e.target.name]: e.target.value })
     }
 
-    const handleTagsChange = (newTags) => {
-        setTags(newTags.split(','));
+    const getNowtime = () => {
+        console.log(dayjs().format()) 
     }
 
     return (
         <>
-            <Form onSubmit={handleAddQuote}>
+            <Form onSubmit={handleSubmitQuote}>
                 <Row>
                     <FormGroup>
                         <FloatingLabel label="Quote">
-                            <Form.Control name="quote" placeholder="Quote" onChange={handleQuoteChange}>
+                            <Form.Control name="quotes" placeholder="Quote" onChange={handleGenericChange}>
                             </Form.Control>
                         </FloatingLabel>
                     </FormGroup>
@@ -66,7 +80,7 @@ function AddQuoteForm() {
                     <Col>
                         <FormGroup>
                             <FloatingLabel label="Autor">
-                                <Form.Control name="autor" placeholder="Autor" onChange={handleGenericChange}>
+                                <Form.Control name="author" placeholder="Autor" onChange={handleGenericChange}>
                                 </Form.Control>
                             </FloatingLabel>
                         </FormGroup>
@@ -89,12 +103,19 @@ function AddQuoteForm() {
                     </FormGroup>
 
                     <FormGroup>
-                        <h4>{tags}</h4>
-                        <TagSelectorComponent tags={tags} setTags={setTags} onChange={handleTagsChange} />
+                        <FloatingLabel label="Contexto (Opcional)">
+                            <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange}>
+                            </Form.Control>
+                        </FloatingLabel>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <TagSelectorComponent tags={tags} setTags={setTags} />
                     </FormGroup>
 
                 </Row>
                 <Button type="submit">Criar quote</Button>
+                <Button type="button" onClick={getNowtime}>horas</Button>
             </Form>
 
         </>
