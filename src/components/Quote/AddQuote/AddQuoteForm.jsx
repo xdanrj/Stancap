@@ -8,6 +8,7 @@ import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import dayjs from "dayjs";
 
 import quoteEditingServices from "../../../services/quoteServices"
+import { IpAccessControlListMappingListInstance } from "twilio/lib/rest/api/v2010/account/sip/domain/ipAccessControlListMapping";
 
 const quoteEditingService = new quoteEditingServices()
 
@@ -33,8 +34,25 @@ function AddQuoteForm() {
     const handleSubmitQuote = async (e) => {
         e.preventDefault();
         try {
+            console.log(tags.length)
+            const finishingQuoteData = async () => {
+                setQuoteData((prevData) => ({
+                    ...prevData,
+                    uploadDate: dayjs().format(),
+                    uploadByUser: localStorage.getItem("username")
+                }))
+            }
+            finishingQuoteData()
+            
+            const response = await quoteEditingService.addQuote(quoteData)
+            console.log(quoteData)
 
-            const response = await quoteEditingService.addQuote(readyQuoteData)
+            if (response === true) {
+                alert('Quote criada com sucesso')
+                
+            } else {
+                alert(response)
+            }
         } catch (error) {
             alert(error)
         }
