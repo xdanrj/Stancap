@@ -14,6 +14,13 @@ const quoteEditingService = new quoteEditingServices()
 
 function AddQuoteForm() {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
+
+    const [quotes, setQuotes] = useState()
+    const [author, setAuthor] = useState()
+    const [date, setDate] = useState()
+    const [source, setSource] = useState()
+    const [context, setContext] = useState()
+    const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
         quotes: [],
         tags: [],
@@ -24,32 +31,22 @@ function AddQuoteForm() {
         uploadDate: "",
         uploadByUser: ""
     })
-    const [quotes, setQuotes] = useState()
-    const [author, setAuthor] = useState()
-    const [date, setDate] = useState()
-    const [source, setSource] = useState()
-    const [context, setContext] = useState()
-    const [tags, setTags] = useState([])
 
     const handleSubmitQuote = async (e) => {
         e.preventDefault();
         try {
-            console.log(tags.length)
-            const finishingQuoteData = async () => {
-                setQuoteData((prevData) => ({
-                    ...prevData,
-                    uploadDate: dayjs().format(),
-                    uploadByUser: localStorage.getItem("username")
-                }))
+            console.log(tags)
+            const updatedQuoteData = {
+                ...quoteData,
+                tags: tags,
+                uploadDate: dayjs().format(),
+                uploadByUser: localStorage.getItem("username")
             }
-            finishingQuoteData()
-            
+            await setQuoteData(updatedQuoteData)
             const response = await quoteEditingService.addQuote(quoteData)
             console.log(quoteData)
-
             if (response === true) {
                 alert('Quote criada com sucesso')
-                
             } else {
                 alert(response)
             }
@@ -81,7 +78,7 @@ function AddQuoteForm() {
     }
 
     const getNowtime = () => {
-        console.log(dayjs().format()) 
+        console.log(dayjs().format())
     }
 
     return (
