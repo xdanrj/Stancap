@@ -45,11 +45,11 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.get("/search_quote", async (req, res) => {
+  app.post("/search_quote", async (req, res) => {
     try {
-      console.log(req.body)
+      console.log("req.body aqui: ", req.body)
       const foundQuote = await selectQuote(req.body)
-      res.send({ response: foundQuote.response })
+      res.send({ response: foundQuote })
     } catch (error) {
       res.send({ message: error })
     }

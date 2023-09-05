@@ -17,9 +17,8 @@ export default class quoteEditingServices {
     }
 
     async getQuote(dados) {
-        console.log("dados abaixo: ")
-        console.log(dados)
-        const response = await this.axios.get('/search_quote', dados)
+        console.log("dados aqui: ", dados)
+        const response = await this.axios.post('/search_quote', dados)
         if (response.data.response) {
             return response
         } else {

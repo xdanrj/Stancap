@@ -41,6 +41,7 @@ export async function userExists(proprietyTarget) {
 
 // SEL3CT QU0T3 AQUI
 export async function selectQuote(body) {
+  console.log("body: ", body)
   let property = Object.keys(body)[0]
   let target = body[property]
   let query = { [property]: target }
@@ -56,14 +57,14 @@ export async function selectQuote(body) {
   }
   else if (property == "password") {
     message = "Acesso negado"
-  } else {
-    if (quantity > 0) {
-      message = "Sucesso"
-    } else {
-      message = "Nenhuma quote encontrada"
-    }
   }
-  return { query: query, quantity: quantity, message: message, response: foundQuote }
+  else if (quantity > 0) {
+    message = "Sucesso"
+  }
+  else if (quantity === 0) {
+    message = "Nenhuma quote encontrada"
+}
+return { query: query, quantity: quantity, message: message, response: foundQuote }
 }
 
 

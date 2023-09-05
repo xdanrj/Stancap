@@ -5,31 +5,36 @@ import quoteEditingServices from "../../services/quoteServices";
 
 export default function SummaryQuote() {
     const [quotesResponse, setQuotesResponse] = useState([])
+    const [quotesResponseArray, setQuotesResponseArray] = useState([])
 
     useEffect(() => {
         async function fetchQuotes() {
             const username = localStorage.getItem("username")
-            console.log(`o username é: ${username}`)
             const quoteService = new quoteEditingServices()
-            const query = {"uploadByUser": "a"}
+            let query = { "uploadByUser": localStorage.getItem("username") }
             const response = await quoteService.getQuote(query)
-            console.log(response)
+
             setQuotesResponse(response.data.response)
+            setQuotesResponseArray(quotesResponse.response)
         }
         fetchQuotes()
     }, []);
-    
     return (
         <>
-            {quotesResponse.map((data) => {
-                return (
-                    <div key={data._id}>                        
-                        <MinimalQuoteContainer>
-                            <p>{data.quotes[0].quote}</p>
-                        </MinimalQuoteContainer>
-                    </div>
+            {
+                quotesResponse.quantity > 0 ? (
+                    quotesResponseArray.map((data) => {
+                        <div key={data._id}>
+                            <MinimalQuoteContainer>
+                                <p>{data.quotes[0].quote}</p>
+                            </MinimalQuoteContainer>
+                        </div>
+                    })
+                ) : (
+                    <h1>{quotesResponse.message}</h1>
                 )
-            })}
+
+            }
         </>
     )
 }
