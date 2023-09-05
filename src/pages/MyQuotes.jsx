@@ -1,11 +1,12 @@
 import React from "react"
+import SummaryQuote from "../components/SummaryQuote/SummaryQuote"
+
 
 function MyQuotes() {
     return (
         <>
-            <h1>quot</h1>
+            <SummaryQuote />
         </>
     )
 }
-
 export default MyQuotes

@@ -5,7 +5,7 @@ import MultipleQuote from "./MultipleQuote/MultipleQuote";
 import GlobalStyles from "../../GlobalStyles/GlobalStyles";
 import { size } from "../../GlobalStyles/device";
 
-const quoteService = new quoteEditingServices()
+//const quoteService = new quoteEditingServices()
 
 function QuotesPage() {
   const [quotesResponse, setQuotesResponse] = useState([])
