@@ -15,36 +15,28 @@ const quoteEditingService = new quoteEditingServices()
 function AddQuoteForm() {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
 
-    const [quotes, setQuotes] = useState()
+    const [quotes, setQuotes] = useState([])
     const [author, setAuthor] = useState()
     const [date, setDate] = useState()
     const [source, setSource] = useState()
     const [context, setContext] = useState()
     const [tags, setTags] = useState([])
-    const [quoteData, setQuoteData] = useState({
-        quotes: [],
-        tags: [],
-        author: "",
-        context: "",
-        source: "",
-        date: "",
-        uploadDate: "",
-        uploadByUser: ""
-    })
+    const [quoteData, setQuoteData] = useState({})
 
     const handleSubmitQuote = async (e) => {
         e.preventDefault();
         try {
-            console.log(tags)
-            const updatedQuoteData = {
-                ...quoteData,
+            console.log(quotes)
+
+            const updatedQuoteData = {...quoteData,
+                quotes: quotes,
                 tags: tags,
                 uploadDate: dayjs().format(),
                 uploadByUser: localStorage.getItem("username")
             }
-            await setQuoteData(updatedQuoteData)
-            const response = await quoteEditingService.addQuote(quoteData)
-            console.log(quoteData)
+
+            const response = await quoteEditingService.addQuote(updatedQuoteData)
+            console.log(updatedQuoteData)
             if (response === true) {
                 alert('Quote criada com sucesso')
             } else {
@@ -58,27 +50,15 @@ function AddQuoteForm() {
     const handleGenericChange = (e) => {
         const { name, value } = e.target
 
-        setQuoteData((prevData) => {
-            if (name === "quotes") {
-                return {
-                    ...prevData,
-                    quotes: { quote: value }
-                }
-            } else {
-                return {
-                    ...prevData,
-                    [name]: value
-                }
-            }
-        })
+        setQuoteData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }))
     }
 
-    const handleQuoteChange = (e) => {
-        setQuotes({ ...quotes, [e.target.name]: e.target.value })
-    }
-
-    const getNowtime = () => {
-        console.log(dayjs().format())
+    const handleSingleQuoteChange = (e) => {
+        const newQuote = {quote: e.target.value}
+        setQuotes({ ...quotes, ...newQuote })
     }
 
     return (
@@ -87,7 +67,7 @@ function AddQuoteForm() {
                 <Row>
                     <FormGroup>
                         <FloatingLabel label="Quote">
-                            <Form.Control name="quotes" placeholder="Quote" onChange={handleGenericChange}>
+                            <Form.Control name="quotes" placeholder="Quote" onChange={handleSingleQuoteChange}>
                             </Form.Control>
                         </FloatingLabel>
                     </FormGroup>
@@ -130,7 +110,7 @@ function AddQuoteForm() {
 
                 </Row>
                 <Button type="submit">Criar quote</Button>
-                <Button type="button" onClick={getNowtime}>horas</Button>
+
             </Form>
 
         </>

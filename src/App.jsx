@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import NewPassword from './pages/NewPassword';
 import Testes from './components/Testes';
 import AddQuote from './pages/AddQuote';
+import MyQuotes from './pages/MyQuotes';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -24,6 +25,7 @@ function App() {
         <Route path="/testes" element={<Testes/>} />
         <Route path="/new_password" element={<NewPassword/>} />
         <Route path="/add_quote" element={<AddQuote/>} />
+        <Route path="/my_quotes" element={<MyQuotes/>} />
       </Routes>
     </Router>
     

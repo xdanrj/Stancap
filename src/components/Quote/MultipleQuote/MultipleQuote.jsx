@@ -11,7 +11,8 @@ export default function MultipleQuotes({ multipleQuotes }) {
             {multipleQuotes.map((data) => {
                 data.date = dayjs().format("DD/MM/YYYY");
                 return (
-                    <QuoteContainer key={data.id}>
+                    <div key={data._id}>
+                    <QuoteContainer>
                         <QuoteHeader>
                             <SourceLogo src="../src/images/Stancap.png" />
                             <InfoIcon />
@@ -27,6 +28,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
                             </Ballon>
                         ))}
                     </QuoteContainer>
+                    </div>
                 );
             })}
         </>

@@ -50,6 +50,10 @@ export default function NavbarComponent() {
                 <MDBNavbarLink href='/add_quote'>Add Quote</MDBNavbarLink>
               </MDBNavbarItem>
 
+              <MDBNavbarItem>
+                <MDBNavbarLink href='/my_quotes'>My Quotes</MDBNavbarLink>
+              </MDBNavbarItem>
+
             </MDBNavbarNav>
           </MDBCollapse>
         </MDBContainer>

@@ -10,22 +10,24 @@ export default function SingleQuotes({ singleQuotes }) {
     return (
         <>
             {singleQuotes.map((data) => {
-                data.date = dayjs().format("DD/MM/YYYY")
+                const formatedDate = dayjs(data.date).format("DD/MM/YYYY")
                 return (
-                    <QuoteContainer key={data.id}>
-                        <SourceLogo src="../src/images/Stancap.png" />
-                        <>
-                            <Paragraph>
-                                ‟{data.quotes[0].quote}”
-                            </Paragraph>
-                            <ParagraphAutor>
-                                —{data.author}
-                            </ParagraphAutor>
-                            <ParagraphDate>
-                                ({data.date})
-                            </ParagraphDate>
-                        </>
-                    </QuoteContainer>
+                    <div key={data._id}>
+                        <QuoteContainer>
+                            <SourceLogo src="../src/images/Stancap.png" />
+                            <>
+                                <Paragraph>
+                                    ‟{data.quotes[0].quote}”
+                                </Paragraph>
+                                <ParagraphAutor>
+                                    —{data.author}
+                                </ParagraphAutor>
+                                <ParagraphDate>
+                                    ({formatedDate})
+                                </ParagraphDate>
+                            </>
+                        </QuoteContainer>
+                    </div>
                 )
             })}
         </>
