@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import dayjs from "dayjs"
-import { MinimalQuoteContainer } from "./SummaryQuoteStyles";
+import { MinimalQuoteContainer, Paragraph, ParagraphAutor } from "./SummaryQuoteStyles";
 import quoteEditingServices from "../../services/quoteServices";
 
 export default function SummaryQuote() {
@@ -13,23 +13,26 @@ export default function SummaryQuote() {
             const quoteService = new quoteEditingServices()
             let query = { "uploadByUser": localStorage.getItem("username") }
             const response = await quoteService.getQuote(query)
-
             setQuotesResponse(response.data.response)
-            setQuotesResponseArray(quotesResponse.response)
+            setQuotesResponseArray(response.data.response.response)
         }
         fetchQuotes()
+
+        
     }, []);
+    
     return (
         <>
             {
                 quotesResponse.quantity > 0 ? (
-                    quotesResponseArray.map((data) => {
+                    quotesResponseArray.map((data) => (
                         <div key={data._id}>
                             <MinimalQuoteContainer>
-                                <p>{data.quotes[0].quote}</p>
+                                <Paragraph>{data.quotes[0].quote}</Paragraph>
+                                <ParagraphAutor>—{data.author}</ParagraphAutor>
                             </MinimalQuoteContainer>
                         </div>
-                    })
+                    ))
                 ) : (
                     <h1>{quotesResponse.message}</h1>
                 )
