@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { MDBIcon as originalMDBIcon } from 'mdb-react-ui-kit';
-import { device } from '../../../GlobalStyles/device';
+import { device } from '../../../CommonStyles/device';
 
 export const QuoteContainer = styled.div.attrs(() => ({
     className: "px-2 py-2 mb-5"

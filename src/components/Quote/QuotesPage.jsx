@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react"
 import quoteEditingServices from "../../services/quoteServices";
 import SingleQuote from "./SingleQuote/SingleQuote";
 import MultipleQuote from "./MultipleQuote/MultipleQuote";
-import GlobalStyles from "../../GlobalStyles/GlobalStyles";
-import { size } from "../../GlobalStyles/device";
+import { size } from "../../CommonStyles/device";
 
 //const quoteService = new quoteEditingServices()
 
@@ -59,7 +58,6 @@ function QuotesPage() {
   // atencao: qnd terminar de corrigir o codigo, so taca o single e o multiple components no return()
   return (
     <>
-      <GlobalStyles />
       <SingleQuote singleQuotes={singleQuotesArray}/>
       <MultipleQuote multipleQuotes={multipleQuotesArray} />
     </>

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { device } from '../../../GlobalStyles/device';
+import { device } from '../../../CommonStyles/device';
 
 export const QuoteContainer = styled.div.attrs(() => ({
     className: "py-1 mb-5 mx-auto"

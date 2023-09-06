@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-
+import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 
 import loginAndRegisterServices from "../../services/loginAndRegisterServices"
 const loginAndRegisterService = new loginAndRegisterServices()
@@ -87,13 +87,15 @@ function NewPasswordForm() {
             {sendCodeForm && (
                 <>
                     <Form onSubmit={handleSubmitSendCode}>
-                        <Form.Label className="text-white">E-mail:</Form.Label>
-                        <Form.Control
-                            className="mb-3"
-                            name="email"
-                            type="email"
-                            onChange={handleEmailChange}
-                        ></Form.Control>
+                        <FloatingLabel label="E-mail">
+                            <Form.Control
+                                className="mb-3"
+                                name="email"
+                                type="email"
+                                onChange={handleEmailChange}
+                                placeholder="E-mail">
+                            </Form.Control>
+                        </FloatingLabel>
                         <Button type="submit">Enviar código</Button>
                     </Form>
                 </>
@@ -102,13 +104,15 @@ function NewPasswordForm() {
             {checkCodeForm && (
                 <>
                     <Form onSubmit={handleSubmitCheckCode}>
-                        <Form.Label className="text-white">Código:</Form.Label>
-                        <Form.Control
-                            className="mb-3"
-                            name="code"
-                            type="text"
-                            onChange={handleCodeChange}
-                        ></Form.Control>
+                        <FloatingLabel label="Código">
+                            <Form.Control
+                                className="mb-3"
+                                name="code"
+                                type="text"
+                                onChange={handleCodeChange}
+                                placeholder="Código"
+                            ></Form.Control>
+                        </FloatingLabel>
                         <Button type="submit">Verificar</Button>
                     </Form>
                 </>
@@ -117,21 +121,24 @@ function NewPasswordForm() {
                 <>
                     <Form onSubmit={handleSubmitNewPassword}>
 
-                        <Form.Label className="text-white">Nova senha:</Form.Label>
-                        <Form.Control
-                            className="mb-3"
-                            name="password"
-                            type="password"
-                            onChange={handleNewPasswordChange}
-                        ></Form.Control>
+                        <FloatingLabel label="Nova senha">
+                            <Form.Control
+                                className="mb-3"
+                                name="password"
+                                type="password"
+                                onChange={handleNewPasswordChange}
+                                placeholder="Nova senha"
+                            ></Form.Control>
+                        </FloatingLabel>
 
-                        <Form.Label className="text-white">Nova senha (novamente):</Form.Label>
-                        <Form.Control
-                            className="mb-3"
-                            name="confirmPassword"
-                            type="password"
-                            onChange={handleNewPasswordChange}
-                        ></Form.Control>
+                        <FloatingLabel label="Nova senha (novamente)">
+                            <Form.Control
+                                className="mb-3"
+                                name="confirmPassword"
+                                type="password"
+                                onChange={handleNewPasswordChange}
+                                placeholder="Nova senha (novamente)"></Form.Control>
+                        </FloatingLabel>
 
                         <Button type="submit" disabled={!isPasswordMatching}>Alterar senha</Button>
                     </Form>

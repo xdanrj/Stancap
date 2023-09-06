@@ -1,10 +1,9 @@
 import styled from 'styled-components'
-import { device } from '../../GlobalStyles/device'
+import { device } from '../../CommonStyles/device'
 
 export const MinimalQuoteContainer = styled.div.attrs(() => ({
-    className: "py-1 px-3 mb-5"
+    className: "py-1 mb-5 mx-auto"
 }))`
-    min-width: 100%;
     width: 100%;
     font-size: 1.1rem;
     background-color: rgb(40, 40, 40);

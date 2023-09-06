@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import dayjs from "dayjs"
 import { MinimalQuoteContainer, Paragraph, ParagraphAutor } from "./SummaryQuoteStyles";
+
 import quoteEditingServices from "../../services/quoteServices";
 
 export default function SummaryQuote() {
@@ -18,7 +19,6 @@ export default function SummaryQuote() {
         }
         fetchQuotes()
 
-        
     }, []);
     
     return (

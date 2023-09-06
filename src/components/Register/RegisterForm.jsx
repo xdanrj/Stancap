@@ -2,8 +2,7 @@ import { useState } from "react"
 import Button from "react-bootstrap/Button";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
-import "./GeralRegisterForm.css"
+import { DisabledFormControl, FloatingLabel } from "../../CommonStyles/CommonStyles";
 
 import loginAndRegisterServices from "../../services/loginAndRegisterServices"
 const loginAndRegisterService = new loginAndRegisterServices()
@@ -95,13 +94,14 @@ function RegisterForm() {
             {sendCodeForm && (
                 <>
                     <Form onSubmit={handleSubmitSendCode}>
-                        <Form.Label className="text-white">E-mail:</Form.Label>
+                        <FloatingLabel label="E-mail">
                         <Form.Control
                             className="mb-3"
                             name="email"
                             type="email"
                             onChange={handleEmailChange}
-                        />
+                            placeholder="E-mail" />
+                            </FloatingLabel>
                         <Button type="submit">Enviar código</Button>
                     </Form>
                 </>
@@ -110,13 +110,15 @@ function RegisterForm() {
             {checkCodeForm && (
                 <>
                     <Form onSubmit={handleSubmitCheckCode}>
-                        <Form.Label className="text-white">Código:</Form.Label>
+                        <FloatingLabel label="Código">
                         <Form.Control
                             className="mb-3"
                             name="code"
                             type="text"
                             onChange={handleCodeChange}
+                            placeholder=""
                         />
+                        </FloatingLabel>
                         <Button type="submit">Verificar</Button>
                     </Form>
                 </>
@@ -126,28 +128,33 @@ function RegisterForm() {
                 <>
                     <h4>Você poderá logar usando e-mail ou username</h4>
                     <Form onSubmit={handleSubmitRegister}>
-                        <Form.Label className="text-white">E-mail:</Form.Label>
-                        <Form.Control
+                        <FloatingLabel label="E-mail">
+                        <Form.Control style={{color: 'grey'}}
                             className="mb-3"
                             name="email"
                             type="email"
                             value={email.email}
                             disabled
                         />
-                        <Form.Label className="text-white">Username:</Form.Label>
+                        </FloatingLabel>
+                        <FloatingLabel label="Username">
                         <Form.Control
                             className="mb-3"
                             name="username"
                             type="text"
                             onChange={handleRegisterChange}
+                            placeholder=""
                         />
-                        <Form.Label className="text-white">Senha:</Form.Label>
+                        </FloatingLabel>
+                        <FloatingLabel label="Senha">
                         <Form.Control
                             className="mb-3"
                             name="password"
                             type="password"
                             onChange={handleRegisterChange}
+                            placeholder=""
                         />
+                        </FloatingLabel>
                         <Button type="submit">Registrar</Button>
                     </Form>
                 </>

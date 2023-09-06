@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import "./LoginForm.css"
+import { Form } from "react-bootstrap";
+import { FloatingLabel, FormGroup } from "../../CommonStyles/CommonStyles";
+
 
 import loginAndRegisterServices from "../../services/loginAndRegisterServices"
 
@@ -44,31 +45,34 @@ function LoginForm() {
         console.log(loginData)
     }
 
-
     return (
         <>
-        <h1 id="aga">h1 aqui</h1>
-        <Form onSubmit={handleSubmitLogin}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label className="text-white">E-mail:</Form.Label>
-                <Form.Control
-                    name="email"
-                    type="email"
-                    onChange={handleLoginChange}
-                />
-            </Form.Group>
+            <h1 id="aga">login</h1>
+            <Form onSubmit={handleSubmitLogin}>
+                <FormGroup>
+                    <FloatingLabel label="E-mail">
+                        <Form.Control
+                            name="email"
+                            type="email"
+                            placeholder="E-mail"
+                            onChange={handleLoginChange}>
+                        </Form.Control>
+                    </FloatingLabel>
+                </FormGroup>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label className="text-white">Senha:</Form.Label>
-                <Form.Control
-                    name="password"
-                    type="password"
-                    onChange={handleLoginChange}
-                />
-            </Form.Group>
-            <Button onClick={"/change_password"}>Esqueci minha senha</Button>
-            <Button type="submit">Enviar</Button>
-        </Form>
+                <FormGroup>
+                    <FloatingLabel label="Senha">
+                    <Form.Control
+                        name="password"
+                        type="password"
+                        placeholder="Senha"
+                        onChange={handleLoginChange}>
+                        </Form.Control>
+                        </FloatingLabel>
+                </FormGroup>
+                <Button href="/new_password">Esqueci minha senha</Button>
+                <Button type="submit">Enviar</Button>
+            </Form>
         </>
     )
 }

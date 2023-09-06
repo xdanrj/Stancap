@@ -3,12 +3,11 @@ import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
 import { Form, Col, Row } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FloatingLabel, FormGroup } from "./AddQuoteFormStyles";
+import { FloatingLabel, FormGroup } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import dayjs from "dayjs";
 
 import quoteEditingServices from "../../../services/quoteServices"
-import { IpAccessControlListMappingListInstance } from "twilio/lib/rest/api/v2010/account/sip/domain/ipAccessControlListMapping";
 
 const quoteEditingService = new quoteEditingServices()
 

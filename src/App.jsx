@@ -10,7 +10,6 @@ import NewPassword from './pages/NewPassword';
 import Testes from './components/Testes';
 import AddQuote from './pages/AddQuote';
 import MyQuotes from './pages/MyQuotes';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
