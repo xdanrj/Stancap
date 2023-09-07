@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import dayjs from "dayjs"
-import { MinimalQuoteContainer, Paragraph, ParagraphAutor } from "./SummaryQuoteStyles";
+import { MinimalQuoteContainer, Paragraph, ParagraphAutor, MdbIcon } from "./SummaryQuoteStyles";
+import { Col, Row } from "react-bootstrap";
 
 import quoteEditingServices from "../../services/quoteServices";
 
@@ -28,8 +29,14 @@ export default function SummaryQuote() {
                     quotesResponseArray.map((data) => (
                         <div key={data._id}>
                             <MinimalQuoteContainer>
-                                <Paragraph>{data.quotes[0].quote}</Paragraph>
+                               
+                                <Paragraph>{data.quotes[0].quote} </Paragraph>
                                 <ParagraphAutor>—{data.author}</ParagraphAutor>
+                                
+                                <MdbIcon fas icon="trash-alt" />
+                                
+                                <MdbIcon fas icon="pencil-alt" />
+                                
                             </MinimalQuoteContainer>
                         </div>
                     ))
