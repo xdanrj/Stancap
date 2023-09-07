@@ -3,34 +3,41 @@ import { device } from '../../CommonStyles/device'
 import { MDBIcon as originalMDBIcon } from 'mdb-react-ui-kit'
 
 export const MinimalQuoteContainer = styled.div.attrs(() => ({
-    className: "py-2 px-2 mb-5 mx-auto"
+    className: "pt-4 px-3 mb-5"
 }))`
-    width: 100%;
     font-size: 0.85rem;
     background-color: rgb(40, 40, 40);
     border-radius: 12px;
 `
 
-export const Paragraph = styled.p.attrs(() => ({
-    className: "mb-0font-italic text-start"
+export const TextContainer = styled.div.attrs(() => ({
+    className: "row"
 }))`
-    width: 60%;
-    float: left;
+`
+export const IconContainer = styled.div.attrs(() => ({
+    className: "row"
+}))`
+`
+
+export const Paragraph = styled.p.attrs(() => ({
+    className: "font-italic text-start col-6"
+}))`
+    background-color: blue;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 `;
 
 export const ParagraphAutor = styled.p.attrs(() => ({
-    className: ``
+    className: `col-3 text-start`
 }))`
+    background-color: green;
     color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 0;
     font-weight: bold;
 `;
 
 export const MdbIcon = styled(originalMDBIcon).attrs(() => ({
-    className: `mx-2`
+    className: `col-1`
 }))`
-    float: right;
+    
 `
