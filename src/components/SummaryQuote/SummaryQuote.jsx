@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react"
 import dayjs from "dayjs"
-import { MinimalQuoteContainer, TextContainer, IconContainer, Paragraph, ParagraphAutor, MdbIcon } from "./SummaryQuoteStyles";
+import { MinimalQuoteContainer, InternalContainer, Paragraph, ParagraphAutor, MdbIcon } from "./SummaryQuoteStyles";
 import { Col, Row } from "react-bootstrap";
 import quoteEditingServices from "../../services/quoteServices";
 
 export default function SummaryQuote() {
     const [quotesResponse, setQuotesResponse] = useState([])
     const [quotesResponseArray, setQuotesResponseArray] = useState([])
+    const [editingQuote, setEditingQuote] = useState({})
 
     useEffect(() => {
         async function fetchQuotes() {
@@ -21,6 +22,11 @@ export default function SummaryQuote() {
 
     }, []);
 
+    const handleEditQuote = (quoteId) => {
+        let queryAndBody = {_id: quoteId}
+        quoteService.editQuote(queryAndBody)
+    }
+
     return (
         <>
             {
@@ -28,16 +34,13 @@ export default function SummaryQuote() {
                     quotesResponseArray.map((data) => (
                         <div key={data._id}>
                             <MinimalQuoteContainer>
-                                <TextContainer>
+                                <InternalContainer>
                                     <Paragraph>{data.quotes[0].quote} </Paragraph>
-                                    <ParagraphAutor>—{data.author}</ParagraphAutor>
-                                
-                                
-                                    <MdbIcon fas icon="trash-alt" />
-                                    <MdbIcon fas icon="pencil-alt" />
-                                    <MdbIcon fas icon="info-circle" />
-                                    </TextContainer>
-
+                                    <ParagraphAutor>—{data.author}</ParagraphAutor>                                
+                                    <MdbIcon icon="trash-alt" />
+                                    <MdbIcon icon="pencil-alt" onClick={(handleEditQuote(data._id))} />
+                                    <MdbIcon icon="info-circle" />
+                                    </InternalContainer>
                             </MinimalQuoteContainer>
                         </div>
                     ))

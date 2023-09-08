@@ -28,7 +28,15 @@ export default class quoteEditingServices {
 
     async addQuote(dados) {
         const response = await this.axios.post('/add_quote', dados)
-        // se recebeu um objeto com "{response}"
+        if (response.data.response) {
+            return true
+        } else {
+            return response.data.message
+        }
+    }
+
+    async editQuote(dados) {
+        const response = await this.axios.patch('/edit_quote', dados)
         if (response.data.response) {
             return true
         } else {

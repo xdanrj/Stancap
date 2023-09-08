@@ -10,7 +10,7 @@ export const MinimalQuoteContainer = styled.div.attrs(() => ({
     border-radius: 12px;
 `
 
-export const TextContainer = styled.div.attrs(() => ({
+export const InternalContainer = styled.div.attrs(() => ({
     className: "row"
 }))`
 `
