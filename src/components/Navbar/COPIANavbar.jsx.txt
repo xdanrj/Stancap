@@ -7,7 +7,7 @@ import "./Navbar.css"
 import { MDBIcon } from "mdb-react-ui-kit"
 import { NavbarStyle } from "./NavbarStyles"
 
-function NavbarComponent() {
+export default function NavbarComponent() {
     const username = localStorage.getItem("username")
     return (
         <NavbarStyle>
@@ -37,5 +37,3 @@ function NavbarComponent() {
         </NavbarStyle>
     )
 }
-
-export default NavbarComponent

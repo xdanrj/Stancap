@@ -2,7 +2,7 @@ import { useState } from "react"
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-function Testes() {
+export default function Testes() {
     const [caixaUm, setCaixaUm] = useState(true)
     const [caixaDois, setCaixaDois] = useState(false)
 
@@ -53,5 +53,3 @@ function Testes() {
         </>
     )
 }
-
-export default Testes

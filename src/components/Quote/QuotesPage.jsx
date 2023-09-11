@@ -6,7 +6,7 @@ import { size } from "../../CommonStyles/device";
 
 //const quoteService = new quoteEditingServices()
 
-function QuotesPage() {
+export default function QuotesPage() {
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
@@ -63,9 +63,6 @@ function QuotesPage() {
     </>
   )
 }
-
-export default QuotesPage
-
 
 /*
   {quotesResponse.map((data, index) => {

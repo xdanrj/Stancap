@@ -1,7 +1,7 @@
 import React from "react"
-import NewPasswordForm from "../components/NewPassword/NewPasswordForm"
+import NewPasswordForm from "../../components/NewPassword/NewPasswordForm"
 
-function NewPassword (){
+export default function NewPassword (){
     return(
         <>
         <h1>Recuperar senha</h1>
@@ -9,5 +9,3 @@ function NewPassword (){
         </>
     )
 }
-
-export default NewPassword

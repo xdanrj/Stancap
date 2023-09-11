@@ -8,13 +8,13 @@ const quoteEditingService = new quoteEditingServices()
 export default function AddQuoteForm() {
 
     //const response = await quoteEditingService.addQuote(updatedQuoteData)
-   
+
     return (
         <>
-            <GenericQuoteForm 
-                handleSubmit={handleSubmitAddQuote}
-                texts={{button: "Criar quote"}}
-                response={quoteEditingService.addQuote(updatedQuoteData)}/>
+            <GenericQuoteForm
+                texts={{ button: "Criar quote" }}
+                type={"addQuote"}
+            />
         </>
     )
 }

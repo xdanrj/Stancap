@@ -4,7 +4,7 @@ import { TagsInput } from 'react-tag-input-component';
 import "./TagsSelectorComponent.css"
 
 
-const TagSelectorComponent = ({tags, setTags}) => {
+export const TagSelectorComponent = ({tags, setTags}) => {
   
   return (
     <>
@@ -17,5 +17,3 @@ const TagSelectorComponent = ({tags, setTags}) => {
     </>
   )
 }
-
-export default TagSelectorComponent

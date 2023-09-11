@@ -3,17 +3,17 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
-import Quotes from './pages/Quotes';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import NewPassword from './pages/NewPassword';
+import Quotes from './pages/Quotes/Quotes';
+import Login from './pages/Credentials/Login';
+import Register from './pages/Credentials/Register';
+import NewPassword from './pages/Credentials/NewPassword';
 import Testes from './components/Testes';
-import AddQuote from './pages/AddQuote';
-import MyQuotes from './pages/MyQuotes';
+import AddQuote from './pages/Quotes/AddQuote';
+import MyQuotes from './pages/Quotes/MyQuotes';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-function App() {
+export default function App() {
   return (
      <Router>
       <Routes>
@@ -30,4 +30,3 @@ function App() {
     
   )
 }
-export default App

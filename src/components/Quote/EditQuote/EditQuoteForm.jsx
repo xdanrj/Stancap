@@ -27,7 +27,10 @@ export default function AddQuoteForm() {
     }
     return (
         <>
-           <GenericQuoteForm handleSubmit={handleSubmitEditQuote} texts={{button: "Editar quote"}}/>
+            <GenericQuoteForm
+                texts={{ button: "Editar quote" }}
+                type={"editQuote"}
+            />
         </>
     )
 }

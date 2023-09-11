@@ -7,7 +7,7 @@ import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 import loginAndRegisterServices from "../../services/loginAndRegisterServices"
 const loginAndRegisterService = new loginAndRegisterServices()
 
-function NewPasswordForm() {
+export default function NewPasswordForm() {
     const navigate = useNavigate()
 
     // definição dos valores
@@ -147,5 +147,3 @@ function NewPasswordForm() {
         </>
     )
 }
-
-export default NewPasswordForm

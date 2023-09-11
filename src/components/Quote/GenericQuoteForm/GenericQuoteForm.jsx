@@ -11,7 +11,7 @@ import quoteEditingServices from "../../../services/quoteServices"
 
 const quoteEditingService = new quoteEditingServices()
 
-export default function GenericQuoteForm({ handleSubmit, texts }) {
+export default function GenericQuoteForm(props) {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
     const [quotes, setQuotes] = useState([])
     const [tags, setTags] = useState([])
@@ -34,7 +34,12 @@ export default function GenericQuoteForm({ handleSubmit, texts }) {
                 uploadDate: dayjs().format(),
                 uploadByUser: localStorage.getItem("username")
             }
-            const response = await quoteEditingService.addQuote(updatedQuoteData)
+            if(props.type === "addQuote"){
+                const response = await quoteEditingService.addQuote(updatedQuoteData)
+            } else if(props.type === "editQuote"){
+                const response = await quoteEditingService.editQuote(updatedQuoteData)
+            }
+            
             if (response === true) {
                 alert('Quote criada com sucesso')
             } else {
@@ -61,7 +66,7 @@ export default function GenericQuoteForm({ handleSubmit, texts }) {
 
     return (
         <>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmitQuote}>
                 <Row>
                     <FormGroup>
                         <FloatingLabel label="Quote">
@@ -110,7 +115,7 @@ export default function GenericQuoteForm({ handleSubmit, texts }) {
                     </FormGroup>
                 </Row>
 
-                <Button type="submit">{texts.button}</Button>
+                <Button type="submit">{props.texts.button}</Button>
             </Form>
         </>
     )

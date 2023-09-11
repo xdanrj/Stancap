@@ -10,7 +10,7 @@ import loginAndRegisterServices from "../../services/loginAndRegisterServices"
 
 const loginAndRegisterService = new loginAndRegisterServices()
 
-function LoginForm() {
+export default function LoginForm() {
     const location = useLocation()
     const navigate = useNavigate()
     const [loginData, setLoginData] = useState([])
@@ -76,5 +76,3 @@ function LoginForm() {
         </>
     )
 }
-
-export default LoginForm
