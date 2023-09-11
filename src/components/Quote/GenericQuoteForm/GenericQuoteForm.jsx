@@ -24,27 +24,6 @@ export default function AddQuoteForm() {
         tags: [],
       })
 
-    const handleSubmitQuote = async (e) => {
-        e.preventDefault();
-        try {
-            const updatedQuoteData = {
-                ...quoteData,
-                quotes: quotes,
-                tags: tags,
-                uploadDate: dayjs().format(),
-                uploadByUser: localStorage.getItem("username")
-            }
-            const response = await quoteEditingService.addQuote(updatedQuoteData)
-            if (response === true) {
-                alert('Quote criada com sucesso')
-            } else {
-                alert(response)
-            }
-        } catch (error) {
-            alert(error)
-        }
-    }
-
     const handleGenericChange = (e) => {
         const { name, value } = e.target
 

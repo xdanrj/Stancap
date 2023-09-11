@@ -24,7 +24,7 @@ export default function AddQuoteForm() {
         tags: [],
       })
 
-    const handleSubmitQuote = async (e) => {
+    const handleSubmitAdd Quote = async (e) => {
         e.preventDefault();
         try {
             const updatedQuoteData = {
