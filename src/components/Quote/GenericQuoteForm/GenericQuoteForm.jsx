@@ -11,7 +11,7 @@ import quoteEditingServices from "../../../services/quoteServices"
 
 const quoteEditingService = new quoteEditingServices()
 
-export default function AddQuoteForm() {
+export default function GenericQuoteForm({ handleSubmit, texts }) {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
     const [quotes, setQuotes] = useState([])
     const [tags, setTags] = useState([])
@@ -22,7 +22,28 @@ export default function AddQuoteForm() {
         source: '',
         context: '',
         tags: [],
-      })
+    })
+
+    const handleSubmitQuote = async (e) => {
+        e.preventDefault();
+        try {
+            const updatedQuoteData = {
+                ...quoteData,
+                quotes: quotes,
+                tags: tags,
+                uploadDate: dayjs().format(),
+                uploadByUser: localStorage.getItem("username")
+            }
+            const response = await quoteEditingService.addQuote(updatedQuoteData)
+            if (response === true) {
+                alert('Quote criada com sucesso')
+            } else {
+                alert(response)
+            }
+        } catch (error) {
+            alert(error)
+        }
+    }
 
     const handleGenericChange = (e) => {
         const { name, value } = e.target
@@ -40,7 +61,7 @@ export default function AddQuoteForm() {
 
     return (
         <>
-            <Form onSubmit={handleSubmitQuote}>
+            <Form onSubmit={handleSubmit}>
                 <Row>
                     <FormGroup>
                         <FloatingLabel label="Quote">
@@ -79,7 +100,7 @@ export default function AddQuoteForm() {
                     <Col>
                         <FormGroup>
                             <FloatingLabel label="Contexto (Opcional)">
-                                <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange}> 
+                                <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange}>
                                 </Form.Control>
                             </FloatingLabel>
                         </FormGroup>
@@ -89,7 +110,7 @@ export default function AddQuoteForm() {
                     </FormGroup>
                 </Row>
 
-                <Button type="submit">Criar quote</Button>
+                <Button type="submit">{texts.button}</Button>
             </Form>
         </>
     )
