@@ -17,3 +17,4 @@ export const TagSelectorComponent = ({tags, setTags}) => {
     </>
   )
 }
+export default TagSelectorComponent

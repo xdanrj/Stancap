@@ -2,9 +2,9 @@ import { useState } from "react"
 import Button from "react-bootstrap/Button";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { DisabledFormControl, FloatingLabel } from "../../CommonStyles/CommonStyles";
+import { DisabledFormControl, FloatingLabel } from "../../../CommonStyles/CommonStyles";
 
-import loginAndRegisterServices from "../../services/loginAndRegisterServices"
+import loginAndRegisterServices from "../../../services/loginAndRegisterServices"
 const loginAndRegisterService = new loginAndRegisterServices()
 
 function RegisterForm() {

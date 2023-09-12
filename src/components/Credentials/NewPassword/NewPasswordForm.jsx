@@ -2,9 +2,9 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import { FloatingLabel } from "../../CommonStyles/CommonStyles";
+import { FloatingLabel } from "../../../CommonStyles/CommonStyles";
 
-import loginAndRegisterServices from "../../services/loginAndRegisterServices"
+import loginAndRegisterServices from "../../../services/loginAndRegisterServices"
 const loginAndRegisterService = new loginAndRegisterServices()
 
 export default function NewPasswordForm() {

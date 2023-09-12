@@ -3,10 +3,10 @@ import Button from "react-bootstrap/Button";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { Form } from "react-bootstrap";
-import { FloatingLabel, FormGroup } from "../../CommonStyles/CommonStyles";
+import { FloatingLabel, FormGroup } from "../../../CommonStyles/CommonStyles";
 
 
-import loginAndRegisterServices from "../../services/loginAndRegisterServices"
+import loginAndRegisterServices from "../../../services/loginAndRegisterServices"
 
 const loginAndRegisterService = new loginAndRegisterServices()
 

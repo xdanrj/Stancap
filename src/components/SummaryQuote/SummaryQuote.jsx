@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react"
 import dayjs from "dayjs"
 import { MinimalQuoteContainer, InternalContainer, Paragraph, ParagraphAutor, MdbIcon } from "./SummaryQuoteStyles";
 import { Col, Row } from "react-bootstrap";
-import quoteEditingServices from "../../services/quoteServices";
+import quoteEditingServices from "../../services/quoteServices"
+
+const quoteService = new quoteEditingServices()
 
 export default function SummaryQuote() {
     const [quotesResponse, setQuotesResponse] = useState([])
@@ -12,7 +14,7 @@ export default function SummaryQuote() {
     useEffect(() => {
         async function fetchQuotes() {
             const username = localStorage.getItem("username")
-            const quoteService = new quoteEditingServices()
+            
             let query = { "uploadByUser": localStorage.getItem("username") }
             const response = await quoteService.getQuote(query)
             setQuotesResponse(response.data.response)
