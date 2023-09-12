@@ -1,11 +1,13 @@
 import React from "react"
-import { Form } from "react-bootstrap"
-import AddQuoteForm from "../../components/Quote/AddQuote/AddQuoteForm"
+import GenericQuoteForm from "../../components/Quote/GenericQuoteForm/GenericQuoteForm"
 
 export default function AddQuote() {
     return (
         <>
-        <AddQuoteForm/>
+            <GenericQuoteForm
+                texts={{ button: "Criar quote" }}
+                type={"addQuote"}
+            />
         </>
     )
 }

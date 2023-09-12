@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react"
 import dayjs from "dayjs"
 import { MinimalQuoteContainer, InternalContainer, Paragraph, ParagraphAutor, MdbIcon } from "./SummaryQuoteStyles";
 import { Col, Row } from "react-bootstrap";
-import quoteEditingServices from "../../services/quoteServices"
+import quoteEditingServices from "../../../services/quoteServices"
+import { useNavigate } from "react-router-dom";
+
 
 const quoteService = new quoteEditingServices()
 
 export default function SummaryQuote() {
+    const navigate = useNavigate()
     const [quotesResponse, setQuotesResponse] = useState([])
     const [quotesResponseArray, setQuotesResponseArray] = useState([])
     const [editingQuote, setEditingQuote] = useState({})
@@ -14,7 +17,6 @@ export default function SummaryQuote() {
     useEffect(() => {
         async function fetchQuotes() {
             const username = localStorage.getItem("username")
-            
             let query = { "uploadByUser": localStorage.getItem("username") }
             const response = await quoteService.getQuote(query)
             setQuotesResponse(response.data.response)
@@ -24,9 +26,14 @@ export default function SummaryQuote() {
 
     }, []);
 
-    const handleEditQuote = (quoteId) => {
-        let queryAndBody = {_id: quoteId}
-        quoteService.editQuote(queryAndBody)
+    const handleEditQuote = async (quoteId) => {
+        try {
+            let queryAndBody = { _id: quoteId }
+            navigate(`/edit_quote/${quoteId}`)
+            const response = await quoteService.editQuote(queryAndBody)
+        } catch (error) {
+            alert(error)
+        }
     }
 
     return (
@@ -38,11 +45,11 @@ export default function SummaryQuote() {
                             <MinimalQuoteContainer>
                                 <InternalContainer>
                                     <Paragraph>{data.quotes[0].quote} </Paragraph>
-                                    <ParagraphAutor>—{data.author}</ParagraphAutor>                                
+                                    <ParagraphAutor>—{data.author}</ParagraphAutor>
                                     <MdbIcon icon="trash-alt" />
-                                    <MdbIcon icon="pencil-alt" onClick={(handleEditQuote(data._id))} />
+                                    <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id)} />
                                     <MdbIcon icon="info-circle" />
-                                    </InternalContainer>
+                                </InternalContainer>
                             </MinimalQuoteContainer>
                         </div>
                     ))

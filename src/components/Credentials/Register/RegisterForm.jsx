@@ -58,14 +58,11 @@ function RegisterForm() {
 
             if (response === true) {
                 alert('Usuário cadastrado com sucesso')
-                console.log(`AUTO LOGIN INFOS: email: ${email.email} password: ${registerData.password}`)
                 await loginAndRegisterService.login({
                     email: email.email,
                     password: registerData.password
                 })
                 navigate('/quotes')
-
-
                 // envia para a pagina de login e preenche auto. o email
                 //navigate(`/login?email=${encodeURIComponent(email.email)}`)
             }

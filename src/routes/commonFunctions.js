@@ -41,7 +41,6 @@ export async function userExists(proprietyTarget) {
 
 // SEL3CT QU0T3 AQUI
 export async function selectQuote(body) {
-  console.log("body: ", body)
   let property = Object.keys(body)[0]
   let target = body[property]
   let query = { [property]: target }

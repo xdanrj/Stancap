@@ -53,11 +53,7 @@ export default function NewPasswordForm() {
     const handleSubmitNewPassword = async (e) => {
         e.preventDefault();
         try {
-            console.log(`email: ${email.email} // newPassword.password: ${newPassword.password} // newPassword.confirmPassword: ${newPassword.confirmPassword}`)
-            console.log("OBJETO EMAIL SECO: ", email)
-            console.log("OBJETO NEWPASSWORD SECO: ", newPassword)
             if (newPassword.password == newPassword.confirmPassword) {
-
                 const response = await loginAndRegisterService.newPassword({ ...email, password: newPassword.password })
                 console.log("response: ", response)
                 if (response === true) {

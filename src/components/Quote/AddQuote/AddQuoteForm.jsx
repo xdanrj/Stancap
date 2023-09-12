@@ -1,14 +1,7 @@
 import React from "react";
-import dayjs from "dayjs";
-import GenericQuoteForm from "../GenericQuoteForm/GenericQuoteForm";
-
-import quoteEditingServices from "../../../services/quoteServices"
-const quoteEditingService = new quoteEditingServices()
+import GenericQuoteForm from "../../components/Quote/GenericQuoteForm/GenericQuoteForm"
 
 export default function AddQuoteForm() {
-
-    //const response = await quoteEditingService.addQuote(updatedQuoteData)
-
     return (
         <>
             <GenericQuoteForm

@@ -26,7 +26,6 @@ export default class loginAndRegisterServices {
             ...dados.email,
             ...dados.code
         }
-        console.log("emailAndCode: ", emailAndCode)
         const response = await this.axios.post('/check_code', emailAndCode)
         // se recebeu um objeto com "{response}":
         if (response.data.response) {

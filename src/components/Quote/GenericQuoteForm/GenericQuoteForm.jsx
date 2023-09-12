@@ -26,6 +26,7 @@ export default function GenericQuoteForm(props) {
 
     const handleSubmitQuote = async (e) => {
         e.preventDefault();
+        let response
         try {
             const updatedQuoteData = {
                 ...quoteData,
@@ -35,9 +36,9 @@ export default function GenericQuoteForm(props) {
                 uploadByUser: localStorage.getItem("username")
             }
             if(props.type === "addQuote"){
-                const response = await quoteEditingService.addQuote(updatedQuoteData)
+                response = await quoteEditingService.addQuote(updatedQuoteData)
             } else if(props.type === "editQuote"){
-                const response = await quoteEditingService.editQuote(updatedQuoteData)
+                response = await quoteEditingService.editQuote(updatedQuoteData)
             }
             
             if (response === true) {
