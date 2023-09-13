@@ -25,7 +25,6 @@ export default function App() {
         <Route path="/testes" element={<Testes />} />
         <Route path="/new_password" element={<NewPassword />} />
         <Route path="/add_quote" element={<AddQuote />} />
-        <Route path="/edit_quote" element={<EditQuote />} />
         <Route path="/edit_quote/:id" element={<EditQuote />} />
         <Route path="/my_quotes" element={<MyQuotes />} />
       </Routes>

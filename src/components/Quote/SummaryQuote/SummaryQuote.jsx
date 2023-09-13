@@ -18,7 +18,10 @@ export default function SummaryQuote() {
         async function fetchQuotes() {
             const username = localStorage.getItem("username")
             let query = { "uploadByUser": localStorage.getItem("username") }
+
             const response = await quoteService.getQuote(query)
+            console.log(response)
+            console.log(response.data.response)
             setQuotesResponse(response.data.response)
             setQuotesResponseArray(response.data.response.response)
         }
@@ -28,9 +31,7 @@ export default function SummaryQuote() {
 
     const handleEditQuote = async (quoteId) => {
         try {
-            let queryAndBody = { _id: quoteId }
             navigate(`/edit_quote/${quoteId}`)
-            const response = await quoteService.editQuote(queryAndBody)
         } catch (error) {
             alert(error)
         }

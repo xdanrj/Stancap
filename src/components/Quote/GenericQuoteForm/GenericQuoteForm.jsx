@@ -24,6 +24,19 @@ export default function GenericQuoteForm(props) {
         tags: [],
     })
 
+    useEffect(() => {
+        async function getQuoteToEdit() {
+            if (props.quoteIdToEdit) {
+                const response = await quoteEditingService.getQuote(props.quoteIdToEdit)
+                console.log(response)
+                setQuoteData({ author: 'autor mockado' })
+            }
+        }
+
+        getQuoteToEdit()
+
+    }, [])
+
     const handleSubmitQuote = async (e) => {
         e.preventDefault();
         let response
@@ -35,12 +48,12 @@ export default function GenericQuoteForm(props) {
                 uploadDate: dayjs().format(),
                 uploadByUser: localStorage.getItem("username")
             }
-            if(props.type === "addQuote"){
+            if (props.type === "addQuote") {
                 response = await quoteEditingService.addQuote(updatedQuoteData)
-            } else if(props.type === "editQuote"){
+            } else if (props.type === "editQuote") {
                 response = await quoteEditingService.editQuote(updatedQuoteData)
             }
-            
+
             if (response === true) {
                 alert('Quote criada com sucesso')
             } else {
