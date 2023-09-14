@@ -28,8 +28,8 @@ export default function GenericQuoteForm(props) {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
                 const response = await quoteEditingService.getQuote(props.quoteIdToEdit)
-                console.log(response)
-                setQuoteData({ author: 'autor mockado' })
+                console.log(response.data.response.response)
+                setQuoteData(response.data.response.response)
             }
         }
 
