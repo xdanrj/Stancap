@@ -27,12 +27,18 @@ export default function GenericQuoteForm(props) {
     useEffect(() => {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
+                console.log("entrou na condicao certa")
                 const apiResponse = await quoteEditingService.getQuote(props.quoteIdToEdit)
                 const response = await apiResponse.data.response.response[0]
                 console.log(response)
                 setQuoteData((prevData) => ({
                     ...prevData,
-                    ...response
+                    quotes: response.quotes[0].quote,
+                    author: response.author,
+                    date: response.date,
+                    source: response.source,
+                    context: response.context,
+                    tags: response.tags
                 }))
             }
         }
@@ -45,21 +51,23 @@ export default function GenericQuoteForm(props) {
         e.preventDefault();
         let response
         try {
-            const updatedQuoteData = {
-                ...quoteData,
-                quotes: quotes,
-                tags: tags,
-                uploadDate: dayjs().format(),
-                uploadByUser: localStorage.getItem("username")
-            }
             if (props.type === "addQuote") {
+                const updatedQuoteData = {
+                    ...quoteData,
+                    quotes: quotes,
+                    tags: tags,
+                    uploadDate: dayjs().format(),
+                    uploadByUser: localStorage.getItem("username")
+                }
                 response = await quoteEditingService.addQuote(updatedQuoteData)
             } else if (props.type === "editQuote") {
-                response = await quoteEditingService.editQuote(updatedQuoteData)
+                console.log(props.type)
+                const response = await quoteEditingService.editQuote(props.quoteIdToEdit, quoteData)
+                console.log(response)
             }
-
+            
             if (response === true) {
-                alert('Quote criada com sucesso')
+                alert(props.submitMessage)
             } else {
                 alert(response)
             }
@@ -133,7 +141,7 @@ export default function GenericQuoteForm(props) {
                     </FormGroup>
                 </Row>
 
-                <Button type="submit">{props.texts.button}</Button>
+                <Button type="submit">{props.texts.submitButton}</Button>
             </Form>
         </>
     )

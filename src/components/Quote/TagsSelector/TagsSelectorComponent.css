@@ -3,31 +3,11 @@
 }
 
 .tagClass {
-  color:#b04c4c;
+  color:#000000;
 }
 
-.bgClass{
-  background-color: #4cb0a1;
-}
-
-.border{
-  color: a;
-}
-
-.main{
-  color: a;
-}
-
-.radius{
-  color: a;
-}
-
-.s{
-  color: a;
-}
-
-.tag-remove{
-  color: a;
+.inputClass {
+  
 }
 /* documentação: 
 .rti--container {

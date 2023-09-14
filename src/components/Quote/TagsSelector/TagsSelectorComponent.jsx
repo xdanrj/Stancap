@@ -9,7 +9,7 @@ export const TagSelectorComponent = ({tags, setTags}) => {
   return (
     <>
       <TagsInput
-        classNames={{tag: "tagClass", bg: "bgClass", tagremove: "tagremoveClass"}}
+        classNames={{tag: "tagClass", input: "inputClass"}}
         value={tags}
         onChange={setTags}
         name="tags"
