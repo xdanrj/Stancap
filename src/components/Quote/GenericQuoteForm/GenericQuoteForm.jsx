@@ -27,9 +27,13 @@ export default function GenericQuoteForm(props) {
     useEffect(() => {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
-                const response = await quoteEditingService.getQuote(props.quoteIdToEdit)
-                console.log(response.data.response.response)
-                setQuoteData(response.data.response.response)
+                const apiResponse = await quoteEditingService.getQuote(props.quoteIdToEdit)
+                const response = await apiResponse.data.response.response[0]
+                console.log(response)
+                setQuoteData((prevData) => ({
+                    ...prevData,
+                    ...response
+                }))
             }
         }
 
@@ -84,7 +88,7 @@ export default function GenericQuoteForm(props) {
                 <Row>
                     <FormGroup>
                         <FloatingLabel label="Quote">
-                            <Form.Control name="quotes" placeholder="Quote" onChange={handleSingleQuoteChange}>
+                            <Form.Control name="quotes" placeholder="Quote" onChange={handleSingleQuoteChange} value={quoteData.quotes}>
                             </Form.Control>
                         </FloatingLabel>
                     </FormGroup>
@@ -101,7 +105,7 @@ export default function GenericQuoteForm(props) {
                     <Col>
                         <FormGroup>
                             <FloatingLabel label="Data">
-                                <Form.Control name="date" placeholder="Data" onChange={handleGenericChange}>
+                                <Form.Control name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
                                 </Form.Control>
                             </FloatingLabel>
                         </FormGroup>
@@ -111,7 +115,7 @@ export default function GenericQuoteForm(props) {
                     <Col>
                         <FormGroup>
                             <FloatingLabel label="Source">
-                                <Form.Control name="source" placeholder="Source" onChange={handleGenericChange}>
+                                <Form.Control name="source" placeholder="Source" onChange={handleGenericChange} value={quoteData.source}>
                                 </Form.Control>
                             </FloatingLabel>
                         </FormGroup>
@@ -119,13 +123,13 @@ export default function GenericQuoteForm(props) {
                     <Col>
                         <FormGroup>
                             <FloatingLabel label="Contexto (Opcional)">
-                                <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange}>
+                                <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange} value={quoteData.context}>
                                 </Form.Control>
                             </FloatingLabel>
                         </FormGroup>
                     </Col>
                     <FormGroup>
-                        <TagSelectorComponent tags={tags} setTags={setTags} />
+                        <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
                     </FormGroup>
                 </Row>
 
