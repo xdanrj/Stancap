@@ -6,7 +6,7 @@ export default function AddQuote() {
         <>
             <GenericQuoteForm
                 texts={{
-                    submitButton: "Criar quote", submitMessage: "Quote criada com sucesso"
+                    submitButton: "Criar quote", submitSuccess: "Quote criada com sucesso"
                 }}
                 type={"addQuote"}
             />

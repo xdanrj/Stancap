@@ -13,7 +13,7 @@ export default function EditQuote() {
         <>
             <GenericQuoteForm
                 texts={{
-                    submitButton: "Editar quote", submitMessage: "Quote editada com sucesso"
+                    submitButton: "Editar quote", submitSuccess: "Quote editada com sucesso"
                 }}
                 type={"editQuote"}
                 quoteIdToEdit={quoteId}

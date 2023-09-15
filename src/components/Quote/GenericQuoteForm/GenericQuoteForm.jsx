@@ -63,11 +63,11 @@ export default function GenericQuoteForm(props) {
             } else if (props.type === "editQuote") {
                 console.log(props.type)
                 const response = await quoteEditingService.editQuote(props.quoteIdToEdit, quoteData)
-                console.log(response)
             }
-            
+
             if (response === true) {
-                alert(props.submitMessage)
+                console.log(props.texts.submitSuccess)
+                alert(props.texts.submitSuccess)
             } else {
                 alert(response)
             }
@@ -79,16 +79,23 @@ export default function GenericQuoteForm(props) {
     const handleGenericChange = (e) => {
         const { name, value } = e.target
 
+        if(name === "quotes") {
+            setQuotes((prevQuoteData) => ({
+                ...prevQuoteData,
+                [name]: value
+            }))
+        }
+
         setQuoteData((prevData) => ({
             ...prevData,
             [name]: value
         }))
     }
 
-    const handleSingleQuoteChange = (e) => {
+    /*const handleSingleQuoteChange = (e) => {
         const newQuote = { quote: e.target.value }
-        setQuotes({ ...quotes, ...newQuote })
-    }
+        setQuotes({ ...quotes, newQuote })
+    }*/
 
     return (
         <>
@@ -96,7 +103,7 @@ export default function GenericQuoteForm(props) {
                 <Row>
                     <FormGroup>
                         <FloatingLabel label="Quote">
-                            <Form.Control name="quotes" placeholder="Quote" onChange={handleSingleQuoteChange} value={quoteData.quotes}>
+                            <Form.Control name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes}>
                             </Form.Control>
                         </FloatingLabel>
                     </FormGroup>
