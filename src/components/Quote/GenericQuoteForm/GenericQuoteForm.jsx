@@ -25,6 +25,7 @@ export default function GenericQuoteForm(props) {
     })
 
     useEffect(() => {
+
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
                 console.log("entrou na condicao certa")
@@ -63,11 +64,11 @@ export default function GenericQuoteForm(props) {
             } else if (props.type === "editQuote") {
                 console.log(props.type)
                 const response = await quoteEditingService.editQuote(props.quoteIdToEdit, quoteData)
-                console.log(response)
             }
-            
+
             if (response === true) {
-                alert(props.submitMessage)
+                console.log(props.texts.submitSuccess)
+                alert(props.texts.submitSuccess)
             } else {
                 alert(response)
             }
@@ -87,7 +88,7 @@ export default function GenericQuoteForm(props) {
 
     const handleSingleQuoteChange = (e) => {
         const newQuote = { quote: e.target.value }
-        setQuotes({ ...quotes, ...newQuote })
+        setQuotes({ ...quotes, newQuote })
     }
 
     return (
