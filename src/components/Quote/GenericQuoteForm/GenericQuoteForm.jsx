@@ -13,7 +13,7 @@ const quoteEditingService = new quoteEditingServices()
 
 export default function GenericQuoteForm(props) {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
-    const [quotes, setQuotes] = useState([])
+    const [ quotes, setQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
         quotes: [],
@@ -25,27 +25,25 @@ export default function GenericQuoteForm(props) {
     })
 
     useEffect(() => {
-
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
                 console.log("entrou na condicao certa")
                 const apiResponse = await quoteEditingService.getQuote(props.quoteIdToEdit)
                 const response = await apiResponse.data.response.response[0]
                 console.log(response)
+                console.log(response.quotes[0].quote)
                 setQuoteData((prevData) => ({
                     ...prevData,
                     quotes: response.quotes[0].quote,
                     author: response.author,
-                    date: response.date,
+                    date: response.date,    
                     source: response.source,
                     context: response.context,
                     tags: response.tags
                 }))
             }
         }
-
         getQuoteToEdit()
-
     }, [])
 
     const handleSubmitQuote = async (e) => {
@@ -62,15 +60,15 @@ export default function GenericQuoteForm(props) {
                 }
                 response = await quoteEditingService.addQuote(updatedQuoteData)
             } else if (props.type === "editQuote") {
-                console.log(props.type)
-                const response = await quoteEditingService.editQuote(props.quoteIdToEdit, quoteData)
+                const updatedQuoteData = {
+                    ...quoteData,
+                    quotes: quotes,
+                    tags: tags
+                }
+                const response = await quoteEditingService.editQuote(props.quoteIdToEdit, updatedQuoteData)
             }
-
-
             if (response === true) {
-                console.log(props.texts.submitSuccess)
                 alert(props.texts.submitSuccess)
-                console.log(props.texts.submitSuccess)
                 alert(props.texts.submitSuccess)
             } else {
                 alert(response)
@@ -83,10 +81,10 @@ export default function GenericQuoteForm(props) {
     const handleGenericChange = (e) => {
         const { name, value } = e.target
 
-        if(name === "quotes") {
+        if (name === "quotes") {
             setQuotes((prevQuoteData) => ({
                 ...prevQuoteData,
-                [name]: value
+                ["quote"]: value
             }))
         }
 
