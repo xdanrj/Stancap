@@ -9,7 +9,7 @@ export const FormGroupMultipleQuote = styled(originalForm.Group).attrs(() => ({
    
   `;
 
-export const MDBIcon = styled(originalMDBIcon).attrs(() => ({
+export const AddIcon = styled(originalMDBIcon).attrs(() => ({
     className: "my-3"
 }))`
 

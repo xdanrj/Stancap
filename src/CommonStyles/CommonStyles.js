@@ -16,7 +16,7 @@ export const FormGroup = styled(originalForm.Group).attrs(() => ({
 `;
 
 export const CenteredFormControl = styled(originalFormControl).attrs(() => ({
-  className: ""
+  className: "w-50"
 }))`
   
 `;

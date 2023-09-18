@@ -4,8 +4,9 @@ import Button from "react-bootstrap/Button";
 import { Form, Col, Row } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../CommonStyles/CommonStyles";
-import { MDBIcon, FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyles";
+import { FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
+import MultipleQuoteInputs from "./MultipleQuoteInputs";
 import dayjs from "dayjs";
 
 import quoteEditingServices from "../../../services/quoteServices"
@@ -96,31 +97,14 @@ export default function MultipleQuoteGenericForm(props) {
     return (
         <>
             <Form onSubmit={handleSubmitQuote}>
-                <Row>
-                    <Col>
-                        <FormGroupMultipleQuote>
-                            <FloatingLabel label="Quote">
-                                <Form.Control name="quote" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes}>
-                                </Form.Control>
-                            </FloatingLabel>
-                        </FormGroupMultipleQuote>
-                    </Col>
-                    <Col>
-                        <FormGroupMultipleQuote>
-                            <FloatingLabel label="QuoteAutor">
-                                <Form.Control name="quoteautor" placeholder="QuoteAutor" onChange={handleGenericChange} value={quoteData.quotes}>
-                                </Form.Control>
-                            </FloatingLabel>
-                        </FormGroupMultipleQuote>
-                    </Col>
-                </Row>
-                <MDBIcon icon="plus-circle" />
+                
+                <MultipleQuoteInputs onChange={handleGenericChange} quoteValue={quotes} authorValue={quoteData.author}/>
 
                 <Row>
                     <Col>
                         <FormGroup>
                             <FloatingLabel label="Data">
-                                <CenteredFormControl className="w-50" name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
+                                <CenteredFormControl name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
                                 </CenteredFormControl>
                             </FloatingLabel>
                         </FormGroup>
