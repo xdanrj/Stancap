@@ -8,7 +8,7 @@ import Login from './pages/Credentials/Login';
 import Register from './pages/Credentials/Register';
 import NewPassword from './pages/Credentials/NewPassword';
 import Testes from './components/Testes';
-import AddQuote from './pages/Quotes/AddQuote';
+import AddQuote from './pages/Quotes/AddQuote/AddQuote';
 import EditQuote from './pages/Quotes/EditQuote';
 import MyQuotes from './pages/Quotes/MyQuotes';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';

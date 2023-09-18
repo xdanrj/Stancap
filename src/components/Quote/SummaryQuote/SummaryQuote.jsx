@@ -5,7 +5,6 @@ import { Col, Row } from "react-bootstrap";
 import quoteEditingServices from "../../../services/quoteServices"
 import { useNavigate } from "react-router-dom";
 
-
 const quoteService = new quoteEditingServices()
 
 export default function SummaryQuote() {

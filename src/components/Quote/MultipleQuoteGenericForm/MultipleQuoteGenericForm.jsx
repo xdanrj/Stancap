@@ -3,7 +3,8 @@ import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
 import { Form, Col, Row } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FloatingLabel, FormGroup } from "../../../CommonStyles/CommonStyles";
+import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../CommonStyles/CommonStyles";
+import { MDBIcon, FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import dayjs from "dayjs";
 
@@ -11,9 +12,9 @@ import quoteEditingServices from "../../../services/quoteServices"
 
 const quoteEditingService = new quoteEditingServices()
 
-export default function GenericQuoteForm(props) {
+export default function MultipleQuoteGenericForm(props) {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
-    const [ quotes, setQuotes] = useState([])
+    const [quotes, setQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
         quotes: [],
@@ -36,7 +37,7 @@ export default function GenericQuoteForm(props) {
                     ...prevData,
                     quotes: response.quotes[0].quote,
                     author: response.author,
-                    date: response.date,    
+                    date: response.date,
                     source: response.source,
                     context: response.context,
                     tags: response.tags
@@ -80,50 +81,47 @@ export default function GenericQuoteForm(props) {
 
     const handleGenericChange = (e) => {
         const { name, value } = e.target
-
         if (name === "quotes") {
             setQuotes((prevQuoteData) => ({
                 ...prevQuoteData,
                 ["quote"]: value
             }))
         }
-
         setQuoteData((prevData) => ({
             ...prevData,
             [name]: value
         }))
     }
 
-    /*const handleSingleQuoteChange = (e) => {
-        const newQuote = { quote: e.target.value }
-        setQuotes({ ...quotes, newQuote })
-    }*/
-
     return (
         <>
             <Form onSubmit={handleSubmitQuote}>
                 <Row>
-                    <FormGroup>
-                        <FloatingLabel label="Quote">
-                            <Form.Control name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes}>
-                            </Form.Control>
-                        </FloatingLabel>
-                    </FormGroup>
-
                     <Col>
-                        <FormGroup>
-                            <FloatingLabel label="Autor">
-                                <Form.Control name="author" placeholder="Autor" onChange={handleGenericChange} value={quoteData.author}>
+                        <FormGroupMultipleQuote>
+                            <FloatingLabel label="Quote">
+                                <Form.Control name="quote" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes}>
                                 </Form.Control>
                             </FloatingLabel>
-                        </FormGroup>
+                        </FormGroupMultipleQuote>
                     </Col>
+                    <Col>
+                        <FormGroupMultipleQuote>
+                            <FloatingLabel label="QuoteAutor">
+                                <Form.Control name="quoteautor" placeholder="QuoteAutor" onChange={handleGenericChange} value={quoteData.quotes}>
+                                </Form.Control>
+                            </FloatingLabel>
+                        </FormGroupMultipleQuote>
+                    </Col>
+                </Row>
+                <MDBIcon icon="plus-circle" />
 
+                <Row>
                     <Col>
                         <FormGroup>
                             <FloatingLabel label="Data">
-                                <Form.Control name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
-                                </Form.Control>
+                                <CenteredFormControl className="w-50" name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
+                                </CenteredFormControl>
                             </FloatingLabel>
                         </FormGroup>
                     </Col>

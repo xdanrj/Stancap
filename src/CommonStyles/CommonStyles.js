@@ -13,7 +13,12 @@ export const GlobalStyles = createGlobalStyle`
 export const FormGroup = styled(originalForm.Group).attrs(() => ({
   className: "mb-4"
 }))`
- 
+`;
+
+export const CenteredFormControl = styled(originalFormControl).attrs(() => ({
+  className: ""
+}))`
+  
 `;
 
 export const DisabledFormControl = styled(originalFormControl).attrs(() => ({
