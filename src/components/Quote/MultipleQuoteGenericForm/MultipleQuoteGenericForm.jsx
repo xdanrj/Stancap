@@ -16,6 +16,7 @@ const quoteEditingService = new quoteEditingServices()
 export default function MultipleQuoteGenericForm(props) {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
     const [quotes, setQuotes] = useState([])
+    const [multipleQuotes, setMultipleQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
         quotes: [],
@@ -94,11 +95,21 @@ export default function MultipleQuoteGenericForm(props) {
         }))
     }
 
+    const handleMultipleQuoteChange = (e) => {
+        const { name, value } = e.target
+        setMultipleQuotes((prevMultipleQuotesData) => ({
+            ...prevMultipleQuotesData, 
+            [name]: value
+            
+        }))
+        console.log(multipleQuotes)
+    }
+
     return (
         <>
             <Form onSubmit={handleSubmitQuote}>
                 
-                <MultipleQuoteInputs onChange={handleGenericChange} quoteValue={quotes} authorValue={quoteData.author}/>
+                <MultipleQuoteInputs onChange={handleMultipleQuoteChange} quoteValue={multipleQuotes.quote} authorValue={multipleQuotes.author}/>
 
                 <Row>
                     <Col>

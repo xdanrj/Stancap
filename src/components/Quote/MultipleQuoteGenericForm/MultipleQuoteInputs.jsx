@@ -30,8 +30,8 @@ export default function MultipleQuoteInputs(props) {
                 </Col>
                 <Col>
                     <FormGroupMultipleQuote>
-                        <FloatingLabel label="QuoteAutor">
-                            <Form.Control name="quoteautor" placeholder="QuoteAutor" onChange={props.onChange} value={props.authorValue}>
+                        <FloatingLabel label="Autor">
+                            <Form.Control name="author" placeholder="Autor" onChange={props.onChange} value={props.authorValue}>
                             </Form.Control>
                         </FloatingLabel>
                     </FormGroupMultipleQuote>
