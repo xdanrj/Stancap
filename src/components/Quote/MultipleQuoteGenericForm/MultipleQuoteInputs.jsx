@@ -23,7 +23,7 @@ export default function MultipleQuoteInputs(props) {
                 <Col>
                     <FormGroupMultipleQuote>
                         <FloatingLabel label="Quote">
-                            <Form.Control name="quote" placeholder="Quote" onChange={props.onChange} value={props.quoteValue}>
+                            <Form.Control index={index} name="quote" placeholder="Quote" onChange={(e) => props.onChange(e, index)} value={props.quoteValue}>
                             </Form.Control>
                         </FloatingLabel>
                     </FormGroupMultipleQuote>
@@ -31,7 +31,7 @@ export default function MultipleQuoteInputs(props) {
                 <Col>
                     <FormGroupMultipleQuote>
                         <FloatingLabel label="Autor">
-                            <Form.Control name="author" placeholder="Autor" onChange={props.onChange} value={props.authorValue}>
+                            <Form.Control name="author" placeholder="Autor" onChange={(e) => props.onChange(e, index)} value={props.authorValue}>
                             </Form.Control>
                         </FloatingLabel>
                     </FormGroupMultipleQuote>

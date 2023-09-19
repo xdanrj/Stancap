@@ -95,13 +95,20 @@ export default function MultipleQuoteGenericForm(props) {
         }))
     }
 
-    const handleMultipleQuoteChange = (e) => {
+    const handleMultipleQuoteChange = (e, index) => {
         const { name, value } = e.target
-        setMultipleQuotes((prevMultipleQuotesData) => ({
-            ...prevMultipleQuotesData, 
+        const updatedMultipleQuotes = [...multipleQuotes]
+        if (!updatedMultipleQuotes[index]) {
+            updatedMultipleQuotes[index] = {}
+          }
+
+        updatedMultipleQuotes[index] = {
+            ...updatedMultipleQuotes[index],
             [name]: value
-            
-        }))
+        }
+
+        setMultipleQuotes(updatedMultipleQuotes);
+        console.log(index)
         console.log(multipleQuotes)
     }
 
