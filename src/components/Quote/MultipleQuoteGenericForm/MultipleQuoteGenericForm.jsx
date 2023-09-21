@@ -4,7 +4,6 @@ import Button from "react-bootstrap/Button";
 import { Form, Col, Row } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../CommonStyles/CommonStyles";
-import { FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import MultipleQuoteInputs from "./MultipleQuoteInputs";
 import dayjs from "dayjs";
@@ -56,7 +55,7 @@ export default function MultipleQuoteGenericForm(props) {
             if (props.type === "addQuote") {
                 const updatedQuoteData = {
                     ...quoteData,
-                    quotes: quotes,
+                    quotes: multipleQuotes,
                     tags: tags,
                     uploadDate: dayjs().format(),
                     uploadByUser: localStorage.getItem("username")
@@ -65,13 +64,13 @@ export default function MultipleQuoteGenericForm(props) {
             } else if (props.type === "editQuote") {
                 const updatedQuoteData = {
                     ...quoteData,
-                    quotes: quotes,
+                    quotes: multipleQuotes,
                     tags: tags
                 }
                 const response = await quoteEditingService.editQuote(props.quoteIdToEdit, updatedQuoteData)
             }
+            
             if (response === true) {
-                alert(props.texts.submitSuccess)
                 alert(props.texts.submitSuccess)
             } else {
                 alert(response)
@@ -100,13 +99,12 @@ export default function MultipleQuoteGenericForm(props) {
         const updatedMultipleQuotes = [...multipleQuotes]
         if (!updatedMultipleQuotes[index]) {
             updatedMultipleQuotes[index] = {}
-          }
+        }
 
         updatedMultipleQuotes[index] = {
             ...updatedMultipleQuotes[index],
             [name]: value
         }
-
         setMultipleQuotes(updatedMultipleQuotes);
         console.log(index)
         console.log(multipleQuotes)
@@ -115,9 +113,7 @@ export default function MultipleQuoteGenericForm(props) {
     return (
         <>
             <Form onSubmit={handleSubmitQuote}>
-                
-                <MultipleQuoteInputs onChange={handleMultipleQuoteChange} quoteValue={multipleQuotes.quote} authorValue={multipleQuotes.author}/>
-
+                <MultipleQuoteInputs onChange={handleMultipleQuoteChange} quoteValue={multipleQuotes.quote} authorValue={multipleQuotes.author} />
                 <Row>
                     <Col>
                         <FormGroup>
