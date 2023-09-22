@@ -7,6 +7,6 @@ export default class MultipleQuoteValidations {
     }
 
     showEventTarget(){
-        return this.eventTarget
+        return this.eventTarget.value
     }
 }

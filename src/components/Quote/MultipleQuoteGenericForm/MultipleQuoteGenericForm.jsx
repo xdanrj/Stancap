@@ -9,6 +9,7 @@ import MultipleQuoteInputs from "./MultipleQuoteInputs";
 import dayjs from "dayjs";
 
 import quoteEditingServices from "../../../services/quoteServices"
+import MultipleQuoteValidations from "./Validations";
 
 const quoteEditingService = new quoteEditingServices()
 
@@ -95,6 +96,8 @@ export default function MultipleQuoteGenericForm(props) {
     }
 
     const handleMultipleQuoteChange = (e, index) => {
+        const validation = new MultipleQuoteValidations(e.target)
+        console.log(validation.showEventTarget())
         const { name, value } = e.target
         const updatedMultipleQuotes = [...multipleQuotes]
         if (!updatedMultipleQuotes[index]) {

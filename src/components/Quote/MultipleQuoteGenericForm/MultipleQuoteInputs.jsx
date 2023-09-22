@@ -7,8 +7,7 @@ import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../CommonSt
 import { MdbIcon, FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 
-import MultipleQuoteValidations from "./Validations";
-const validation = new MultipleQuoteValidations(e.target)
+
 
 export default function MultipleQuoteInputs(props) {
     const [qtdQuotes, setQtdQuotes] = useState(1)
@@ -58,7 +57,7 @@ export default function MultipleQuoteInputs(props) {
                                         <Form.Control index={index} name="quote" placeholder="Quote" value={props.quoteValue}
                                             onChange={(e) =>
                                                 props.onChange(e, index)
-                                                validation.showEventTarget()
+                                                
                                             }
                                         >
                                         </Form.Control>
