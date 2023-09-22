@@ -7,6 +7,9 @@ import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../CommonSt
 import { MdbIcon, FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 
+import MultipleQuoteValidations from "./Validations";
+const validation = new MultipleQuoteValidations(e.target)
+
 export default function MultipleQuoteInputs(props) {
     const [qtdQuotes, setQtdQuotes] = useState(1)
     const [iconVisible, setIconVisible] = useState([{ 0: true }])
@@ -20,24 +23,24 @@ export default function MultipleQuoteInputs(props) {
         const newObject = { [newIndex]: true }
 
         updatedIconVisible[index] = !updatedIconVisible[index]
-        
+
         updatedIconVisible.push(newObject)
-        
+
         setIconVisible(updatedIconVisible)
         //console.log(qtdQuotes)
         console.log(updatedIconVisible)
         //console.log(iconVisible)
     }
     const removeQuoteInput = (index) => {
-        
+
         setQtdQuotes(qtdQuotes - 1)
-        
+
         const updatedIconVisible = [...iconVisible]
 
         updatedIconVisible[index - 1] = !updatedIconVisible[index - 1]
 
         setIconVisible(updatedIconVisible)
-        
+
         //console.log(qtdQuotes)
         console.log(updatedIconVisible)
     }
@@ -52,7 +55,12 @@ export default function MultipleQuoteInputs(props) {
                                 <FormGroupMultipleQuote>
                                     <FloatingLabel label="Quote">
 
-                                        <Form.Control index={index} name="quote" placeholder="Quote" onChange={(e) => props.onChange(e, index)} value={props.quoteValue}>
+                                        <Form.Control index={index} name="quote" placeholder="Quote" value={props.quoteValue}
+                                            onChange={(e) =>
+                                                props.onChange(e, index)
+                                                validation.showEventTarget()
+                                            }
+                                        >
                                         </Form.Control>
                                     </FloatingLabel>
                                 </FormGroupMultipleQuote>
@@ -60,7 +68,10 @@ export default function MultipleQuoteInputs(props) {
                             <Col>
                                 <FormGroupMultipleQuote>
                                     <FloatingLabel label="Autor">
-                                        <Form.Control name="author" placeholder="Autor" onChange={(e) => props.onChange(e, index)} value={props.authorValue}>
+                                        <Form.Control name="author" placeholder="Autor" value={props.authorValue}
+                                            onChange={(e) =>
+                                                props.onChange(e, index)}
+                                        >
                                         </Form.Control>
                                     </FloatingLabel>
                                 </FormGroupMultipleQuote>

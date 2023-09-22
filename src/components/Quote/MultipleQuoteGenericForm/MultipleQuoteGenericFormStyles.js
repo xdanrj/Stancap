@@ -4,7 +4,7 @@ import { MDBIcon as originalMDBIcon } from 'mdb-react-ui-kit';
 import { Form as originalForm } from 'react-bootstrap';
 
 export const FormGroupMultipleQuote = styled(originalForm.Group).attrs(() => ({
-    className: ""
+    className: "my-2"
   }))`
    
   `;
