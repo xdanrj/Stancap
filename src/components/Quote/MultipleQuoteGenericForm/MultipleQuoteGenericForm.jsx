@@ -116,7 +116,7 @@ export default function MultipleQuoteGenericForm(props) {
     return (
         <>
             <Form onSubmit={handleSubmitQuote}>
-                <MultipleQuoteInputs onChange={handleMultipleQuoteChange} quoteValue={multipleQuotes.quote} authorValue={multipleQuotes.author} />
+                <MultipleQuoteInputs onChange={handleMultipleQuoteChange} quoteValue={multipleQuotes.quote} authorValue={multipleQuotes.author} multipleQuotesValue={multipleQuotes}/>
                 <Row>
                     <Col>
                         <FormGroup>

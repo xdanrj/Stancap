@@ -3,10 +3,15 @@ export default class MultipleQuoteValidations {
         this.eventTarget = eventTarget
     }
 
-    isEmpty() {
+    isEmpty(quoteInputsValues) {
+        if (quoteInputsValues && (quoteInputsValues.quote && quoteInputsValues.author)) {
+            return false
+        } else {
+            return true
+        }
     }
 
-    showEventTarget(){
+    showEventTarget() {
         return this.eventTarget.value
     }
 }

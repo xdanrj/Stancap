@@ -6,14 +6,19 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../CommonStyles/CommonStyles";
 import { MdbIcon, FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
-
-
+import MultipleQuoteValidations from "./Validations";
+const validation = new MultipleQuoteValidations()
 
 export default function MultipleQuoteInputs(props) {
     const [qtdQuotes, setQtdQuotes] = useState(1)
     const [iconVisible, setIconVisible] = useState([{ 0: true }])
 
     const addQuoteInput = (index) => {
+        //console.log(props.multipleQuotesValue[index].quote)
+        const isInputsEmpty = validation.isEmpty(props.multipleQuotesValue[index])
+        
+        isInputsEmpty ? console.log("inputs vazios") : console.log("inputs cheios")
+
         setQtdQuotes(qtdQuotes + 1)
 
         const updatedIconVisible = [...iconVisible]
@@ -29,6 +34,7 @@ export default function MultipleQuoteInputs(props) {
         //console.log(qtdQuotes)
         console.log(updatedIconVisible)
         //console.log(iconVisible)
+        
     }
     const removeQuoteInput = (index) => {
 
@@ -57,7 +63,6 @@ export default function MultipleQuoteInputs(props) {
                                         <Form.Control index={index} name="quote" placeholder="Quote" value={props.quoteValue}
                                             onChange={(e) =>
                                                 props.onChange(e, index)
-                                                
                                             }
                                         >
                                         </Form.Control>
