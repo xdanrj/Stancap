@@ -1,28 +1,20 @@
 import React from "react"
 import { useState, useEffect } from "react"
-import { Alert } from "react-bootstrap"
+import { Toast, ToastContainer, Row, Col } from "react-bootstrap"
 
 export default function AlertComponent(props) {
-    const [showAlert, setShowAlert] = useState()
-
-    useEffect(() => {
-        handleShowAlert()
-    }, [])
-
-    const handleShowAlert = () => {
-        setShowAlert(true)
-
-        setTimeout(() => {
-            setShowAlert(false)
-        }, 3000)
-    }
-
+    const [show, setShow] = useState()
     return (
         <>
-            {showAlert && (
-                <Alert variant="primary">{props.text}</Alert>
-            )}
+        <Row>
+            <Col>
+            <ToastContainer className="mb-3 mx-3" position="bottom-start">
+                <Toast onClose={() => setShow(false)} show={show} bg="dark" animation={true} delay={3000} autohide>
+                    <Toast.Body>a</Toast.Body>
+                </Toast>
+            </ToastContainer>
+            </Col>
+            </Row>
         </>
-
     )
 }
