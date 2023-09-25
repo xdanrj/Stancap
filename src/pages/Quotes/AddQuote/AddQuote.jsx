@@ -1,10 +1,5 @@
 import { React, useState } from "react"
-import {
-    MDBTabsItem,
-    MDBTabsContent,
-    MDBTabsPane
-} from 'mdb-react-ui-kit';
-
+import { MDBTabsItem, MDBTabsContent, MDBTabsPane } from 'mdb-react-ui-kit';
 import { MDBTabs, MDBTabsLink } from "./AddQuoteStyles";
 import SingleQuoteGenericForm from "../../../components/Quote/SingleQuoteGenericForm/SingleQuoteGenericForm";
 import MultipleQuoteGenericForm from "../../../components/Quote/MultipleQuoteGenericForm/MultipleQuoteGenericForm";
@@ -53,7 +48,6 @@ export default function AddQuote() {
                         type={"addQuote"} />
                 </MDBTabsPane>
             </MDBTabsContent>
-
         </>
     )
 }

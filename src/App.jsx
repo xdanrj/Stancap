@@ -29,6 +29,5 @@ export default function App() {
         <Route path="/my_quotes" element={<MyQuotes />} />
       </Routes>
     </Router>
-
   )
 }

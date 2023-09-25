@@ -1,20 +1,20 @@
 import React from "react"
 import { useState, useEffect } from "react"
-import { Toast, ToastContainer, Row, Col } from "react-bootstrap"
+import { Toast, Row, Col, Button } from "react-bootstrap"
+import { MdbIcon, ToastContainer } from "./AlertStyles"
 
 export default function AlertComponent(props) {
     const [show, setShow] = useState()
     return (
         <>
-        <Row>
-            <Col>
-            <ToastContainer className="mb-3 mx-3" position="bottom-start">
-                <Toast onClose={() => setShow(false)} show={show} bg="dark" animation={true} delay={3000} autohide>
-                    <Toast.Body>a</Toast.Body>
+            <ToastContainer position="bottom-center">
+                <Toast onClose={() => setShow(false)} show={show} bg="dark" animation={true} delay={1500} autohide>
+                    <Toast.Body>
+                        <MdbIcon icon="info-circle" />
+                        {props.text}
+                    </Toast.Body>
                 </Toast>
             </ToastContainer>
-            </Col>
-            </Row>
         </>
     )
 }
