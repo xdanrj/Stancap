@@ -11,10 +11,16 @@ import MultipleQuoteValidations from "./Validations";
 const validation = new MultipleQuoteValidations()
 
 export default function MultipleQuoteInputs(props) {
-    const [qtdQuotes, setQtdQuotes] = useState(1)
+    console.log(props.multipleQuotesValue)
     const [iconVisible, setIconVisible] = useState([{ 0: true }])
     const [alertVisible, setAlertVisible] = useState(false)
     const [alertTextState, setAlertTextState] = useState("")
+
+    useEffect(() => {
+        if (props.multipleQuotesValue.length === 0) {
+            props.setMultipleQuotes([{ quote: "", author: "" }])
+        }
+    }, [])
 
     const sendAlert = (alertText) => {
         setAlertVisible(!alertVisible)
@@ -22,13 +28,10 @@ export default function MultipleQuoteInputs(props) {
     }
 
     const addQuoteInput = (index) => {
-        //console.log(props.multipleQuotesValue[index].quote)
         const isInputsEmpty = validation.isEmpty(props.multipleQuotesValue[index])
         if (isInputsEmpty) {
             sendAlert("Um ou mais campos vazios!")
         } else {
-            setQtdQuotes(qtdQuotes + 1)
-
             const updatedIconVisible = [...iconVisible]
 
             const newIndex = iconVisible.length
@@ -39,77 +42,57 @@ export default function MultipleQuoteInputs(props) {
             updatedIconVisible.push(newObject)
 
             setIconVisible(updatedIconVisible)
-            //console.log(qtdQuotes)
+
             console.log(updatedIconVisible)
-            //console.log(iconVisible)
         }
     }
     const removeQuoteInput = (index) => {
-
-        //setQtdQuotes(qtdQuotes - 1)
-        const qtdQuotesCopy = [...qtdQuotes]
-        const updatedQtdQuotes = qtdQuotesCopy.splice(index, 1)
-        setQtdQuotes(updatedQtdQuotes)
-
         const updatedIconVisible = [...iconVisible]
-
         updatedIconVisible[index - 1] = !updatedIconVisible[index - 1]
-
         setIconVisible(updatedIconVisible)
-
-        props.multipleQuotesValue.splice(index, 1)
         console.log(updatedIconVisible)
     }
 
     return (
         <>
-            {
-                Array.from({ length: qtdQuotes }, (_, index) => (
-                    <div key={index}>
-                        <Row>
-                            <Col>
-                                <FormGroupMultipleQuote>
-                                    <FloatingLabel label="Quote">
-
-                                        <Form.Control index={index} name="quote" placeholder="Quote" value={props.quoteValue}
-                                            onChange={(e) =>
-                                                props.onChange(e, index)
-                                            }
-                                        >
-                                        </Form.Control>
-                                    </FloatingLabel>
-                                </FormGroupMultipleQuote>
-                            </Col>
-                            <Col>
-                                <FormGroupMultipleQuote>
-                                    <FloatingLabel label="Autor">
-                                        <Form.Control name="author" placeholder="Autor" value={props.authorValue}
-                                            onChange={(e) =>
-                                                props.onChange(e, index)}
-                                        >
-                                        </Form.Control>
-                                    </FloatingLabel>
-                                </FormGroupMultipleQuote>
-                            </Col>
-                        </Row>
-                        {
-                            iconVisible[index] ? (
-                                <MdbIcon icon="plus-circle" onClick={() => addQuoteInput(index)} />
-                            ) : (<></>)
-                        }
-                        {
-                            index !== 0 ? (
-                                <MdbIcon icon="trash-alt" onClick={() => { removeQuoteInput(index) }} />
-                            ) : (<></>)
-                        }
-                        {
-                            alertVisible && (
-                                <AlertComponent text={alertTextState} />)
-                        }
-                    </div>
-                ))}
+            {props.multipleQuotesValue.map((_, index) => (
+                <div key={index}>
+                    <Row>
+                        <Col>
+                            <FormGroup>
+                                <FloatingLabel label="Quote">
+                                    <Form.Control
+                                        name="quote"
+                                        placeholder="Quote"
+                                        value={props.quoteValue}
+                                        onChange={(e) => props.onChange(e, index)}
+                                    />
+                                </FloatingLabel>
+                            </FormGroup>
+                        </Col>
+                        <Col>
+                            <FormGroup>
+                                <FloatingLabel label="Autor">
+                                    <Form.Control
+                                        name="author"
+                                        placeholder="Autor"
+                                        value={props.authorValue}
+                                        onChange={(e) => props.onChange(e, index)}
+                                    />
+                                </FloatingLabel>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    {index !== 0 && (
+                        <MdbIcon
+                            icon="trash-alt"
+                            onClick={() => removeQuoteInput(index)}
+                        />
+                    )}
+                    <MdbIcon icon="plus-circle" onClick={addQuoteInput} />
+                    {alertVisible && <AlertComponent text={alertTextState} />}
+                </div>
+            ))}
         </>
     )
 }
-
-// <Icon icon="trash-alt" onClick={() => removeQuote()} />
