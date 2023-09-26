@@ -53,6 +53,7 @@ function RegisterForm() {
     const handleSubmitRegister = async (e) => {
         e.preventDefault();
         try {
+            
             const response = await loginAndRegisterService.register(registerData)
 
             if (response === true) {
