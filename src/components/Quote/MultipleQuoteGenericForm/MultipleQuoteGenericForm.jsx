@@ -70,7 +70,7 @@ export default function MultipleQuoteGenericForm(props) {
                 }
                 const response = await quoteEditingService.editQuote(props.quoteIdToEdit, updatedQuoteData)
             }
-            
+
             if (response === true) {
                 alert(props.texts.submitSuccess)
             } else {
@@ -96,8 +96,6 @@ export default function MultipleQuoteGenericForm(props) {
     }
 
     const handleMultipleQuoteChange = (e, index) => {
-        const validation = new MultipleQuoteValidations(e.target)
-        console.log(validation.showEventTarget())
         const { name, value } = e.target
         const updatedMultipleQuotes = [...multipleQuotes]
         if (!updatedMultipleQuotes[index]) {
@@ -109,14 +107,14 @@ export default function MultipleQuoteGenericForm(props) {
             [name]: value
         }
         setMultipleQuotes(updatedMultipleQuotes);
-        console.log(index)
-        console.log(multipleQuotes)
     }
 
     return (
         <>
             <Form onSubmit={handleSubmitQuote}>
-                <MultipleQuoteInputs onChange={handleMultipleQuoteChange} quoteValue={multipleQuotes.quote} authorValue={multipleQuotes.author} multipleQuotesValue={multipleQuotes} setMultipleQuotes={setMultipleQuotes}/>
+                <MultipleQuoteInputs onChange={handleMultipleQuoteChange}
+                    multipleQuotesValue={multipleQuotes}
+                    setMultipleQuotes={setMultipleQuotes} />
                 <Row>
                     <Col>
                         <FormGroup>

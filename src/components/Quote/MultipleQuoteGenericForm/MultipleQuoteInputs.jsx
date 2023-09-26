@@ -27,30 +27,40 @@ export default function MultipleQuoteInputs(props) {
         setAlertTextState(alertText)
     }
 
+    const handleVisibility = (index) => {
+        const copyIconVisible = [...iconVisible]
+        //copyIconVisible[index]
+
+        if(index < copyIconVisible.length) {
+            
+            setIconVisible()
+        }
+    }
+
     const addQuoteInput = (index) => {
         const isInputsEmpty = validation.isEmpty(props.multipleQuotesValue[index])
+
         if (isInputsEmpty) {
             sendAlert("Um ou mais campos vazios!")
         } else {
-            const updatedIconVisible = [...iconVisible]
-
+            props.setMultipleQuotes([...props.multipleQuotesValue, { quote: "", author: "" }])
+            handleVisibility(index)
+            /*const updatedIconVisible = [...iconVisible]
             const newIndex = iconVisible.length
             const newObject = { [newIndex]: true }
-
             updatedIconVisible[index] = !updatedIconVisible[index]
-
             updatedIconVisible.push(newObject)
-
-            setIconVisible(updatedIconVisible)
-
-            console.log(updatedIconVisible)
+            setIconVisible(updatedIconVisible)*/
         }
     }
     const removeQuoteInput = (index) => {
-        const updatedIconVisible = [...iconVisible]
+        const updatedMultipleQuotesValue = [...props.multipleQuotesValue]
+        updatedMultipleQuotesValue.splice(index, 1)
+        props.setMultipleQuotes(updatedMultipleQuotesValue)
+
+        /*const updatedIconVisible = [...iconVisible]
         updatedIconVisible[index - 1] = !updatedIconVisible[index - 1]
-        setIconVisible(updatedIconVisible)
-        console.log(updatedIconVisible)
+        setIconVisible(updatedIconVisible)*/
     }
 
     return (
@@ -64,7 +74,7 @@ export default function MultipleQuoteInputs(props) {
                                     <Form.Control
                                         name="quote"
                                         placeholder="Quote"
-                                        value={props.quoteValue}
+                                        value={props.multipleQuotesValue[index].quote}
                                         onChange={(e) => props.onChange(e, index)}
                                     />
                                 </FloatingLabel>
@@ -76,20 +86,25 @@ export default function MultipleQuoteInputs(props) {
                                     <Form.Control
                                         name="author"
                                         placeholder="Autor"
-                                        value={props.authorValue}
+                                        value={props.multipleQuotesValue[index].author}
                                         onChange={(e) => props.onChange(e, index)}
                                     />
                                 </FloatingLabel>
                             </FormGroup>
                         </Col>
                     </Row>
+
+                    {iconVisible[index] && (
+                        <MdbIcon icon="plus-circle" onClick={() => addQuoteInput(index)} />
+                    )}
+
                     {index !== 0 && (
                         <MdbIcon
                             icon="trash-alt"
                             onClick={() => removeQuoteInput(index)}
                         />
                     )}
-                    <MdbIcon icon="plus-circle" onClick={addQuoteInput} />
+
                     {alertVisible && <AlertComponent text={alertTextState} />}
                 </div>
             ))}
