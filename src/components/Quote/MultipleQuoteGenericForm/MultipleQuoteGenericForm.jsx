@@ -9,7 +9,7 @@ import MultipleQuoteInputs from "./MultipleQuoteInputs";
 import dayjs from "dayjs";
 
 import quoteEditingServices from "../../../services/quoteServices"
-import MultipleQuoteValidations from "./Validations";
+import MultipleQuoteValidations from "../../../Validations/MultipleQuoteValidations";
 
 const quoteEditingService = new quoteEditingServices()
 

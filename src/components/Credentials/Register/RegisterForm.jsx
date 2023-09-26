@@ -11,7 +11,6 @@ function RegisterForm() {
     const navigate = useNavigate()
 
     // definição dos valores
-    const [loginData, setLoginData] = useState([])
     const [email, setEmail] = useState([])
     const [code, setCode] = useState([])
     const [registerData, setRegisterData] = useState([])

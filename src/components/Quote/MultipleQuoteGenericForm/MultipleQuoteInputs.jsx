@@ -7,12 +7,13 @@ import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../CommonSt
 import { MdbIcon, FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import AlertComponent from "../../Alert/AlertComponent";
-import MultipleQuoteValidations from "./Validations";
+import MultipleQuoteValidations from "../../../Validations/MultipleQuoteValidations";
 const validation = new MultipleQuoteValidations()
 
 export default function MultipleQuoteInputs(props) {
     console.log(props.multipleQuotesValue)
-    const [iconVisible, setIconVisible] = useState([{ 0: true }])
+    const [iconVisible, setIconVisible] = useState(true)
+    //const [iconVisible, setIconVisible] = useState([{ 0: true }])
     const [alertVisible, setAlertVisible] = useState(false)
     const [alertTextState, setAlertTextState] = useState("")
 
@@ -28,12 +29,10 @@ export default function MultipleQuoteInputs(props) {
     }
 
     const handleVisibility = (index) => {
-        const copyIconVisible = [...iconVisible]
-        //copyIconVisible[index]
+        if (index < props.multipleQuotesValue.length) {
+            setIconVisible(false)
+        } else if (a) {
 
-        if(index < copyIconVisible.length) {
-            
-            setIconVisible()
         }
     }
 
@@ -54,6 +53,7 @@ export default function MultipleQuoteInputs(props) {
         }
     }
     const removeQuoteInput = (index) => {
+        handleVisibility(index)
         const updatedMultipleQuotesValue = [...props.multipleQuotesValue]
         updatedMultipleQuotesValue.splice(index, 1)
         props.setMultipleQuotes(updatedMultipleQuotesValue)
@@ -94,7 +94,7 @@ export default function MultipleQuoteInputs(props) {
                         </Col>
                     </Row>
 
-                    {iconVisible[index] && (
+                    {iconVisible && (
                         <MdbIcon icon="plus-circle" onClick={() => addQuoteInput(index)} />
                     )}
 
