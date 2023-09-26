@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import quoteEditingServices from "../../../services/quoteServices";
 import dayjs from "dayjs";
-
+import { sourceLogoSelector } from "../CommonFunctions";
 import { QuoteContainer, Paragraph, ParagraphAutor, ParagraphDate, FooterLine, SourceLogo } from "./SingleQuoteStyles"
 
 const quoteService = new quoteEditingServices()
@@ -14,7 +14,7 @@ export default function SingleQuotes({ singleQuotes }) {
                 return (
                     <div key={data._id}>
                         <QuoteContainer>
-                            <SourceLogo src="../src/images/Stancap.png" />
+                            <SourceLogo src={sourceLogoSelector(data.source)} />
                             <>
                                 <Paragraph>
                                     ‟{data.quotes[0].quote}”

@@ -66,13 +66,13 @@ export default function SingleQuoteGenericForm(props) {
                     tags: tags
                 }
                 const response = await quoteEditingService.editQuote(props.quoteIdToEdit, updatedQuoteData)
+                if (response === true) {
+                    alert(props.texts.submitSuccess)
+                } else {
+                    alert(response)
+                }
             }
-            if (response === true) {
-                alert(props.texts.submitSuccess)
-                alert(props.texts.submitSuccess)
-            } else {
-                alert(response)
-            }
+            
         } catch (error) {
             alert(error)
         }

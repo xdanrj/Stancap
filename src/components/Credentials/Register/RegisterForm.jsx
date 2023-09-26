@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { DisabledFormControl, FloatingLabel } from "../../../CommonStyles/CommonStyles";
-
+import { PasswordValidation } from "../../../Validations/PasswordValidations";
 import loginAndRegisterServices from "../../../services/loginAndRegisterServices"
 const loginAndRegisterService = new loginAndRegisterServices()
 
@@ -53,22 +53,28 @@ function RegisterForm() {
     const handleSubmitRegister = async (e) => {
         e.preventDefault();
         try {
-            
-            const response = await loginAndRegisterService.register(registerData)
-
-            if (response === true) {
-                alert('Usuário cadastrado com sucesso')
-                await loginAndRegisterService.login({
-                    email: email.email,
-                    password: registerData.password
-                })
-                navigate('/quotes')
-                // envia para a pagina de login e preenche auto. o email
-                //navigate(`/login?email=${encodeURIComponent(email.email)}`)
+            const dataValidation = PasswordValidation(registerData.password)
+            if (dataValidation.response) {
+                const response = await loginAndRegisterService.register(registerData)
+                if (response === true) {
+                    alert('Usuário cadastrado com sucesso')
+                    await loginAndRegisterService.login({
+                        email: email.email,
+                        password: registerData.password
+                    })
+                    navigate('/quotes')
+                }
+            } else {
+                console.log(dataValidation.message)
+                alert(dataValidation.message)
             }
         } catch (error) {
             alert(error.response.data.error)
         }
+
+
+
+
     }
 
     // handleChange de todos os inputs
@@ -92,13 +98,13 @@ function RegisterForm() {
                 <>
                     <Form onSubmit={handleSubmitSendCode}>
                         <FloatingLabel label="E-mail">
-                        <Form.Control
-                            className="mb-3"
-                            name="email"
-                            type="email"
-                            onChange={handleEmailChange}
-                            placeholder="E-mail" />
-                            </FloatingLabel>
+                            <Form.Control
+                                className="mb-3"
+                                name="email"
+                                type="email"
+                                onChange={handleEmailChange}
+                                placeholder="E-mail" />
+                        </FloatingLabel>
                         <Button type="submit">Enviar código</Button>
                     </Form>
                 </>
@@ -108,13 +114,13 @@ function RegisterForm() {
                 <>
                     <Form onSubmit={handleSubmitCheckCode}>
                         <FloatingLabel label="Código">
-                        <Form.Control
-                            className="mb-3"
-                            name="code"
-                            type="text"
-                            onChange={handleCodeChange}
-                            placeholder=""
-                        />
+                            <Form.Control
+                                className="mb-3"
+                                name="code"
+                                type="text"
+                                onChange={handleCodeChange}
+                                placeholder=""
+                            />
                         </FloatingLabel>
                         <Button type="submit">Verificar</Button>
                     </Form>
@@ -126,31 +132,31 @@ function RegisterForm() {
                     <h4>Você poderá logar usando e-mail ou username</h4>
                     <Form onSubmit={handleSubmitRegister}>
                         <FloatingLabel label="E-mail">
-                        <Form.Control style={{color: 'grey'}}
-                            className="mb-3"
-                            name="email"
-                            type="email"
-                            value={email.email}
-                            disabled
-                        />
+                            <Form.Control style={{ color: 'grey' }}
+                                className="mb-3"
+                                name="email"
+                                type="email"
+                                value={email.email}
+                                disabled
+                            />
                         </FloatingLabel>
                         <FloatingLabel label="Username">
-                        <Form.Control
-                            className="mb-3"
-                            name="username"
-                            type="text"
-                            onChange={handleRegisterChange}
-                            placeholder=""
-                        />
+                            <Form.Control
+                                className="mb-3"
+                                name="username"
+                                type="text"
+                                onChange={handleRegisterChange}
+                                placeholder=""
+                            />
                         </FloatingLabel>
                         <FloatingLabel label="Senha">
-                        <Form.Control
-                            className="mb-3"
-                            name="password"
-                            type="password"
-                            onChange={handleRegisterChange}
-                            placeholder=""
-                        />
+                            <Form.Control
+                                className="mb-3"
+                                name="password"
+                                type="password"
+                                onChange={handleRegisterChange}
+                                placeholder=""
+                            />
                         </FloatingLabel>
                         <Button type="submit">Registrar</Button>
                     </Form>
