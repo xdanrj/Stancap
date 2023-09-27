@@ -8,7 +8,12 @@ import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
 
 export default function MultipleQuotes({ multipleQuotes }) {
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
-    const [quoteInfoId, setQuoteInfoId] = useState("")
+    const [quoteInfoData, setQuoteInfoData] = useState("")
+
+    const handleQuoteInfoClick = (data) => {
+        setQuoteInfoData(data)
+        setShowQuoteInfo(true)
+    }
 
     return (
         <>
@@ -19,7 +24,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
                         <QuoteContainer>
                             <QuoteHeader>
                                 <SourceLogo src={sourceLogoSelector(data.source)} />
-                                <InfoIcon onClick={() => setQuoteInfoId(data._id)}/>
+                                <InfoIcon onClick={() => handleQuoteInfoClick(data)} />
                             </QuoteHeader>
                             {data.quotes.map((quote, index) => (
                                 <Ballon key={index} ballonside={index % 2 === 0}>
@@ -36,7 +41,8 @@ export default function MultipleQuotes({ multipleQuotes }) {
                 )
             })}
             {
-                <QuoteInfo quoteData={} />
+                <QuoteInfo quoteData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo}/>
+            
             }
         </>
     )
