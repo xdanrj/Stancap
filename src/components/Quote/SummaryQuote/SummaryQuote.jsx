@@ -4,6 +4,7 @@ import { MinimalQuoteContainer, InternalContainer, Paragraph, ParagraphAutor, Md
 import { Col, Row } from "react-bootstrap";
 import quoteEditingServices from "../../../services/quoteServices"
 import { useNavigate } from "react-router-dom";
+import QuoteInfo from "./QuoteInfo/QuoteInfo";
 
 const quoteService = new quoteEditingServices()
 
@@ -11,7 +12,7 @@ export default function SummaryQuote() {
     const navigate = useNavigate()
     const [quotesResponse, setQuotesResponse] = useState([])
     const [quotesResponseArray, setQuotesResponseArray] = useState([])
-    const [editingQuote, setEditingQuote] = useState({})
+    
 
     useEffect(() => {
         async function fetchQuotes() {
@@ -57,6 +58,7 @@ export default function SummaryQuote() {
                     <h1>{quotesResponse.message}</h1>
                 )
             }
+           
         </>
     )
 }
