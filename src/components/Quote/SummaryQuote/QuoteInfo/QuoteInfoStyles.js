@@ -6,6 +6,7 @@ import { Modal as originalModal } from 'react-bootstrap'
 export const Modal = styled(originalModal).attrs(() => ({
     className: ""
 }))`
+
     font-size: 2.5vh;
     color: white;
 `
@@ -13,13 +14,13 @@ export const Modal = styled(originalModal).attrs(() => ({
 export const ModalHeader = styled(originalModal.Header).attrs(() => ({
     className: ""
 }))`
-   background-color: rgb(40, 40, 40);
+    
 `
 
 export const ModalTitle = styled(originalModal.Title).attrs(() => ({
     className: ""
 }))`
-    background-color: rgb(40, 40, 40);
+    color: black;
     font-size: 1.1em;
 `
 
@@ -32,6 +33,7 @@ export const ModalBody = styled(originalModal.Body).attrs(() => ({
 export const ProprietyTitle = styled.p.attrs(() => ({
     className: "my-0"
 }))`
+
     font-size: 1.1em;
     font-weight: bold;
 `

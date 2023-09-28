@@ -23,7 +23,7 @@ export default function SingleQuotes({ singleQuotes }) {
                                     —{data.author}
                                 </ParagraphAutor>
                                 <ParagraphDate>
-                                    ({formatedDate})
+                                    ({data.date})
                                 </ParagraphDate>
                             </>
                         </QuoteContainer>
