@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react"
-import dayjs from "dayjs"
+import { NormalDate, NormalDateAndHour } from "../../../../Formatting/DateFormatting";
 import { useNavigate } from "react-router-dom";
-import { Modal, Button, Row, Col } from "react-bootstrap";
-import { ModalTitle, ModalBody } from "./QuoteInfoStyles";
+import { Button } from "react-bootstrap";
+import { Modal, ModalTitle, ModalBody, ProprietyTitle, ProprietyValue } from "./QuoteInfoStyles";
 
 
 export default function QuoteInfo(props) {
     const handleClose = () => props.setShow(false)
-    
+
     useEffect(() => {
         console.log(props.quoteData)
     }, [])
@@ -16,9 +16,23 @@ export default function QuoteInfo(props) {
         <>
             <Modal show={props.show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <ModalTitle>{props.quoteData.context}</ModalTitle>
+                    <ModalTitle>Detalhes da Quote</ModalTitle>
                 </Modal.Header>
-                <ModalBody>corpo do modal aqui</ModalBody>
+
+                <ModalBody>
+
+                    <ProprietyTitle>Source</ProprietyTitle>
+                    <ProprietyValue>{props.quoteData.source}</ProprietyValue>
+
+                    <ProprietyTitle>Data de upload</ProprietyTitle>
+                    <ProprietyValue>{NormalDateAndHour(props.quoteData.uploadDate)}</ProprietyValue>
+
+                    <ProprietyTitle>Upload por</ProprietyTitle>
+                    <ProprietyValue>{props.quoteData.uploadByUser}</ProprietyValue>
+
+                    <ProprietyTitle>Contexto</ProprietyTitle>
+                   <ProprietyValue>{props.quoteData.context}</ProprietyValue>
+                </ModalBody>
             </Modal>
         </>
     )

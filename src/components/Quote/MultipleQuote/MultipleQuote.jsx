@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import quoteEditingServices from "../../../services/quoteServices";
-import dayjs from "dayjs";
+import {NormalDate} from "../../../Formatting/DateFormatting";
 import { sourceLogoSelector } from "../CommonFunctions";
 import { QuoteContainer, QuoteHeader, Ballon, Paragraph, ParagraphAutor, SourceLogo, InfoIcon } from "./MultipleQuoteStyles";
 const quoteService = new quoteEditingServices();
@@ -18,7 +18,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
     return (
         <>
             {multipleQuotes.map((data) => {
-                data.date = dayjs().format("DD/MM/YYYY")
+                data.date = NormalDate()
                 return (
                     <div key={data._id}>
                         <QuoteContainer>

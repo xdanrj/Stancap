@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import quoteEditingServices from "../../../services/quoteServices";
-import dayjs from "dayjs";
+import { NormalDate } from "../../../Formatting/DateFormatting";
 import { sourceLogoSelector } from "../CommonFunctions";
 import { QuoteContainer, Paragraph, ParagraphAutor, ParagraphDate, FooterLine, SourceLogo } from "./SingleQuoteStyles"
 
@@ -10,7 +10,7 @@ export default function SingleQuotes({ singleQuotes }) {
     return (
         <>
             {singleQuotes.map((data) => {
-                const formatedDate = dayjs(data.date).format("DD/MM/YYYY")
+                data.date = NormalDate()
                 return (
                     <div key={data._id}>
                         <QuoteContainer>

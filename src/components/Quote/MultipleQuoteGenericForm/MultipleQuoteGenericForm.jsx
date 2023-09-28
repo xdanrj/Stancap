@@ -20,7 +20,6 @@ export default function MultipleQuoteGenericForm(props) {
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
         quotes: [],
-        author: '',
         date: '',
         source: '',
         context: '',
@@ -38,7 +37,6 @@ export default function MultipleQuoteGenericForm(props) {
                 setQuoteData((prevData) => ({
                     ...prevData,
                     quotes: response.quotes[0].quote,
-                    author: response.author,
                     date: response.date,
                     source: response.source,
                     context: response.context,
