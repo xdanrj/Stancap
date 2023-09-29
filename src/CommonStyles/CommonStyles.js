@@ -16,13 +16,13 @@ export const FormGroup = styled(originalForm.Group).attrs(() => ({
 `;
 
 export const CenteredFormGroup = styled(originalForm.Group).attrs(() => ({
-  className: "mx-auto d-block"
+  className: "mb-4 wd-50 mx-auto"
 }))`
 `;
 
-//a fazer ainda \/
+//à fazer ainda \/
 export const CenteredFormControl = styled(originalFormControl).attrs(() => ({
-  className: ""
+  className: "wd-50 mx-auto"
 }))`
   
 `;

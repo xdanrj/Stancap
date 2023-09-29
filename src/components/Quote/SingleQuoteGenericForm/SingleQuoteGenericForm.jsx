@@ -1,8 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
-import { Form, Col, Row, Dropdown, DropdownButton, ButtonGroup } from "react-bootstrap";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Form, Col, Row, Dropdown, DropdownButton } from "react-bootstrap";
 import { FloatingLabel, FormGroup, CenteredFormGroup } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import dayjs from "dayjs";
@@ -87,21 +86,18 @@ export default function SingleQuoteGenericForm(props) {
 
     const handleGenericChange = (e) => {
         const { name, value } = e.target
-
         if (name === "otherSourceName") {
             setQuoteData((prevData) => ({
                 ...prevData,
                 source: value
             }))
         }
-
         if (name === "quotes") {
             setQuotes((prevQuoteData) => ({
                 ...prevQuoteData,
                 ["quote"]: value
             }))
         }
-
         setQuoteData((prevData) => ({
             ...prevData,
             [name]: value

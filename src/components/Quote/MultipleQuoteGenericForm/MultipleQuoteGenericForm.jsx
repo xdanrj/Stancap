@@ -1,12 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
-import { Form, Col, Row } from "react-bootstrap";
-import { useNavigate, useLocation } from "react-router-dom";
-import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../CommonStyles/CommonStyles";
+import { Form, Col, Row, Dropdown, DropdownButton } from "react-bootstrap";
+import { FloatingLabel, FormGroup, CenteredFormControl, CenteredFormGroup } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import MultipleQuoteInputs from "./MultipleQuoteInputs";
 import dayjs from "dayjs";
+import { SourceNames } from "../SourceCommonFunctions";
 
 import quoteEditingServices from "../../../services/quoteServices"
 import MultipleQuoteValidations from "../../../Validations/MultipleQuoteValidations";
@@ -47,6 +47,15 @@ export default function MultipleQuoteGenericForm(props) {
         getQuoteToEdit()
     }, [])
 
+    const handleSourceSelect = (eventKey) => {
+        if (eventKey) {
+            setQuoteData((prevData) => ({
+                ...prevData,
+                source: eventKey
+            }))
+        }
+    }
+
     const handleSubmitQuote = async (e) => {
         e.preventDefault();
         let response
@@ -82,6 +91,12 @@ export default function MultipleQuoteGenericForm(props) {
 
     const handleGenericChange = (e) => {
         const { name, value } = e.target
+        if (name === "otherSourceName") {
+            setQuoteData((prevData) => ({
+                ...prevData,
+                source: value
+            }))
+        }
         if (name === "quotes") {
             setQuotes((prevQuoteData) => ({
                 ...prevQuoteData,
@@ -116,7 +131,7 @@ export default function MultipleQuoteGenericForm(props) {
                     setMultipleQuotes={setMultipleQuotes} />
                 <Row>
                     <Col>
-                        <FormGroup>
+                        <FormGroup className="wd-50 mx-auto">
                             <FloatingLabel label="Data">
                                 <CenteredFormControl name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
                                 </CenteredFormControl>
@@ -127,20 +142,27 @@ export default function MultipleQuoteGenericForm(props) {
                 <Row>
                     <Col>
                         <FormGroup>
-                            <FloatingLabel label="Source">
-                                <Form.Control name="source" placeholder="Source" onChange={handleGenericChange} value={quoteData.source}>
-                                </Form.Control>
-                            </FloatingLabel>
-                        </FormGroup>
-                    </Col>
-                    <Col>
-                        <FormGroup>
                             <FloatingLabel label="Contexto (Opcional)">
                                 <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange} value={quoteData.context}>
                                 </Form.Control>
                             </FloatingLabel>
                         </FormGroup>
                     </Col>
+
+                    <FormGroup>
+                        <DropdownButton drop="down" align="end" title={quoteData.source ? quoteData.source : "Source"} onSelect={handleSourceSelect}>
+                            {SourceNames.map((item) => (
+                                <Dropdown.Item key={item} eventKey={item}>{item}</Dropdown.Item>
+                            ))}
+                            <Dropdown.Divider />
+                            <div className="px-1 pb-2">
+                                <FloatingLabel label="Outro">
+                                    <Form.Control name="otherSourceName" placeholder="Outro" onChange={handleGenericChange} value={SourceNames.includes(quoteData.source) ? "" : quoteData.source}>
+                                    </Form.Control>
+                                </FloatingLabel>
+                            </div>
+                        </DropdownButton>
+                    </FormGroup>
                     <FormGroup>
                         <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
                     </FormGroup>
