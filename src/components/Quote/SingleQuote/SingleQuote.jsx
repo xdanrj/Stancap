@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react"
 import quoteEditingServices from "../../../services/quoteServices";
 import { NormalDate } from "../../../Formatting/DateFormatting";
-import { sourceLogoSelector } from "../CommonFunctions";
-import { QuoteContainer, Paragraph, ParagraphAutor, ParagraphDate, FooterLine, SourceLogo } from "./SingleQuoteStyles"
-
+import { sourceLogoSelector } from "../SourceCommonFunctions";
+import { QuoteHeader, SourceLogo, InfoIcon } from "../../../CommonStyles/CommonStyles";
+import { QuoteContainer, Paragraph, ParagraphAutor, ParagraphDate } from "./SingleQuoteStyles"
 const quoteService = new quoteEditingServices()
+import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
 
 export default function SingleQuotes({ singleQuotes }) {
+    const [showQuoteInfo, setShowQuoteInfo] = useState(false)
+    const [quoteInfoData, setQuoteInfoData] = useState("")
+
+    const handleQuoteInfoClick = (data) => {
+        setQuoteInfoData(data)
+        setShowQuoteInfo(true)
+    }
     return (
         <>
             {singleQuotes.map((data) => {
@@ -14,7 +22,10 @@ export default function SingleQuotes({ singleQuotes }) {
                 return (
                     <div key={data._id}>
                         <QuoteContainer>
-                            <SourceLogo src={sourceLogoSelector(data.source)} />
+                            <QuoteHeader>
+                                <SourceLogo src={sourceLogoSelector(data.source)} />
+                                <InfoIcon onClick={() => handleQuoteInfoClick(data)} />
+                            </QuoteHeader>
                             <>
                                 <Paragraph>
                                     ‟{data.quotes[0].quote}”
@@ -30,6 +41,7 @@ export default function SingleQuotes({ singleQuotes }) {
                     </div>
                 )
             })}
+            {<QuoteInfo quoteData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo}/>}
         </>
     )
 }

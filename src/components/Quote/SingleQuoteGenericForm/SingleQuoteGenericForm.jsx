@@ -1,19 +1,21 @@
 import React from "react";
 import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
-import { Form, Col, Row } from "react-bootstrap";
+import { Form, Col, Row, Dropdown, DropdownButton, ButtonGroup } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FloatingLabel, FormGroup } from "../../../CommonStyles/CommonStyles";
+import { FloatingLabel, FormGroup, CenteredFormGroup } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import dayjs from "dayjs";
+import { SourceNames } from "../SourceCommonFunctions";
 
 import quoteEditingServices from "../../../services/quoteServices"
 
 const quoteEditingService = new quoteEditingServices()
 
 export default function SingleQuoteGenericForm(props) {
+    
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
-    const [ quotes, setQuotes] = useState([])
+    const [quotes, setQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
         quotes: [],
@@ -23,7 +25,7 @@ export default function SingleQuoteGenericForm(props) {
         context: '',
         tags: [],
     })
-
+    console.log(quoteData)
     useEffect(() => {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
@@ -36,7 +38,7 @@ export default function SingleQuoteGenericForm(props) {
                     ...prevData,
                     quotes: response.quotes[0].quote,
                     author: response.author,
-                    date: response.date,    
+                    date: response.date,
                     source: response.source,
                     context: response.context,
                     tags: response.tags
@@ -45,6 +47,15 @@ export default function SingleQuoteGenericForm(props) {
         }
         getQuoteToEdit()
     }, [])
+
+    const handleSourceSelect = (eventKey) => {
+        if(eventKey){
+        setQuoteData((prevData) => ({
+            ...prevData,
+            source: eventKey
+        }))
+    }
+    }
 
     const handleSubmitQuote = async (e) => {
         e.preventDefault();
@@ -66,13 +77,12 @@ export default function SingleQuoteGenericForm(props) {
                     tags: tags
                 }
                 const response = await quoteEditingService.editQuote(props.quoteIdToEdit, updatedQuoteData)
-                if (response === true) {
-                    alert(props.texts.submitSuccess)
-                } else {
-                    alert(response)
-                }
             }
-            
+            if (response === true) {
+                alert(props.texts.submitSuccess)
+            } else {
+                alert(response)
+            }
         } catch (error) {
             alert(error)
         }
@@ -80,6 +90,13 @@ export default function SingleQuoteGenericForm(props) {
 
     const handleGenericChange = (e) => {
         const { name, value } = e.target
+
+        if(name === "otherSourceName") {
+            setQuoteData((prevData) => ({
+                ...prevData,
+                source: value
+            }))
+        }
 
         if (name === "quotes") {
             setQuotes((prevQuoteData) => ({
@@ -126,24 +143,34 @@ export default function SingleQuoteGenericForm(props) {
                 <Row>
                     <Col>
                         <FormGroup>
-                            <FloatingLabel label="Source">
-                                <Form.Control name="source" placeholder="Source" onChange={handleGenericChange} value={quoteData.source}>
-                                </Form.Control>
-                            </FloatingLabel>
-                        </FormGroup>
-                    </Col>
-                    <Col>
-                        <FormGroup>
                             <FloatingLabel label="Contexto (Opcional)">
                                 <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange} value={quoteData.context}>
                                 </Form.Control>
                             </FloatingLabel>
                         </FormGroup>
                     </Col>
-                    <FormGroup>
-                        <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
-                    </FormGroup>
                 </Row>
+                <Col>
+
+                    <FormGroup>
+                        <DropdownButton title={quoteData.source ? quoteData.source : "Source"} onSelect={handleSourceSelect}>
+                            {SourceNames.map((item) => (
+                                <Dropdown.Item key={item} eventKey={item}>{item}</Dropdown.Item>
+                            ))}
+                            <Dropdown.Divider />
+                            <div className="px-1 pb-2">
+                                <FloatingLabel label="Outro">
+                                    <Form.Control name="otherSourceName" placeholder="Outro" onChange={handleGenericChange} value={SourceNames.includes(quoteData.source) ? "" : quoteData.source}>
+                                    </Form.Control>
+                                </FloatingLabel>
+                                </div>
+                        </DropdownButton>
+                    </FormGroup>
+                </Col>
+
+                <FormGroup>
+                    <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
+                </FormGroup>
 
                 <Button type="submit">{props.texts.submitButton}</Button>
             </Form>

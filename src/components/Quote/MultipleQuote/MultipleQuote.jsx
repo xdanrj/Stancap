@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import quoteEditingServices from "../../../services/quoteServices";
-import {NormalDate} from "../../../Formatting/DateFormatting";
-import { sourceLogoSelector } from "../CommonFunctions";
-import { QuoteContainer, QuoteHeader, Ballon, Paragraph, ParagraphAutor, SourceLogo, InfoIcon } from "./MultipleQuoteStyles";
+import { NormalDate } from "../../../Formatting/DateFormatting";
+import { sourceLogoSelector } from "../SourceCommonFunctions";
+import { QuoteHeader, SourceLogo, InfoIcon } from "../../../CommonStyles/CommonStyles";
+import { QuoteContainer, Ballon, Paragraph, ParagraphAutor } from "./MultipleQuoteStyles";
 const quoteService = new quoteEditingServices();
 import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
 
@@ -40,10 +41,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
                     </div>
                 )
             })}
-            {
-                <QuoteInfo quoteData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo}/>
-            
-            }
+            {<QuoteInfo quoteData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo} />}
         </>
     )
 }

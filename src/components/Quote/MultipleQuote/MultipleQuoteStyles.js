@@ -3,16 +3,15 @@ import { MDBIcon as originalMDBIcon } from 'mdb-react-ui-kit';
 import { device } from '../../../CommonStyles/device';
 
 export const QuoteContainer = styled.div.attrs(() => ({
-    className: "px-2 py-2 mb-5"
+    className: "py-2 px-2 mb-5"
 }))`
     width: 100%;
     background-color: rgb(50, 50, 0);
-    border-radius: 15px;
+    border-radius: 20px;
 `;
 export const QuoteHeader = styled.div.attrs(() => ({
     className: "position-relative"
 }))`
-   
 `;
 
 export const SourceLogo = styled.img.attrs(() => ({

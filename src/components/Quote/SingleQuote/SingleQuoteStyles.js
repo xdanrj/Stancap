@@ -2,12 +2,12 @@ import styled from 'styled-components'
 import { device } from '../../../CommonStyles/device';
 
 export const QuoteContainer = styled.div.attrs(() => ({
-    className: "py-1 mb-5 mx-auto"
+    className: "py-2 px-2 mb-5 mx-auto"
 }))`
     width: 100%;
     font-size: 1.1rem;
     background-color: rgb(40, 40, 40);
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 20px;
     @media ${device.laptopL} {
         width: 75%;
     }
@@ -45,9 +45,11 @@ export const FooterLine = styled.div.attrs((props) => ({
     background-color: rgba(128, 128, 128, 0.5)
 `;
 
-export const SourceLogo = styled.img.attrs(() => ({
-    className: "position-absolute translate-middle rounded-6"
+export const InfoIcon = styled.i.attrs(() => ({
+    className: "bi bi-info-square-fill position-absolute top-0 start-100 translate-middle"
 }))`
     margin-top: -1vh;
-    width: 5.5vh;
+    margin-left: -0.2vw;
+    font-size: 3vh;
+    color: grey;
 `;
