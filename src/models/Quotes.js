@@ -21,7 +21,8 @@ const QuoteSchema = new mongoose.Schema(
         source: { type: String },
         date: { type: String },
         uploadDate: { type: String },
-        uploadByUser: { type: String }
+        uploadByUser: { type: String },
+        quoteType: { type: String }
     }
 )
 

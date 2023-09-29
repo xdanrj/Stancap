@@ -57,7 +57,8 @@ export default function MultipleQuoteGenericForm(props) {
                     quotes: multipleQuotes,
                     tags: tags,
                     uploadDate: dayjs().format(),
-                    uploadByUser: localStorage.getItem("username")
+                    uploadByUser: localStorage.getItem("username"),
+                    quoteType: "multiple"
                 }
                 response = await quoteEditingService.addQuote(updatedQuoteData)
             } else if (props.type === "editQuote") {

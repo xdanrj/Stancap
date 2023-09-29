@@ -29,9 +29,9 @@ export default function SummaryQuote() {
 
     }, []);
 
-    const handleEditQuote = async (quoteId) => {
+    const handleEditQuote = async (quoteId, quoteType) => {
         try {
-            navigate(`/edit_quote/${quoteId}`)
+            navigate(`/edit_quote/${quoteType}/${quoteId}`)
         } catch (error) {
             alert(error)
         }
@@ -48,7 +48,7 @@ export default function SummaryQuote() {
                                     <Paragraph>{data.quotes[0].quote} </Paragraph>
                                     <ParagraphAutor>—{data.author}</ParagraphAutor>
                                     <MdbIcon icon="trash-alt" />
-                                    <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id)} />
+                                    <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id, data.quoteType)} />
                                     <MdbIcon icon="info-circle" />
                                 </InternalContainer>
                             </MinimalQuoteContainer>
