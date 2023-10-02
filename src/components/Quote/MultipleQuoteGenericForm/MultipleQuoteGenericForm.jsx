@@ -15,7 +15,6 @@ const quoteEditingService = new quoteEditingServices()
 
 export default function MultipleQuoteGenericForm(props) {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
-    const [quotes, setQuotes] = useState([])
     const [multipleQuotes, setMultipleQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
@@ -29,14 +28,15 @@ export default function MultipleQuoteGenericForm(props) {
     useEffect(() => {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
-                console.log("entrou na condicao certa")
                 const apiResponse = await quoteEditingService.getQuote(props.quoteIdToEdit)
                 const response = await apiResponse.data.response.response[0]
-                console.log(response)
-                console.log(response.quotes[0].quote)
+
+                console.log(response.quotes)
+                setMultipleQuotes(response.quotes)
+
                 setQuoteData((prevData) => ({
                     ...prevData,
-                    quotes: response.quotes[0].quote,
+                    //nao necessario: // quotes: response.quotes,
                     date: response.date,
                     source: response.source,
                     context: response.context,
@@ -76,7 +76,7 @@ export default function MultipleQuoteGenericForm(props) {
                     quotes: multipleQuotes,
                     tags: tags
                 }
-                const response = await quoteEditingService.editQuote(props.quoteIdToEdit, updatedQuoteData)
+                response = await quoteEditingService.editQuote(props.quoteIdToEdit, updatedQuoteData)
             }
 
             if (response === true) {
@@ -98,7 +98,7 @@ export default function MultipleQuoteGenericForm(props) {
             }))
         }
         if (name === "quotes") {
-            setQuotes((prevQuoteData) => ({
+            setMultipleQuotes((prevQuoteData) => ({
                 ...prevQuoteData,
                 ["quote"]: value
             }))

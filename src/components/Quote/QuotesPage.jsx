@@ -63,23 +63,3 @@ export default function QuotesPage() {
     </>
   )
 }
-
-/*
-  {quotesResponse.map((data, index) => {
-                if (data.quotes.length === 1) {
-                    return (
-                        <SingleQuote key={index}/>
-                    )
-                }
-                else if (data.quotes.length > 1) {
-                    return (
-                        <MultipleQuote key={index}/>
-                    )
-                } else {
-                    return (
-                        <h1>Nenhuma quote encontrada</h1>
-                    )
-                }
-            })}
-
-*/
