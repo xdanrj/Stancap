@@ -55,7 +55,7 @@ export default function QuotesPage() {
   };
   const currentSize = getCurrentScreenSize();
   console.log("Tamanho atual da tela:", currentSize);
-  // atencao: qnd terminar de corrigir o codigo, so taca o single e o multiple components no return()
+  
   return (
     <>
       <SingleQuote singleQuotes={singleQuotesArray}/>
