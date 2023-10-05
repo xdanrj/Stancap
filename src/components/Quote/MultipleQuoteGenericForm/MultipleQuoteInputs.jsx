@@ -24,7 +24,13 @@ export default function MultipleQuoteInputs(props) {
         setAlertVisible(!alertVisible)
         setAlertTextState(alertText)
     }
-
+    /*
+                const updatedIconVisible = [...iconVisible]
+                const newIndex = iconVisible.length
+                const newObject = { [newIndex]: true }
+                updatedIconVisible[index] = !updatedIconVisible[index]
+                updatedIconVisible.push(newObject)
+                setIconVisible(updatedIconVisible)*/
     const addQuoteInput = (index) => {
         const isInputsEmpty = validation.isEmpty(props.multipleQuotesValue[index])
 
@@ -34,21 +40,18 @@ export default function MultipleQuoteInputs(props) {
             props.setMultipleQuotes([...props.multipleQuotesValue, { quote: "", author: "" }])
 
             const updatedIconVisible = [...iconVisible]
-            if (index !== 0) {
-                setIconVisible((prevData) => ({
-                    ...prevData,
-                    prevData[index - 1]: false,
-                    prevData[index + 1]: true
-                }))
-                
+            if (index === 0) {
+                console.log("condicao: index [0]")
+                updatedIconVisible[0] = false
+                updatedIconVisible[1] = true
+            } else {
+                console.log("condicao else")
+                updatedIconVisible[index - 1] = false
+                updatedIconVisible[index + 1] = true
+
             }
-            /*
-            const updatedIconVisible = [...iconVisible]
-            const newIndex = iconVisible.length
-            const newObject = { [newIndex]: true }
-            updatedIconVisible[index] = !updatedIconVisible[index]
-            updatedIconVisible.push(newObject)
-            setIconVisible(updatedIconVisible)*/
+            setIconVisible(updatedIconVisible)
+
         }
     }
     const removeQuoteInput = (index) => {
@@ -99,12 +102,12 @@ export default function MultipleQuoteInputs(props) {
                         <MdbIcon icon="plus-circle" onClick={() => addQuoteInput(index)} />
                     )}
 
-                    {index !== 0 && (
+                    {
                         <MdbIcon
                             icon="trash-alt"
                             onClick={() => removeQuoteInput(index)}
                         />
-                    )}
+                    }
 
                     {alertVisible && <AlertComponent text={alertTextState} />}
                 </div>
