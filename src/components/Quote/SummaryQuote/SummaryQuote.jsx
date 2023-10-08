@@ -13,7 +13,6 @@ export default function SummaryQuote() {
     const [quotesResponse, setQuotesResponse] = useState([])
     const [quotesResponseArray, setQuotesResponseArray] = useState([])
     
-
     useEffect(() => {
         async function fetchQuotes() {
             const username = localStorage.getItem("username")

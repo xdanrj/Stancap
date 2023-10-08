@@ -8,7 +8,7 @@ import MultipleQuoteValidations from "../../../Validations/MultipleQuoteValidati
 const validation = new MultipleQuoteValidations()
 
 export default function MultipleQuoteInputs(props) {
-    //console.log(props.multipleQuotesValue)
+    console.log(props.multipleQuotesValue)
 
     const [iconVisible, setIconVisible] = useState([true])
     const [alertVisible, setAlertVisible] = useState(false)
@@ -24,47 +24,32 @@ export default function MultipleQuoteInputs(props) {
         setAlertVisible(!alertVisible)
         setAlertTextState(alertText)
     }
-    /*
-                const updatedIconVisible = [...iconVisible]
-                const newIndex = iconVisible.length
-                const newObject = { [newIndex]: true }
-                updatedIconVisible[index] = !updatedIconVisible[index]
-                updatedIconVisible.push(newObject)
-                setIconVisible(updatedIconVisible)*/
     const addQuoteInput = (index) => {
         const isInputsEmpty = validation.isEmpty(props.multipleQuotesValue[index])
-
         if (isInputsEmpty) {
             sendAlert("Um ou mais campos vazios!")
         } else {
             props.setMultipleQuotes([...props.multipleQuotesValue, { quote: "", author: "" }])
 
-            const updatedIconVisible = [...iconVisible]
-            if (index === 0) {
-                console.log("condicao: index [0]")
-                updatedIconVisible[0] = false
-                updatedIconVisible[1] = true
-            } else {
-                console.log("condicao else")
-                updatedIconVisible[index - 1] = false
-                updatedIconVisible[index + 1] = true
+            let updatedIconVisible = [...iconVisible]
 
-            }
+            updatedIconVisible[index] = true
+            updatedIconVisible[index + 1] = true
             setIconVisible(updatedIconVisible)
 
         }
     }
     const removeQuoteInput = (index) => {
-        const updatedMultipleQuotesValue = [...props.multipleQuotesValue]
+        //deleta valores da array
+        let updatedMultipleQuotesValue = [...props.multipleQuotesValue]
         updatedMultipleQuotesValue.splice(index, 1)
         props.setMultipleQuotes(updatedMultipleQuotesValue)
 
-        const updatedIconVisible = [...iconVisible]
+        // altera a visibilidade dos icones
+        let updatedIconVisible = [...iconVisible]
+        updatedIconVisible[index - 1] = true
         updatedIconVisible.splice(index, 1)
         setIconVisible(updatedIconVisible)
-        /*
-        updatedIconVisible[index - 1] = !updatedIconVisible[index - 1]
-        setIconVisible(updatedIconVisible)*/
     }
 
     return (
@@ -102,12 +87,12 @@ export default function MultipleQuoteInputs(props) {
                         <MdbIcon icon="plus-circle" onClick={() => addQuoteInput(index)} />
                     )}
 
-                    {
+                    {!(props.multipleQuotesValue.length === 1) && (
                         <MdbIcon
                             icon="trash-alt"
                             onClick={() => removeQuoteInput(index)}
                         />
-                    }
+                    )}
 
                     {alertVisible && <AlertComponent text={alertTextState} />}
                 </div>
