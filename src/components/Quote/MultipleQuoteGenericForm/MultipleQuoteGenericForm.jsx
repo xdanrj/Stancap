@@ -9,7 +9,6 @@ import dayjs from "dayjs";
 import { SourceNames } from "../SourceCommonFunctions";
 
 import quoteEditingServices from "../../../services/quoteServices"
-import MultipleQuoteValidations from "../../../Validations/MultipleQuoteValidations";
 
 const quoteEditingService = new quoteEditingServices()
 

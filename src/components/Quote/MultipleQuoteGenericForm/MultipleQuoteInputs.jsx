@@ -4,15 +4,14 @@ import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../CommonSt
 import { MdbIcon, FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import AlertComponent from "../../Alert/AlertComponent";
-import MultipleQuoteValidations from "../../../Validations/MultipleQuoteValidations";
-const validation = new MultipleQuoteValidations()
+import {isMultipleQuoteInputsEmpty} from "../../../Validations/MultipleQuoteValidations";
 
 export default function MultipleQuoteInputs(props) {
     console.log(props.multipleQuotesValue)
 
     const [iconVisible, setIconVisible] = useState([true])
-    const [alertVisible, setAlertVisible] = useState(false)
-    const [alertTextState, setAlertTextState] = useState("")
+    //const [alertVisible, setAlertVisible] = useState(false)
+    //const [alertTextState, setAlertTextState] = useState("")
     console.log(iconVisible)
     useEffect(() => {
         if (props.multipleQuotesValue.length === 0) {
@@ -21,22 +20,20 @@ export default function MultipleQuoteInputs(props) {
     }, [])
 
     const sendAlert = (alertText) => {
-        setAlertVisible(!alertVisible)
+        //setAlertVisible(!alertVisible)
         setAlertTextState(alertText)
     }
     const addQuoteInput = (index) => {
-        const isInputsEmpty = validation.isEmpty(props.multipleQuotesValue[index])
-        if (isInputsEmpty) {
+        if (isMultipleQuoteInputsEmpty(props.multipleQuotesValue[index])) {
             sendAlert("Um ou mais campos vazios!")
         } else {
             props.setMultipleQuotes([...props.multipleQuotesValue, { quote: "", author: "" }])
 
             let updatedIconVisible = [...iconVisible]
 
-            updatedIconVisible[index] = true
+            updatedIconVisible[index] = false
             updatedIconVisible[index + 1] = true
             setIconVisible(updatedIconVisible)
-
         }
     }
     const removeQuoteInput = (index) => {

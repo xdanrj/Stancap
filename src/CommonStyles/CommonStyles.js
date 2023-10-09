@@ -22,9 +22,8 @@ export const CenteredFormGroup = styled(originalForm.Group).attrs(() => ({
 
 //à fazer ainda \/
 export const CenteredFormControl = styled(originalFormControl).attrs(() => ({
-  className: "wd-50 mx-auto"
+  className: "mx-auto"
 }))`
-  
 `;
 
 export const DisabledFormControl = styled(originalFormControl).attrs(() => ({
