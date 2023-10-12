@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { Form, Col, Row, Dropdown, DropdownButton } from "react-bootstrap";
 import { FloatingLabel, FormGroup, CenteredFormControl, CenteredFormGroup } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
+import AlertComponent from "../../Alert/AlertComponent";
 import MultipleQuoteInputs from "./MultipleQuoteInputs";
 import dayjs from "dayjs";
 import { SourceNames } from "../SourceCommonFunctions";
@@ -14,6 +15,8 @@ const quoteEditingService = new quoteEditingServices()
 
 export default function MultipleQuoteGenericForm(props) {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
+    const [alertVisible, setAlertVisible] = useState(false)
+    const [alertTextState, setAlertTextState] = useState("")
     const [multipleQuotes, setMultipleQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
@@ -35,7 +38,6 @@ export default function MultipleQuoteGenericForm(props) {
 
                 setQuoteData((prevData) => ({
                     ...prevData,
-                    //nao necessario: // quotes: response.quotes,
                     date: response.date,
                     source: response.source,
                     context: response.context,
@@ -45,6 +47,11 @@ export default function MultipleQuoteGenericForm(props) {
         }
         getQuoteToEdit()
     }, [])
+
+    const sendAlert = (alertText) => {
+        setAlertVisible(!alertVisible)
+        setAlertTextState(alertText)
+    }
 
     const handleSourceSelect = (eventKey) => {
         if (eventKey) {
@@ -59,30 +66,35 @@ export default function MultipleQuoteGenericForm(props) {
         e.preventDefault();
         let response
         try {
-            if (props.type === "addQuote") {
-                const updatedQuoteData = {
-                    ...quoteData,
-                    quotes: multipleQuotes,
-                    tags: tags,
-                    uploadDate: dayjs().format(),
-                    uploadByUser: localStorage.getItem("username"),
-                    quoteType: "multiple"
+            if (multipleQuotes.length > 1) {
+                if (props.type === "addQuote") {
+                    const updatedQuoteData = {
+                        ...quoteData,
+                        quotes: multipleQuotes,
+                        tags: tags,
+                        uploadDate: dayjs().format(),
+                        uploadByUser: localStorage.getItem("username"),
+                        quoteType: "multiple"
+                    }
+                    response = await quoteEditingService.addQuote(updatedQuoteData)
+                } else if (props.type === "editQuote") {
+                    const updatedQuoteData = {
+                        ...quoteData,
+                        quotes: multipleQuotes,
+                        tags: tags
+                    }
+                    response = await quoteEditingService.editQuote(props.quoteIdToEdit, updatedQuoteData)
                 }
-                response = await quoteEditingService.addQuote(updatedQuoteData)
-            } else if (props.type === "editQuote") {
-                const updatedQuoteData = {
-                    ...quoteData,
-                    quotes: multipleQuotes,
-                    tags: tags
+                if (response === true) {
+                    alert(props.texts.submitSuccess)
+                } else {
+                    alert(response)
                 }
-                response = await quoteEditingService.editQuote(props.quoteIdToEdit, updatedQuoteData)
+            } else {
+                alert("Diálogos precisam de 2 ou mais falas")
             }
 
-            if (response === true) {
-                alert(props.texts.submitSuccess)
-            } else {
-                alert(response)
-            }
+
         } catch (error) {
             alert(error)
         }
@@ -166,9 +178,9 @@ export default function MultipleQuoteGenericForm(props) {
                         <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
                     </FormGroup>
                 </Row>
-
                 <Button type="submit">{props.texts.submitButton}</Button>
             </Form>
+            <AlertComponent text={alertTextState} show={alertVisible} setShow={setAlertVisible} />
         </>
     )
 }
