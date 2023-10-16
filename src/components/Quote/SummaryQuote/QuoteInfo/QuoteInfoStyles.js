@@ -30,7 +30,7 @@ export const ModalBody = styled(originalModal.Body).attrs(() => ({
    background-color: rgb(40, 40, 40);
 
 `
-export const ProprietyTitle = styled.p.attrs(() => ({
+export const TextTitle = styled.p.attrs(() => ({
     className: "my-0"
 }))`
 
@@ -38,7 +38,7 @@ export const ProprietyTitle = styled.p.attrs(() => ({
     font-weight: bold;
 `
 
-export const ProprietyValue = styled.p.attrs(() => ({
+export const TextParagraph = styled.p.attrs(() => ({
     className: ""
 }))`
     

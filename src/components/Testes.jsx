@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
-import AlertComponent from './Alert/AlertComponent';
-import QuoteInfo from './Quote/SummaryQuote/QuoteInfo/QuoteInfo';
-function Testes() {
-  
+import { Button } from "react-bootstrap"
+import { ToastContainer, toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css'
 
+export default function Testes() {
+  const notify = () => toast("testando msg")
   return (
-    <div>
-    <QuoteInfo/>
-    </div>
+    <>
+      <ToastContainer
+        autoClose={2000}
+        position="top-center"
+        theme="dark"
+        limit={1}
+        closeButton={false}
+      />
+
+      <Button onClick={notify}>opa</Button>
+    </>
   )
 }
-
-export default Testes;

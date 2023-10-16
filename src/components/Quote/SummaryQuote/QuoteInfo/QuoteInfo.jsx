@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { NormalDate, NormalDateAndHour } from "../../../../Formatting/DateFormatting";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { Modal, ModalTitle, ModalBody, ProprietyTitle, ProprietyValue } from "./QuoteInfoStyles";
+import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph } from "./QuoteInfoStyles";
 
 
 export default function QuoteInfo(props) {
@@ -21,17 +21,17 @@ export default function QuoteInfo(props) {
 
                 <ModalBody>
 
-                    <ProprietyTitle>Source</ProprietyTitle>
-                    <ProprietyValue>{props.quoteData.source}</ProprietyValue>
+                    <TextTitle>Source</TextTitle>
+                    <TextParagraph>{props.quoteData.source}</TextParagraph>
 
-                    <ProprietyTitle>Data de upload</ProprietyTitle>
-                    <ProprietyValue>{NormalDateAndHour(props.quoteData.uploadDate)}</ProprietyValue>
+                    <TextTitle>Data de upload</TextTitle>
+                    <TextParagraph>{NormalDateAndHour(props.quoteData.uploadDate)}</TextParagraph>
 
-                    <ProprietyTitle>Upload por</ProprietyTitle>
-                    <ProprietyValue>{props.quoteData.uploadByUser}</ProprietyValue>
+                    <TextTitle>Upload por</TextTitle>
+                    <TextParagraph>{props.quoteData.uploadByUser}</TextParagraph>
 
-                    <ProprietyTitle>Contexto</ProprietyTitle>
-                   <ProprietyValue>{props.quoteData.context}</ProprietyValue>
+                    <TextTitle>Contexto</TextTitle>
+                   <TextParagraph>{props.quoteData.context}</TextParagraph>
                 </ModalBody>
             </Modal>
         </>

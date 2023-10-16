@@ -2,13 +2,13 @@ import { React, useState, useEffect } from "react"
 import { Form, Col, Row } from "react-bootstrap";
 import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../CommonStyles/CommonStyles";
 import { MdbIcon, FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyles";
-import AlertComponent from "../../Alert/AlertComponent";
+import { useAlert } from "../../Alert/AlertContext";
 
 export default function MultipleQuoteInputs(props) {
     console.log(props.multipleQuotesValue)
-
+    const notify = useAlert()
     const [iconVisible, setIconVisible] = useState([true])
-   
+
     console.log(iconVisible)
     useEffect(() => {
         if (props.multipleQuotesValue.length === 0) {
@@ -16,11 +16,9 @@ export default function MultipleQuoteInputs(props) {
         }
     }, [])
 
-    
-
     const addQuoteInput = (index) => {
         if (!(props.multipleQuotesValue[index].quote) || !(props.multipleQuotesValue[index].author)) {
-            sendAlert("Um ou mais campos vazios!")
+            notify("Um ou mais campos vazios!")
         } else {
             props.setMultipleQuotes([...props.multipleQuotesValue, { quote: "", author: "" }])
 
@@ -85,8 +83,6 @@ export default function MultipleQuoteInputs(props) {
                             onClick={() => removeQuoteInput(index)}
                         />
                     )}
-
-                    
                 </div>
             ))}
         </>

@@ -4,10 +4,10 @@ import Button from "react-bootstrap/Button";
 import { Form, Col, Row, Dropdown, DropdownButton } from "react-bootstrap";
 import { FloatingLabel, FormGroup, CenteredFormControl, CenteredFormGroup } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
-import AlertComponent from "../../Alert/AlertComponent";
 import MultipleQuoteInputs from "./MultipleQuoteInputs";
 import dayjs from "dayjs";
 import { SourceNames } from "../SourceCommonFunctions";
+import { useAlert } from "../../Alert/AlertContext";
 
 import quoteEditingServices from "../../../services/quoteServices"
 
@@ -15,8 +15,7 @@ const quoteEditingService = new quoteEditingServices()
 
 export default function MultipleQuoteGenericForm(props) {
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
-    const [alertVisible, setAlertVisible] = useState(false)
-    const [alertTextState, setAlertTextState] = useState("")
+    const notify = useAlert()
     const [multipleQuotes, setMultipleQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
@@ -48,11 +47,6 @@ export default function MultipleQuoteGenericForm(props) {
         getQuoteToEdit()
     }, [])
 
-    const sendAlert = (alertText) => {
-        setAlertVisible(!alertVisible)
-        setAlertTextState(alertText)
-    }
-
     const handleSourceSelect = (eventKey) => {
         if (eventKey) {
             setQuoteData((prevData) => ({
@@ -67,6 +61,9 @@ export default function MultipleQuoteGenericForm(props) {
         let response
         try {
             if (multipleQuotes.length > 1) {
+                if(!(quoteData.date)){
+                    
+                }
                 if (props.type === "addQuote") {
                     const updatedQuoteData = {
                         ...quoteData,
@@ -88,15 +85,13 @@ export default function MultipleQuoteGenericForm(props) {
                 if (response === true) {
                     alert(props.texts.submitSuccess)
                 } else {
-                    alert(response)
+                    notify(response)
                 }
             } else {
-                alert("Diálogos precisam de 2 ou mais falas")
+                notify("Diálogos precisam de 2 ou mais falas")
             }
-
-
         } catch (error) {
-            alert(error)
+            notify(error)
         }
     }
 
@@ -180,7 +175,7 @@ export default function MultipleQuoteGenericForm(props) {
                 </Row>
                 <Button type="submit">{props.texts.submitButton}</Button>
             </Form>
-            <AlertComponent text={alertTextState} show={alertVisible} setShow={setAlertVisible} />
+            
         </>
     )
 }
