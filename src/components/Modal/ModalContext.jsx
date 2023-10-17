@@ -1,17 +1,18 @@
-import React, { useContext, createContext, useState } from "react"
+import React, { useContext, createContext, useState, useEffect } from "react"
 import { Button, Modal, ModalBody, ModalTitle } from "react-bootstrap"
 
 const ModalContext = createContext()
 
 export function ModalProvider({ children }) {
-    
+
     const [show, setShow] = useState(false)
-    const [modalData, setModalData] = useState({})
-    console.log(modalData)
+    const [modalData, setModalData] = useState({ title: "", paragraph: "", "buttons": [] })
+
     const handleClose = () => {
         setShow(false)
     }
 
+    console.log(show)
     const modalBox = (data) => {
         setModalData((prevData) => ({
             ...prevData,
@@ -20,8 +21,9 @@ export function ModalProvider({ children }) {
             buttons: data.buttons
         }))
 
+        setShow(true)
     }
-
+    console.log(modalData)
     return (
         <>
             <ModalContext.Provider value={modalBox}>
@@ -33,10 +35,9 @@ export function ModalProvider({ children }) {
                     <ModalBody>
                         {modalData.paragraph}
                     </ModalBody>
-
+                    
                     {
                         modalData.buttons && modalData.buttons.map((button, index) => (
-
                             <Button key={index} variant="dark">{button}</Button>
                         ))
                     }
