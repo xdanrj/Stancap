@@ -22,7 +22,6 @@ export function AlertProvider({children}) {
         </>
     )
 }
-
 export function useAlert() {
     return useContext(AlertContext)
 }

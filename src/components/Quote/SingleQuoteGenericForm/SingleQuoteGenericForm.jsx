@@ -6,11 +6,13 @@ import { FloatingLabel, FormGroup, CenteredFormGroup } from "../../../CommonStyl
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import dayjs from "dayjs";
 import { SourceNames } from "../SourceCommonFunctions";
+import { useModalBox } from "../../Modal/ModalContext";
 
 import quoteEditingServices from "../../../services/quoteServices"
 const quoteEditingService = new quoteEditingServices()
 
 export default function SingleQuoteGenericForm(props) {
+    const useModal = useModalBox()
     const [quotes, setQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
@@ -21,6 +23,7 @@ export default function SingleQuoteGenericForm(props) {
         context: '',
         tags: [],
     })
+
     console.log(quoteData)
     useEffect(() => {
         async function getQuoteToEdit() {
@@ -56,6 +59,9 @@ export default function SingleQuoteGenericForm(props) {
         e.preventDefault();
         let response
         try {
+            if (!(quoteData.date)) {
+                useModal({title: "titulo aq", paragraph: "paragrafffow"})              
+            } else {                
             if (props.type === "addQuote") {
                 const updatedQuoteData = {
                     ...quoteData,
@@ -79,6 +85,7 @@ export default function SingleQuoteGenericForm(props) {
             } else {
                 alert(response)
             }
+        }
         } catch (error) {
             alert(error)
         }
