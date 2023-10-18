@@ -59,9 +59,19 @@ export default function SingleQuoteGenericForm(props) {
         e.preventDefault();
         let response
         try {
+            let paragraph
+            let buttons = ["Vou inserir", "Deixa assim mesmo"]
             if (!(quoteData.date)) {
-                useModal({title: "Informações faltando", paragraph: "paragrafffow", buttons: ["sim", "não"]})              
-            } else {                
+                paragraph = "Você esqueceu da data. Não se lembra nem do ano?"                
+            }
+            if(!(quoteData.author)) {
+                paragraph = "Você esqueceu do autor."                
+            }
+            if(paragraph){
+                useModal({title: "Faltam informações", paragraph: paragraph, buttons: buttons})
+                console.log(paragraph)
+            }
+
             if (props.type === "addQuote") {
                 const updatedQuoteData = {
                     ...quoteData,
@@ -85,7 +95,7 @@ export default function SingleQuoteGenericForm(props) {
             } else {
                 alert(response)
             }
-        }
+
         } catch (error) {
             alert(error)
         }

@@ -3,7 +3,7 @@ import axios from "axios"
 export default class quoteEditingServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: "http://192.168.1.65:3000"
+            baseURL: "http://192.168.1.89:3000"
         })
     }
 
