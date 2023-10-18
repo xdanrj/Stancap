@@ -20,7 +20,7 @@ export const CenteredFormGroup = styled(originalForm.Group).attrs(() => ({
 }))`
 `;
 
-//à fazer ainda \/
+//à fazer (centeredformcontrol) ainda \/
 export const CenteredFormControl = styled(originalFormControl).attrs(() => ({
   className: "mx-auto"
 }))`
@@ -63,3 +63,8 @@ export const InfoIcon = styled.i.attrs(() => ({
   font-size: 3vh;
   color: grey;
 `;
+
+export const FooterLine = styled.div.attrs(() => ({
+  className: ""
+}))`
+`

@@ -1,5 +1,6 @@
 import React, { useContext, createContext, useState, useEffect } from "react"
-import { Button, Modal, ModalBody, ModalTitle } from "react-bootstrap"
+import { Modal, ModalFooter } from "react-bootstrap"
+import { ModalBody, ModalTitle, Button, ButtonContainer } from "./ModalContextStyles"
 
 const ModalContext = createContext()
 
@@ -36,11 +37,14 @@ export function ModalProvider({ children }) {
                         {modalData.paragraph}
                     </ModalBody>
                     
+                    <ButtonContainer>
                     {
                         modalData.buttons && modalData.buttons.map((button, index) => (
                             <Button key={index} variant="dark">{button}</Button>
                         ))
                     }
+                    </ButtonContainer>
+                    
                 </Modal>
                 {children}
             </ModalContext.Provider>

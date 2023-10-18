@@ -60,7 +60,7 @@ export default function SingleQuoteGenericForm(props) {
         let response
         try {
             if (!(quoteData.date)) {
-                useModal({title: "titulo aq", paragraph: "paragrafffow"})              
+                useModal({title: "Informações faltando", paragraph: "paragrafffow", buttons: ["sim", "não"]})              
             } else {                
             if (props.type === "addQuote") {
                 const updatedQuoteData = {
