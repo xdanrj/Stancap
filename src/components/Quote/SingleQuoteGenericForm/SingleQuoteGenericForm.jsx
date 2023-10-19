@@ -55,23 +55,10 @@ export default function SingleQuoteGenericForm(props) {
         }
     }
 
-    const handleSubmitQuote = async (e) => {
-        e.preventDefault();
-        let response
+    const finalSubmitQuote = async () => {
         try {
-            let paragraph
-            let buttons = ["Vou inserir", "Deixa assim mesmo"]
-            if (!(quoteData.date)) {
-                paragraph = "Você esqueceu da data. Não se lembra nem do ano?"                
-            }
-            if(!(quoteData.author)) {
-                paragraph = "Você esqueceu do autor."                
-            }
-            if(paragraph){
-                useModal({title: "Faltam informações", paragraph: paragraph, buttons: buttons})
-                console.log(paragraph)
-            }
-
+            console.log("entrou no finalsubmitquote")
+            let response
             if (props.type === "addQuote") {
                 const updatedQuoteData = {
                     ...quoteData,
@@ -95,7 +82,38 @@ export default function SingleQuoteGenericForm(props) {
             } else {
                 alert(response)
             }
+        } catch (error) {
+            alert(error)
+        }
+    }
 
+    const doFunction = (paragraph) => {
+        paragraph ? finalSubmitQuote : (null)
+    }
+
+    const handleSubmitQuote = async (e) => {
+        e.preventDefault()
+        try {
+            console.log("entrou")
+            let paragraph
+            let buttons = [{
+                text: "Vou inserir", action: "handleClose"
+            },
+            {
+                text: "Deixa assim mesmo", action: finalSubmitQuote
+            }]
+
+            if (!(quoteData.date)) {
+                paragraph = "Você se esqueceu da data. Não se lembra nem do ano?"
+            }
+            else if (!(quoteData.author)) {
+                paragraph = "Você se esqueceu do autor."
+            }
+            if (paragraph) {                
+                useModal({ title: "Faltam informações", paragraph: paragraph, buttons: buttons })
+            } else {
+                finalSubmitQuote()
+            }
         } catch (error) {
             alert(error)
         }

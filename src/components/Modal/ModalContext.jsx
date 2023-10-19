@@ -36,15 +36,19 @@ export function ModalProvider({ children }) {
                     <ModalBody>
                         {modalData.paragraph}
                     </ModalBody>
-                    
+
                     <ButtonContainer>
-                    {
-                        modalData.buttons && modalData.buttons.map((button, index) => (
-                            <Button key={index} variant="dark">{button}</Button>
-                        ))
-                    }
+                        {
+                            modalData.buttons && modalData.buttons.map((button, index) => (
+                                <Button key={index} variant="dark"
+                                    onClick={typeof button.action === "string" ?
+                                        eval(button.action) : (null)}>
+                                    {button.text}
+                                </Button>
+                            ))
+                        }
                     </ButtonContainer>
-                    
+
                 </Modal>
                 {children}
             </ModalContext.Provider>
