@@ -87,10 +87,6 @@ export default function SingleQuoteGenericForm(props) {
         }
     }
 
-    const doFunction = (paragraph) => {
-        paragraph ? finalSubmitQuote : (null)
-    }
-
     const handleSubmitQuote = async (e) => {
         e.preventDefault()
         try {
