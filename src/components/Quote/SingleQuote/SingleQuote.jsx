@@ -14,7 +14,9 @@ export default function SingleQuotes({ singleQuotes }) {
 
     useEffect(() => {
         const loadImagePaths = async () => {
-            const paths = await Promise.all(singleQuotes.map(data => sourceLogoSelector(data.source)))
+            const paths = await Promise.all(
+                singleQuotes.map(data =>
+                    sourceLogoSelector(data.source)))
             setImagePaths(paths)
         }
         loadImagePaths()
@@ -34,8 +36,9 @@ export default function SingleQuotes({ singleQuotes }) {
                         <QuoteContainer>
                             <QuoteHeader>
                                 {
-                                    imgPath ? (<SourceLogo src={imgPath}/>) : (<></>)
-                                     
+                                    imgPath ? (
+                                        <SourceLogo src={imgPath} />) : (
+                                        <SourceLogo src={`../src/images/Blank.png`} />)
                                 }
                                 <InfoIcon onClick={() => handleQuoteInfoClick(data)} />
 

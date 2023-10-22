@@ -16,13 +16,14 @@ export default function QuotesPage() {
       const quoteService = new quoteEditingServices()
       const response = await quoteService.getAllQuotes()
       setQuotesResponse(response)
-    };
-    fetchQuotes();
-  }, []);
+    }
+    fetchQuotes()
+  }, [])
 
   useEffect(() => {
     const currentSingleQuotesArray = []
     const currentMultipleQuotesArray = []
+
     quotesResponse.forEach((data) => {
       if (data.quotes.length === 1) {
         currentSingleQuotesArray.push(data)
@@ -52,9 +53,9 @@ export default function QuotesPage() {
     } else {
       return "mobileS";
     }
-  };
-  const currentSize = getCurrentScreenSize();
-  console.log("Tamanho atual da tela:", currentSize);
+  }
+  const currentSize = getCurrentScreenSize()
+  console.log("Tamanho atual da tela:", currentSize)
   
   return (
     <>
