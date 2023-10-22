@@ -13,6 +13,7 @@ import { MDBNavbarLink, MDBNavbarBrand, MDBNavbarToggler } from './NavbarStyles'
 
 export default function NavbarComponent() {
   const [showNavNoTogglerSecond, setShowNavNoTogglerSecond] = useState(false);
+  const username = localStorage.getItem("username")
 
   return (
     <>
@@ -30,8 +31,13 @@ export default function NavbarComponent() {
           </MDBNavbarToggler>
           <MDBCollapse navbar show={showNavNoTogglerSecond}>
             <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
+
               <MDBNavbarItem>
-                <MDBNavbarLink href='/quotes' className='text-white'>Quotes</MDBNavbarLink>
+              <MDBNavbarLink href='/' className='text-white'>Logado como {username}</MDBNavbarLink>
+              </MDBNavbarItem>
+
+              <MDBNavbarItem>
+                <MDBNavbarLink href='/quotes'>Quotes</MDBNavbarLink>
               </MDBNavbarItem>
 
               <MDBNavbarItem>
@@ -48,10 +54,6 @@ export default function NavbarComponent() {
 
               <MDBNavbarItem>
                 <MDBNavbarLink href='/add_quote'>Add Quote</MDBNavbarLink>
-              </MDBNavbarItem>
-
-              <MDBNavbarItem>
-                <MDBNavbarLink href='/edit_quote'>Edit Quote</MDBNavbarLink>
               </MDBNavbarItem>
 
               <MDBNavbarItem>

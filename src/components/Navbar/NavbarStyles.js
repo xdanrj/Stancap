@@ -14,12 +14,12 @@ import {
 } from 'mdb-react-ui-kit';
 
 export const MDBNavbar = styled(originalMDBNavbar).attrs(() => ({
-    className: ""
+    className: "text-white"
 }))`
 `;
 
 export const MDBContainer = styled(originalMDBContainer).attrs(() => ({
-    className: ""
+    className: "text-white"
 }))`
 `;
 
@@ -34,7 +34,7 @@ export const MDBNavbarToggler = styled(originalMDBNavbarToggler).attrs(() => ({
 `;
 
 export const MDBNavbarItem = styled(originalMDBNavbarItem).attrs(() => ({
-    className: ""
+    className: "text-white"
 }))`
 `;
 

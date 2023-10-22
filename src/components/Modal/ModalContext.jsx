@@ -35,11 +35,11 @@ export function ModalProvider({ children }) {
                     </ModalBody>
 
                     <ButtonContainer>
-                        {
+                    {
                             modalData.buttons && modalData.buttons.map((button, index) => (
                                 <Button key={index} variant="dark"
                                     onClick={typeof button.action === "string" ?
-                                        eval(button.action) : (null)}>
+                                        eval(button.action) : (button.action)}>
                                     {button.text}
                                 </Button>
                             ))
@@ -56,3 +56,15 @@ export function ModalProvider({ children }) {
 export function useModalBox() {
     return useContext(ModalContext)
 }
+
+/* BACKUP: 
+{
+                            modalData.buttons && modalData.buttons.map((button, index) => (
+                                <Button key={index} variant="dark"
+                                    onClick={typeof button.action === "string" ?
+                                        eval(button.action) : (null)}>
+                                    {button.text}
+                                </Button>
+                            ))
+                        }
+*/
