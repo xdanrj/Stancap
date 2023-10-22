@@ -10,38 +10,52 @@ import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
 export default function SingleQuotes({ singleQuotes }) {
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
     const [quoteInfoData, setQuoteInfoData] = useState("")
+    const [imagePaths, setImagePaths] = useState([])
 
+    useEffect(() => {
+        const loadImagePaths = async () => {
+            const paths = await Promise.all(singleQuotes.map(data => sourceLogoSelector(data.source)))
+            setImagePaths(paths)
+        }
+        loadImagePaths()
+    }, [singleQuotes])
+
+    console.log(imagePaths)
     const handleQuoteInfoClick = (data) => {
         setQuoteInfoData(data)
         setShowQuoteInfo(true)
     }
     return (
         <>
-            {singleQuotes.map((data) => {
-                data.date = NormalDate()
+            {singleQuotes.map((data, index) => {
+                const imgPath = imagePaths[index]
                 return (
                     <div key={data._id}>
                         <QuoteContainer>
                             <QuoteHeader>
-                                <SourceLogo src={sourceLogoSelector(data.source)} />
+                                {
+                                    imgPath ? (<SourceLogo src={imgPath}/>) : (<></>)
+                                     
+                                }
                                 <InfoIcon onClick={() => handleQuoteInfoClick(data)} />
+
                             </QuoteHeader>
                             <>
                                 <Paragraph>
                                     ‟{data.quotes[0].quote}”
                                 </Paragraph>
                                 <ParagraphAutor>
-                                    —{data.author}
+                                    —{data.author ? data.author : "Autor desconhecido"}
                                 </ParagraphAutor>
                                 <ParagraphDate>
-                                    ({data.date})
+                                    ({data.date ? data.date : "Data desconhecida"})
                                 </ParagraphDate>
                             </>
                         </QuoteContainer>
                     </div>
                 )
             })}
-            {<QuoteInfo quoteData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo}/>}
+            {<QuoteInfo quoteData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo} />}
         </>
     )
 }
