@@ -22,16 +22,28 @@ export default function QuoteInfo(props) {
                 <ModalBody>
 
                     <TextTitle>Source</TextTitle>
-                    <TextParagraph>{props.quoteData.source}</TextParagraph>
+                    <TextParagraph>{props.quoteData.source ?
+                        props.quoteData.source :
+                        "Source não especificada"}
+                    </TextParagraph>
 
                     <TextTitle>Data de upload</TextTitle>
-                    <TextParagraph>{NormalDateAndHour(props.quoteData.uploadDate)}</TextParagraph>
+                    <TextParagraph>{props.quoteData.uploadDate ?
+                        NormalDateAndHour(props.quoteData.uploadDate) :
+                        "Data não especificada"}
+                    </TextParagraph>
 
                     <TextTitle>Upload por</TextTitle>
-                    <TextParagraph>{props.quoteData.uploadByUser}</TextParagraph>
+                    <TextParagraph>{props.quoteData.uploadByUser ?
+                        props.quoteData.uploadByUser :
+                        "Usuário não especificado (isso não deveria acontecer, contate o dev)"}
+                    </TextParagraph>
 
                     <TextTitle>Contexto</TextTitle>
-                   <TextParagraph>{props.quoteData.context}</TextParagraph>
+                    <TextParagraph>{props.quoteData.context ?
+                        props.quoteData.context :
+                        "Contexto não especificado"}
+                    </TextParagraph>
                 </ModalBody>
             </Modal>
         </>

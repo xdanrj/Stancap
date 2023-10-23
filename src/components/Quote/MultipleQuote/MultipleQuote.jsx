@@ -10,6 +10,22 @@ import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
 export default function MultipleQuotes({ multipleQuotes }) {
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
     const [quoteInfoData, setQuoteInfoData] = useState("")
+    const [imagePaths, setImagePaths] = useState([])
+
+    useEffect(() => {
+        const loadImagePaths = async () => {
+            const paths = await Promise.all(
+                multipleQuotes.map(async (data) => {
+                    try {
+                        return await sourceLogoSelector(data.source)
+                    } catch (error) {
+                        return "false"
+                    }
+                }))
+            setImagePaths(paths)
+        }
+        loadImagePaths()
+    }, [multipleQuotes])
 
     const handleQuoteInfoClick = (data) => {
         setQuoteInfoData(data)
@@ -18,13 +34,18 @@ export default function MultipleQuotes({ multipleQuotes }) {
 
     return (
         <>
-            {multipleQuotes.map((data) => {
+            {multipleQuotes.map((data, index) => {
+                const imgPath = imagePaths[index]
                 data.date = NormalDate()
                 return (
                     <div key={data._id}>
                         <QuoteContainer>
                             <QuoteHeader>
-                                <SourceLogo src={sourceLogoSelector(data.source)} />
+                            {
+                                    imgPath ? (
+                                        <SourceLogo src={imgPath} />
+                                    ) : (<></>)                                        
+                                }
                                 <InfoIcon onClick={() => handleQuoteInfoClick(data)} />
                             </QuoteHeader>
                             {data.quotes.map((quote, index) => (

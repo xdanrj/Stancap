@@ -11,6 +11,7 @@ export function sourceLogoSelector(source) {
         img.onerror = () => {
             reject(false)
         }
+        console.log(imgPath)
     })
 }
 
