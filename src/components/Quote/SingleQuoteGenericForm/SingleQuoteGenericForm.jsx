@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { Form, Col, Row, Dropdown, DropdownButton } from "react-bootstrap";
 import { FloatingLabel, FormGroup, CenteredFormGroup } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import dayjs from "dayjs";
+import { isValidDate } from "../../../Formatting/DateFormatting";
 import { SourceNames } from "../SourceCommonFunctions";
 import { useModalBox } from "../../Modal/ModalContext";
 
@@ -79,6 +81,8 @@ export default function SingleQuoteGenericForm(props) {
             }
             if (response === true) {
                 alert(props.texts.submitSuccess)
+                window.location.reload()
+                
             } else {
                 alert(response)
             }
@@ -102,8 +106,15 @@ export default function SingleQuoteGenericForm(props) {
             if (!(quoteData.date)) {
                 paragraph = "Você se esqueceu da data. Não se lembra nem do ano?"
             }
+            else if(!(isValidDate(quoteData.date))){
+                paragraph = "Insira pelo menos o ano ou o mês e o ano. Ex.: 2022 ou 05/2020."
+            }
             else if (!(quoteData.author)) {
                 paragraph = "Você se esqueceu do autor."
+            }
+            else if(tags.length === 0) {
+                paragraph = "Insira pelo menos uma tag."
+                buttons = [{text: "Vou inserir", action: "handleClose"}]
             }
             if (paragraph) {                
                 useModal({ title: "Faltam informações", paragraph: paragraph, buttons: buttons })
@@ -141,7 +152,7 @@ export default function SingleQuoteGenericForm(props) {
                 <Row>
                     <FormGroup>
                         <FloatingLabel label="Quote">
-                            <Form.Control name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes}>
+                            <Form.Control required name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes}>
                             </Form.Control>
                         </FloatingLabel>
                     </FormGroup>
