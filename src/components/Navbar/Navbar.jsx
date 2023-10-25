@@ -10,10 +10,17 @@ import {
   MDBInputGroup
 } from 'mdb-react-ui-kit';
 import { MDBNavbarLink, MDBNavbarBrand, MDBNavbarToggler } from './NavbarStyles';
+import { useModalBox } from '../Modal/ModalContext';
 
 export default function NavbarComponent() {
+  const useModal = useModalBox()
   const [showNavNoTogglerSecond, setShowNavNoTogglerSecond] = useState(false);
   const username = localStorage.getItem("username")
+  const logoff = () => {
+     localStorage.removeItem("username")
+     localStorage.removeItem("email")
+     localStorage.removeItem("token")
+  }
 
   return (
     <>
@@ -33,7 +40,7 @@ export default function NavbarComponent() {
             <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
 
               <MDBNavbarItem>
-              <MDBNavbarLink href='/' className='text-white'>Logado como {username}</MDBNavbarLink>
+              <MDBNavbarLink onClick={useModal({title: `Usuário ${username}`, paragraph: ``, buttons: [{text: "Deslogar", action: logoff}]})} className='text-white'>Logado como {username}</MDBNavbarLink>
               </MDBNavbarItem>
 
               <MDBNavbarItem>
