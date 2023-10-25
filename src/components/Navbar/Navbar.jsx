@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
-import {
-  MDBNavbar,
-  MDBContainer,
-  MDBNavbarItem,
-  MDBCollapse,
-  MDBBtn,
-  MDBIcon,
-  MDBNavbarNav,
-  MDBInputGroup
-} from 'mdb-react-ui-kit';
+import { useNavigate } from 'react-router-dom';
+import { MDBNavbar, MDBContainer, MDBNavbarItem, MDBCollapse, MDBBtn, MDBIcon, MDBNavbarNav, MDBInputGroup } from 'mdb-react-ui-kit';
 import { MDBNavbarLink, MDBNavbarBrand, MDBNavbarToggler } from './NavbarStyles';
 import { useModalBox } from '../Modal/ModalContext';
 
 export default function NavbarComponent() {
+  const navigate = useNavigate()
   const useModal = useModalBox()
   const [showNavNoTogglerSecond, setShowNavNoTogglerSecond] = useState(false);
   const username = localStorage.getItem("username")
+
   const logoff = () => {
-     localStorage.removeItem("username")
-     localStorage.removeItem("email")
-     localStorage.removeItem("token")
+    localStorage.removeItem("username")
+    localStorage.removeItem("email")
+    localStorage.removeItem("token")
+    navigate('/quotes')
+    alert("Deslogado com sucesso")
   }
 
   return (
@@ -40,7 +36,7 @@ export default function NavbarComponent() {
             <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
 
               <MDBNavbarItem>
-              <MDBNavbarLink onClick={useModal({title: `Usuário ${username}`, paragraph: ``, buttons: [{text: "Deslogar", action: logoff}]})} className='text-white'>Logado como {username}</MDBNavbarLink>
+                <MDBNavbarLink onClick={() => useModal({ title: `Usuário ${username}`, paragraph: ``, buttons: [{ text: "Deslogar", action: logoff }] })} className='text-white'>Logado como {username}</MDBNavbarLink>
               </MDBNavbarItem>
 
               <MDBNavbarItem>

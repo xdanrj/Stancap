@@ -3,6 +3,7 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
+import NavbarComponent from './components/Navbar/Navbar';
 import Quotes from './pages/Quotes/Quotes';
 import Login from './pages/Credentials/Login';
 import Register from './pages/Credentials/Register';
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/add_quote" element={<AddQuote />} />
         <Route path="/edit_quote/:quotetype/:id" element={<EditQuote />} />
         <Route path="/my_quotes" element={<MyQuotes />} />
+        <Route path="/navbar" element={<NavbarComponent />} />
       </Routes>
     </Router>
   )
