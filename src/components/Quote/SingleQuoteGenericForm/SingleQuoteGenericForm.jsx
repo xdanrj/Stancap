@@ -5,16 +5,18 @@ import Button from "react-bootstrap/Button";
 import { Form, Col, Row, Dropdown, DropdownButton } from "react-bootstrap";
 import { FloatingLabel, FormGroup, CenteredFormGroup } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
-import dayjs from "dayjs";
 import { isValidDate } from "../../../Formatting/DateFormatting";
 import { SourceNames } from "../SourceCommonFunctions";
 import { useModalBox } from "../../Modal/ModalContext";
+import { useAlertMsg } from "../../Alert/AlertContext";
+import dayjs from "dayjs";
 
 import quoteEditingServices from "../../../services/quoteServices"
 const quoteEditingService = new quoteEditingServices()
 
 export default function SingleQuoteGenericForm(props) {
     const useModal = useModalBox()
+    const useAlert = useAlertMsg()
     const [quotes, setQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
@@ -82,9 +84,9 @@ export default function SingleQuoteGenericForm(props) {
             if (response === true) {
                 alert(props.texts.submitSuccess)
                 window.location.reload()
-                
+
             } else {
-                alert(response)
+                useAlert(response)
             }
         } catch (error) {
             alert(error)
@@ -94,7 +96,6 @@ export default function SingleQuoteGenericForm(props) {
     const handleSubmitQuote = async (e) => {
         e.preventDefault()
         try {
-            console.log("entrou")
             let paragraph
             let buttons = [{
                 text: "Vou inserir", action: "handleClose"
@@ -106,23 +107,23 @@ export default function SingleQuoteGenericForm(props) {
             if (!(quoteData.date)) {
                 paragraph = "Você se esqueceu da data. Não se lembra nem do ano?"
             }
-            else if(!(isValidDate(quoteData.date))){
-                paragraph = "Insira pelo menos o ano ou o mês e o ano. Ex.: 2022 ou 05/2020."
-            }
             else if (!(quoteData.author)) {
                 paragraph = "Você se esqueceu do autor."
+                buttons = [{ text: "Vou inserir", action: "handleClose" }, { text: "Não lembro do autor" }]
             }
-            else if(tags.length === 0) {
-                paragraph = "Insira pelo menos uma tag."
-                buttons = [{text: "Vou inserir", action: "handleClose"}]
+            else if (tags.length === 0) {
+                useAlert("Insira pelo menos uma tag.")                
             }
-            if (paragraph) {                
+            else if (!(isValidDate(quoteData.date))) {
+                useAlert("Insira pelo menos o ano ou mês/ano. Ex.: 2022 ou 05/2020.")
+            }
+            if (paragraph) {
                 useModal({ title: "Faltam informações", paragraph: paragraph, buttons: buttons })
             } else {
                 finalSubmitQuote()
             }
         } catch (error) {
-            alert(error)
+            useAlert(error)
         }
     }
 

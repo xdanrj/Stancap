@@ -7,15 +7,17 @@ import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import MultipleQuoteInputs from "./MultipleQuoteInputs";
 import dayjs from "dayjs";
 import { SourceNames } from "../SourceCommonFunctions";
-import { useAlert } from "../../Alert/AlertContext";
+import { useAlertMsg } from "../../Alert/AlertContext";
+import { useModalBox } from "../../Modal/ModalContext";
 
 import quoteEditingServices from "../../../services/quoteServices"
 
 const quoteEditingService = new quoteEditingServices()
 
 export default function MultipleQuoteGenericForm(props) {
+    const useAlert = useAlertMsg()
+    const useModal = useModalBox()
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
-    const notify = useAlert()
     const [multipleQuotes, setMultipleQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
@@ -56,14 +58,11 @@ export default function MultipleQuoteGenericForm(props) {
         }
     }
 
-    const handleSubmitQuote = async (e) => {
+    const finalSubmitQuote = async (e) => {
         e.preventDefault();
         let response
         try {
             if (multipleQuotes.length > 1) {
-                if(!(quoteData.date)){
-                    
-                }
                 if (props.type === "addQuote") {
                     const updatedQuoteData = {
                         ...quoteData,
@@ -85,13 +84,42 @@ export default function MultipleQuoteGenericForm(props) {
                 if (response === true) {
                     alert(props.texts.submitSuccess)
                 } else {
-                    notify(response)
+                    useAlert(response)
                 }
             } else {
-                notify("Diálogos precisam de 2 ou mais falas")
+                useAlert("Diálogos precisam de 2 ou mais falas")
             }
         } catch (error) {
-            notify(error)
+            useAlert(error)
+        }
+    }
+
+    const handleSubmitQuote = async (e) => {
+        e.preventDefault()
+        try {
+            let paragraph
+            let buttons = [{
+                text: "Vou inserir", action: "handleClose"
+            },
+            {
+                text: "Deixa assim mesmo", action: finalSubmitQuote
+            }]
+
+            if (!(quoteData.date)) {
+                paragraph = "Você se esqueceu da data. Não se lembra nem do ano?"
+            } else if (tags.length === 0) {
+                useAlert("Insira pelo menos uma tag.")
+            }
+            else if (!(isValidDate(quoteData.date))) {
+                useAlert("Insira pelo menos o ano ou mês/ano. Ex.: 2022 ou 05/2020.")
+            }
+            if (paragraph) {
+                useModal({ title: "Faltam informações", paragraph: paragraph, buttons: buttons })
+            } else {
+                finalSubmitQuote()
+            }
+        } catch (error) {
+            useAlert(error)
         }
     }
 
@@ -175,7 +203,7 @@ export default function MultipleQuoteGenericForm(props) {
                 </Row>
                 <Button type="submit">{props.texts.submitButton}</Button>
             </Form>
-            
+
         </>
     )
 }

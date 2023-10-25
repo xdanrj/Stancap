@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
 import { useNavigate, useLocation } from "react-router-dom";
-
 import { Form } from "react-bootstrap";
 import { FloatingLabel, FormGroup } from "../../../CommonStyles/CommonStyles";
+import { useAlertMsg } from "../../Alert/AlertContext";
 
 
 import loginAndRegisterServices from "../../../services/loginAndRegisterServices"
@@ -11,6 +11,7 @@ import loginAndRegisterServices from "../../../services/loginAndRegisterServices
 const loginAndRegisterService = new loginAndRegisterServices()
 
 export default function LoginForm() {
+    const useAlert = useAlertMsg()
     const location = useLocation()
     const navigate = useNavigate()
     const [loginData, setLoginData] = useState([])
@@ -34,10 +35,10 @@ export default function LoginForm() {
                 navigate('/quotes')
             }
             else {
-                alert(response)
+                useAlert(response)
             }
         } catch (error) {
-            alert(error)
+            useAlert(error)
         }
     }
     const handleLoginChange = (e) => {

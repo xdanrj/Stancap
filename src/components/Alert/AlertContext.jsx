@@ -22,6 +22,6 @@ export function AlertProvider({children}) {
         </>
     )
 }
-export function useAlert() {
+export function useAlertMsg() {
     return useContext(AlertContext)
 }

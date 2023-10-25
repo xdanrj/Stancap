@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { DisabledFormControl, FloatingLabel } from "../../../CommonStyles/CommonStyles";
 import { PasswordValidation } from "../../../Validations/PasswordValidations";
 import loginAndRegisterServices from "../../../services/loginAndRegisterServices"
+import { useAlertMsg } from "../../Alert/AlertContext";
 const loginAndRegisterService = new loginAndRegisterServices()
 
 function RegisterForm() {
     const navigate = useNavigate()
+    const useAlert = useAlertMsg()
 
     // definição dos valores
     const [email, setEmail] = useState([])
@@ -30,7 +32,7 @@ function RegisterForm() {
                 setCheckCodeForm(true)
             }
             else {
-                alert(response)
+                useAlert(response)
             }
         } catch (error) { alert(error.response.data.error) }
     }
@@ -45,9 +47,9 @@ function RegisterForm() {
                 setRegisterForm(true)
             }
             else {
-                alert(response)
+                useAlert(response)
             }
-        } catch (error) { alert(error.response.data.error) }
+        } catch (error) { useAlert(error.response.data.error) }
     }
 
     const handleSubmitRegister = async (e) => {
@@ -66,18 +68,12 @@ function RegisterForm() {
                 }
             } else {
                 console.log(dataValidation.message)
-                alert(dataValidation.message)
+                useAlert(dataValidation.message)
             }
         } catch (error) {
-            alert(error.response.data.error)
+            useAlert(error.response.data.error)
         }
-
-
-
-
     }
-
-    // handleChange de todos os inputs
     const handleEmailChange = (e) => {
         setEmail({ ...email, [e.target.name]: e.target.value })
     }

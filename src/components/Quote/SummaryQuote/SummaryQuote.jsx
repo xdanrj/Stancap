@@ -5,10 +5,12 @@ import { Col, Row } from "react-bootstrap";
 import quoteEditingServices from "../../../services/quoteServices"
 import { useNavigate } from "react-router-dom";
 import QuoteInfo from "./QuoteInfo/QuoteInfo";
+import { useAlertMsg } from "../../Alert/AlertContext";
 
 const quoteService = new quoteEditingServices()
 
 export default function SummaryQuote() {
+    const useAlert = useAlertMsg()
     const navigate = useNavigate()
     const [quotesResponse, setQuotesResponse] = useState([])
     const [quotesResponseArray, setQuotesResponseArray] = useState([])
@@ -32,7 +34,7 @@ export default function SummaryQuote() {
         try {
             navigate(`/edit_quote/${quoteType}/${quoteId}`)
         } catch (error) {
-            alert(error)
+            useal(error)
         }
     }
 

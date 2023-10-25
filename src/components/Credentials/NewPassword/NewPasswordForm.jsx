@@ -5,11 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { FloatingLabel } from "../../../CommonStyles/CommonStyles";
 
 import loginAndRegisterServices from "../../../services/loginAndRegisterServices"
+import { useAlertMsg } from "../../Alert/AlertContext";
 const loginAndRegisterService = new loginAndRegisterServices()
 
 export default function NewPasswordForm() {
     const navigate = useNavigate()
-
+    const useAlert = useAlertMsg()
     // definição dos valores
     const [email, setEmail] = useState()
     const [code, setCode] = useState()
@@ -30,7 +31,7 @@ export default function NewPasswordForm() {
                 setCheckCodeForm(true)
             }
             else {
-                alert(response)
+                useAlert(response)
             }
         } catch (error) { alert(error) }
     }
@@ -45,7 +46,7 @@ export default function NewPasswordForm() {
                 setNewPasswordForm(true)
             }
             else {
-                alert(response)
+                useAlert(response)
             }
         } catch (error) { alert(error) }
     }
@@ -61,7 +62,7 @@ export default function NewPasswordForm() {
                     navigate('/quotes')
                 }
             } else {
-                alert(response)
+                useAlert(response)
             }
         } catch (error) { alert(error) }
     }
