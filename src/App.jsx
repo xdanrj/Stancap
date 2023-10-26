@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import NavbarComponent from './components/Navbar/Navbar';
@@ -17,19 +17,20 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/quotes" element={<Quotes />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/testes" element={<Testes />} />
-        <Route path="/new_password" element={<NewPassword />} />
-        <Route path="/add_quote" element={<AddQuote />} />
-        <Route path="/edit_quote/:quotetype/:id" element={<EditQuote />} />
-        <Route path="/my_quotes" element={<MyQuotes />} />
-        <Route path="/navbar" element={<NavbarComponent />} />
-      </Routes>
-    </Router>
+    <div>
+      <NavbarComponent />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/quotes" element={<Quotes />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/testes" element={<Testes />} />
+          <Route path="/new_password" element={<NewPassword />} />
+          <Route path="/add_quote" element={<AddQuote />} />
+          <Route path="/edit_quote/:quotetype/:id" element={<EditQuote />} />
+          <Route path="/my_quotes" element={<MyQuotes />} />
+          <Route path="/navbar" element={<NavbarComponent />} />
+        </Routes>      
+    </div>
   )
 }

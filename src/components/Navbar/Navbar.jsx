@@ -36,7 +36,7 @@ export default function NavbarComponent() {
             <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
 
               <MDBNavbarItem>
-                <MDBNavbarLink onClick={() => useModal({ title: `Usuário ${username}`, paragraph: ``, buttons: [{ text: "Deslogar", action: logoff }] })} className='text-white'>Logado como {username}</MDBNavbarLink>
+                <MDBNavbarLink onClick={() => useModal({ title: `Usuário ${username}`, paragraph: ``, buttons: [{ text: "Deslogar", action: [logoff, "handleClose"] }] })} className='text-white'>Logado como {username}</MDBNavbarLink>
               </MDBNavbarItem>
 
               <MDBNavbarItem>

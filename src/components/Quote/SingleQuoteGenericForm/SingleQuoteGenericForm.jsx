@@ -98,10 +98,10 @@ export default function SingleQuoteGenericForm(props) {
         try {
             let paragraph
             let buttons = [{
-                text: "Vou inserir", action: "handleClose"
+                text: "Vou inserir", action: ["handleClose"]
             },
             {
-                text: "Deixa assim mesmo", action: finalSubmitQuote
+                text: "Deixa assim mesmo", action: [finalSubmitQuote]
             }]
 
             if (!(quoteData.date)) {
@@ -109,7 +109,7 @@ export default function SingleQuoteGenericForm(props) {
             }
             else if (!(quoteData.author)) {
                 paragraph = "Você se esqueceu do autor."
-                buttons = [{ text: "Vou inserir", action: "handleClose" }, { text: "Não lembro do autor" }]
+                buttons = [{ text: "Vou inserir", action: ["handleClose"] }, { text: "Não lembro do autor" }]
             }
             else if (tags.length === 0) {
                 useAlert("Insira pelo menos uma tag.")                

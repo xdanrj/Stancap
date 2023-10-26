@@ -35,11 +35,21 @@ export function ModalProvider({ children }) {
                     </ModalBody>
 
                     <ButtonContainer>
-                    {
+                        {
                             modalData.buttons && modalData.buttons.map((button, index) => (
                                 <Button key={index} variant="dark"
-                                    onClick={typeof button.action === "string" ?
-                                        eval(button.action) : (button.action)}>
+                                    onClick={() => {
+                                        button.action.forEach((buttonInList) => {
+                                            if (typeof buttonInList === "string") {
+                                                console.log("entrou string")
+                                                eval(buttonInList)
+                                            } else if (typeof buttonInList === "function") {
+                                                console.log("entrou function")
+                                                buttonInList()
+                                            }
+                                        })
+                                    }}
+                                >
                                     {button.text}
                                 </Button>
                             ))
@@ -48,7 +58,7 @@ export function ModalProvider({ children }) {
 
                 </Modal>
                 {children}
-            </ModalContext.Provider>
+            </ModalContext.Provider >
         </>
     )
 }

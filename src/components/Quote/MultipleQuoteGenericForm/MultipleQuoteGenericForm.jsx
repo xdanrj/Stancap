@@ -99,10 +99,10 @@ export default function MultipleQuoteGenericForm(props) {
         try {
             let paragraph
             let buttons = [{
-                text: "Vou inserir", action: "handleClose"
+                text: "Vou inserir", action: ["handleClose"]
             },
             {
-                text: "Deixa assim mesmo", action: finalSubmitQuote
+                text: "Deixa assim mesmo", action: [finalSubmitQuote]
             }]
 
             if (!(quoteData.date)) {
