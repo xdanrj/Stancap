@@ -42,6 +42,7 @@ export function ModalProvider({ children }) {
                                         button.action.forEach((buttonInList) => {
                                             if (typeof buttonInList === "string") {
                                                 console.log("entrou string")
+                                                console.log(buttonInList)
                                                 eval(buttonInList)
                                             } else if (typeof buttonInList === "function") {
                                                 console.log("entrou function")

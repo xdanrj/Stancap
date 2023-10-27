@@ -11,7 +11,7 @@ export function AlertProvider({children}) {
         <>
         <AlertContext.Provider value={notify}>
             <ToastContainer
-                autoClose={2000}
+                autoClose={3500}
                 position="top-center"
                 theme="dark"
                 limit={2}

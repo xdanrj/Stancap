@@ -98,7 +98,7 @@ export default function SingleQuoteGenericForm(props) {
         try {
             let paragraph
             let buttons = [{
-                text: "Vou inserir", action: ["handleClose"]
+                text: "Vou inserir", action: ["handleClose()"]
             },
             {
                 text: "Deixa assim mesmo", action: [finalSubmitQuote]
@@ -109,19 +109,23 @@ export default function SingleQuoteGenericForm(props) {
             }
             else if (!(quoteData.author)) {
                 paragraph = "Você se esqueceu do autor."
-                buttons = [{ text: "Vou inserir", action: ["handleClose"] }, { text: "Não lembro do autor" }]
+                buttons = [{ text: "Vou inserir", action: ["handleClose()"] }, { text: "Não lembro o autor" }]
             }
-            else if (tags.length === 0) {
-                useAlert("Insira pelo menos uma tag.")                
-            }
-            else if (!(isValidDate(quoteData.date))) {
-                useAlert("Insira pelo menos o ano ou mês/ano. Ex.: 2022 ou 05/2020.")
-            }
+
             if (paragraph) {
                 useModal({ title: "Faltam informações", paragraph: paragraph, buttons: buttons })
-            } else {
-                finalSubmitQuote()
             }
+            else {
+                if (tags.length === 0) {
+                    useAlert("Insira pelo menos uma tag.")
+                }
+                else if (!(isValidDate(quoteData.date))) {
+                    useAlert("Insira pelo menos o ano ou mês/ano. Ex.: 2022 ou 05/2020.")
+                } else {
+                    finalSubmitQuote()
+                }
+            }
+
         } catch (error) {
             useAlert(error)
         }
