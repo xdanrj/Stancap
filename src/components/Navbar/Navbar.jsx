@@ -18,6 +18,10 @@ export default function NavbarComponent() {
     alert("Deslogado com sucesso")
   }
 
+  const handleNavToggler = () => {
+    setShowNavNoTogglerSecond(!showNavNoTogglerSecond)
+  }
+
   return (
     <>
       <MDBNavbar fixed="top" expand='lg' light bgColor='dark'>
@@ -29,14 +33,14 @@ export default function NavbarComponent() {
             aria-controls='navbarTogglerDemo02'
             aria-expanded='false'
             aria-label='Toggle navigation'
-            onClick={() => setShowNavNoTogglerSecond(!showNavNoTogglerSecond)}>
+            onClick={() => handleNavToggler()}>
             <MDBIcon icon='bars' fas />
           </MDBNavbarToggler>
           <MDBCollapse navbar show={showNavNoTogglerSecond}>
             <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
 
               <MDBNavbarItem>
-                <MDBNavbarLink onClick={() => useModal({ title: `Usuário ${username}`, paragraph: ``, buttons: [{ text: "Deslogar", action: [logoff, "handleClose"] }] })} className='text-white'>Logado como {username}</MDBNavbarLink>
+                <MDBNavbarLink onClick={() => useModal({ title: `Usuário ${username}`, paragraph: ``, buttons: [{ text: "Deslogar", action: [logoff, handleNavToggler,"handleClose()"] }] })} className='text-white'>Logado como {username}</MDBNavbarLink>
               </MDBNavbarItem>
 
               <MDBNavbarItem>

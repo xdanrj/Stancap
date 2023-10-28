@@ -96,6 +96,7 @@ export default function SingleQuoteGenericForm(props) {
     const handleSubmitQuote = async (e) => {
         e.preventDefault()
         try {
+            // condicoes
             let paragraph
             let buttons = [{
                 text: "Vou inserir", action: ["handleClose()"]
@@ -118,8 +119,7 @@ export default function SingleQuoteGenericForm(props) {
             else {
                 if (tags.length === 0) {
                     useAlert("Insira pelo menos uma tag.")
-                }
-                else if (!(isValidDate(quoteData.date))) {
+                } else if (!(isValidDate(quoteData.date))) {
                     useAlert("Insira pelo menos o ano ou mês/ano. Ex.: 2022 ou 05/2020.")
                 } else {
                     finalSubmitQuote()

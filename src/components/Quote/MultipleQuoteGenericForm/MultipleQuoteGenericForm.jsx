@@ -58,8 +58,8 @@ export default function MultipleQuoteGenericForm(props) {
         }
     }
 
-    const finalSubmitQuote = async (e) => {
-        e.preventDefault();
+    const finalSubmitQuote = async () => {
+
         let response
         try {
             if (multipleQuotes.length > 1) {
@@ -83,6 +83,7 @@ export default function MultipleQuoteGenericForm(props) {
                 }
                 if (response === true) {
                     alert(props.texts.submitSuccess)
+                    window.location.reload()
                 } else {
                     useAlert(response)
                 }
@@ -97,9 +98,10 @@ export default function MultipleQuoteGenericForm(props) {
     const handleSubmitQuote = async (e) => {
         e.preventDefault()
         try {
+            // condicoes
             let paragraph
             let buttons = [{
-                text: "Vou inserir", action: ["handleClose"]
+                text: "Vou inserir", action: ["handleClose()"]
             },
             {
                 text: "Deixa assim mesmo", action: [finalSubmitQuote]
@@ -107,16 +109,18 @@ export default function MultipleQuoteGenericForm(props) {
 
             if (!(quoteData.date)) {
                 paragraph = "Você se esqueceu da data. Não se lembra nem do ano?"
-            } else if (tags.length === 0) {
-                useAlert("Insira pelo menos uma tag.")
             }
-            else if (!(isValidDate(quoteData.date))) {
-                useAlert("Insira pelo menos o ano ou mês/ano. Ex.: 2022 ou 05/2020.")
-            }
+
             if (paragraph) {
                 useModal({ title: "Faltam informações", paragraph: paragraph, buttons: buttons })
             } else {
-                finalSubmitQuote()
+                if (tags.length === 0) {
+                    useAlert("Insira pelo menos uma tag.")
+                } else if (!(isValidDate(quoteData.date))) {
+                    useAlert("Insira pelo menos o ano ou mês/ano. Ex.: 2022 ou 05/2020.")
+                } else {
+                    finalSubmitQuote()
+                }
             }
         } catch (error) {
             useAlert(error)
