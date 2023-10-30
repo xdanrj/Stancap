@@ -4,24 +4,28 @@ import { MDBInput, MDBIcon, MDBBtn, MDBDropdown, MDBDropdownToggle, MDBDropdownM
 import { MDBInputGroup } from "./SearchBarStyles";
 
 export function SearchBar() {
+    const SearchTypes = [{"Autor": "author"}, {"Tag": "tag"}, {"Source": "source"}, {"Upload por": "uploadByUser"}, {"Contexto": "context"}]
+
+    const handleSearchTypeSelect = (item) => {
+
+    }
+
     return (
-        <>  
+        <>
             <MDBInputGroup>
-            <MDBDropdown>
-            <MDBDropdownToggle size="lg" color="dark">Tipo</MDBDropdownToggle>
+                <MDBDropdown>
+                    <MDBDropdownToggle size="lg" color="dark">Tipo</MDBDropdownToggle>
                     <MDBDropdownMenu dark>
-                        <MDBDropdownItem link>Autor</MDBDropdownItem>
-                        <MDBDropdownItem>Tag</MDBDropdownItem>
-                        <MDBDropdownItem>Source</MDBDropdownItem>
-                        <MDBDropdownItem>Upload por</MDBDropdownItem>
-                        <MDBDropdownItem>Contexto</MDBDropdownItem>
-                        <MDBDropdownItem divider />
-                        <MDBDropdownItem></MDBDropdownItem>
+                        {SearchTypes.map((item) => (
+                            <MDBDropdownItem onClick={handleSearchTypeSelect(item)}>{item}</MDBDropdownItem>
+                        ))
+
+                        }
                     </MDBDropdownMenu>
                 </MDBDropdown>
-            
+
                 <MDBInput className="" contrast label='Pesquise' />
-                
+
                 <MDBBtn color="dark" rippleColor='white' onClick={() => a}>
                     <MDBIcon color="white" icon='search' />
                 </MDBBtn>
