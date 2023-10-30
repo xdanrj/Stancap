@@ -1,28 +1,17 @@
 import { React, useState } from "react";
-import { CenteredFormControl, FloatingLabel, FormGroup } from "../../CommonStyles/CommonStyles";
-import { Form, Row, Col, Button } from "react-bootstrap";
-import { MDBIcon } from "mdb-react-ui-kit";
+import { Form, FormGroup, FloatingLabel, Row, Col, Button } from "react-bootstrap";
+import { MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBInputGroup } from "./SearchBarStyles";
 
-export function SearchBar({ props }) {
-
-
+export function SearchBar() {
     return (
-        <>
-            <Form>
-                <FormGroup>
-                    <Row>
-                        <Col >
-                            <CenteredFormControl placeholder="Digite">
-                            </CenteredFormControl>
-                        </Col>
-                        <Col>
-                            <Button>
-                                <MDBIcon fas icon="search" />
-                            </Button>
-                        </Col>
-                    </Row>
-                </FormGroup>
-            </Form>
+        <>  
+            <MDBInputGroup>
+                <MDBInput className="" contrast label='Pesquise' />
+                <MDBBtn rippleColor='white' onClick={() => a}>
+                    <MDBIcon color="white" icon='search' />
+                </MDBBtn>
+            </MDBInputGroup>
         </>
     )
 }

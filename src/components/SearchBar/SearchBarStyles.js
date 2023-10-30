@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { device } from "../../CommonStyles/device";
-import { MDBIcon } from "mdb-react-ui-kit";
+import { MDBInputGroup as originalMDBInputGroup} from "mdb-react-ui-kit";
 
-export const MdbIcon = styled(originalMDBIcon).attrs(() => ({
-    className: ``
+export const MDBInputGroup = styled(originalMDBInputGroup).attrs(() => ({
+    className: `mb-5`
 }))`
     
 `
