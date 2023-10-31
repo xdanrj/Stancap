@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { device } from "../../CommonStyles/device";
-import { MDBInputGroup as originalMDBInputGroup} from "mdb-react-ui-kit";
+import { InputGroup as originalInputGroup } from "react-bootstrap";
 
-export const MDBInputGroup = styled(originalMDBInputGroup).attrs(() => ({
+export const InputGroup = styled(originalInputGroup).attrs(() => ({
     className: `mb-5`
 }))`
     

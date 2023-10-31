@@ -1,35 +1,36 @@
 import { React, useState } from "react";
-import { Form, FormGroup, FloatingLabel, Row, Col, Button } from "react-bootstrap";
-import { MDBInput, MDBIcon, MDBBtn, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from 'mdb-react-ui-kit';
-import { MDBInputGroup } from "./SearchBarStyles";
+import { Form, FormGroup, FloatingLabel, Row, Col, Button, DropdownButton } from "react-bootstrap";
+import { InputGroup } from "./SearchBarStyles";
+import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
 export function SearchBar() {
-    const SearchTypes = [{"Autor": "author"}, {"Tag": "tag"}, {"Source": "source"}, {"Upload por": "uploadByUser"}, {"Contexto": "context"}]
+    const SearchTypes = [
+        { label: "Autor", value: "author" },
+        { label: "Tag", value: "tag" },
+        { label: "Source", value: "source" },
+        { label: "Upload por", value: "uploadByUser" },
+        { label: "Contexto", value: "context" }
+    ]
 
-    const handleSearchTypeSelect = (item) => {
+    const [selectedType, setSelectedType] = useState()
 
+    const handleTypeSelect = (eventKey) => {
+        console.log(eventKey)
+        console.log(SearchTypes[eventKey])
+        setSelectedType(SearchTypes[eventKey])
+        
     }
 
     return (
         <>
-            <MDBInputGroup>
-                <MDBDropdown>
-                    <MDBDropdownToggle size="lg" color="dark">Tipo</MDBDropdownToggle>
-                    <MDBDropdownMenu dark>
-                        {SearchTypes.map((item) => (
-                            <MDBDropdownItem onClick={handleSearchTypeSelect(item)}>{item}</MDBDropdownItem>
-                        ))
-
-                        }
-                    </MDBDropdownMenu>
-                </MDBDropdown>
-
-                <MDBInput className="" contrast label='Pesquise' />
-
-                <MDBBtn color="dark" rippleColor='white' onClick={() => a}>
-                    <MDBIcon color="white" icon='search' />
-                </MDBBtn>
-            </MDBInputGroup>
+            <InputGroup>
+            <DropdownButton title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
+            {SearchTypes.map((item, index) => (
+                <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
+            ))}
+            </DropdownButton>
+            <Form.Control />
+            </InputGroup>
         </>
     )
 }
