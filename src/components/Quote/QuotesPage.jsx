@@ -61,6 +61,7 @@ export default function QuotesPage() {
   return (
     <>
     <SearchBar/>
+    
       <SingleQuote singleQuotes={singleQuotesArray}/>
       <MultipleQuote multipleQuotes={multipleQuotesArray} />
     </>
