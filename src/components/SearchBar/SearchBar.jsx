@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import { Form, FormGroup, FloatingLabel, Row, Col, Button, DropdownButton } from "react-bootstrap";
 import { InputGroup } from "./SearchBarStyles";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
+import { MDBIcon } from "mdb-react-ui-kit";
 
 export function SearchBar() {
     const SearchTypes = [
@@ -24,12 +25,15 @@ export function SearchBar() {
     return (
         <>
             <InputGroup>
-            <DropdownButton title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
+            <DropdownButton variant="dark" menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
             {SearchTypes.map((item, index) => (
                 <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
             ))}
             </DropdownButton>
-            <Form.Control />
+            <Form.Control placeholder="Pesquise..." />
+            <Button variant="dark">
+                <MDBIcon icon="search"/>
+            </Button>
             </InputGroup>
         </>
     )
