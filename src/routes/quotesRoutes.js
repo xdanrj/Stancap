@@ -39,19 +39,18 @@ export const quotesRoutes = (app) => {
   app.get("/all_quotes", async (req, res) => {
     try {
       const response = await Quotes.find()
-      res.send({ response: response })
+      res.send(response)
     } catch (error) {
-      res.send({ message: error })
+      res.send(error)
     }
   })
 
   app.post("/search_quote", async (req, res) => {
     try {
-      console.log("req.body aqui: ", req.body)
       const foundQuote = await selectQuote(req.body)
-      res.send({ response: foundQuote })
+      res.send(foundQuote)
     } catch (error) {
-      res.send({ message: error })
+      res.send(error)
     }
   })
 
@@ -61,7 +60,7 @@ export const quotesRoutes = (app) => {
       const response = await functionEditQuote(selectedQuote, req.body)
       res.send(response)
     } catch (error) {
-      res.send({ message: error })
+      res.send(error)
     }
   })
 
@@ -70,7 +69,9 @@ export const quotesRoutes = (app) => {
       const selectedQuote = await selectQuote(req.body)
       const response = await functionDeleteQuote(selectedQuote)
       res.send(response)
-    } catch (error) { res.send({ message: error }) }
+    } catch (error) {
+      res.send(error)
+    }
   })
 
   app.post("/add_quote", async (req, res) => {
@@ -78,9 +79,9 @@ export const quotesRoutes = (app) => {
     try {
       const newQuote = new Quotes(quote)
       const savedQuote = await newQuote.save()
-      res.send({ message: "Quote adicionada com sucesso", response: savedQuote })
+      res.send(savedQuote)
     } catch (error) {
-      res.send({ message: error })
+      res.send(error)
     }
   })
 }
