@@ -12,16 +12,24 @@ export default function QuotesPage() {
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
 
+  async function fetchAllQuotes() {
+    const quoteService = new quoteEditingServices()
+    const response = await quoteService.getAllQuotes()
+    setQuotesResponse(response)
+  }
+
+  async function fetchQuotesBySearch(searchQuery) {
+    const quoteService = new quoteEditingServices()
+    const response = await quoteService.getQuote(searchQuery)
+    setQuotesResponse(response)
+  }
+
   useEffect(() => {
-    async function fetchQuotes() {
-      const quoteService = new quoteEditingServices()
-      const response = await quoteService.getAllQuotes()
-      setQuotesResponse(response)
-    }
-    fetchQuotes()
+    fetchAllQuotes()
   }, [])
 
   useEffect(() => {
+    console.log(quotesResponse)
     const currentSingleQuotesArray = []
     const currentMultipleQuotesArray = []
 
@@ -60,7 +68,7 @@ export default function QuotesPage() {
   
   return (
     <>
-    <SearchBar/>
+    <SearchBar searchFunction={fetchQuotesBySearch}/>
     
       <SingleQuote singleQuotes={singleQuotesArray}/>
       <MultipleQuote multipleQuotes={multipleQuotesArray} />

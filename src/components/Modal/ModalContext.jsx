@@ -22,7 +22,6 @@ export function ModalProvider({ children }) {
         }))
         setShow(true)
     }
-    console.log(modalData)
     return (
         <>
             <ModalContext.Provider value={modalBox}>

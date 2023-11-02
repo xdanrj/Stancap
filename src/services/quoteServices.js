@@ -3,7 +3,7 @@ import axios from "axios"
 export default class quoteEditingServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: "http://192.168.1.89:3000"
+            baseURL: "http://192.168.1.65:3000"
         })
     }
 
@@ -17,9 +17,11 @@ export default class quoteEditingServices {
     }
 
     async getQuote(dados) {
+        console.log(dados)
         const response = await this.axios.post('/search_quote', dados)
+        console.log(response)
         if (response.data.response) {
-            return response
+            return response.data.response
         } else {
             return response.data.message
         }
