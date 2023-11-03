@@ -2,38 +2,29 @@ import { Quotes } from "../models/Quotes.js"
 import { selectQuote, quoteExists } from "./commonFunctions.js"
 
 export const quotesRoutes = (app) => {
-
-  async function functionEditQuote(query, body) {
+  async function functionEditQuote(selectedQuote, body) {
     const entries = Object.entries(body)
     const data = Object.fromEntries(entries.slice(1))
+    const firstPropriety = entries[0]
+    const query = { [firstPropriety[0]]: firstPropriety[1] }
 
-    if (query.quantity > 1) {
-      await Quotes.updateMany(
-        query.query,
+    if (selectedQuote.length > 1) {
+      Quotes.updateMany(
+        query,
+        { ...data }
+      )
+    } else if (selectedQuote.length == 1) {
+      await Quotes.updateOne(
+        query,
         { ...data }
       )
     }
-    else if (query.quantity == 1) {
-      await Quotes.updateOne(
-        query.query,
-        { ...data },
-      )
-    }
-    return query
+    return true
   }
 
   async function functionDeleteQuote(query) {
-    if (query.quantity > 1) {
-      await Quotes.deleteMany(
-        query.query
-      )
-    }
-    else if (query.quantity == 1) {
-      await Quotes.deleteOne(
-        query.query
-      )
-    }
-    return query
+    await Quotes.deleteMany(query)
+    return true
   }
 
   app.get("/all_quotes", async (req, res) => {
@@ -57,8 +48,12 @@ export const quotesRoutes = (app) => {
   app.patch("/edit_quote", async (req, res) => {
     try {
       const selectedQuote = await selectQuote(req.body)
-      const response = await functionEditQuote(selectedQuote, req.body)
-      res.send(response)
+      if (selectedQuote) {
+        const response = await functionEditQuote(selectedQuote, req.body)
+        response ? res.send(true) : res.send(false)
+      } else {
+        res.send(false)
+      }
     } catch (error) {
       res.send(error)
     }
@@ -66,9 +61,12 @@ export const quotesRoutes = (app) => {
 
   app.delete("/delete_quote", async (req, res) => {
     try {
-      const selectedQuote = await selectQuote(req.body)
-      const response = await functionDeleteQuote(selectedQuote)
-      res.send(response)
+      const response = await functionDeleteQuote(req.body)
+      if (response) {
+        res.send(true)
+      } else {
+        res.send(false)
+      }
     } catch (error) {
       res.send(error)
     }

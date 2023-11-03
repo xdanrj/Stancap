@@ -8,16 +8,18 @@ export async function selectUser(body) {
   let query = { [property]: target }
 
   const foundUser = await User.find(query)
-  const quantity = foundUser.length
-
-  return foundUser
+  if (foundUser) {
+    return foundUser
+  } else {
+    return false
+  }
 }
 
 // Essa função permite selecionar qualquer usuário usando qualquer propriedade como filtro. Recebe como parâmetro um único OBJETO (propriedade: valorPropriedade)
 export async function userExists(proprietyTarget) {
   const user = await User.findOne(proprietyTarget)
   if (user) {
-    return user
+    return true
   }
   else {
     return false
@@ -29,12 +31,15 @@ export async function selectQuote(body) {
   let target = body[property]
   let query = { [property]: target }
 
-  const foundQuote = await Quotes.find(query)
-
   if (property == "password") {
     return false
-  } else {
+  }
+
+  const foundQuote = await Quotes.find(query)
+  if (foundQuote.length > 0) {
     return foundQuote
+  } else {
+    return false
   }
 }
 
@@ -42,7 +47,7 @@ export async function selectQuote(body) {
 export async function quoteExists(proprietyTarget) {
   const quote = await Quotes.findOne({ proprietyTarget })
   if (quote) {
-    return quote
+    return true
   }
   else {
     return false

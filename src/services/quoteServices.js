@@ -9,8 +9,8 @@ export default class quoteEditingServices {
 
     async getAllQuotes() {
         const response = await this.axios.get('/all_quotes')
-        if (response.data.response) {
-            return response.data.response
+        if (response.data) {
+            return response.data
         } else {
             return response.data.message
         }
@@ -20,8 +20,8 @@ export default class quoteEditingServices {
         console.log(dados)
         const response = await this.axios.post('/search_quote', dados)
         console.log(response)
-        if (response.data.response) {
-            return response.data.response
+        if (response.data) {
+            return response.data
         } else {
             return response.data.message
         }
@@ -29,7 +29,7 @@ export default class quoteEditingServices {
 
     async addQuote(dados) {
         const response = await this.axios.post('/add_quote', dados)
-        if (response.data.response) {
+        if (response.data) {
             return true
         } else {
             return response.data.message
@@ -39,7 +39,7 @@ export default class quoteEditingServices {
     async editQuote(query, body) {
         console.log({query, body})
         const response = await this.axios.patch('/edit_quote', {...query, ...body})
-        if (response.data.response) {
+        if (response.data) {
             return true
         } else {
             return response.data.message
