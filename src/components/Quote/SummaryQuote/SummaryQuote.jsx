@@ -14,7 +14,7 @@ export default function SummaryQuote() {
     const navigate = useNavigate()
     const [quotesResponse, setQuotesResponse] = useState([])
     const [quotesResponseArray, setQuotesResponseArray] = useState([])
-    
+
     useEffect(() => {
         async function fetchQuotes() {
             const username = localStorage.getItem("username")
@@ -22,33 +22,44 @@ export default function SummaryQuote() {
 
             const response = await quoteService.getQuote(query)
             console.log(response)
-            console.log(response.data.response)
-            setQuotesResponse(response.data.response)
-            setQuotesResponseArray(response.data.response.response)
+            console.log(response)
+            setQuotesResponse(response)
+            setQuotesResponseArray(response)
         }
         fetchQuotes()
-
     }, []);
 
     const handleEditQuote = async (quoteId, quoteType) => {
         try {
             navigate(`/edit_quote/${quoteType}/${quoteId}`)
         } catch (error) {
-            useal(error)
+            useAlert(error)
+        }
+    }
+
+    const handleDeleteQuote = async (quoteId) => {
+        try {
+            const response = await quoteService.deleteQuote(quoteId)
+            if (response) {
+                useAlert("Quote deletada com sucesso")
+            }
+        } catch (error) {
+            useAlert(error)
+            console.log(error)
         }
     }
 
     return (
         <>
             {
-                quotesResponse.quantity > 0 ? (
+                quotesResponse.length > 0 ? (
                     quotesResponseArray.map((data) => (
                         <div key={data._id}>
                             <MinimalQuoteContainer>
                                 <InternalContainer>
                                     <Paragraph>{data.quotes[0].quote} </Paragraph>
                                     <ParagraphAutor>—{data.author}</ParagraphAutor>
-                                    <MdbIcon icon="trash-alt" />
+                                    <MdbIcon icon="trash-alt" onClick={() => handleDeleteQuote(data._id)} />
                                     <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id, data.quoteType)} />
                                     <MdbIcon icon="info-circle" />
                                 </InternalContainer>
@@ -56,10 +67,10 @@ export default function SummaryQuote() {
                         </div>
                     ))
                 ) : (
-                    <h1>{quotesResponse.message}</h1>
+                    <h1>Você ainda não criou nenhuma quote</h1>
                 )
             }
-           
+
         </>
     )
 }

@@ -12,18 +12,16 @@ export default class quoteEditingServices {
         if (response.data) {
             return response.data
         } else {
-            return response.data.message
+            return false
         }
     }
 
     async getQuote(dados) {
-        console.log(dados)
         const response = await this.axios.post('/search_quote', dados)
-        console.log(response)
         if (response.data) {
             return response.data
         } else {
-            return response.data.message
+            return false
         }
     }
 
@@ -32,17 +30,26 @@ export default class quoteEditingServices {
         if (response.data) {
             return true
         } else {
-            return response.data.message
+            return false
         }
     }
 
     async editQuote(query, body) {
-        console.log({query, body})
         const response = await this.axios.patch('/edit_quote', {...query, ...body})
         if (response.data) {
             return true
         } else {
-            return response.data.message
+            return false
+        }
+    }
+
+    async deleteQuote(query) {
+        console.log(query)
+        const response = await this.axios.delete(query)
+        if(response) {
+            return true
+        } else {
+            return false
         }
     }
 }
