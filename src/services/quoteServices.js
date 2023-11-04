@@ -1,9 +1,10 @@
 import axios from "axios"
+const apiIp = process.env.API_IP
 
 export default class quoteEditingServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: "http://192.168.1.89:3000"
+            baseURL: `${apiIp}`
         })
     }
 

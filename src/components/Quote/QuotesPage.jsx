@@ -5,8 +5,6 @@ import MultipleQuote from "./MultipleQuote/MultipleQuote";
 import { size } from "../../CommonStyles/device";
 import { SearchBar } from "../SearchBar/SearchBar";
 
-//const quoteService = new quoteEditingServices()
-
 export default function QuotesPage() {
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
