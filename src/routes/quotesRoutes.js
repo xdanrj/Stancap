@@ -21,11 +21,11 @@ export const quotesRoutes = (app) => {
     }
     return true
   }
-
+/*
   async function functionDeleteQuote(query) {
     await Quotes.deleteMany(query)
     return true
-  }
+  }*/
 
   app.get("/all_quotes", async (req, res) => {
     try {
@@ -62,7 +62,9 @@ export const quotesRoutes = (app) => {
 
   app.delete("/delete_quote", async (req, res) => {
     try {
-      const response = await functionDeleteQuote(req.body)
+      console.log(req.body)
+      const response = await Quotes.deleteMany(req.body)
+      console.log(response)
       if (response) {
         res.send(true)
       } else {

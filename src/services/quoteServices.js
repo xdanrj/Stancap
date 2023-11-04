@@ -3,7 +3,7 @@ import axios from "axios"
 export default class quoteEditingServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: "http://192.168.1.65:3000"
+            baseURL: "http://192.168.1.89:3000"
         })
     }
 
@@ -35,7 +35,7 @@ export default class quoteEditingServices {
     }
 
     async editQuote(query, body) {
-        const response = await this.axios.patch('/edit_quote', {...query, ...body})
+        const response = await this.axios.patch('/edit_quote', { ...query, ...body })
         if (response.data) {
             return true
         } else {
@@ -45,8 +45,8 @@ export default class quoteEditingServices {
 
     async deleteQuote(query) {
         console.log(query)
-        const response = await this.axios.delete(query)
-        if(response) {
+        const response = await this.axios.delete('/delete_quote', query)
+        if (response) {
             return true
         } else {
             return false
