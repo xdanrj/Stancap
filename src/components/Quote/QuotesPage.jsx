@@ -13,6 +13,7 @@ export default function QuotesPage() {
   async function fetchAllQuotes() {
     const quoteService = new quoteEditingServices()
     const response = await quoteService.getAllQuotes()
+    console.log(response)
     setQuotesResponse(response)
   }
 
@@ -27,7 +28,6 @@ export default function QuotesPage() {
   }, [])
 
   useEffect(() => {
-    console.log(quotesResponse)
     const currentSingleQuotesArray = []
     const currentMultipleQuotesArray = []
 

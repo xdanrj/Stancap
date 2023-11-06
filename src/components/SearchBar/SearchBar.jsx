@@ -14,7 +14,7 @@ export function SearchBar(props) {
     ]
     const [searchQuery, setSearchQuery] = useState()
     const [selectedType, setSelectedType] = useState()
-    console.log(searchQuery)
+    
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(SearchTypes[eventKey])

@@ -41,7 +41,6 @@ export const quotesRoutes = (app) => {
   })
 
   app.patch("/edit_quote", async (req, res) => {
-    console.log(req.body)
     try {
       const selectedQuote = await selectQuote(req.body)
       if (selectedQuote) {
@@ -57,9 +56,7 @@ export const quotesRoutes = (app) => {
 
   app.delete("/delete_quote", async (req, res) => {
     try {
-      console.log(req.body)
       const response = await Quotes.deleteMany(req.body)
-      console.log(response)
       if (response) {
         res.send(true)
       } else {

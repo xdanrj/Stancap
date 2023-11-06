@@ -1,9 +1,5 @@
 const apiUrl = process.env.API_URL
 import axios from "axios"
-const apagardepois = `"http://localhost:3000"
-   P "http://192.168.1.65:3000"
-   N "http://192.168.1.89:3000"
-    baseURL: window.location.hostname === "localhost" ? "http://localhost:3000" : "http://192.168.1.65:3000" `
 
 export default class loginAndRegisterServices {
     constructor() {

@@ -10,7 +10,7 @@ export default class quoteEditingServices {
 
     async getAllQuotes() {
         const response = await this.axios.get('/all_quotes')
-        if (response.data) {
+        if (response) {
             return response.data
         } else {
             return false
@@ -45,7 +45,6 @@ export default class quoteEditingServices {
     }
 
     async deleteQuote(query) {
-        console.log(query)
         const response = await this.axios.delete('/delete_quote', query)
         if (response) {
             return true
