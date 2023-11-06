@@ -10,19 +10,19 @@ export const loginAndRegisterRoutes = (app) => {
     const verifySid = process.env.TWILIO_VERIFY_SID
     const client = twilio(accountSid, authToken)
     const secretKey = process.env.SECRET_KEY
+    const apiUrl = process.env.API_URL
 
     app.get("/testando", async (req, res) => {
         try {
-            res.send({
+            res.status(200).json({
                 accountSid: accountSid,
                 authToken: authToken,
                 verifySid: verifySid,
                 client: client,
-                secretKey: secretKey
+                secretKey: secretKey,
+                apiUrl: apiUrl
             })
-        } catch (error) {
-            res.send({ message: error })
-        }
+        } catch (error) { res.json({ message: error }) }
     })
 
     app.post("/login", async (req, res) => {
@@ -30,15 +30,15 @@ export const loginAndRegisterRoutes = (app) => {
             const email = req.body.email
             const password = req.body.password
             const user = await userExists({ email: email })
-            
+
             if (user.password == password) {
                 const token = createToken(user._id)
 
-                res.send({ email: email, username: user.username, token: token })
+                res.status(200).json({ email: email, username: user.username, token: token })
             } else if (user.password != password) {
-                res.send({ message: "Login/Senha incorreto(s)" })
+                res.status(401).json({ message: "Login/Senha incorreto(s)" })
             }
-        } catch (error) { res.send({ message: error }) }
+        } catch (error) { res.json({ message: error }) }
 
     })
     app.post("/send_code", async (req, res) => {
@@ -46,10 +46,9 @@ export const loginAndRegisterRoutes = (app) => {
             const email = req.body.email
             //verifica se o email ja existe no DB
             let exist = await userExists({ email: email })
-            
+
             if (exist) {
-                res
-                    .send({ message: "E-mail já cadastrado" });
+                res.status(409).json({ message: "E-mail já cadastrado" });
             }
             else if (!exist) {
                 const verification = await client.verify.v2.services(verifySid)
@@ -60,15 +59,15 @@ export const loginAndRegisterRoutes = (app) => {
                             from_name: 'Stancap'
                         }, to: email, channel: 'email'
                     })
-                
+
                 const verificationStatus = verification.status
                 console.log(`verification.status: ${verificationStatus}`)
-                res.send({
+                res.status(200).json({
                     message: "Código de verificação enviado para o e-mail",
                     response: verificationStatus
                 })
             }
-        } catch (error) { res.send({message: error}) }
+        } catch (error) { res.json({ message: error }) }
     })
 
     app.post("/check_code", async (req, res) => {
@@ -84,17 +83,17 @@ export const loginAndRegisterRoutes = (app) => {
                 const verificationCheckStatus = verification_check.status
                 //caso o codigo verificado por email seja aprovado, cria o User por enquanto apenas com o email:
                 if (verificationCheckStatus == "approved") {
-                    res.send({
+                    res.status(200).json({
                         message: "E-mail verificado com sucesso",
                         response: email
                     })
                 } else {
-                    res.send({
+                    res.status(400).json({
                         message: "Código inválido ou expirado: tente novamente"
                     })
                 }
             }
-        } catch (error) { res.send({message: error}) }
+        } catch (error) { res.json({ message: error }) }
     })
 
     app.post("/register", async (req, res) => {
@@ -114,17 +113,14 @@ export const loginAndRegisterRoutes = (app) => {
                 })
                 const savedUser = await newUser.save()
 
-                res.send({
+                res.status(200).json({
                     message: "Usuário cadastrado com sucesso",
                     response: savedUser
                 })
             } else if (selectedUser) {
-                res.send({ message: "E-mail já cadastrado" });
+                res.status(409).json({ message: "E-mail já cadastrado" });
             }
-        } catch (error) {
-            res.send({message: error})
-            
-        }
+        } catch (error) { res.json({ message: error }) }
     })
 
     function createToken(userId) {

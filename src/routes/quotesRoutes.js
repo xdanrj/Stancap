@@ -21,11 +21,6 @@ export const quotesRoutes = (app) => {
     }
     return true
   }
-/*
-  async function functionDeleteQuote(query) {
-    await Quotes.deleteMany(query)
-    return true
-  }*/
 
   app.get("/all_quotes", async (req, res) => {
     try {

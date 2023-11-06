@@ -4,7 +4,7 @@ const apiUrl = process.env.API_URL
 export default class quoteEditingServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: `${apiUrl}`
+            baseURL: apiUrl
         })
     }
 

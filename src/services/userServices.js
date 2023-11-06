@@ -3,7 +3,7 @@ const apiUrl = process.env.API_URL
 export default class userServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: `${apiUrl}`
+            baseURL: apiUrl
         })
     }
 

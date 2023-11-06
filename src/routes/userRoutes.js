@@ -44,38 +44,33 @@ export const userRoutes = (app) => {
   }
 
   app.get("/all_users", async (req, res) => {
-    const response = await User.find()
-    res.send({ response: response })
+    try {
+      const response = await User.find()
+      res.status(200).send(response)
+    } catch (error) { res.json({ message: error }) }
   })
 
   app.get("/search_user", async (req, res) => {
     try {
       const foundUser = await selectUser(req.body)
-      //foundUser.response
-      res.send(foundUser)
-    } catch (error) {
-      res.send(error)
-    }
+      res.status(200).json(foundUser)
+    } catch (error) { res.json({ message: error }) }
   })
 
   app.patch("/edit_user", async (req, res) => {
     try {
       const selectedUser = await selectUser(req.body)
       const response = await functionEditUser(selectedUser, req.body)
-      res.send(response)
-    } catch (error) {
-      res.send(error)
-    }
+      res.status(200).json(response)
+    } catch (error) { res.json({message: error})}
   })
 
   app.delete("/delete_user", async (req, res) => {
     try {
       const selectedUser = await selectUser(req.body)
       const response = await functionDeleteUser(selectedUser)
-      res.send(response)
-    } catch (error) {
-      res.send(error)
-    }
+      res.status(200).json(response)
+    } catch (error) { res.json({message: error})}
   })
 
   app.post("/change_password_send", async (req, res) => {
@@ -91,16 +86,14 @@ export const userRoutes = (app) => {
               from_name: 'Stancap'
             }, to: email, channel: 'email'
           })
-        res.send({
+        res.status(200).json({
           message: "Código de verificação enviado para o e-mail",
           response: selectedUser
         })
       } else {
-        res.send({ message: "E-mail não encontrado" })
+        res.status(200).json({ message: "E-mail não encontrado" })
       }
-    } catch (error) {
-      res.send(error)
-    }
+    } catch (error) { res.json({message: error})}
   })
 
   app.post("/change_password_check", async (req, res) => {
@@ -115,15 +108,13 @@ export const userRoutes = (app) => {
         const selectedUser = await User.updateOne(
           { email: email },
           { password: newPassword })
-        res.send({
+        res.status(200).json({
           message: "Senha alterada com sucesso",
           response: selectedUser
         })
       } else {
-        res.send({ message: "Código de verificação incorreto ou expirado" })
+        res.status(400).json({ message: "Código de verificação incorreto ou expirado" })
       }
-    } catch (error) {
-      res.send(error)
-    }
+    } catch (error) { res.json({message: error})}
   })
 }

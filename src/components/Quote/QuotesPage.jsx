@@ -64,6 +64,7 @@ export default function QuotesPage() {
   const currentSize = getCurrentScreenSize()
   console.log("Tamanho atual da tela:", currentSize)
   
+  //
   return (
     <>
     <SearchBar searchFunction={fetchQuotesBySearch}/>

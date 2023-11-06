@@ -8,7 +8,7 @@ const apagardepois = `"http://localhost:3000"
 export default class loginAndRegisterServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: `${apiUrl}`
+            baseURL: apiUrl
         })
     }
 
