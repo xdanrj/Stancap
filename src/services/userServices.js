@@ -1,9 +1,9 @@
-const apiIp = process.env.API_IP
+const apiUrl = process.env.API_URL
 
 export default class userServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: `${apiIp}`
+            baseURL: `${apiUrl}`
         })
     }
 

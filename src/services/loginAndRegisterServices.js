@@ -1,4 +1,4 @@
-const apiIp = process.env.API_IP
+const apiUrl = process.env.API_URL
 import axios from "axios"
 const apagardepois = `"http://localhost:3000"
    P "http://192.168.1.65:3000"
@@ -8,7 +8,7 @@ const apagardepois = `"http://localhost:3000"
 export default class loginAndRegisterServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: `${apiIp}`
+            baseURL: `${apiUrl}`
         })
     }
 
