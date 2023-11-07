@@ -22,7 +22,7 @@ export const loginAndRegisterRoutes = (app) => {
                 secretKey: secretKey,
                 apiUrl: apiUrl
             })
-        } catch (error) { res.json({ message: error }) }
+        } catch (error) { res.status(400).json({message: error}) }
     })
 
     app.post("/login", async (req, res) => {
@@ -38,7 +38,7 @@ export const loginAndRegisterRoutes = (app) => {
             } else if (user.password != password) {
                 res.status(401).json({ message: "Login/Senha incorreto(s)" })
             }
-        } catch (error) { res.json({ message: error }) }
+        } catch (error) { res.status(400).json({message: error}) }
 
     })
     app.post("/send_code", async (req, res) => {
@@ -67,7 +67,7 @@ export const loginAndRegisterRoutes = (app) => {
                     response: verificationStatus
                 })
             }
-        } catch (error) { res.json({ message: error }) }
+        } catch (error) { res.status(400).json({message: error}) }
     })
 
     app.post("/check_code", async (req, res) => {
@@ -93,7 +93,7 @@ export const loginAndRegisterRoutes = (app) => {
                     })
                 }
             }
-        } catch (error) { res.json({ message: error }) }
+        } catch (error) { res.status(400).json({message: error}) }
     })
 
     app.post("/register", async (req, res) => {
@@ -120,7 +120,7 @@ export const loginAndRegisterRoutes = (app) => {
             } else if (selectedUser) {
                 res.status(409).json({ message: "E-mail já cadastrado" });
             }
-        } catch (error) { res.json({ message: error }) }
+        } catch (error) { res.status(400).json({message: error}) }
     })
 
     function createToken(userId) {

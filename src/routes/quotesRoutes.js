@@ -25,18 +25,18 @@ export const quotesRoutes = (app) => {
   app.get("/all_quotes", async (req, res) => {
     try {
       const response = await Quotes.find()
-      res.send(response)
+      res.status(200).json(response)
     } catch (error) {
-      res.send(error)
+      res.status(400).json({message: error})
     }
   })
 
   app.post("/search_quote", async (req, res) => {
     try {
       const foundQuote = await selectQuote(req.body)
-      res.send(foundQuote)
+      res.status(200).json(foundQuote)
     } catch (error) {
-      res.send(error)
+      res.status(400).json({message: error})
     }
   })
 
@@ -45,12 +45,12 @@ export const quotesRoutes = (app) => {
       const selectedQuote = await selectQuote(req.body)
       if (selectedQuote) {
         const response = await functionEditQuote(selectedQuote, req.body)
-        response ? res.send(true) : res.send(false)
+        response ? res.status(200).send(true) : res.status(400).send(false)
       } else {
-        res.send(false)
+        res.status(400).send(false)
       }
     } catch (error) {
-      res.send(error)
+      res.status(400).json({message: error})
     }
   })
 
@@ -58,12 +58,12 @@ export const quotesRoutes = (app) => {
     try {
       const response = await Quotes.deleteMany(req.body)
       if (response) {
-        res.send(true)
+        res.status(200).send(true)
       } else {
-        res.send(false)
+        res.status(400).send(false)
       }
     } catch (error) {
-      res.send(error)
+      res.status(400).json({message: error})
     }
   })
 
@@ -72,9 +72,9 @@ export const quotesRoutes = (app) => {
     try {
       const newQuote = new Quotes(quote)
       const savedQuote = await newQuote.save()
-      res.send(savedQuote)
+      res.status(200).json(savedQuote)
     } catch (error) {
-      res.send(error)
+      res.status(400).json({message: error})
     }
   })
 }

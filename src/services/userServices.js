@@ -1,9 +1,10 @@
+import axios from "axios"
 const apiUrl = process.env.API_URL
 
 export default class userServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: apiUrl
+            baseURL: "http://localhost:3000"
         })
     }
 

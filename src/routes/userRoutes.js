@@ -47,14 +47,14 @@ export const userRoutes = (app) => {
     try {
       const response = await User.find()
       res.status(200).send(response)
-    } catch (error) { res.json({ message: error }) }
+    } catch (error) { res.status(400).json({ message: error }) }
   })
 
   app.get("/search_user", async (req, res) => {
     try {
       const foundUser = await selectUser(req.body)
       res.status(200).json(foundUser)
-    } catch (error) { res.json({ message: error }) }
+    } catch (error) { res.status(400).json({ message: error }) }
   })
 
   app.patch("/edit_user", async (req, res) => {
@@ -62,7 +62,7 @@ export const userRoutes = (app) => {
       const selectedUser = await selectUser(req.body)
       const response = await functionEditUser(selectedUser, req.body)
       res.status(200).json(response)
-    } catch (error) { res.json({message: error})}
+    } catch (error) { res.status(400).json({ message: error }) }
   })
 
   app.delete("/delete_user", async (req, res) => {
@@ -70,7 +70,7 @@ export const userRoutes = (app) => {
       const selectedUser = await selectUser(req.body)
       const response = await functionDeleteUser(selectedUser)
       res.status(200).json(response)
-    } catch (error) { res.json({message: error})}
+    } catch (error) { res.status(400).json({ message: error }) }
   })
 
   app.post("/change_password_send", async (req, res) => {
@@ -93,7 +93,7 @@ export const userRoutes = (app) => {
       } else {
         res.status(200).json({ message: "E-mail não encontrado" })
       }
-    } catch (error) { res.json({message: error})}
+    } catch (error) { res.status(400).json({ message: error }) }
   })
 
   app.post("/change_password_check", async (req, res) => {
@@ -115,6 +115,6 @@ export const userRoutes = (app) => {
       } else {
         res.status(400).json({ message: "Código de verificação incorreto ou expirado" })
       }
-    } catch (error) { res.json({message: error})}
+    } catch (error) { res.status(400).json({ message: error }) }
   })
 }

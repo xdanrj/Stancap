@@ -4,17 +4,20 @@ const apiUrl = process.env.API_URL
 export default class quoteEditingServices {
     constructor() {
         this.axios = axios.create({
-            baseURL: apiUrl
+            baseURL: "http://localhost:3000"
         })
     }
 
     async getAllQuotes() {
+        try {
         const response = await this.axios.get('/all_quotes')
-        if (response) {
+        if (response.status === 200) {
+            console.log(response.data)
             return response.data
-        } else {
-            return false
         }
+    } catch(error) {
+        console.log(error)
+    }
     }
 
     async getQuote(dados) {
