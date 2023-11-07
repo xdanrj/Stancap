@@ -40,6 +40,7 @@ export default class quoteEditingServices {
 
     async editQuote(query, body) {
         const response = await this.axios.patch('/edit_quote', { ...query, ...body })
+        console.log(response)
         if (response.data) {
             return true
         } else {

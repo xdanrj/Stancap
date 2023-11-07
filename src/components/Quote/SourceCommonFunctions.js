@@ -1,17 +1,10 @@
-export function sourceLogoSelector(source) {
-    const imgPath = `../src/images/${source}.png`
+export const SourceNames = ['Anarco Feudalismo', 'Anarco Primitivismo', 'AnProm', 'Corujas Neto Lovers', 'Ditadura Cultural', 'Freudcap', 'Relatórios do Dmitri', 'Stancap', 'Stancap Nobreza']
 
-    return new Promise((resolve, reject) => {
-        const img = new Image()
-        img.src = imgPath
-
-        img.onload = () => {
-            resolve(imgPath)
-        }
-        img.onerror = () => {
-            reject(false)
-        }
-    })
+export async function sourceLogoSelector(source) {
+    if (SourceNames.includes(source)) {
+      return `../src/images/${source}.png`
+    } else {
+        return false
+    }
 }
 
-export const SourceNames = ['Anarco Feudalismo', 'Anarco Primitivismo', 'AnProm', 'Corujas Neto Lovers', 'Ditadura Cultural', 'Freudcap', 'Relatórios do Dmitri', 'Stancap', 'Stancap Nobreza']

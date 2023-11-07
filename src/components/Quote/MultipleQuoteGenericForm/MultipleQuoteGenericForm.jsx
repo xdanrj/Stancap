@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import { SourceNames } from "../SourceCommonFunctions";
 import { useAlertMsg } from "../../Alert/AlertContext";
 import { useModalBox } from "../../Modal/ModalContext";
+import { isValidDate } from "../../../Formatting/DateFormatting";
 
 import quoteEditingServices from "../../../services/quoteServices"
 
@@ -33,8 +34,6 @@ export default function MultipleQuoteGenericForm(props) {
             if (props.quoteIdToEdit) {
                 const apiResponse = await quoteEditingService.getQuote(props.quoteIdToEdit)
                 const response = await apiResponse.data.response.response[0]
-
-                console.log(response.quotes)
                 setMultipleQuotes(response.quotes)
 
                 setQuoteData((prevData) => ({
@@ -59,7 +58,6 @@ export default function MultipleQuoteGenericForm(props) {
     }
 
     const finalSubmitQuote = async () => {
-
         let response
         try {
             if (multipleQuotes.length > 1) {

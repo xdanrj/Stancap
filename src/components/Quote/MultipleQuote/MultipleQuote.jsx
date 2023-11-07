@@ -14,14 +14,10 @@ export default function MultipleQuotes({ multipleQuotes }) {
 
     useEffect(() => {
         const loadImagePaths = async () => {
-            const paths = await Promise.all(
-                multipleQuotes.map(async (data) => {
-                    try {
-                        return await sourceLogoSelector(data.source)
-                    } catch (error) {
-                        return "false"
-                    }
-                }))
+            const promisses = await multipleQuotes.map(async (data) => {
+                return sourceLogoSelector(data.source)
+            })
+            const paths = await Promise.all(promisses)
             setImagePaths(paths)
         }
         loadImagePaths()
@@ -35,16 +31,15 @@ export default function MultipleQuotes({ multipleQuotes }) {
     return (
         <>
             {multipleQuotes.map((data, index) => {
-                const imgPath = imagePaths[index]
                 data.date = NormalDate()
                 return (
                     <div key={data._id}>
                         <QuoteContainer>
                             <QuoteHeader>
-                            {
-                                    imgPath ? (
-                                        <SourceLogo src={imgPath} />
-                                    ) : (<></>)                                        
+                                {
+                                    imagePaths[index] ? (
+                                        <SourceLogo src={imagePaths[index]} />
+                                    ) : (<></>)
                                 }
                                 <InfoIcon onClick={() => handleQuoteInfoClick(data)} />
                             </QuoteHeader>

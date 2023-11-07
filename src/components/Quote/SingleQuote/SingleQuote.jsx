@@ -14,34 +14,30 @@ export default function SingleQuotes({ singleQuotes }) {
 
     useEffect(() => {
         const loadImagePaths = async () => {
-            const paths = await Promise.all(
-                singleQuotes.map(async (data) => {
-                    try {
-                        return await sourceLogoSelector(data.source)
-                    } catch (error) {
-                        return false
-                    }
-                }))
-            setImagePaths(paths)
+            const promisses = await singleQuotes.map(async (data) => {
+                return sourceLogoSelector(data.source)
+            })
+                const paths = await Promise.all(promisses)
+                setImagePaths(paths)
         }
         loadImagePaths()
     }, [singleQuotes])
-        
+
     const handleQuoteInfoClick = (data) => {
         setQuoteInfoData(data)
         setShowQuoteInfo(true)
+        console.log(imagePaths)
     }
     return (
         <>
-            {singleQuotes.map((data, index) => {
-                const imgPath = imagePaths[index]
+            {singleQuotes.map((data, index) => {               
                 return (
                     <div key={data._id}>
                         <QuoteContainer>
                             <QuoteHeader>
                                 {
-                                    imgPath ? (
-                                        <SourceLogo src={imgPath} />
+                                    imagePaths[index] ? (
+                                        <SourceLogo src={imagePaths[index]} />
                                     ) : (<></>)
                                 }
                                 <InfoIcon onClick={() => handleQuoteInfoClick(data)} />

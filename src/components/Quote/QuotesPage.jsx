@@ -41,6 +41,7 @@ export default function QuotesPage() {
     });
     setSingleQuotesArray(currentSingleQuotesArray)
     setMultipleQuotesArray(currentMultipleQuotesArray)
+    
   }, [quotesResponse])
 
   function getCurrentScreenSize() {
