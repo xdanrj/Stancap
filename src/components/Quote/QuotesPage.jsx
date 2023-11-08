@@ -21,9 +21,10 @@ export default function QuotesPage() {
 
   async function fetchQuotesBySearch(searchQuery) {
     console.log(searchQuery)
+    console.log(searchQuery["query"])
     const quoteService = new quoteEditingServices()
-    const response = await quoteService.getQuote(searchQuery[query])
-    response ? setQuotesResponse(response) : useAlert(`${searchQuery[label]}`)
+    const response = await quoteService.getQuote(searchQuery["query"]) //useAlert(`${searchQuery["label"], searchQuery["query"][0]} não encontrado.`)
+    response ? setQuotesResponse(response) : useAlert("não encontrado")
     setQuotesResponse(response)
   }
 

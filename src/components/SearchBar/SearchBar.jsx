@@ -12,7 +12,7 @@ export function SearchBar(props) {
         { label: "Upload por", value: "uploadByUser" },
         { label: "Contexto", value: "context" }
     ]
-    const [searchQuery, setSearchQuery] = useState()
+    const [searchQuery, setSearchQuery] = useState({})
     const [selectedType, setSelectedType] = useState()
 
 
@@ -23,9 +23,11 @@ export function SearchBar(props) {
 
     const handleSearchChange = (e) => {
         const query = { [selectedType.value]: e.target.value }
-        
-        setSearchQuery([[query]: { [selectedType.value]: e.target.value },
-        { ["label"]: selectedType.label }])
+
+        //const queryObject = 
+
+        setSearchQuery({ ["query"]: { [selectedType.value]: e.target.value } },
+        { ["label"]: selectedType.label })
         console.log(searchQuery)
     }
 
