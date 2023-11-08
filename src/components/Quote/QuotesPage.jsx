@@ -4,8 +4,10 @@ import SingleQuote from "./SingleQuote/SingleQuote";
 import MultipleQuote from "./MultipleQuote/MultipleQuote";
 import { size } from "../../CommonStyles/device";
 import { SearchBar } from "../SearchBar/SearchBar";
+import { useAlertMsg } from "../Alert/AlertContext";
 
 export default function QuotesPage() {
+  const useAlert = useAlertMsg()
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
@@ -18,8 +20,10 @@ export default function QuotesPage() {
   }
 
   async function fetchQuotesBySearch(searchQuery) {
+    console.log(searchQuery)
     const quoteService = new quoteEditingServices()
-    const response = await quoteService.getQuote(searchQuery)
+    const response = await quoteService.getQuote(searchQuery[query])
+    response ? setQuotesResponse(response) : useAlert(`${searchQuery[label]}`)
     setQuotesResponse(response)
   }
 

@@ -14,14 +14,19 @@ export function SearchBar(props) {
     ]
     const [searchQuery, setSearchQuery] = useState()
     const [selectedType, setSelectedType] = useState()
-    
+
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(SearchTypes[eventKey])
+        console.log(selectedType)
     }
 
     const handleSearchChange = (e) => {
-        setSearchQuery({[selectedType.value]: e.target.value})
+        const query = { [selectedType.value]: e.target.value }
+        
+        setSearchQuery([[query]: { [selectedType.value]: e.target.value },
+        { ["label"]: selectedType.label }])
+        console.log(searchQuery)
     }
 
     return (
@@ -32,7 +37,7 @@ export function SearchBar(props) {
                         <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
                     ))}
                 </DropdownButton>
-                <Form.Control placeholder="Pesquise..." onChange={handleSearchChange}/>
+                <Form.Control placeholder="Pesquise..." onChange={handleSearchChange} />
                 <Button variant="dark" onClick={() => props.searchFunction(searchQuery)}>
                     <MDBIcon icon="search" />
                 </Button>
