@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Form, FormGroup, FloatingLabel, Row, Col, Button, DropdownButton } from "react-bootstrap";
+import { Form, Button, DropdownButton } from "react-bootstrap";
 import { InputGroup } from "./SearchBarStyles";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import { MDBIcon } from "mdb-react-ui-kit";
@@ -18,16 +18,13 @@ export function SearchBar(props) {
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(SearchTypes[eventKey])
-        console.log(selectedType)
     }
 
     const handleSearchChange = (e) => {
-        const query = { [selectedType.value]: e.target.value }
-
-        //const queryObject = 
-
-        setSearchQuery({ ["query"]: { [selectedType.value]: e.target.value } },
-        { ["label"]: selectedType.label })
+        setSearchQuery({
+            ["query"]: { [selectedType.value]: e.target.value },
+            ["label"]: selectedType.label
+        })
         console.log(searchQuery)
     }
 

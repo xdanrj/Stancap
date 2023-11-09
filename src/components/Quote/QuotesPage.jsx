@@ -20,11 +20,9 @@ export default function QuotesPage() {
   }
 
   async function fetchQuotesBySearch(searchQuery) {
-    console.log(searchQuery)
-    console.log(searchQuery["query"])
     const quoteService = new quoteEditingServices()
-    const response = await quoteService.getQuote(searchQuery["query"]) //useAlert(`${searchQuery["label"], searchQuery["query"][0]} não encontrado.`)
-    response ? setQuotesResponse(response) : useAlert("não encontrado")
+    const response = await quoteService.getQuote(searchQuery["query"])
+    response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`)
     setQuotesResponse(response)
   }
 
@@ -36,17 +34,19 @@ export default function QuotesPage() {
     const currentSingleQuotesArray = []
     const currentMultipleQuotesArray = []
 
-    quotesResponse.forEach((data) => {
-      if (data.quotes.length === 1) {
-        currentSingleQuotesArray.push(data)
-      }
-      else if (data.quotes.length > 1) {
-        currentMultipleQuotesArray.push(data)
-      }
-    });
-    setSingleQuotesArray(currentSingleQuotesArray)
-    setMultipleQuotesArray(currentMultipleQuotesArray)
-    
+    if (Array.isArray(quotesResponse)) {
+      quotesResponse.forEach((data) => {
+        if (data.quotes.length === 1) {
+          currentSingleQuotesArray.push(data)
+        }
+        else if (data.quotes.length > 1) {
+          currentMultipleQuotesArray.push(data)
+        }
+      });
+      setSingleQuotesArray(currentSingleQuotesArray)
+      setMultipleQuotesArray(currentMultipleQuotesArray)
+    }
+
   }, [quotesResponse])
 
   function getCurrentScreenSize() {
@@ -69,13 +69,13 @@ export default function QuotesPage() {
   }
   const currentSize = getCurrentScreenSize()
   console.log("Tamanho atual da tela:", currentSize)
-  
+
   //
   return (
     <>
-    <SearchBar searchFunction={fetchQuotesBySearch}/>
-    
-      <SingleQuote singleQuotes={singleQuotesArray}/>
+      <SearchBar searchFunction={fetchQuotesBySearch} />
+
+      <SingleQuote singleQuotes={singleQuotesArray} />
       <MultipleQuote multipleQuotes={multipleQuotesArray} />
     </>
   )
