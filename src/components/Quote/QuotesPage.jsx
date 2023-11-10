@@ -12,10 +12,10 @@ export default function QuotesPage() {
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
 
+
   async function fetchAllQuotes() {
     const quoteService = new quoteEditingServices()
     const response = await quoteService.getAllQuotes()
-    console.log(response)
     setQuotesResponse(response)
   }
 
@@ -24,12 +24,12 @@ export default function QuotesPage() {
     const response = await quoteService.getQuote(searchQuery["query"])
     response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`)
     setQuotesResponse(response)
+    console.log(searchQuery)
   }
 
   useEffect(() => {
     fetchAllQuotes()
   }, [])
-
   useEffect(() => {
     const currentSingleQuotesArray = []
     const currentMultipleQuotesArray = []
