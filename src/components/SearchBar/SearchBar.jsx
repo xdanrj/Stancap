@@ -12,14 +12,14 @@ export function SearchBar(props) {
         { label: "Upload por", value: "uploadByUser" },
         { label: "Contexto", value: "context" }
     ]
-    const [searchQuery, setSearchQuery] = useState({})
+    const [searchQuery, setSearchQuery] = useState({query: {}, label: ""})
     const [selectedType, setSelectedType] = useState()
-    const [dropdownButtonVariant, setDropdownButtonVariant] = useState("dark")
+    const [highlighted, setHighlighted] = useState(false)
 
     useEffect(() => {
         setSearchQuery((prevSearchQuery) => ({
             ...prevSearchQuery,
-            ["query"]: { [selectedType?.value]: " " },
+            ["query"]: { [selectedType?.value]: "" },
             ["label"]: selectedType?.label
         }))
     }, [selectedType])
@@ -34,27 +34,24 @@ export function SearchBar(props) {
             ["label"]: selectedType?.label
         })
         console.log(searchQuery)
-    }
-
-    const style = {
-        transition: 'opacity 0.5s ease-in-out'
+        console.log(searchQuery["query"])
     }
 
     const handleNoType = () => {
-        setTimeout(() => {
-            setDropdownButtonVariant('secondary')
-        }, 500)
+        setHighlighted(true)
+        setTimeout(() => { setHighlighted(false) }, 500)
     }
 
     return (
         <>
             <InputGroup>
-                <DropdownButton style={style} variant={dropdownButtonVariant} menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
+                <DropdownButton variant={highlighted ? "danger" : "dark"} menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
+
                     {SearchTypes.map((item, index) => (
                         <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
                     ))}
                 </DropdownButton>
-                <Form.Control placeholder="Pesquise..." onChange={handleSearchChange} />
+                <Form.Control placeholder="Pesquise..." onChange={handleSearchChange} value={searchQuery.query[selectedType?.value] || ""}/>
                 <Button variant="dark" onClick={() => selectedType ? props.searchFunction(searchQuery) : handleNoType()}>
                     <MDBIcon icon="search" />
                 </Button>

@@ -11,16 +11,17 @@ export default function QuotesPage() {
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
+  const quoteService = new quoteEditingServices()
 
 
   async function fetchAllQuotes() {
-    const quoteService = new quoteEditingServices()
+    
     const response = await quoteService.getAllQuotes()
     setQuotesResponse(response)
   }
 
   async function fetchQuotesBySearch(searchQuery) {
-    const quoteService = new quoteEditingServices()
+   
     const response = await quoteService.getQuote(searchQuery["query"])
     response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`)
     setQuotesResponse(response)
