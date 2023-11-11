@@ -42,6 +42,20 @@ export function SearchBar(props) {
         setTimeout(() => { setHighlighted(false) }, 500)
     }
 
+    const handleSearchClick = () => {
+        if(selectedType) {
+            if(searchQuery.query[selectedType.value]) {
+                props.searchFunction(searchQuery)
+            } else {
+
+            }
+            
+        } else {
+            handleNoType()
+        }
+       
+    }
+
     return (
         <>
             <InputGroup>
