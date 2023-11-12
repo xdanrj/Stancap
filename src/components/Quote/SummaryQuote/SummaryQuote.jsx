@@ -21,8 +21,6 @@ export default function SummaryQuote() {
             let query = { "uploadByUser": localStorage.getItem("username") }
 
             const response = await quoteService.getQuote(query)
-            console.log(response)
-            console.log(response)
             setQuotesResponse(response)
             setQuotesResponseArray(response)
         }

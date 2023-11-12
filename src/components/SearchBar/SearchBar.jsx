@@ -7,6 +7,9 @@ import { useAlertMsg } from "../Alert/AlertContext";
 
 export function SearchBar(props) {
     const useAlert = useAlertMsg()
+
+    
+
     const SearchTypes = [
         { label: "Autor", value: "author" },
         { label: "Tag", value: "tag" },
@@ -18,6 +21,10 @@ export function SearchBar(props) {
     const [selectedType, setSelectedType] = useState()
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
+
+    if(props.urlQuery) {
+        
+    }
 
     useEffect(() => {
         setSearchQuery((prevSearchQuery) => ({

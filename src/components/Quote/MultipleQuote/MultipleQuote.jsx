@@ -38,7 +38,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
                             <QuoteHeader>
                                 {
                                     imagePaths[index] ? (
-                                        <SourceLogo src={imagePaths[index]} />
+                                        <SourceLogo src={imagePaths[index]} onClick={}/>
                                     ) : (<></>)
                                 }
                                 <InfoIcon onClick={() => handleQuoteInfoClick(data)} />

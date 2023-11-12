@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { useParams } from "react-router-dom";
 import quoteEditingServices from "../../services/quoteServices";
 import SingleQuote from "./SingleQuote/SingleQuote";
 import MultipleQuote from "./MultipleQuote/MultipleQuote";
@@ -12,16 +13,15 @@ export default function QuotesPage() {
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
   const quoteService = new quoteEditingServices()
-
+  const {queryprop, queryvalue} = useParams()
+  const urlQuery = {queryprop, queryvalue}
 
   async function fetchAllQuotes() {
-    
     const response = await quoteService.getAllQuotes()
     setQuotesResponse(response)
   }
 
   async function fetchQuotesBySearch(searchQuery) {
-   
     const response = await quoteService.getQuote(searchQuery["query"])
     response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`)
     setQuotesResponse(response)
@@ -43,7 +43,7 @@ export default function QuotesPage() {
         else if (data.quotes.length > 1) {
           currentMultipleQuotesArray.push(data)
         }
-      });
+      })
       setSingleQuotesArray(currentSingleQuotesArray)
       setMultipleQuotesArray(currentMultipleQuotesArray)
     }
@@ -71,10 +71,9 @@ export default function QuotesPage() {
   const currentSize = getCurrentScreenSize()
   console.log("Tamanho atual da tela:", currentSize)
 
-  //
   return (
     <>
-      <SearchBar searchFunction={fetchQuotesBySearch} />
+      <SearchBar searchFunction={fetchQuotesBySearch} urlQuery={urlQuery}/>
 
       <SingleQuote singleQuotes={singleQuotesArray} />
       <MultipleQuote multipleQuotes={multipleQuotesArray} />

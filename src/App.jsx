@@ -21,7 +21,7 @@ export default function App() {
       <NavbarComponent />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/quotes" element={<Quotes />} />
+          <Route path="/quotes/:queryprop?/:queryvalue?" element={<Quotes />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/testes" element={<Testes />} />
