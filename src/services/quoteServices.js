@@ -12,7 +12,6 @@ export default class quoteEditingServices {
         try {
         const response = await this.axios.get('/all_quotes')
         if (response.status === 200) {
-            console.log(response.data)
             return response.data
         }
     } catch(error) {

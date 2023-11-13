@@ -8,10 +8,6 @@ import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph } from "./QuoteI
 export default function QuoteInfo(props) {
     const handleClose = () => props.setShow(false)
 
-    useEffect(() => {
-        console.log(props.quoteData)
-    }, [])
-
     return (
         <>
             <Modal show={props.show} onHide={handleClose} centered>

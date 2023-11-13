@@ -8,7 +8,7 @@ import { useAlertMsg } from "../Alert/AlertContext";
 export function SearchBar(props) {
     const useAlert = useAlertMsg()
     console.log(props.urlQuery)
-    
+    console.log(props.urlQuery.source)
 
     const SearchTypes = [
         { label: "Autor", value: "author" },
@@ -17,20 +17,20 @@ export function SearchBar(props) {
         { label: "Upload por", value: "uploadByUser" },
         { label: "Contexto", value: "context" }
     ]
-    const [searchQuery, setSearchQuery] = useState({ query: {}, label: "" })
+
     const [selectedType, setSelectedType] = useState()
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
 
-    
-    /*if(props.urlQuery) {
-        setSearchQuery({query: })
-    }*/
     // a fazer: setar type auto. puxando da urlquery, corrigir bug em que o valor do input so muda quando digita-se algo 
-    useEffect(() => {
-        if(props.urlQuery.source) {
 
-        }
+    const initialQuery = props.urlQuery.source
+        ? { query: { source: props.urlQuery.source }, label: "Source" }
+        : { query: { query: {}, label: "" } }
+
+    const [searchQuery, setSearchQuery] = useState(initialQuery)
+
+    useEffect(() => {
         setSearchQuery((prevSearchQuery) => ({
             ...prevSearchQuery,
             ["query"]: { [selectedType?.value]: "" },
@@ -50,6 +50,7 @@ export function SearchBar(props) {
     }
 
     const checkAttributes = () => {
+        console.log(searchQuery)
         if (!selectedType) {
             setTypeColor(true)
             setTimeout(() => { setTypeColor(false) }, 500)
@@ -62,8 +63,9 @@ export function SearchBar(props) {
     }
 
     const handleSearchClick = () => {
+        
         props.searchFunction(searchQuery)
-        console.log(checkAttributes)
+
     }
 
     return (

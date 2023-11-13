@@ -26,10 +26,6 @@ export default function SingleQuotes({ singleQuotes }) {
     }, [singleQuotes])
 
     const handleQuoteInfoClick = (data) => {
-        console.log(imagePaths)
-        imagePaths.forEach((item) => {
-            console.log(item.path)
-        })
         setQuoteInfoData(data)
         setShowQuoteInfo(true)
     }

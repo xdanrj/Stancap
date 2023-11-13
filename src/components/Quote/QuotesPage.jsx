@@ -50,7 +50,7 @@ export default function QuotesPage() {
     }
 
   }, [quotesResponse])
-
+/*
   function getCurrentScreenSize() {
     const screenWidth = window.innerWidth;
     if (screenWidth >= parseInt(size.desktop)) {
@@ -70,8 +70,8 @@ export default function QuotesPage() {
     }
   }
   const currentSize = getCurrentScreenSize()
-  console.log("Tamanho atual da tela:", currentSize)
-
+  log("Tamanho atual da tela:", currentSize)
+*/
   return (
     <>
       <SearchBar searchFunction={fetchQuotesBySearch} urlQuery={urlQuery}/>
