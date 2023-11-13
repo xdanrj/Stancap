@@ -14,7 +14,8 @@ export default function QuotesPage() {
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
   const quoteService = new quoteEditingServices()
   const {queryprop, queryvalue} = useParams()
-  const urlQuery = {queryprop, queryvalue}
+  const urlQuery = {[queryprop]: queryvalue}
+  console.log(urlQuery)
 
   async function fetchAllQuotes() {
     const response = await quoteService.getAllQuotes()

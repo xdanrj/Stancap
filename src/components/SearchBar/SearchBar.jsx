@@ -23,7 +23,7 @@ export function SearchBar(props) {
     const [inputColor, setInputColor] = useState(false)
 
     if(props.urlQuery) {
-        
+        setSearchQuery({query: })
     }
 
     useEffect(() => {
@@ -43,11 +43,6 @@ export function SearchBar(props) {
             ["query"]: { [selectedType?.value]: e.target.value },
             ["label"]: selectedType?.label
         })
-    }
-
-    const handleNoType = () => {
-        setHighlighted(true)
-        setTimeout(() => { setHighlighted(false) }, 500)
     }
 
     const checkAttributes = () => {
