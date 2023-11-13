@@ -7,7 +7,7 @@ import { useAlertMsg } from "../Alert/AlertContext";
 
 export function SearchBar(props) {
     const useAlert = useAlertMsg()
-
+    console.log(props.urlQuery)
     
 
     const SearchTypes = [
@@ -22,11 +22,15 @@ export function SearchBar(props) {
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
 
-    if(props.urlQuery) {
+    
+    /*if(props.urlQuery) {
         setSearchQuery({query: })
-    }
-
+    }*/
+    // a fazer: setar type auto. puxando da urlquery, corrigir bug em que o valor do input so muda quando digita-se algo 
     useEffect(() => {
+        if(props.urlQuery.source) {
+
+        }
         setSearchQuery((prevSearchQuery) => ({
             ...prevSearchQuery,
             ["query"]: { [selectedType?.value]: "" },

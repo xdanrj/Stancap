@@ -2,7 +2,7 @@ export const SourceNames = ['Anarco Feudalismo', 'Anarco Primitivismo', 'AnProm'
 
 export async function sourceLogoSelector(source) {
     if (SourceNames.includes(source)) {
-      return `../src/images/${source}.png`
+      return {"path": `../src/images/${source}.png`, "source": source}
     } else {
         return false
     }

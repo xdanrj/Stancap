@@ -18,12 +18,16 @@ export default function MultipleQuotes({ multipleQuotes }) {
                 return sourceLogoSelector(data.source)
             })
             const paths = await Promise.all(promisses)
+            
+            
+            
             setImagePaths(paths)
         }
         loadImagePaths()
     }, [multipleQuotes])
 
     const handleQuoteInfoClick = (data) => {
+        
         setQuoteInfoData(data)
         setShowQuoteInfo(true)
     }
@@ -38,7 +42,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
                             <QuoteHeader>
                                 {
                                     imagePaths[index] ? (
-                                        <SourceLogo src={imagePaths[index]} onClick={}/>
+                                        <SourceLogo src={imagePaths[index]} /*onClick={}*//>
                                     ) : (<></>)
                                 }
                                 <InfoIcon onClick={() => handleQuoteInfoClick(data)} />

@@ -6,11 +6,13 @@ import { QuoteHeader, SourceLogo, InfoIcon } from "../../../CommonStyles/CommonS
 import { QuoteContainer, Paragraph, ParagraphAutor, ParagraphDate } from "./SingleQuoteStyles"
 const quoteService = new quoteEditingServices()
 import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
+import { useNavigate } from "react-router-dom";
 
 export default function SingleQuotes({ singleQuotes }) {
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
     const [quoteInfoData, setQuoteInfoData] = useState("")
     const [imagePaths, setImagePaths] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         const loadImagePaths = async () => {
@@ -24,9 +26,12 @@ export default function SingleQuotes({ singleQuotes }) {
     }, [singleQuotes])
 
     const handleQuoteInfoClick = (data) => {
+        console.log(imagePaths)
+        imagePaths.forEach((item) => {
+            console.log(item.path)
+        })
         setQuoteInfoData(data)
         setShowQuoteInfo(true)
-        console.log(imagePaths)
     }
     return (
         <>
@@ -37,7 +42,7 @@ export default function SingleQuotes({ singleQuotes }) {
                             <QuoteHeader>
                                 {
                                     imagePaths[index] ? (
-                                        <SourceLogo src={imagePaths[index]} />
+                                        <SourceLogo src={imagePaths[index].path} onClick={() => navigate(`/quotes/source/${imagePaths[index].source}`)}/>
                                     ) : (<></>)
                                 }
                                 <InfoIcon onClick={() => handleQuoteInfoClick(data)} />
