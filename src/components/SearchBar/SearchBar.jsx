@@ -7,8 +7,6 @@ import { useAlertMsg } from "../Alert/AlertContext";
 
 export function SearchBar(props) {
     const useAlert = useAlertMsg()
-    console.log(props.urlQuery)
-    console.log(props.urlQuery.source)
 
     const SearchTypes = [
         { label: "Autor", value: "author" },
@@ -21,24 +19,35 @@ export function SearchBar(props) {
     const [selectedType, setSelectedType] = useState()
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
+    const [searchQuery, setSearchQuery] = useState({ "query": { source: "" }, "label": "" })
+    console.log(searchQuery)
 
-    // a fazer: setar type auto. puxando da urlquery, corrigir bug em que o valor do input so muda quando digita-se algo 
+    //ainda refatorar pra aceitar qualquer tipo de query
+    useEffect(() => {
+        if (props.urlQuery.source) {
+            console.log("entrou funcao get")
+            console.log(props.urlQuery)
+            console.log(props.urlQuery.source)
+            setSearchQuery((prevSearchQuery) => ({
+                ...prevSearchQuery,
+                "query": { "source": props.urlQuery.source }, "label": "Source"
+            }))
+        }
 
-    const initialQuery = props.urlQuery.source
-        ? { query: { source: props.urlQuery.source }, label: "Source" }
-        : { query: { query: {}, label: "" } }
-
-    const [searchQuery, setSearchQuery] = useState(initialQuery)
+    }, [props.urlQuery.source])
 
     useEffect(() => {
-        setSearchQuery((prevSearchQuery) => ({
-            ...prevSearchQuery,
-            ["query"]: { [selectedType?.value]: "" },
-            ["label"]: selectedType?.label
-        }))
+        if (selectedType) {
+            setSearchQuery((prevSearchQuery) => ({
+                ...prevSearchQuery,
+                ["query"]: { [selectedType?.value]: "" },
+                ["label"]: selectedType?.label
+            }))
+        }
     }, [selectedType])
 
     const handleTypeSelect = (eventKey) => {
+        console.log(selectedType)
         setSelectedType(SearchTypes[eventKey])
     }
 
@@ -50,7 +59,7 @@ export function SearchBar(props) {
     }
 
     const checkAttributes = () => {
-        console.log(searchQuery)
+        console.log(selectedType)
         if (!selectedType) {
             setTypeColor(true)
             setTimeout(() => { setTypeColor(false) }, 500)
@@ -63,9 +72,7 @@ export function SearchBar(props) {
     }
 
     const handleSearchClick = () => {
-        
         props.searchFunction(searchQuery)
-
     }
 
     return (
