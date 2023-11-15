@@ -19,7 +19,7 @@ export function SearchBar(props) {
     const [selectedType, setSelectedType] = useState()
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
-    const [searchQuery, setSearchQuery] = useState({ "query": { source: "" }, "label": "" })
+    const [searchQuery, setSearchQuery] = useState({ "query": { }, "label": "" })
     console.log(searchQuery)
 
     //ainda refatorar pra aceitar qualquer tipo de query
@@ -28,12 +28,12 @@ export function SearchBar(props) {
             console.log("entrou funcao get")
             console.log(props.urlQuery)
             console.log(props.urlQuery.source)
+            setSelectedType()
             setSearchQuery((prevSearchQuery) => ({
                 ...prevSearchQuery,
                 "query": { "source": props.urlQuery.source }, "label": "Source"
             }))
         }
-
     }, [props.urlQuery.source])
 
     useEffect(() => {
@@ -88,7 +88,7 @@ export function SearchBar(props) {
                 <Form.Control
                     className={inputColor ? "bg-danger" : "bg-light"}
                     placeholder="Pesquise..." onChange={handleSearchChange}
-                    value={searchQuery.query[selectedType?.value] || ""} />
+                    value={searchQuery.query["source"] ? searchQuery.query["source"] : "" || ""} />
 
                 <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
                     <MDBIcon icon="search" />
