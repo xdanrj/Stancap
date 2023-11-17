@@ -20,7 +20,6 @@ export function SearchBar(props) {
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
-    const [initialSearchDone, setInitialSearchDone] = useState(false)
     console.log(searchQuery)
 
     //ainda refatorar pra aceitar qualquer tipo de query
@@ -28,26 +27,25 @@ export function SearchBar(props) {
         async function handleParams() {
             const queryProp = Object.keys(props.urlQuery)
             console.log(queryProp.length)
-            if (!initialSearchDone) {
                 console.log("entrou funcao get")
                 console.log(props.urlQuery)
-                const foundType = SearchTypes.find((type) => type.value === Object.keys(props.urlQuery)[0])
+          
+                const foundType = SearchTypes.find((type) => type.value === queryProp[0])
                 console.log(foundType)
                 setSelectedType(foundType)
-
+          
                 setSearchQuery((prevSearchQuery) => ({
-                    ...prevSearchQuery,
-                    "query": props.urlQuery, "label": foundType?.label
+                  ...prevSearchQuery,
+                  "query": props.urlQuery,
+                  "label": foundType?.label,
                 }))
-                setInitialSearchDone(true)
             }
-        }
         handleParams()
 
-    }, [props.urlQuery, initialSearchDone])
+    }, [props.urlQuery])
 
     useEffect(() => {
-        props.searchFunction(searchQuery)
+            props.searchFunction(searchQuery)
     }, [searchQuery])
 
     const handleTypeSelect = (eventKey) => {
