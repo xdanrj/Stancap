@@ -19,24 +19,35 @@ export function SearchBar(props) {
     const [selectedType, setSelectedType] = useState()
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
-    const [searchQuery, setSearchQuery] = useState({ "query": { }, "label": "" })
+    const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
     console.log(searchQuery)
 
     //ainda refatorar pra aceitar qualquer tipo de query
     useEffect(() => {
-        if (props.urlQuery.source) {
-            console.log("entrou funcao get")
-            console.log(props.urlQuery)
-            console.log(props.urlQuery.source)
-            setSelectedType()
-            setSearchQuery((prevSearchQuery) => ({
-                ...prevSearchQuery,
-                "query": { "source": props.urlQuery.source }, "label": "Source"
-            }))
+        async function handleParams() {
+            if (props.urlQuery.source) {
+                console.log("entrou funcao get")
+                console.log(props.urlQuery)
+                console.log(props.urlQuery.source)
+                const foundType = SearchTypes.find((type) => type.value === Object.keys(props.urlQuery)[0])
+                console.log(foundType)
+                setSelectedType(foundType)
+
+                setSearchQuery((prevSearchQuery) => ({
+                    ...prevSearchQuery,
+                    "query": props.urlQuery, "label": foundType.label
+                }))
+            }
         }
-    }, [props.urlQuery.source])
+        handleParams()
+
+    }, [props.urlQuery])
 
     useEffect(() => {
+        props.searchFunction(searchQuery)
+    }, [searchQuery])
+
+    /*useEffect(() => {
         if (selectedType) {
             setSearchQuery((prevSearchQuery) => ({
                 ...prevSearchQuery,
@@ -44,7 +55,7 @@ export function SearchBar(props) {
                 ["label"]: selectedType?.label
             }))
         }
-    }, [selectedType])
+    }, [selectedType])*/
 
     const handleTypeSelect = (eventKey) => {
         console.log(selectedType)

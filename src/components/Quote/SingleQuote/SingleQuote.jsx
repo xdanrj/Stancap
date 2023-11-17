@@ -48,7 +48,7 @@ export default function SingleQuotes({ singleQuotes }) {
                                 <Paragraph>
                                     ‟{data.quotes[0].quote}”
                                 </Paragraph>
-                                <ParagraphAutor>
+                                <ParagraphAutor onClick={() => navigate(`/quotes/author/${data.author}`)}>
                                     —{data.author ? data.author : "Autor desconhecido"}
                                 </ParagraphAutor>
                                 <ParagraphDate>
