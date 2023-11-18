@@ -4,9 +4,12 @@ import { InputGroup } from "./SearchBarStyles";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { useAlertMsg } from "../Alert/AlertContext";
+import { useNavigate } from "react-router-dom";
 
 export function SearchBar(props) {
     const useAlert = useAlertMsg()
+    
+    const navigate = useNavigate()
 
     const SearchTypes = [
         { label: "Autor", value: "author" },
@@ -75,7 +78,12 @@ export function SearchBar(props) {
     }
 
     const handleSearchClick = () => {
+        const queryProp = [...Object.keys(searchQuery.query)][0]
+        console.log(queryProp)
+        console.log(searchQuery.query[queryProp])
         props.searchFunction(searchQuery)
+        navigate(`/quotes/${queryProp}/${searchQuery.query[queryProp]}`)
+
     }
 
     return (
