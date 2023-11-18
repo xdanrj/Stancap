@@ -21,13 +21,13 @@ export function SearchBar(props) {
     const [inputColor, setInputColor] = useState(false)
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
     console.log(searchQuery)
+    console.log(Object.keys(searchQuery.query))
 
     //ainda refatorar pra aceitar qualquer tipo de query
     useEffect(() => {        
         async function handleParams() {
             const queryProp = Object.keys(props.urlQuery)
-            console.log(queryProp.length)
-                console.log("entrou funcao get")
+            console.log("=====================================")
                 console.log(props.urlQuery)
           
                 const foundType = SearchTypes.find((type) => type.value === queryProp[0])
@@ -44,9 +44,9 @@ export function SearchBar(props) {
 
     }, [props.urlQuery])
 
-    useEffect(() => {
+    /*useEffect(() => {
             props.searchFunction(searchQuery)
-    }, [searchQuery])
+    }, [searchQuery])*/
 
     const handleTypeSelect = (eventKey) => {
         console.log(selectedType)
@@ -54,10 +54,11 @@ export function SearchBar(props) {
     }
 
     const handleSearchChange = (e) => {
-        setSearchQuery({
-            ["query"]: { [selectedType?.value]: e.target.value },
-            ["label"]: selectedType?.label
-        })
+        setSearchQuery((prevSearchQuery) => ({
+            ...prevSearchQuery,
+            query: { [selectedType?.value]: e.target.value },
+            label: selectedType?.label
+        }))
     }
 
     const checkAttributes = () => {
@@ -90,7 +91,7 @@ export function SearchBar(props) {
                 <Form.Control
                     className={inputColor ? "bg-danger" : "bg-light"}
                     placeholder="Pesquise..." onChange={handleSearchChange}
-                    value={searchQuery.query["source"] ? searchQuery.query["source"] : "" || ""} />
+                    value={searchQuery.query[Object.keys(searchQuery.query)] ? searchQuery.query[Object.keys(searchQuery.query)] : "" || ""} />
 
                 <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
                     <MDBIcon icon="search" />
