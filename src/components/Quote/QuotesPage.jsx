@@ -13,9 +13,13 @@ export default function QuotesPage() {
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
   const quoteService = new quoteEditingServices()
-  const {queryprop, queryvalue} = useParams()
-  const urlQuery = {[queryprop]: queryvalue}
-  
+  const { queryprop, queryvalue } = useParams()
+  let urlQuery
+
+  if (queryprop && queryvalue) {
+    urlQuery = { [queryprop]: queryvalue }
+  }
+
 
   async function fetchAllQuotes() {
     const response = await quoteService.getAllQuotes()
@@ -50,31 +54,31 @@ export default function QuotesPage() {
     }
 
   }, [quotesResponse])
-/*
-  function getCurrentScreenSize() {
-    const screenWidth = window.innerWidth;
-    if (screenWidth >= parseInt(size.desktop)) {
-      return "desktop";
-    } else if (screenWidth >= parseInt(size.laptopL)) {
-      return "laptopL";
-    } else if (screenWidth >= parseInt(size.laptop)) {
-      return "laptop";
-    } else if (screenWidth >= parseInt(size.tablet)) {
-      return "tablet";
-    } else if (screenWidth >= parseInt(size.mobileL)) {
-      return "mobileL";
-    } else if (screenWidth >= parseInt(size.mobileM)) {
-      return "mobileM";
-    } else {
-      return "mobileS";
+  /*
+    function getCurrentScreenSize() {
+      const screenWidth = window.innerWidth;
+      if (screenWidth >= parseInt(size.desktop)) {
+        return "desktop";
+      } else if (screenWidth >= parseInt(size.laptopL)) {
+        return "laptopL";
+      } else if (screenWidth >= parseInt(size.laptop)) {
+        return "laptop";
+      } else if (screenWidth >= parseInt(size.tablet)) {
+        return "tablet";
+      } else if (screenWidth >= parseInt(size.mobileL)) {
+        return "mobileL";
+      } else if (screenWidth >= parseInt(size.mobileM)) {
+        return "mobileM";
+      } else {
+        return "mobileS";
+      }
     }
-  }
-  const currentSize = getCurrentScreenSize()
-  log("Tamanho atual da tela:", currentSize)
-*/
+    const currentSize = getCurrentScreenSize()
+    log("Tamanho atual da tela:", currentSize)
+  */
   return (
     <>
-      <SearchBar searchFunction={fetchQuotesBySearch} urlQuery={urlQuery}/>
+      <SearchBar searchFunction={fetchQuotesBySearch} urlQuery={urlQuery} />
 
       <SingleQuote singleQuotes={singleQuotesArray} />
       <MultipleQuote multipleQuotes={multipleQuotesArray} />
