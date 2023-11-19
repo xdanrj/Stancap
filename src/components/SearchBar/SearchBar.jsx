@@ -25,7 +25,6 @@ export function SearchBar(props) {
     const [inputColor, setInputColor] = useState(false)
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
 
-    //ainda refatorar pra aceitar qualquer tipo de query
     useEffect(() => {
         console.log(props.urlQuery)
         if (props.urlQuery) {
@@ -40,11 +39,7 @@ export function SearchBar(props) {
                     "query": props.urlQuery,
                     "label": foundType?.label,
                 }))
-                console.log("antes focus")
-                SearchBarRef.current.focus()
-                console.log("depois focus")
             }
-
             getParams()
         }
     }, [props.urlQuery])
@@ -77,7 +72,6 @@ export function SearchBar(props) {
         const queryProp = [...Object.keys(searchQuery.query)][0]
         props.searchFunction(searchQuery)
         navigate(`/quotes/${queryProp}/${searchQuery.query[queryProp]}`)
-
     }
 
     return (
@@ -91,7 +85,7 @@ export function SearchBar(props) {
                 </DropdownButton>
 
                 <Form.Control
-                    
+
                     className={inputColor ? "bg-danger" : "bg-light"}
                     placeholder="Pesquise..." onChange={handleSearchChange}
                     value={searchQuery.query[Object.keys(searchQuery.query)] ? searchQuery.query[Object.keys(searchQuery.query)] : "" || ""} />
