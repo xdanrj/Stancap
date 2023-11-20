@@ -11,8 +11,8 @@ export function SearchBar(props) {
     const useAlert = useAlertMsg()
     const navigate = useNavigate()
     const SearchBarRef = useRef()
-    const hasSearchedRef = useRef(false)
-
+    //const hasSearchedRef = useRef(false)
+    
     const SearchTypes = [
         { label: "Autor", value: "author" },
         { label: "Tag", value: "tag" },
@@ -25,29 +25,24 @@ export function SearchBar(props) {
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
-    console.log(hasSearchedRef)
-
-    useEffect(() => {
-        console.log(props.urlQuery)
-
-
-        if (props.urlQuery && !hasSearchedRef.current) {
+    const [urlQuery, setUrlQuery] = useState(props.urlQuery)
+    console.log(urlQuery)
+    useEffect(() => {        
+        if (urlQuery) {
             console.log("rodou")
             async function getParams() {
-                const queryProp = Object.keys(props.urlQuery)
+                const queryProp = Object.keys(urlQuery)
                 const foundType = SearchTypes.find((type) => type.value === queryProp[0])
                 setSelectedType(foundType)
                 setSearchQuery((prevSearchQuery) => ({
                     ...prevSearchQuery,
-                    "query": props.urlQuery,
+                    "query": urlQuery,
                     "label": foundType?.label,
                 }))
             }
             getParams()
-            hasSearchedRef.current = true
+            //hasSearchedRef.current = true
             props.searchFunction(searchQuery)
-
-            hasSearchedRef.current = false
         }
     }, [props.urlQuery])
 
@@ -77,8 +72,8 @@ export function SearchBar(props) {
 
     const handleSearchClick = async () => {
         await props.searchFunction(searchQuery)
-        const queryProp = [...Object.keys(searchQuery.query)][0]
-        navigate(`/quotes/${queryProp}/${searchQuery.query[queryProp]}`)
+        //const queryProp = [...Object.keys(searchQuery.query)][0]
+        //navigate(`/quotes/${queryProp}/${searchQuery.query[queryProp]}`)
     }
 
     return (
