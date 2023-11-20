@@ -11,6 +11,7 @@ export function SearchBar(props) {
     const useAlert = useAlertMsg()
     const navigate = useNavigate()
     const SearchBarRef = useRef()
+    const hasSearchedRef = useRef(false)
 
     const SearchTypes = [
         { label: "Autor", value: "author" },
@@ -24,27 +25,26 @@ export function SearchBar(props) {
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
-    const [initialUrlQuery, setInitialUrlQuery] = useState(props.urlQuery)
+
 
     useEffect(() => {
         console.log(props.urlQuery)
-        if (props.urlQuery && props.urlQuery !== initialUrlQuery) {
+        if (props.urlQuery && !hasSearchedRef.current) {
             console.log("rodou")
             async function getParams() {
                 const queryProp = Object.keys(props.urlQuery)
                 const foundType = SearchTypes.find((type) => type.value === queryProp[0])
                 setSelectedType(foundType)
-
                 setSearchQuery((prevSearchQuery) => ({
                     ...prevSearchQuery,
                     "query": props.urlQuery,
                     "label": foundType?.label,
                 }))
-                props.searchFunction(searchQuery)
             }
             getParams()
+            hasSearchedRef.current = true
         }
-    }, [props.urlQuery, initialUrlQuery])
+    }, [props.urlQuery, hasSearchedRef.current])
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(SearchTypes[eventKey])
@@ -70,9 +70,9 @@ export function SearchBar(props) {
         }
     }
 
-    const handleSearchClick = () => {
+    const handleSearchClick = async () => {        
+        await props.searchFunction(searchQuery)
         const queryProp = [...Object.keys(searchQuery.query)][0]
-        props.searchFunction(searchQuery)
         navigate(`/quotes/${queryProp}/${searchQuery.query[queryProp]}`)
     }
 
