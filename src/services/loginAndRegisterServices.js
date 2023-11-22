@@ -10,7 +10,8 @@ export default class loginAndRegisterServices {
 
     async sendCode(email) {
         const response = await this.axios.post('/send_code', email)
-        // se enviou o code com sucesso:
+        
+        console.log(response)
         if (response.data.response) {
             return true
         }

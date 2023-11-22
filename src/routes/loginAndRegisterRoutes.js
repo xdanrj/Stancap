@@ -2,6 +2,7 @@ import twilio from "twilio"
 import { User } from "../models/User.js";
 import { userExists } from "./commonFunctions.js";
 import jwt from "jsonwebtoken"
+import bcrypt from 'bcrypt'
 
 export const loginAndRegisterRoutes = (app) => {
     //variaveis globais para funcionamento da API Twilio
@@ -101,9 +102,15 @@ export const loginAndRegisterRoutes = (app) => {
             // na rota anterior o email verificado sera guardado no localstorage (??nao sei, hein?? ignorar isso aqui talvez?)
             const email = req.body.email
             const username = req.body.username
-            const password = req.body.password
+            let password
             const selectedUser = await userExists({ email: email })
-            // caso o email seja novo (condição redundante pois a rota "/register" só será acessada caso a verificação por código (rota anterior) seja bem sucedida)
+            try {
+                password = await bcrypt.hash(req.body.password, 10)
+                console.log("hash de senha gerado: ", password)
+            } catch (error) {
+                res.status(400).json({message: error})
+            }
+            // caso o email seja novo (condição redundante (segurança extra) pois a rota "/register" só será acessada caso a verificação por código (rota anterior) seja bem sucedida)
             if (!selectedUser) {
                 const newUser = new User({
                     // email será auto preenchido puxando no localStorage
@@ -130,5 +137,4 @@ export const loginAndRegisterRoutes = (app) => {
         const token = jwt.sign(payload, secretKey, { expiresIn: '1h' })
         return token
     }
-
 }
