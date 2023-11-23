@@ -31,15 +31,17 @@ export const loginAndRegisterRoutes = (app) => {
             const email = req.body.email
             const password = req.body.password
             const user = await userExists({ email: email })
-
-            if (user.password == password) {
+            const correctCredentials = await bcrypt.compare(password, user.password)
+            console.log(correctCredentials)
+            if (correctCredentials) {
                 const token = createToken(user._id)
-
                 res.status(200).json({ email: email, username: user.username, token: token })
-            } else if (user.password != password) {
+            } else if (!correctCredentials) {
                 res.status(401).json({ message: "Login/Senha incorreto(s)" })
             }
-        } catch (error) { res.status(400).json({message: error}) }
+        } catch (error) {
+            console.log(error)
+             res.status(400).json({message: error}) }
 
     })
     app.post("/send_code", async (req, res) => {
@@ -68,7 +70,9 @@ export const loginAndRegisterRoutes = (app) => {
                     response: verificationStatus
                 })
             }
-        } catch (error) { res.status(400).json({message: error}) }
+        } catch (error) {
+            console.log(error)
+            res.status(400).json({message: error}) }
     })
 
     app.post("/check_code", async (req, res) => {

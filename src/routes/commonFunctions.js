@@ -19,7 +19,7 @@ export async function selectUser(body) {
 export async function userExists(proprietyTarget) {
   const user = await User.findOne(proprietyTarget)
   if (user) {
-    return true
+    return user
   }
   else {
     return false
