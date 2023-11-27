@@ -9,8 +9,7 @@ export default class loginAndRegisterServices {
     }
 
     async sendCode(email) {
-        const response = await this.axios.post('/send_code', email)
-        
+        const response = await this.axios.post('/send_code', email)        
         console.log(response)
         if (response.data.response) {
             return true
@@ -58,6 +57,18 @@ export default class loginAndRegisterServices {
             // se não: já retorna a "{message}" da API
         } else {
             return response.data.message
+        }
+    }
+
+    async isUserTokenValid() {
+        const token = localStorage.getItem("token")
+        if(!token) {
+            return false
+        }
+        try {
+            
+        } catch (error) {
+            
         }
     }
 
