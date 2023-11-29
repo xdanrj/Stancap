@@ -9,7 +9,7 @@ export default class userServices {
     }
 
     usuarioAutenticado() {
-        return localStorage.getItem("token") != undefined ? true : false
+        return localStorage.getItem("token") ? true : false
     }
 
     async logout() {

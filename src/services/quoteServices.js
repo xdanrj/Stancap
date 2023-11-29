@@ -1,22 +1,24 @@
 import axios from "axios"
 const apiUrl = process.env.API_URL
-
+const userToken = localStorage.getItem("token")
+console.log("userToken aqui: ", userToken)
 export default class quoteEditingServices {
     constructor() {
         this.axios = axios.create({
             baseURL: "http://localhost:3000"
         })
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`
     }
 
     async getAllQuotes() {
         try {
-        const response = await this.axios.get('/all_quotes')
-        if (response.status === 200) {
-            return response.data
+            const response = await this.axios.get('/all_quotes')
+            if (response.status === 200) {
+                return response.data
+            }
+        } catch (error) {
+            console.log(error)
         }
-    } catch(error) {
-        console.log(error)
-    }
     }
 
     async getQuote(dados) {
