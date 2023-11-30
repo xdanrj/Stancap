@@ -8,7 +8,7 @@ export default class userServices {
         })
     }
 
-    usuarioAutenticado() {
+    authenticatedUser() {
         return localStorage.getItem("token") ? true : false
     }
 

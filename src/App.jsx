@@ -12,6 +12,7 @@ import Testes from './components/Testes';
 import AddQuote from './pages/Quotes/AddQuote/AddQuote';
 import EditQuote from './pages/Quotes/EditQuote';
 import MyQuotes from './pages/Quotes/MyQuotes';
+import ProtectedRoutes from './pages/Credentials/ProtectedRoutes';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -21,15 +22,19 @@ export default function App() {
       <NavbarComponent />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/quotes/:queryprop?/:queryvalue?" element={<Quotes />} />
+         
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/testes" element={<Testes />} />
           <Route path="/new_password" element={<NewPassword />} />
+
+          <ProtectedRoutes>
+          <Route path="/quotes/:queryprop?/:queryvalue?" element={<Quotes />} />
           <Route path="/add_quote" element={<AddQuote />} />
           <Route path="/edit_quote/:quotetype/:id" element={<EditQuote />} />
           <Route path="/my_quotes" element={<MyQuotes />} />
           <Route path="/navbar" element={<NavbarComponent />} />
+          </ProtectedRoutes>
         </Routes>      
     </div>
   )
