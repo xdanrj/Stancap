@@ -20,22 +20,44 @@ export default function App() {
   return (
     <div>
       <NavbarComponent />
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-         
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/testes" element={<Testes />} />
-          <Route path="/new_password" element={<NewPassword />} />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/testes" element={<Testes />} />
+        <Route path="/new_password" element={<NewPassword />} />
 
+        <Route path="/quotes/:queryprop?/:queryvalue?" element={
           <ProtectedRoutes>
-          <Route path="/quotes/:queryprop?/:queryvalue?" element={<Quotes />} />
-          <Route path="/add_quote" element={<AddQuote />} />
-          <Route path="/edit_quote/:quotetype/:id" element={<EditQuote />} />
-          <Route path="/my_quotes" element={<MyQuotes />} />
-          <Route path="/navbar" element={<NavbarComponent />} />
+            <Quotes />
           </ProtectedRoutes>
-        </Routes>      
+        } />
+
+        <Route path="/add_quote" element={
+          <ProtectedRoutes>
+            <AddQuote />
+          </ProtectedRoutes>
+        } />
+
+        <Route path="/edit_quote/:quotetype/:id" element={
+          <ProtectedRoutes>
+            <EditQuote />
+          </ProtectedRoutes>
+        } />
+
+        <Route path="/my_quotes" element={
+          <ProtectedRoutes>
+            <MyQuotes />
+          </ProtectedRoutes>
+        } />
+
+        <Route path="/navbar" element={
+          <ProtectedRoutes>
+            <NavbarComponent />
+          </ProtectedRoutes>
+        } />
+
+      </Routes>
     </div>
   )
 }
