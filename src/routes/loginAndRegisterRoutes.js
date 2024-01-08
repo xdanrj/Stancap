@@ -32,11 +32,12 @@ export const loginAndRegisterRoutes = (app) => {
             const password = req.body.password
             const user = await userExists({ email: email })
             const correctCredentials = await bcrypt.compare(password, user.password)
-            console.log(correctCredentials)
+            console.log("linha 35 ", correctCredentials)
             if (correctCredentials) {
                 const token = createToken(user._id)
                 res.status(200).json({ email: email, username: user.username, token: token })
             } else if (!correctCredentials) {
+                console.log("caiu no elseif")
                 res.status(401).json({ message: "Login/Senha incorreto(s)" })
             }
         } catch (error) {

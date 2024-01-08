@@ -29,7 +29,7 @@ export default function LoginForm() {
         e.preventDefault();
         try {
             const response = await loginAndRegisterService.login(loginData)
-
+            console.log("linha 32 aqui", response)
             if (response === true) {
                 alert('Logado com sucesso')
                 navigate('/quotes')
