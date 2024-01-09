@@ -1,4 +1,6 @@
 import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+dotenv.config()
 const secretKey = process.env.SECRET_KEY
 
 const requireToken = (req, res, next) => {
@@ -11,17 +13,20 @@ const requireToken = (req, res, next) => {
     }
 
     try {
-        console.log("secretKey: ", secretKey)
+        console.log("secretKey aquii: ", secretKey)
         console.log("userToken: ", userToken)
         const legitToken = jwt.verify(userToken, secretKey)
-        console.log(legitToken)
+        console.log("legitToken foi? ", legitToken)
         if(legitToken) {
             next()
         } else {
-            return res.status(401).json({message: "Token de usuário inválido. Faça login"})
+            return res.status(401).json({message: "Token de usuário inválido. Faça login."})
         }
     } catch (error) {
-        return res.status(401).json({message: error})
+        console.log("caiu no catcherror")
+        if (error instanceof jwt.TokenExpiredError) {
+            return res.status(498).json({ message: "Token de usuário expirado. Faça login novamente." });
+        }
     }
 }
 

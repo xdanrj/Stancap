@@ -45,10 +45,9 @@ export default class loginAndRegisterServices {
     }
 
     async login(dados) {
-        console.log("l. 50")
         const response = await this.axios.post('/login', dados)
-        console.log("l. da response: ", response)
-        // se recebeu um objeto com "{token}":
+        console.log("response do login abaixo:")
+        console.log(response)
         if (response.status === 200) {
             localStorage.setItem("email", response.data.email)
             localStorage.setItem("username", response.data.username)
@@ -56,7 +55,6 @@ export default class loginAndRegisterServices {
             return true
             // se não: já retorna a "{message}" da API
         } else if (response.status === 401){
-            console.log("linha 60 caiu no else")
             return response.data.message
         }
     }

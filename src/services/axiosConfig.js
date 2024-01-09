@@ -9,6 +9,10 @@ axiosInstance.interceptors.response.use(
     (error) => {
         // Se o erro tem uma resposta, retorna a resposta mesmo que seja um erro 4xx
         if (error.response) {
+            console.log(error)
+            if(error.response.status === 409) {
+                alert("testando alerta")
+            }
             return Promise.resolve(error.response)
         }
         // Se o erro não tem uma resposta, retorna o próprio erro
