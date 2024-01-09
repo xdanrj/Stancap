@@ -1,5 +1,6 @@
 import { Quotes } from "../models/Quotes.js"
 import { selectQuote, quoteExists } from "./commonFunctions.js"
+import requireToken from "./middleware.js"
 
 export const quotesRoutes = (app) => {
   async function functionEditQuote(selectedQuote, body) {
@@ -22,7 +23,7 @@ export const quotesRoutes = (app) => {
     return true
   }
 
-  app.get("/all_quotes", async (req, res) => {
+  app.get("/all_quotes", requireToken, async (req, res) => {
     try {
       const response = await Quotes.find()
       res.status(200).json(response)

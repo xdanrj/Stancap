@@ -1,12 +1,8 @@
 import axiosInstance from "./axiosConfig"
 const apiUrl = process.env.API_URL
-const userToken = localStorage.getItem("token")
-console.log("userToken aqui: ", userToken)
 export default class quoteEditingServices {
     constructor() {
         this.axios = axiosInstance
-    
-        this.axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`
     }
 
     async getAllQuotes() {
