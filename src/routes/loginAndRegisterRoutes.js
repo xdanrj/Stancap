@@ -32,7 +32,7 @@ export const loginAndRegisterRoutes = (app) => {
             const password = req.body.password
             const user = await userExists({ email: email })
             const correctCredentials = await bcrypt.compare(password, user.password)
-            console.log("linha 35 ", correctCredentials)
+            console.log("correctCredentials: ", correctCredentials)
             if (correctCredentials) {
                 const token = createToken(user._id)
                 res.status(200).json({ email: email, username: user.username, token: token })

@@ -1,12 +1,11 @@
-import axios from "axios"
+import axiosInstance from "./axiosConfig"
 const apiUrl = process.env.API_URL
 const userToken = localStorage.getItem("token")
 console.log("userToken aqui: ", userToken)
 export default class quoteEditingServices {
     constructor() {
-        this.axios = axios.create({
-            baseURL: "http://localhost:3000"
-        })
+        this.axios = axiosInstance
+    
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`
     }
 

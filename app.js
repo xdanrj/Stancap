@@ -5,6 +5,7 @@ import { connectDB } from "./src/infra/db.js";
 import { userRoutes } from "./src/routes/userRoutes.js";
 import { quotesRoutes } from "./src/routes/quotesRoutes.js";
 import { loginAndRegisterRoutes } from "./src/routes/loginAndRegisterRoutes.js";
+import requireToken from "./src/routes/middleware.js";
 
 import dotenv from "dotenv"
 dotenv.config()
@@ -15,6 +16,8 @@ app.use(express.json());
 
 app.use(cors());
 mongoose.set("strictQuery", false);
+
+app.use(requireToken)
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

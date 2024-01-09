@@ -28,16 +28,19 @@ export default function LoginForm() {
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
         try {
+            console.log("l. no try")
             const response = await loginAndRegisterService.login(loginData)
-            console.log("linha 32 aqui", response)
+            console.log("l. 32 aqui", response)
             if (response === true) {
                 alert('Logado com sucesso')
                 navigate('/quotes')
             }
             else {
+                console.log("Caiu no else")
                 useAlert(response)
             }
         } catch (error) {
+            console.log("entrou no catch")
             useAlert(error)
         }
     }
