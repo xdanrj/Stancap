@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Form } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 import { ButtonsFormGroup, FloatingLabel, FormGroup } from "../../../CommonStyles/CommonStyles";
 import { useAlertMsg } from "../../Alert/AlertContext";
 import loginAndRegisterServices from "../../../services/loginAndRegisterServices"
@@ -47,9 +47,9 @@ export default function LoginForm() {
 
     return (
         <>
-            <h1 id="aga">login</h1>
             <Form onSubmit={handleSubmitLogin}>
-                <FormGroup className="vw-50 position-absolute top-50 start-50 translate-middle">
+                
+                <Form.Group className="mb-2">
                     <FloatingLabel label="E-mail">
                         <Form.Control
                             name="email"
@@ -59,7 +59,7 @@ export default function LoginForm() {
                             className="mb-3">
                         </Form.Control>
                     </FloatingLabel>
-                
+
                     <FloatingLabel label="Senha">
                         <Form.Control
                             name="password"
@@ -68,12 +68,18 @@ export default function LoginForm() {
                             onChange={handleLoginChange}>
                         </Form.Control>
                     </FloatingLabel>
-                </FormGroup>
+                </Form.Group>
 
-                <ButtonsFormGroup>
-                    <Button type="submit">Enviar</Button>
-                    <Button href="/new_password">Esqueci minha senha</Button>
-                </ButtonsFormGroup>
+                <Row>
+                    <Col className="mb-2">
+                        <Button type="submit" size="sm">Logar</Button>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Button href="/new_password" size="sm" >Esqueci minha senha</Button>
+                    </Col>
+                </Row>
 
             </Form>
         </>

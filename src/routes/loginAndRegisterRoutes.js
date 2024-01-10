@@ -139,8 +139,7 @@ export const loginAndRegisterRoutes = (app) => {
         const payload = {
             userId: userId
         }
-        // atencao: alterar pra 1h
-        const token = jwt.sign(payload, secretKey, { expiresIn: '1m' })
+        const token = jwt.sign(payload, secretKey, { expiresIn: '1h' })
         return token
     }
 }
