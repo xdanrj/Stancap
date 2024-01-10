@@ -40,8 +40,8 @@ connectDB()
 app.get("/", async (req, res) => {
   res.status(200).send({ message: "API is ready to go!" });
 });
-
-app.use(requireToken)
+//nem todas rotas precisam do token
+//app.use(requireToken)
 
 userRoutes(app)
 quotesRoutes(app)

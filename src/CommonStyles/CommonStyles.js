@@ -10,6 +10,12 @@ export const GlobalStyles = createGlobalStyle`
 `;
 // /\
 
+export const ButtonsFormGroup = styled(originalForm.Group).attrs(() => ({
+  className: "d-flex justify-content-evenly"
+}))`
+  
+`;
+
 export const FormGroup = styled(originalForm.Group).attrs(() => ({
   className: "mb-4"
 }))`

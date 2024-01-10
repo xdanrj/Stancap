@@ -23,7 +23,7 @@ export const quotesRoutes = (app) => {
     return true
   }
 
-  app.get("/all_quotes", requireToken, async (req, res) => {
+  app.get("/all_quotes", async (req, res) => {
     try {
       const response = await Quotes.find()
       res.status(200).json(response)
@@ -41,7 +41,7 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.patch("/edit_quote", async (req, res) => {
+  app.patch("/edit_quote", requireToken, async (req, res) => {
     try {
       const selectedQuote = await selectQuote(req.body)
       if (selectedQuote) {
@@ -55,7 +55,7 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.delete("/delete_quote", async (req, res) => {
+  app.delete("/delete_quote", requireToken, async (req, res) => {
     try {
       const response = await Quotes.deleteMany(req.body)
       if (response) {
@@ -68,7 +68,7 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.post("/add_quote", async (req, res) => {
+  app.post("/add_quote", requireToken, async (req, res) => {
     const quote = req.body
     try {
       const newQuote = new Quotes(quote)

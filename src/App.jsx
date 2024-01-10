@@ -27,11 +27,7 @@ export default function App() {
         <Route path="/testes" element={<Testes />} />
         <Route path="/new_password" element={<NewPassword />} />
 
-        <Route path="/quotes/:queryprop?/:queryvalue?" element={
-          <ProtectedRoutes>
-            <Quotes />
-          </ProtectedRoutes>
-        } />
+        <Route path="/quotes/:queryprop?/:queryvalue?" element={<Quotes />} />
 
         <Route path="/add_quote" element={
           <ProtectedRoutes>

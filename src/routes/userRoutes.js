@@ -1,6 +1,7 @@
 import twilio from "twilio"
 import { User } from "../models/User.js"
 import { selectUser, userExists } from "./commonFunctions.js"
+import requireToken from "./middleware.js"
 
 export const userRoutes = (app) => {
   //variaveis globais para funcionamento da API Twilio
@@ -43,21 +44,21 @@ export const userRoutes = (app) => {
     return query
   }
 
-  app.get("/all_users", async (req, res) => {
+  app.get("/all_users", requireToken, async (req, res) => {
     try {
       const response = await User.find()
       res.status(200).send(response)
     } catch (error) { res.status(400).json({ message: error }) }
   })
 
-  app.get("/search_user", async (req, res) => {
+  app.get("/search_user", requireToken, async (req, res) => {
     try {
       const foundUser = await selectUser(req.body)
       res.status(200).json(foundUser)
     } catch (error) { res.status(400).json({ message: error }) }
   })
 
-  app.patch("/edit_user", async (req, res) => {
+  app.patch("/edit_user", requireToken, async (req, res) => {
     try {
       const selectedUser = await selectUser(req.body)
       const response = await functionEditUser(selectedUser, req.body)
@@ -65,7 +66,7 @@ export const userRoutes = (app) => {
     } catch (error) { res.status(400).json({ message: error }) }
   })
 
-  app.delete("/delete_user", async (req, res) => {
+  app.delete("/delete_user", requireToken, async (req, res) => {
     try {
       const selectedUser = await selectUser(req.body)
       const response = await functionDeleteUser(selectedUser)

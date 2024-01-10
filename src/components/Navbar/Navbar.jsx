@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { MDBNavbar, MDBContainer, MDBNavbarItem, MDBCollapse, MDBBtn, MDBIcon, MDBNavbarNav, MDBInputGroup } from 'mdb-react-ui-kit';
 import { MDBNavbarLink, MDBNavbarBrand, MDBNavbarToggler } from './NavbarStyles';
 import { useModalBox } from '../Modal/ModalContext';
+import userServices from '../../services/userServices';
 
 export default function NavbarComponent() {
   const navigate = useNavigate()
   const useModal = useModalBox()
   const [showNavNoTogglerSecond, setShowNavNoTogglerSecond] = useState(false);
   const username = localStorage.getItem("username")
+  const userService = new userServices()
 
   const logoff = () => {
-    localStorage.removeItem("username")
-    localStorage.removeItem("email")
-    localStorage.removeItem("token")
+    userService.logout()
     navigate('/quotes')
     alert("Deslogado com sucesso")
   }
