@@ -26,8 +26,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
         loadImagePaths()
     }, [multipleQuotes])
 
-    const handleQuoteInfoClick = (data) => {
-        
+    const handleQuoteInfoClick = (data) => {        
         setQuoteInfoData(data)
         setShowQuoteInfo(true)
     }

@@ -6,6 +6,7 @@ import MultipleQuote from "./MultipleQuote/MultipleQuote";
 import { size } from "../../CommonStyles/device";
 import { SearchBar } from "../SearchBar/SearchBar";
 import { useAlertMsg } from "../Alert/AlertContext";
+import { Col, Row, Container } from "react-bootstrap";
 
 export default function QuotesPage() {
   const useAlert = useAlertMsg()
@@ -80,8 +81,12 @@ export default function QuotesPage() {
     <>
       <SearchBar searchFunction={fetchQuotesBySearch} urlQuery={urlQuery} />
 
+      <Row className="justify-content-center">
+        <Col md={7} lg={6} xl={5} >
       <SingleQuote singleQuotes={singleQuotesArray} />
       <MultipleQuote multipleQuotes={multipleQuotesArray} />
+      </Col>
+      </Row>
     </>
   )
 }

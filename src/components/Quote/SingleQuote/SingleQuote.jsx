@@ -42,7 +42,6 @@ export default function SingleQuotes({ singleQuotes }) {
                                     ) : (<></>)
                                 }
                                 <InfoIcon onClick={() => handleQuoteInfoClick(data)} />
-
                             </QuoteHeader>
                             <>
                                 <Paragraph>
