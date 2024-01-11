@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Form, Button, DropdownButton } from "react-bootstrap";
+import { Form, Button, DropdownButton, Row, Col, Container } from "react-bootstrap";
 import { InputGroup } from "./SearchBarStyles";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import { MDBIcon } from "mdb-react-ui-kit";
@@ -79,7 +79,9 @@ export function SearchBar(props) {
 
     return (
         <>
-            <InputGroup ref={SearchBarRef}>
+        <Row className="justify-content-center">
+            <Col md={8} lg={5}>
+            <InputGroup ref={SearchBarRef} >
                 <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
 
                     {SearchTypes.map((item, index) => (
@@ -97,6 +99,8 @@ export function SearchBar(props) {
                     <MDBIcon icon="search" />
                 </Button>
             </InputGroup>
+            </Col>
+            </Row>
         </>
     )
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Form, Row, Col } from "react-bootstrap";
+import { Form, Row, Col, Container } from "react-bootstrap";
 import { ButtonsFormGroup, FloatingLabel, FormGroup } from "../../../CommonStyles/CommonStyles";
 import { useAlertMsg } from "../../Alert/AlertContext";
 import loginAndRegisterServices from "../../../services/loginAndRegisterServices"
@@ -48,8 +48,10 @@ export default function LoginForm() {
     return (
         <>
             <Form onSubmit={handleSubmitLogin}>
-                
-                <Form.Group className="mb-2">
+
+                <Container className="mb-4">
+                    <Row className="justify-content-center">
+                    <Col xs={8} md={6} lg={3}>
                     <FloatingLabel label="E-mail">
                         <Form.Control
                             name="email"
@@ -68,7 +70,10 @@ export default function LoginForm() {
                             onChange={handleLoginChange}>
                         </Form.Control>
                     </FloatingLabel>
-                </Form.Group>
+                    </Col>
+                    </Row>
+                </Container>
+
 
                 <Row>
                     <Col className="mb-2">
