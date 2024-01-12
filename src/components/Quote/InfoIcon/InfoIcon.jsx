@@ -1,7 +1,7 @@
 import { InfoIconStyles } from "../../../CommonStyles/CommonStyles"
 import { useState } from "react"
 
-export default function InfoIcon() {
+export default function InfoIcon({handleQuoteInfoClick, data}) {
     const [hovered, setHovered] = useState(false)
 
     const handleMouseEnter = () => {
@@ -13,15 +13,16 @@ export default function InfoIcon() {
         console.log(hovered)
     }
     const InfoIconStyle = {
-        opacity: hovered ? 0.7 : 1,
+        opacity: hovered ? 1 : 0.2,
         transition: 'opacity 0.3s ease-in-out'
     }
     return (
         <>
-            <InfoIcon
+            <InfoIconStyles
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                style={InfoIconStyle} />
+                style={InfoIconStyle}
+                onClick={() => handleQuoteInfoClick(data)} />
         </>
     )
 }
