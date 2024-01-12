@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import quoteEditingServices from "../../../services/quoteServices";
 import { NormalDate } from "../../../Formatting/DateFormatting";
 import { sourceLogoSelector } from "../SourceCommonFunctions";
-import { QuoteHeader, SourceLogo, InfoIcon } from "../../../CommonStyles/CommonStyles";
+import { QuoteHeader, SourceLogo } from "../../../CommonStyles/CommonStyles";
 import { QuoteContainer, Ballon, Paragraph, ParagraphAutor } from "./MultipleQuoteStyles";
 const quoteService = new quoteEditingServices();
 import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
+import InfoIcon from "../InfoIcon/InfoIcon";
 
 export default function MultipleQuotes({ multipleQuotes }) {
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)

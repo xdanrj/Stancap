@@ -61,7 +61,7 @@ export const SourceLogo = styled.img.attrs(() => ({
   width: 5.5vh;
 `;
 
-export const InfoIcon = styled.i.attrs(() => ({
+export const InfoIconStyles = styled.i.attrs(() => ({
   className: "bi bi-info-square-fill position-absolute top-0 start-100 translate-middle"
 }))`
   margin-top: -1vh;
