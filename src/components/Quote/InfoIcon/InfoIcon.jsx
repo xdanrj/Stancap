@@ -1,8 +1,9 @@
 import { InfoIconStyles } from "../../../CommonStyles/CommonStyles"
 import { useState } from "react"
 
-export default function InfoIcon({handleQuoteInfoClick, data}) {
+export default function InfoIcon({ handleQuoteInfoClick, data }) {
     const [hovered, setHovered] = useState(false)
+    const [opacityValue, setOpacityValue] = useState(0.075)
 
     const handleMouseEnter = () => {
         setHovered(true)
@@ -13,8 +14,28 @@ export default function InfoIcon({handleQuoteInfoClick, data}) {
         console.log(hovered)
     }
     const InfoIconStyle = {
-        opacity: hovered ? 1 : 0.2,
+        opacity: hovered ? 1 : opacityValue,
         transition: 'opacity 0.3s ease-in-out'
+    }
+
+    const handleQuotesPageFirstVisit = () => {
+        const isFirstVisit = localStorage.getItem("quotesPageFirstVisit")
+        if (isFirstVisit) {
+            const intervalId = setInterval(() => {
+                setOpacityValue(1)
+
+                setTimeout(() => {
+                    setOpacityValue(0.075)
+                }, 300)
+            }, 600)
+
+            setTimeout(() => {
+                clearInterval(intervalId)
+                localStorage.setItem
+            }, 2400)
+        }
+
+
     }
     return (
         <>
@@ -26,4 +47,3 @@ export default function InfoIcon({handleQuoteInfoClick, data}) {
         </>
     )
 }
-
