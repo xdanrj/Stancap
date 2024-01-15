@@ -31,7 +31,7 @@ export default function InfoIcon({ handleQuoteInfoClick, data }) {
 
             setTimeout(() => {
                 clearInterval(intervalId)
-                localStorage.setItem
+                localStorage.setItem("quotesPageFirstVisit", JSON.stringify(false))
             }, 2400)
         }
 
@@ -44,6 +44,6 @@ export default function InfoIcon({ handleQuoteInfoClick, data }) {
                 onMouseLeave={handleMouseLeave}
                 style={InfoIconStyle}
                 onClick={() => handleQuoteInfoClick(data)} />
-        </>
+        </> 
     )
 }
