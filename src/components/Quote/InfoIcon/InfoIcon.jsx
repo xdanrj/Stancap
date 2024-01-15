@@ -19,8 +19,9 @@ export default function InfoIcon({ handleQuoteInfoClick, data }) {
     }
 
     const handleQuotesPageFirstVisit = () => {
-        const isFirstVisit = localStorage.getItem("quotesPageFirstVisit")
-        if (isFirstVisit) {
+        let isFirstVisit = true
+        //const isFirstVisit = localStorage.getItem("quotesPageFirstVisit")
+        if(isFirstVisit === true){
             const intervalId = setInterval(() => {
                 setOpacityValue(1)
 
@@ -31,12 +32,12 @@ export default function InfoIcon({ handleQuoteInfoClick, data }) {
 
             setTimeout(() => {
                 clearInterval(intervalId)
-                localStorage.setItem("quotesPageFirstVisit", JSON.stringify(false))
+                isFirstVisit = false
+                //localStorage.setItem("quotesPageFirstVisit", JSON.stringify(false))
             }, 2400)
-        }
-
-
+        }         
     }
+    handleQuotesPageFirstVisit()
     return (
         <>
             <InfoIconStyles
