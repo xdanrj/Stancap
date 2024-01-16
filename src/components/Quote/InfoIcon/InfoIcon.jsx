@@ -27,14 +27,16 @@ export default function InfoIcon({ handleQuoteInfoClick, data }) {
 
                 setTimeout(() => {
                     setOpacityValue(0.075)
+                    console.log("iiiii")
                 }, 300)
             }, 600)
 
             setTimeout(() => {
                 clearInterval(intervalId)
                 isFirstVisit = false
+                console.log(isFirstVisit)
                 //localStorage.setItem("quotesPageFirstVisit", JSON.stringify(false))
-            }, 2400)
+            }, 1200)
         }         
     }
     handleQuotesPageFirstVisit()
