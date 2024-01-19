@@ -18,7 +18,7 @@ export default function InfoIcon({ handleQuoteInfoClick, data }) {
         transition: 'opacity 0.3s ease-in-out'
     }
 
-    const handleQuotesPageFirstVisit = () => {
+    /*const handleQuotesPageFirstVisit = () => {
         let isFirstVisit = true
         //const isFirstVisit = localStorage.getItem("quotesPageFirstVisit")
         if(isFirstVisit === true){
@@ -39,7 +39,7 @@ export default function InfoIcon({ handleQuoteInfoClick, data }) {
             }, 1200)
         }         
     }
-    handleQuotesPageFirstVisit()
+    handleQuotesPageFirstVisit()*/
     return (
         <>
             <InfoIconStyles

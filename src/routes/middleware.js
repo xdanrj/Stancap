@@ -4,8 +4,15 @@ dotenv.config()
 const secretKey = process.env.SECRET_KEY
 
 const requireToken = (req, res, next) => {
-    const rawUserToken = req.headers['authorization']
-    const userToken = rawUserToken.replace('Bearer ', '').trim()
+    console.log(req.headers)
+    if(req.headers['authorization']){
+        const rawUserToken = req.headers['authorization']
+        const userToken = rawUserToken.replace('Bearer ', '').trim()
+    }
+    else{
+        alert("sem headers['authorization']")
+    }
+    
     console.log("header Authorization aqui: ", userToken)
 
     if(!userToken) {
