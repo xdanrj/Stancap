@@ -4,13 +4,14 @@ dotenv.config()
 const secretKey = process.env.SECRET_KEY
 
 const requireToken = (req, res, next) => {
+    let userToken
     console.log(req.headers)
     if(req.headers['authorization']){
         const rawUserToken = req.headers['authorization']
-        const userToken = rawUserToken.replace('Bearer ', '').trim()
+        userToken = rawUserToken.replace('Bearer ', '').trim()
     }
     else{
-        alert("sem headers['authorization']")
+        res.send({message: "Sem header de token de autorização."})
     }
     
     console.log("header Authorization aqui: ", userToken)
@@ -31,8 +32,10 @@ const requireToken = (req, res, next) => {
         }
     } catch (error) {
         console.log("caiu no catcherror")
-        if (error instanceof jwt.TokenExpiredError) {
-            return res.status(498).json({ message: "Token de usuário expirado. Faça login novamente." });
+        if (error instanceof jwt.TokenExpiredError) {            
+            res.redirect('/login')
+            return res.status(498).json({ message: "Token de usuário expirado. Faça login novamente." })
+            
         }
     }
 }

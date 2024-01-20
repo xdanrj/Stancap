@@ -1,5 +1,6 @@
 const apiUrl = process.env.API_URL
 
+
 export default class userServices {
   
     authenticatedUser() {
@@ -10,5 +11,6 @@ export default class userServices {
         localStorage.removeItem("email")
         localStorage.removeItem("username")
         localStorage.removeItem("token")
+        
     }
 }
