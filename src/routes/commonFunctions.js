@@ -13,7 +13,12 @@ export async function selectUser(body) {
 
   const foundUser = await User.find(query)
   if (foundUser) {
-    delete foundUser[0].password
+    console.log(foundUser)
+    for (const userObj of foundUser) {
+      console.log("dentro do for")
+      delete userObj["password"]
+    }
+    console.log("pos for")
     console.log(foundUser)
     return foundUser
   } else {
