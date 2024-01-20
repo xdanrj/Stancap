@@ -55,7 +55,9 @@ export const userRoutes = (app) => {
     try {
       const foundUser = await selectUser(req.body)
       res.status(200).json(foundUser)
-    } catch (error) { res.status(400).json({ message: error }) }
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({ message: error }) }
   })
 
   app.patch("/edit_user", requireToken, async (req, res) => {

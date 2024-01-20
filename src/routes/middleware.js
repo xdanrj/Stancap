@@ -27,7 +27,6 @@ const requireToken = (req, res, next) => {
     } catch (error) {
         console.log("caiu no catcherror")
         if (error instanceof jwt.TokenExpiredError) {            
-            res.redirect('/login')
             return res.status(498).json({ message: "Token de usuário expirado. Faça login novamente." })
             
         }

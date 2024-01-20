@@ -1,5 +1,6 @@
 import { User } from "../models/User.js"
 import { Quotes } from "../models/Quotes.js"
+import mongoose from "mongoose"
 
 // Função que seleciona o usuário através de qualquer propriedade. Usa sempre o primeiro objeto da requisição ( {propriedade: valorDaPropriedade} ). Serve para selecionar o usuário caso a rota não explicite a propriedade selecionada.
 export async function selectUser(body) {
@@ -11,16 +12,12 @@ export async function selectUser(body) {
     return false
   }
 
-  const foundUser = await User.find(query)
+  let foundUser = await User.find(query)
   if (foundUser) {
-    console.log(foundUser)
-    for (const userObj of foundUser) {
-      console.log("dentro do for")
-      delete userObj["password"]
-    }
-    console.log("pos for")
-    console.log(foundUser)
-    return foundUser
+    let finalFoundUser = foundUser.toJSON()
+    console.log(finalFoundUser)
+
+    return finalFoundUser
   } else {
     return false
   }
