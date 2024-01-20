@@ -7,8 +7,14 @@ export async function selectUser(body) {
   let target = body[property]
   let query = { [property]: target }
 
+  if (property == "password") {
+    return false
+  }
+
   const foundUser = await User.find(query)
   if (foundUser) {
+    delete foundUser[0].password
+    console.log(foundUser)
     return foundUser
   } else {
     return false

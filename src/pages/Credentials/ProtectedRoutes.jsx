@@ -13,8 +13,6 @@ const ProtectedRoutes = ({ children }) => {
             navigate('/login')
         }
     }, [isAuthenticated])
-
-    console.log("ta autenticado? ", isAuthenticated)
     return isAuthenticated ? children : null
 }
 

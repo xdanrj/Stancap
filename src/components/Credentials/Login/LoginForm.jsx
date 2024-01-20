@@ -30,19 +30,15 @@ export default function LoginForm() {
                 alert('Logado com sucesso')
                 navigate('/quotes')
             }
-            else {
-                console.log("Caiu no else")
-                console.log(response)
+            else {                
                 useAlert(response)
             }
         } catch (error) {
-            console.log("entrou no catch")
             useAlert(error)
         }
     }
     const handleLoginChange = (e) => {
         setLoginData({ ...loginData, [e.target.name]: e.target.value })
-        console.log(loginData)
     }
 
     return (

@@ -56,7 +56,6 @@ export default function NewPasswordForm() {
         try {
             if (newPassword.password == newPassword.confirmPassword) {
                 const response = await loginAndRegisterService.newPassword({ ...email, password: newPassword.password })
-                console.log("response: ", response)
                 if (response === true) {
                     alert('Senha alterada com sucesso')
                     navigate('/quotes')

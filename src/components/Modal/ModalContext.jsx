@@ -11,7 +11,6 @@ export function ModalProvider({ children }) {
 
     const handleClose = () => {
         setShow(false)
-        console.log("feito: handleClose!")
     }
     const modalBox = (data) => {
         setModalData((prevData) => ({

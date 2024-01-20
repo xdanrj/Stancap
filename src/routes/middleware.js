@@ -5,7 +5,6 @@ const secretKey = process.env.SECRET_KEY
 
 const requireToken = (req, res, next) => {
     let userToken
-    console.log(req.headers)
     if(req.headers['authorization']){
         const rawUserToken = req.headers['authorization']
         userToken = rawUserToken.replace('Bearer ', '').trim()
@@ -13,18 +12,13 @@ const requireToken = (req, res, next) => {
     else{
         res.send({message: "Sem header de token de autorização."})
     }
-    
-    console.log("header Authorization aqui: ", userToken)
 
     if(!userToken) {
         return res.status(401).json({message: "Token de usuário não fornecido. Faça login."})
     }
 
     try {
-        console.log("secretKey aquii: ", secretKey)
-        console.log("userToken: ", userToken)
         const legitToken = jwt.verify(userToken, secretKey)
-        console.log("legitToken foi? ", legitToken)
         if(legitToken) {
             next()
         } else {

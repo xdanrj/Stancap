@@ -27,7 +27,6 @@ export default function InfoIcon({ handleQuoteInfoClick, data }) {
 
                 setTimeout(() => {
                     setOpacityValue(0.075)
-                    console.log("iiiii")
                 }, 300)
             }, 600)
 

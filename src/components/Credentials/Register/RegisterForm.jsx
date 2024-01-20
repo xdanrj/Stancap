@@ -25,16 +25,13 @@ function RegisterForm() {
     const handleSubmitSendCode = async (e) => {
         e.preventDefault()
         try {
-            console.log(email)
             const response = await loginAndRegisterService.sendCode(email)
             if (response === true) {
                 alert('Código enviado com sucesso')
                 setSendCodeForm(false)
                 setCheckCodeForm(true)
             }
-            else {
-                console.log(response)
-                
+            else {                
                 useAlert(response)
             }
         } catch (error) { alert(error.response.data.error) }
