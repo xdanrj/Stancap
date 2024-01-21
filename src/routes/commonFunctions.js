@@ -12,12 +12,15 @@ export async function selectUser(body) {
     return false
   }
 
-  let foundUser = await User.find(query)
+  let foundUser = await User.find(query).lean()
   if (foundUser) {
-    let finalFoundUser = foundUser.toJSON()
-    console.log(finalFoundUser)
+    for(let i = 0; foundUser.length; i++){
+      delete foundUser[i].password
+    }
+    
+    console.log(foundUser)
 
-    return finalFoundUser
+    return foundUser
   } else {
     return false
   }
