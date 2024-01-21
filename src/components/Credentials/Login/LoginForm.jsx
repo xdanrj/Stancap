@@ -23,7 +23,7 @@ export default function LoginForm() {
     }, [location.search])
 
     const handleSubmitLogin = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         try {
             const response = await loginAndRegisterService.login(loginData)
             if (response === true) {

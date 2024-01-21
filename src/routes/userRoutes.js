@@ -44,12 +44,13 @@ export const userRoutes = (app) => {
     return query
   }
 
-  app.get("/all_users", requireToken, async (req, res) => {
+  // essa rota é realmente necessária?
+  /*app.get("/all_users", requireToken, async (req, res) => {
     try {
       const response = await User.find()
       res.status(200).send(response)
     } catch (error) { res.status(400).json({ message: error }) }
-  })
+  })*/
 
   app.get("/search_user", requireToken, async (req, res) => {
     try {
