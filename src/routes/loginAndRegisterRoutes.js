@@ -23,7 +23,7 @@ export const loginAndRegisterRoutes = (app) => {
                 secretKey: secretKey,
                 apiUrl: apiUrl
             })
-        } catch (error) { res.status(400).json({message: error}) }
+        } catch (error) { res.status(400).json({ message: error }) }
     })
 
     app.post("/login", async (req, res) => {
@@ -31,16 +31,21 @@ export const loginAndRegisterRoutes = (app) => {
             const email = req.body.email
             const password = req.body.password
             const user = await userExists({ email: email })
-            const correctCredentials = await bcrypt.compare(password, user.password)
-            if (correctCredentials) {
-                const token = createToken(user._id)
-                res.status(200).json({ email: email, username: user.username, token: token })
-            } else if (!correctCredentials) {
+            if (user) {
+                const userId = user._id
+                const correctCredentials = bcrypt.compare(password, user.password)
+                if (correctCredentials) {
+                    const token = createToken(user._id)
+                    res.status(200).json({ token: token, userId: userId })
+                }
+            }
+            else if (!correctCredentials) {
                 res.status(401).json({ message: "Login/Senha incorreto(s)" })
             }
         } catch (error) {
             console.log(error)
-             res.status(400).json({message: error}) }
+            res.status(400).json({ message: error })
+        }
 
     })
     app.post("/send_code", async (req, res) => {
@@ -71,7 +76,8 @@ export const loginAndRegisterRoutes = (app) => {
             }
         } catch (error) {
             console.log(error)
-            res.status(400).json({message: error}) }
+            res.status(400).json({ message: error })
+        }
     })
 
     app.post("/check_code", async (req, res) => {
@@ -97,7 +103,7 @@ export const loginAndRegisterRoutes = (app) => {
                     })
                 }
             }
-        } catch (error) { res.status(400).json({message: error}) }
+        } catch (error) { res.status(400).json({ message: error }) }
     })
 
     app.post("/register", async (req, res) => {
@@ -111,7 +117,7 @@ export const loginAndRegisterRoutes = (app) => {
                 password = await bcrypt.hash(req.body.password, 10)
                 console.log("hash de senha gerado: ", password)
             } catch (error) {
-                res.status(400).json({message: error})
+                res.status(400).json({ message: error })
             }
             // caso o email seja novo (condição redundante (segurança extra) pois a rota "/register" só será acessada caso a verificação por código (rota anterior) seja bem sucedida)
             if (!selectedUser) {
@@ -130,7 +136,7 @@ export const loginAndRegisterRoutes = (app) => {
             } else if (selectedUser) {
                 res.status(409).json({ message: "E-mail já cadastrado" });
             }
-        } catch (error) { res.status(400).json({message: error}) }
+        } catch (error) { res.status(400).json({ message: error }) }
     })
 
     function createToken(userId) {

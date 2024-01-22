@@ -17,15 +17,14 @@ export default function SummaryQuote() {
 
     useEffect(() => {
         async function fetchQuotes() {
-            const username = localStorage.getItem("username")
-            let query = { "uploadByUser": localStorage.getItem("username") }
+            let query = { "uploadByUser": localStorage.getItem("userId") }
 
             const response = await quoteService.getQuote(query)
             setQuotesResponse(response)
             setQuotesResponseArray(response)
         }
         fetchQuotes()
-    }, []);
+    }, [])
 
     const handleEditQuote = async (quoteId, quoteType) => {
         try {

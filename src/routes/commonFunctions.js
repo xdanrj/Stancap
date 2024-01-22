@@ -9,13 +9,13 @@ export async function selectUser(body) {
   let target = body[property]
   let query = { [property]: target }
 
-  if (property == "password") {
+  if (property !== "_id") {
     return false
   }
 
   let foundUser = await User.find(query).lean()
   if (foundUser) {
-    return _.pick(foundUser[0], "_id")
+    return _.pick(foundUser[0], "username")
   } else {
     return false
   }

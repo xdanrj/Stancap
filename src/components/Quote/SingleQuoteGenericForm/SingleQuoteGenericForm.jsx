@@ -67,7 +67,7 @@ export default function SingleQuoteGenericForm(props) {
                     quotes: quotes,
                     tags: tags,
                     uploadDate: dayjs().format(),
-                    uploadByUser: localStorage.getItem("username"),
+                    uploadByUser: localStorage.getItem("userId"),
                     quoteType: "single"
                 }
                 response = await quoteEditingService.addQuote(updatedQuoteData)

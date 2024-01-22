@@ -8,8 +8,7 @@ export default class userServices {
     }
 
     async logout() {
-        localStorage.removeItem("email")
-        localStorage.removeItem("username")
-        localStorage.removeItem("token")        
+        localStorage.removeItem("token")  
+        localStorage.removeItem("userId")      
     }
 }

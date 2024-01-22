@@ -9,6 +9,7 @@ export default function NavbarComponent() {
   const navigate = useNavigate()
   const useModal = useModalBox()
   const [showNavNoTogglerSecond, setShowNavNoTogglerSecond] = useState(false);
+  // username vai ser: pegar o username usando o userId como busca
   const username = localStorage.getItem("username")
   const userService = new userServices()
 

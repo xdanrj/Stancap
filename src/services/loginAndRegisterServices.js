@@ -49,9 +49,8 @@ export default class loginAndRegisterServices {
         console.log("response do login abaixo:")
         console.log(response)
         if (response.status === 200) {
-            localStorage.setItem("email", response.data.email)
-            localStorage.setItem("username", response.data.username)
             localStorage.setItem("token", response.data.token)
+            localStorage.setItem("userId", response.data.userId)
             return true
             // se não: já retorna a "{message}" da API
         } else if (response.status === 401){
