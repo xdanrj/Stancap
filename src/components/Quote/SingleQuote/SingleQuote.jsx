@@ -13,8 +13,6 @@ export default function SingleQuotes({ singleQuotes }) {
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
     const [quoteInfoData, setQuoteInfoData] = useState("")
     const [imagePaths, setImagePaths] = useState([])
-    
-
     const navigate = useNavigate()
 
     useEffect(() => {

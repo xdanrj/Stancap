@@ -3,10 +3,12 @@ import { NormalDate, NormalDateAndHour } from "../../../../Formatting/DateFormat
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph } from "./QuoteInfoStyles";
-
+import quoteEditingServices from "../../../../services/quoteServices";
 
 export default function QuoteInfo(props) {
     const handleClose = () => props.setShow(false)
+
+    const quoteService = new quoteEditingServices()
 
     return (
         <>
@@ -31,7 +33,7 @@ export default function QuoteInfo(props) {
 
                     <TextTitle>Upload por</TextTitle>
                     <TextParagraph>{props.quoteData.uploadByUser ?
-                        props.quoteData.uploadByUser :
+                        //quoteService.getUploaderUsername(props.quoteData.uploadByUser) :
                         "Usuário não especificado (isso não deveria acontecer, contate o dev)"}
                     </TextParagraph>
 

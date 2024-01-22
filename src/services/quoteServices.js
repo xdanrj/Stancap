@@ -52,4 +52,13 @@ export default class quoteEditingServices {
             return false
         }
     }
+
+    async getUploaderUsername(userId) {
+        const response = await this.axios.get('/search_user', userId)
+        if (response) {
+            return response
+        } else {
+            return false
+        }
+    }
 }
