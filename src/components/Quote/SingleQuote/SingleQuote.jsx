@@ -4,7 +4,7 @@ import { NormalDate } from "../../../Formatting/DateFormatting";
 import { sourceLogoSelector } from "../SourceCommonFunctions";
 import { QuoteHeader, SourceLogo } from "../../../CommonStyles/CommonStyles";
 import { QuoteContainer, Paragraph, ParagraphAutor, ParagraphDate } from "./SingleQuoteStyles"
-const quoteService = new quoteEditingServices()
+
 import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
 import { useNavigate } from "react-router-dom";
 import InfoIcon from "../InfoIcon/InfoIcon";
@@ -14,6 +14,8 @@ export default function SingleQuotes({ singleQuotes }) {
     const [quoteInfoData, setQuoteInfoData] = useState("")
     const [imagePaths, setImagePaths] = useState([])
     const navigate = useNavigate()
+    const quoteService = new quoteEditingServices()
+
 
     useEffect(() => {
         const loadImagePaths = async () => {
@@ -23,7 +25,16 @@ export default function SingleQuotes({ singleQuotes }) {
             const paths = await Promise.all(promisses)
             setImagePaths(paths)
         }
+
+        const setUploadersNames = async () => {
+            singleQuotes.map(async (data) => {
+                console.log(data.uploadByUser)
+                console.log(await quoteService.getUploaderUsername(data.uploadByUser))
+                data.uploadByUser = await quoteService.getUploaderUsername(data.uploadByUser)
+            })
+        }
         loadImagePaths()
+        setUploadersNames()
     }, [singleQuotes])
 
     const handleQuoteInfoClick = (data) => {
@@ -42,7 +53,7 @@ export default function SingleQuotes({ singleQuotes }) {
                                         <SourceLogo src={imagePaths[index].path} onClick={() => navigate(`/quotes/source/${imagePaths[index].source}`)} />
                                     ) : (<></>)
                                 }
-                                <InfoIcon handleQuoteInfoClick={handleQuoteInfoClick} data={data}/>
+                                <InfoIcon handleQuoteInfoClick={handleQuoteInfoClick} data={data} />
                             </QuoteHeader>
                             <>
                                 <Paragraph>

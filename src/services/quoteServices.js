@@ -54,9 +54,10 @@ export default class quoteEditingServices {
     }
 
     async getUploaderUsername(userId) {
-        const response = await this.axios.get('/search_user', userId)
-        if (response) {
-            return response
+        console.log(userId)
+        const response = await this.axios.get('/search_user', {"_id": userId})
+        if (response.data) {
+            return response.data
         } else {
             return false
         }

@@ -52,8 +52,9 @@ export const userRoutes = (app) => {
     } catch (error) { res.status(400).json({ message: error }) }
   })*/
 
-  app.get("/search_user", requireToken, async (req, res) => {
+  app.get("/search_user", async (req, res) => {
     try {
+      console.log(req.body)
       const foundUser = await selectUser(req.body)
       res.status(200).json(foundUser)
     } catch (error) {
