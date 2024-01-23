@@ -29,6 +29,7 @@ export default function SingleQuotes({ singleQuotes }) {
         const setUploadersNames = async () => {
             singleQuotes.map(async (data) => {
                 console.log(data.uploadByUser)
+                console.log(typeof(data.uploadByUser))
                 console.log(await quoteService.getUploaderUsername(data.uploadByUser))
                 data.uploadByUser = await quoteService.getUploaderUsername(data.uploadByUser)
             })

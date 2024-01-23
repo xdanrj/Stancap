@@ -9,14 +9,17 @@ export async function selectUser(body) {
   let target = body[property]
   let query = { [property]: target }
 
+  console.log("ucaucau: ", property !== "_id")
   if (property !== "_id") {
     return false
   }
 
   let foundUser = await User.find(query).lean()
   if (foundUser) {
+    console.log("good ending")
     return _.pick(foundUser[0], "username")
   } else {
+    console.log("entrou else gloria")
     return false
   }
 }

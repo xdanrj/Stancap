@@ -70,14 +70,6 @@ export const userRoutes = (app) => {
     } catch (error) { res.status(400).json({ message: error }) }
   })
 
-  app.delete("/delete_user", requireToken, async (req, res) => {
-    try {
-      const selectedUser = await selectUser(req.body)
-      const response = await functionDeleteUser(selectedUser)
-      res.status(200).json(response)
-    } catch (error) { res.status(400).json({ message: error }) }
-  })
-
   app.post("/change_password_send", async (req, res) => {
     try {
       const email = req.body.email
