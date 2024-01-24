@@ -9,7 +9,11 @@ import { isValidDate } from "../../../Formatting/DateFormatting";
 import { SourceNames } from "../SourceCommonFunctions";
 import { useModalBox } from "../../Modal/ModalContext";
 import { useAlertMsg } from "../../Alert/AlertContext";
-import dayjs from "dayjs";
+import dayjs from "dayjs"
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 import quoteEditingServices from "../../../services/quoteServices"
 const quoteEditingService = new quoteEditingServices()
@@ -27,7 +31,7 @@ export default function SingleQuoteGenericForm(props) {
         context: '',
         tags: [],
     })
-
+    console.log(dayjs.tz.guess())
     console.log(quoteData)
     useEffect(() => {
         async function getQuoteToEdit() {

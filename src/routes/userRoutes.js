@@ -30,20 +30,6 @@ export const userRoutes = (app) => {
     return query
   }
 
-  async function functionDeleteUser(query) {
-    if (query.quantity > 1) {
-      await User.deleteMany(
-        query.query
-      )
-    }
-    else if (query.quantity == 1) {
-      await User.deleteOne(
-        query.query
-      )
-    }
-    return query
-  }
-
   // essa rota é realmente necessária?
   /*app.get("/all_users", requireToken, async (req, res) => {
     try {
@@ -52,13 +38,11 @@ export const userRoutes = (app) => {
     } catch (error) { res.status(400).json({ message: error }) }
   })*/
 
-  app.get("/search_user", async (req, res) => {
+  app.post("/search_user", async (req, res) => {
     try {
-      console.log(req.body)
       const foundUser = await selectUser(req.body)
-      res.status(200).json(foundUser)
+      res.status(200).json(foundUser.username)
     } catch (error) {
-      console.log(error)
       res.status(400).json({ message: error }) }
   })
 
