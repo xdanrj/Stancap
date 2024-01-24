@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react"
 import quoteEditingServices from "../../../services/quoteServices";
 import { NormalDate } from "../../../Formatting/DateFormatting";
 import { sourceLogoSelector } from "../SourceCommonFunctions";
-import { QuoteHeader, SourceLogo } from "../../../CommonStyles/CommonStyles";
-import { QuoteContainer, Paragraph, ParagraphAutor, ParagraphDate } from "./SingleQuoteStyles"
+import { QuoteHeader, SourceLogo, QuoteContainer } from "../../../CommonStyles/CommonStyles";
+import { Paragraph, ParagraphAutor, ParagraphDate } from "./SingleQuoteStyles"
 
 import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
 import { useNavigate } from "react-router-dom";
@@ -25,14 +25,7 @@ export default function SingleQuotes({ singleQuotes }) {
             const paths = await Promise.all(promisses)
             setImagePaths(paths)
         }
-
-        const setUploadersNames = async () => {
-            singleQuotes.map(async (data) => {
-                data.uploadByUser = await quoteService.getUploaderUsername(data.uploadByUser)
-            })
-        }
         loadImagePaths()
-        setUploadersNames()
     }, [singleQuotes])
 
     const handleQuoteInfoClick = (data) => {

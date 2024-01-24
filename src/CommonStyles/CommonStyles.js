@@ -49,6 +49,14 @@ export const ButtonGroup = styled(originalButtonGroup).attrs(() => ({
 }))`
 `;
 
+export const QuoteContainer = styled.div.attrs(() => ({
+  className: "py-2 px-2 mb-5 mx-auto"
+}))`
+  width: 100%;
+  background-color: rgb(50, 50, 50);
+  border-radius: 20px;
+`;
+
 export const QuoteHeader = styled.div.attrs(() => ({
   className: "position-relative"
 }))`

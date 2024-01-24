@@ -2,13 +2,6 @@ import styled from 'styled-components'
 import { MDBIcon as originalMDBIcon } from 'mdb-react-ui-kit';
 import { device } from '../../../CommonStyles/device';
 
-export const QuoteContainer = styled.div.attrs(() => ({
-    className: "py-2 px-2 mb-5"
-}))`
-    width: 100%;
-    background-color: rgb(50, 50, 0);
-    border-radius: 20px;
-`;
 export const QuoteHeader = styled.div.attrs(() => ({
     className: "position-relative"
 }))`

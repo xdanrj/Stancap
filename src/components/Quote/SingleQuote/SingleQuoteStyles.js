@@ -1,18 +1,6 @@
 import styled from 'styled-components'
 import { device } from '../../../CommonStyles/device';
 
-export const QuoteContainer = styled.div.attrs(() => ({
-    className: "py-2 px-2 mb-5 mx-auto"
-}))`
-    width: 100%;
-    font-size: 1.1rem;
-    background-color: rgb(40, 40, 40);
-    border-radius: 20px;
-    @media ${device.laptopL} {
-        width: 75%;
-    }
-`
-
 export const Paragraph = styled.p.attrs(() => ({
     className: "mb-0 mt-2 font-italic"
 }))`

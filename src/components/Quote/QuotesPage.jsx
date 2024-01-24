@@ -41,6 +41,15 @@ export default function QuotesPage() {
     const currentSingleQuotesArray = []
     const currentMultipleQuotesArray = []
 
+    // TRATAMENTOS/ FORMATAÇÃO PRÉ DIVISÃO DE TIPOS DE QUOTE:
+
+  const setUploadersNames = async () => {
+    quotesResponse.map(async (data) => {
+      data.uploadByUser = await quoteService.getUploaderUsername(data.uploadByUser)
+    })
+  }
+  setUploadersNames()
+
     if (Array.isArray(quotesResponse)) {
       quotesResponse.forEach((data) => {
         if (data.quotes.length === 1) {
@@ -55,6 +64,7 @@ export default function QuotesPage() {
     }
 
   }, [quotesResponse])
+
   /*
     function getCurrentScreenSize() {
       const screenWidth = window.innerWidth;
@@ -83,9 +93,9 @@ export default function QuotesPage() {
 
       <Row className="justify-content-center">
         <Col md={7} lg={6} xl={5} >
-      <SingleQuote singleQuotes={singleQuotesArray} />
-      <MultipleQuote multipleQuotes={multipleQuotesArray} />
-      </Col>
+          <SingleQuote singleQuotes={singleQuotesArray} />
+          <MultipleQuote multipleQuotes={multipleQuotesArray} />
+        </Col>
       </Row>
     </>
   )

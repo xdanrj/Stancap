@@ -3,7 +3,7 @@ import { useState } from "react"
 
 export default function InfoIcon({ handleQuoteInfoClick, data }) {
     const [hovered, setHovered] = useState(false)
-    const [opacityValue, setOpacityValue] = useState(0.075)
+    const [opacityValue, setOpacityValue] = useState(0.2)
 
     const handleMouseEnter = () => {
         setHovered(true)

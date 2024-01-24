@@ -1,5 +1,10 @@
 import dayjs from "dayjs"
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('America/Sao_Paulo')
 
 dayjs.extend(customParseFormat)
 
@@ -9,10 +14,10 @@ export function NormalDate(rawDate) {
     return dayjs(rawDate).format("DD/MM/YYYY")
 }
 export function NormalDateAndHour(rawDate) {
-    return dayjs(rawDate).format("DD/MM/YYYY HH:MM")
+    return dayjs(rawDate).format("DD/MM/YYYY HH:mm")
 }
 export function NormalHour(rawDate) {
-    return dayjs(rawDate).format("HH:MM")
+    return dayjs(rawDate).format("HH:mm")
 }
 export function isValidDate(date) {
     for (const format of validFormats) {

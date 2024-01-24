@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import quoteEditingServices from "../../../services/quoteServices";
 import { NormalDate } from "../../../Formatting/DateFormatting";
 import { sourceLogoSelector } from "../SourceCommonFunctions";
-import { QuoteHeader, SourceLogo } from "../../../CommonStyles/CommonStyles";
-import { QuoteContainer, Ballon, Paragraph, ParagraphAutor } from "./MultipleQuoteStyles";
+import { QuoteHeader, QuoteContainer, SourceLogo } from "../../../CommonStyles/CommonStyles";
+import { Ballon, Paragraph, ParagraphAutor } from "./MultipleQuoteStyles";
 const quoteService = new quoteEditingServices();
 import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
 import InfoIcon from "../InfoIcon/InfoIcon";
@@ -42,10 +42,10 @@ export default function MultipleQuotes({ multipleQuotes }) {
                             <QuoteHeader>
                                 {
                                     imagePaths[index] ? (
-                                        <SourceLogo src={imagePaths[index]} /*onClick={}*//>
+                                        <SourceLogo src={imagePaths[index]}/>
                                     ) : (<></>)
                                 }
-                                <InfoIcon onClick={() => handleQuoteInfoClick(data)} />
+                                <InfoIcon handleQuoteInfoClick={handleQuoteInfoClick} data={data} />
                             </QuoteHeader>
                             {data.quotes.map((quote, index) => (
                                 <Ballon key={index} ballonside={index % 2 === 0}>
