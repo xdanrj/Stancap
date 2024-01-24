@@ -9,6 +9,8 @@ export const SourceNames = [
   {"Stancap": "Stancap"},
   {"Stancap Nobreza": "StancapNobreza"}
 ]
+console.log(Object.keys(SourceNames[0]))
+console.log(SourceNames[0])
 export async function sourceLogoSelector(source) {
   if (SourceNames.includes(source)) {
     return { "path": `/images/${source}.png`, "source": source }
