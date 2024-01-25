@@ -20,10 +20,12 @@ export default function SingleQuotes({ singleQuotes }) {
     useEffect(() => {
         const loadImagePaths = async () => {
             const promisses = await singleQuotes.map(async (data) => {
-                return sourceLogoSelector(data.source)
+                let finalReturn = await sourceLogoSelector(data.source)
+                return finalReturn
             })
             const paths = await Promise.all(promisses)
             setImagePaths(paths)
+            console.log(imagePaths)
         }
         loadImagePaths()
     }, [singleQuotes])

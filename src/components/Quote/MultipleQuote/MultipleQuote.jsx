@@ -20,8 +20,6 @@ export default function MultipleQuotes({ multipleQuotes }) {
             })
             const paths = await Promise.all(promisses)
             
-            
-            
             setImagePaths(paths)
         }
         loadImagePaths()
