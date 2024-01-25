@@ -18,17 +18,17 @@ export default function SingleQuotes({ singleQuotes }) {
 
 
     useEffect(() => {
+        let paths = []
         const loadImagePaths = async () => {
-            const promisses = await singleQuotes.map(async (data) => {
-                let finalReturn = await sourceLogoSelector(data.source)
-                return finalReturn
+            singleQuotes.map((data) => {
+                paths.push( sourceLogoSelector(data.source))
             })
-            const paths = await Promise.all(promisses)
             setImagePaths(paths)
-            console.log(imagePaths)
         }
         loadImagePaths()
     }, [singleQuotes])
+
+    console.log(imagePaths)
 
     const handleQuoteInfoClick = (data) => {
         setQuoteInfoData(data)

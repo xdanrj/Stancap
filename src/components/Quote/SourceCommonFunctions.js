@@ -22,23 +22,15 @@ export const SourceNames = [
   "Stancap Nobreza",
 ];*/
 
-/*for (const [name, value] of Object.entries(SourceNames)) {
-  console.log(name, value)
-}*/
+export function sourceLogoSelector(source) {
+  const foundItem = SourceNames.find(item => item.value === source);
 
-export async function sourceLogoSelector(source) {
-  let finalReturn
-  /*if (SourceNames.includes(source)) {
-    let finalReturn = await { "path": `/images/${source}.png`, "source": source }
-*/
-  SourceNames.map((item) => {
-    console.log(item.value)
-    if (item.value == source) {
-      finalReturn = { "path": `/images/${source}.png`, "source": source }
-      return finalReturn
-    } else {
-      return false
-    }
-  })
+  if (foundItem) {
+    const finalReturn = { "path": `/images/${source}.png`, "source": source };
+    console.log(finalReturn);
+    return finalReturn;
+  } else {
+    console.log("Item não encontrado");
+    return null; // ou qualquer valor que indique que o item não foi encontrado
+  }
 }
-
