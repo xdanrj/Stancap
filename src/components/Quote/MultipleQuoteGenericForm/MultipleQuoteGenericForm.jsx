@@ -32,9 +32,9 @@ export default function MultipleQuoteGenericForm(props) {
     useEffect(() => {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
-                const apiResponse = await quoteEditingService.getQuote(props.quoteIdToEdit)
-                const response = await apiResponse.data.response.response[0]
-                setMultipleQuotes(response.quotes)
+                const response = await quoteEditingService.getQuote(props.quoteIdToEdit)
+                console.log(response[0].quotes)
+                setMultipleQuotes(response[0].quotes)
 
                 setQuoteData((prevData) => ({
                     ...prevData,

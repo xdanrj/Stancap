@@ -21,7 +21,6 @@ export default function QuotesPage() {
     urlQuery = { [queryprop]: queryvalue }
   }
 
-
   async function fetchAllQuotes() {
     const response = await quoteService.getAllQuotes()
     setQuotesResponse(response)
@@ -48,6 +47,7 @@ export default function QuotesPage() {
       data.uploadByUser = await quoteService.getUploaderUsername(data.uploadByUser)
     })
   }
+  
   setUploadersNames()
 
     if (Array.isArray(quotesResponse)) {

@@ -16,7 +16,6 @@ export default function SingleQuotes({ singleQuotes }) {
     const navigate = useNavigate()
     const quoteService = new quoteEditingServices()
 
-
     useEffect(() => {
         let paths = []
         const loadImagePaths = async () => {

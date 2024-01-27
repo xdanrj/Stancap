@@ -9,7 +9,6 @@ export default function MultipleQuoteInputs(props) {
     const useAlert = useAlertMsg()
     const [iconVisible, setIconVisible] = useState([true])
 
-    console.log(iconVisible)
     useEffect(() => {
         if (props.multipleQuotesValue.length === 0) {
             props.setMultipleQuotes([{ quote: "", author: "" }])
