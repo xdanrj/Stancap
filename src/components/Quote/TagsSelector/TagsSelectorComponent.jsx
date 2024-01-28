@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { TagsInput } from 'react-tag-input-component';
-
 import "./TagsSelectorComponent.css"
 
 export const TagSelectorComponent = ({tags, setTags}) => {

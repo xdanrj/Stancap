@@ -5,23 +5,14 @@ import { MdbIcon, FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyle
 import { useAlertMsg } from "../../Alert/AlertContext";
 
 export default function MultipleQuoteInputs(props) {
-
     const useAlert = useAlertMsg()
     const [iconVisible, setIconVisible] = useState([true])
-    const [multipleQuotes, setMultipleQuotes] = useState([
-        { quote: 'quote multipla', author: 'autor' },
-        { quote: 'quote multipla2', author: 'autor2' }
-      ])
 
     useEffect(() => {
-        /*if (props.multipleQuotes.length === 0) {
+        if (props.multipleQuotes.length === 0) {
             props.setMultipleQuotes([{ quote: "", author: "" }])
-        }*/
-
-        multipleQuotes.map((_, index) => {
-            console.log(multipleQuotes[index])
-        })
-
+        }
+        console.log(props.multipleQuotes[0])
     }, [])
 
     const addQuoteInput = (index) => {
@@ -51,7 +42,7 @@ export default function MultipleQuoteInputs(props) {
     }
     return (
         <>
-            {multipleQuotes && multipleQuotes.map((_, index) => (
+            {props.multipleQuotes[0] && props.multipleQuotes.map((_, index) => (
                 <div key={index}>
                     <Row>
                         <Col>
@@ -60,7 +51,7 @@ export default function MultipleQuoteInputs(props) {
                                     <Form.Control
                                         name="quote"
                                         placeholder="Quote"
-                                        value={multipleQuotes[index].quote}
+                                        value={props.multipleQuotes[index].quote}
                                         onChange={(e) => props.onChange(e, index)}
                                     />
                                 </FloatingLabel>
@@ -72,8 +63,8 @@ export default function MultipleQuoteInputs(props) {
                                     <Form.Control
                                         name="author"
                                         placeholder="Autor"
-                                        value={multipleQuotes[index].author}
-                                        onChange={(e) => onChange(e, index)}
+                                        value={props.multipleQuotes[index].author}
+                                        onChange={(e) => props.onChange(e, index)}
                                     />
                                 </FloatingLabel>
                             </FormGroup>
@@ -84,7 +75,7 @@ export default function MultipleQuoteInputs(props) {
                         <MdbIcon icon="plus-circle" onClick={() => addQuoteInput(index)} />
                     )}
 
-                    {!(multipleQuotes.length === 1) && (
+                    {!(props.multipleQuotes.length === 1) && (
                         <MdbIcon
                             icon="trash-alt"
                             onClick={() => removeQuoteInput(index)}

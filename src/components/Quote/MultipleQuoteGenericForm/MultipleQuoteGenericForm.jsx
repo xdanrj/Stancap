@@ -27,15 +27,15 @@ export default function MultipleQuoteGenericForm(props) {
         context: '',
         tags: [],
     })
-    console.log(multipleQuotes)
-    console.log(typeof (multipleQuotes))
+    
 
     useEffect(() => {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
                 const response = await quoteEditingService.getQuote(props.quoteIdToEdit)
-                console.log(response[0].quotes)
+                console.log(response[0].tags)
                 setMultipleQuotes(response[0].quotes)
+                setTags(response[0].tags)
 
                 setQuoteData((prevData) => ({
                     ...prevData,
@@ -203,7 +203,7 @@ export default function MultipleQuoteGenericForm(props) {
                         </DropdownButton>
                     </FormGroup>
                     <FormGroup>
-                        <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
+                        <TagSelectorComponent tags={tags} setTags={setTags} />
                     </FormGroup>
                 </Row>
                 <Button type="submit">{props.texts.submitButton}</Button>
