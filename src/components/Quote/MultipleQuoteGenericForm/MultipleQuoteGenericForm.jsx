@@ -10,7 +10,6 @@ import { SourceNames } from "../SourceCommonFunctions";
 import { useAlertMsg } from "../../Alert/AlertContext";
 import { useModalBox } from "../../Modal/ModalContext";
 import { isValidDate } from "../../../Formatting/DateFormatting";
-
 import quoteEditingServices from "../../../services/quoteServices"
 
 const quoteEditingService = new quoteEditingServices()
@@ -29,14 +28,14 @@ export default function MultipleQuoteGenericForm(props) {
         tags: [],
     })
     console.log(multipleQuotes)
-    console.log(typeof(multipleQuotes))
+    console.log(typeof (multipleQuotes))
 
     useEffect(() => {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
                 const response = await quoteEditingService.getQuote(props.quoteIdToEdit)
                 console.log(response[0].quotes)
-                setMultipleQuotes([response[0].quotes])
+                setMultipleQuotes(response[0].quotes)
 
                 setQuoteData((prevData) => ({
                     ...prevData,
@@ -165,10 +164,10 @@ export default function MultipleQuoteGenericForm(props) {
         <>
             <Form onSubmit={handleSubmitQuote}>
                 <MultipleQuoteInputs
-                 /*onChange={handleMultipleQuoteChange}
-                 setMultipleQuotes={setMultipleQuotes*/
+                    onChange={handleMultipleQuoteChange}
+                    setMultipleQuotes={setMultipleQuotes}
                     multipleQuotes={multipleQuotes}
-                     />
+                />
                 <Row>
                     <Col>
                         <FormGroup className="wd-50 mx-auto">

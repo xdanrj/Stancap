@@ -8,13 +8,19 @@ export default function MultipleQuoteInputs(props) {
 
     const useAlert = useAlertMsg()
     const [iconVisible, setIconVisible] = useState([true])
-    const [multipleQuotes, setMultipleQuotes] = useState([])
+    const [multipleQuotes, setMultipleQuotes] = useState([
+        { quote: 'quote multipla', author: 'autor' },
+        { quote: 'quote multipla2', author: 'autor2' }
+      ])
 
     useEffect(() => {
         /*if (props.multipleQuotes.length === 0) {
             props.setMultipleQuotes([{ quote: "", author: "" }])
         }*/
-        setMultipleQuotes(props.multipleQuotes)
+
+        multipleQuotes.map((_, index) => {
+            console.log(multipleQuotes[index])
+        })
 
     }, [])
 
@@ -43,11 +49,9 @@ export default function MultipleQuoteInputs(props) {
         updatedIconVisible.splice(index, 1)
         setIconVisible(updatedIconVisible)
     }
-    console.log(multipleQuotes)
-    console.log(typeof (multipleQuotes))
     return (
         <>
-            {multipleQuotes.map((_, index) => (
+            {multipleQuotes && multipleQuotes.map((_, index) => (
                 <div key={index}>
                     <Row>
                         <Col>
@@ -57,7 +61,7 @@ export default function MultipleQuoteInputs(props) {
                                         name="quote"
                                         placeholder="Quote"
                                         value={multipleQuotes[index].quote}
-                                        onChange={(e) => onChange(e, index)}
+                                        onChange={(e) => props.onChange(e, index)}
                                     />
                                 </FloatingLabel>
                             </FormGroup>
