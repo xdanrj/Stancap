@@ -28,13 +28,15 @@ export default function MultipleQuoteGenericForm(props) {
         context: '',
         tags: [],
     })
+    console.log(multipleQuotes)
+    console.log(typeof(multipleQuotes))
 
     useEffect(() => {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
                 const response = await quoteEditingService.getQuote(props.quoteIdToEdit)
                 console.log(response[0].quotes)
-                setMultipleQuotes(response[0].quotes)
+                setMultipleQuotes([response[0].quotes])
 
                 setQuoteData((prevData) => ({
                     ...prevData,
@@ -156,15 +158,17 @@ export default function MultipleQuoteGenericForm(props) {
             ...updatedMultipleQuotes[index],
             [name]: value
         }
-        setMultipleQuotes(updatedMultipleQuotes);
+        setMultipleQuotes(updatedMultipleQuotes)
     }
 
     return (
         <>
             <Form onSubmit={handleSubmitQuote}>
-                <MultipleQuoteInputs onChange={handleMultipleQuoteChange}
-                    multipleQuotesValue={multipleQuotes}
-                    setMultipleQuotes={setMultipleQuotes} />
+                <MultipleQuoteInputs
+                 /*onChange={handleMultipleQuoteChange}
+                 setMultipleQuotes={setMultipleQuotes*/
+                    multipleQuotes={multipleQuotes}
+                     />
                 <Row>
                     <Col>
                         <FormGroup className="wd-50 mx-auto">

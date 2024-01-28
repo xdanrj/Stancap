@@ -5,21 +5,24 @@ import { MdbIcon, FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyle
 import { useAlertMsg } from "../../Alert/AlertContext";
 
 export default function MultipleQuoteInputs(props) {
-    console.log(props.multipleQuotesValue)
+
     const useAlert = useAlertMsg()
     const [iconVisible, setIconVisible] = useState([true])
+    const [multipleQuotes, setMultipleQuotes] = useState([])
 
     useEffect(() => {
-        if (props.multipleQuotesValue.length === 0) {
+        /*if (props.multipleQuotes.length === 0) {
             props.setMultipleQuotes([{ quote: "", author: "" }])
-        }
+        }*/
+        setMultipleQuotes(props.multipleQuotes)
+
     }, [])
 
     const addQuoteInput = (index) => {
-        if (!(props.multipleQuotesValue[index].quote) || !(props.multipleQuotesValue[index].author)) {
+        if (!(multipleQuotes[index].quote) || !(multipleQuotes[index].author)) {
             useAlert("Um ou mais campos vazios!")
         } else {
-            props.setMultipleQuotes([...props.multipleQuotesValue, { quote: "", author: "" }])
+            setMultipleQuotes([...multipleQuotes, { quote: "", author: "" }])
 
             let updatedIconVisible = [...iconVisible]
 
@@ -30,9 +33,9 @@ export default function MultipleQuoteInputs(props) {
     }
     const removeQuoteInput = (index) => {
         //deleta valores da array
-        let updatedMultipleQuotesValue = [...props.multipleQuotesValue]
-        updatedMultipleQuotesValue.splice(index, 1)
-        props.setMultipleQuotes(updatedMultipleQuotesValue)
+        let updatedmultipleQuotes = [...multipleQuotes]
+        updatedmultipleQuotes.splice(index, 1)
+        setMultipleQuotes(updatedmultipleQuotes)
 
         // altera a visibilidade dos icones
         let updatedIconVisible = [...iconVisible]
@@ -40,10 +43,11 @@ export default function MultipleQuoteInputs(props) {
         updatedIconVisible.splice(index, 1)
         setIconVisible(updatedIconVisible)
     }
-
+    console.log(multipleQuotes)
+    console.log(typeof (multipleQuotes))
     return (
         <>
-            {props.multipleQuotesValue.map((_, index) => (
+            {multipleQuotes.map((_, index) => (
                 <div key={index}>
                     <Row>
                         <Col>
@@ -52,8 +56,8 @@ export default function MultipleQuoteInputs(props) {
                                     <Form.Control
                                         name="quote"
                                         placeholder="Quote"
-                                        value={props.multipleQuotesValue[index].quote}
-                                        onChange={(e) => props.onChange(e, index)}
+                                        value={multipleQuotes[index].quote}
+                                        onChange={(e) => onChange(e, index)}
                                     />
                                 </FloatingLabel>
                             </FormGroup>
@@ -64,8 +68,8 @@ export default function MultipleQuoteInputs(props) {
                                     <Form.Control
                                         name="author"
                                         placeholder="Autor"
-                                        value={props.multipleQuotesValue[index].author}
-                                        onChange={(e) => props.onChange(e, index)}
+                                        value={multipleQuotes[index].author}
+                                        onChange={(e) => onChange(e, index)}
                                     />
                                 </FloatingLabel>
                             </FormGroup>
@@ -76,7 +80,7 @@ export default function MultipleQuoteInputs(props) {
                         <MdbIcon icon="plus-circle" onClick={() => addQuoteInput(index)} />
                     )}
 
-                    {!(props.multipleQuotesValue.length === 1) && (
+                    {!(multipleQuotes.length === 1) && (
                         <MdbIcon
                             icon="trash-alt"
                             onClick={() => removeQuoteInput(index)}
