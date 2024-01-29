@@ -1,8 +1,4 @@
 import axios from "axios"
-import userServices
-
-const userService = new userServices()
-
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:3000",
@@ -16,7 +12,7 @@ axiosInstance.interceptors.response.use(
             console.log(error)
             if(error.response.status === 498) {
                 alert("Token de usuário expirado. Faça login novamente.")
-                userService.logout()
+                //userService.logout()
             }
             return Promise.resolve(error.response)
         }
