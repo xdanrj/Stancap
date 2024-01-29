@@ -2,6 +2,7 @@ import twilio from "twilio"
 import { User } from "../models/User.js"
 import { selectUser, userExists } from "./commonFunctions.js"
 import requireToken from "./middleware.js"
+import _ from "lodash"
 
 export const userRoutes = (app) => {
   //variaveis globais para funcionamento da API Twilio
@@ -30,20 +31,29 @@ export const userRoutes = (app) => {
     return query
   }
 
-  // essa rota é realmente necessária?
-  /*app.get("/all_users", requireToken, async (req, res) => {
+  // rota que retorna todos os usernames existentes
+  app.get("/all_users", requireToken, async (req, res) => {
     try {
-      const response = await User.find()
-      res.status(200).send(response)
-    } catch (error) { res.status(400).json({ message: error }) }
-  })*/
+      const response = await User.find().lean()
+      const removedKeys = response.map(userObj => (_.pick(userObj, "username"))).map(userName => Object.values(userName))
+      const finalResponse = _.flatten(removedKeys)
+      console.log(finalResponse)
+      res.status(200).send(finalResponse)
 
+    } catch (error) {
+      res.status(400).json({ message: error })
+      console.log(error)
+    }
+  })
+
+  //rota que retorna apenas o username usando _id como filtro
   app.post("/search_user", async (req, res) => {
     try {
       const foundUser = await selectUser(req.body)
       res.status(200).json(foundUser.username)
     } catch (error) {
-      res.status(400).json({ message: error }) }
+      res.status(400).json({ message: error })
+    }
   })
 
   app.patch("/edit_user", requireToken, async (req, res) => {

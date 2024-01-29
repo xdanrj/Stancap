@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { DisabledFormControl, FloatingLabel } from "../../../CommonStyles/CommonStyles";
-import { PasswordValidation } from "../../../Validations/RegisterValidations";
+import { passwordValidation, usernameValidation } from "../../../Validations/RegisterValidations";
 import loginAndRegisterServices from "../../../services/loginAndRegisterServices"
 import { useAlertMsg } from "../../Alert/AlertContext";
 const loginAndRegisterService = new loginAndRegisterServices()
@@ -55,7 +55,7 @@ function RegisterForm() {
     const handleSubmitRegister = async (e) => {
         e.preventDefault();
         try {
-            const dataValidation = RegisterValidation(registerData.password)
+            const dataValidation = passwordValidation(registerData.password) && usernameValidation
             if (dataValidation.response) {
                 const response = await loginAndRegisterService.register(registerData)
                 if (response === true) {

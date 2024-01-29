@@ -1,5 +1,5 @@
 import axios from "axios"
-import userServices from "./userServices"
+import userServices
 
 const userService = new userServices()
 

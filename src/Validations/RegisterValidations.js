@@ -1,4 +1,7 @@
-export function PasswordValidation(senha) {
+import quoteEditingServices from "../services/quoteServices"
+const quoteService = new quoteEditingServices()
+
+export function passwordValidation(senha) {
     if (/^.{1,4}$/.test(senha)) {
         return {
             response: false,
@@ -9,5 +12,8 @@ export function PasswordValidation(senha) {
     }
 }
 
-export function
+export function usernameValidation(username) {
+    
+    console.log(quoteService.allUsers())
+}
 
