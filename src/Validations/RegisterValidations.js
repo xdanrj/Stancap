@@ -8,3 +8,6 @@ export function PasswordValidation(senha) {
         return {response: true}
     }
 }
+
+export function
+
