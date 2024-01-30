@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MDBNavbar, MDBContainer, MDBNavbarItem, MDBCollapse, MDBBtn, MDBIcon, MDBNavbarNav, MDBInputGroup } from 'mdb-react-ui-kit';
 import { MDBNavbarLink, MDBNavbarBrand, MDBNavbarToggler } from './NavbarStyles';
@@ -9,12 +9,22 @@ export default function NavbarComponent() {
   const navigate = useNavigate()
   const useModal = useModalBox()
   const [showNavNoTogglerSecond, setShowNavNoTogglerSecond] = useState(false);
-  // username vai ser: pegar o username usando o userId como busca
-  const username = localStorage.getItem("username")
+  const [username, setUsername] = useState('')
   const userService = new userServices()
+
+
+  useEffect(() => {
+    async function getUsername(){
+      setUsername(await userService.getUsername(localStorage.getItem("userId")))
+    }
+    getUsername()
+  }, [])
+  
+  console.log(username)
 
   const logoff = () => {
     userService.logout()
+    setUsername('')
     navigate('/quotes')
     alert("Deslogado com sucesso")
   }

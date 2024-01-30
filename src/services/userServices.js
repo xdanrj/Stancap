@@ -14,6 +14,16 @@ export default class userServices {
         localStorage.removeItem("userId")      
     }
 
+    async getUsername(userId) {
+        console.log(userId)
+        const response = await this.axios.post('/search_user', {_id: userId})
+        if (response.data) {
+            return response.data
+        } else {
+            return false
+        }
+    }
+
     async allUsers() {
         const response = await this.axios.get('/all_users')
         console.log(response)

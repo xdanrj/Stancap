@@ -7,6 +7,7 @@ import { size } from "../../CommonStyles/device";
 import { SearchBar } from "../SearchBar/SearchBar";
 import { useAlertMsg } from "../Alert/AlertContext";
 import { Col, Row, Container } from "react-bootstrap";
+import userServices from "../../services/userServices";
 
 export default function QuotesPage() {
   const useAlert = useAlertMsg()
@@ -14,6 +15,7 @@ export default function QuotesPage() {
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
   const quoteService = new quoteEditingServices()
+  const userService = new userServices()
   const { queryprop, queryvalue } = useParams()
   let urlQuery
 
@@ -44,7 +46,7 @@ export default function QuotesPage() {
 
   const setUploadersNames = async () => {
     quotesResponse.map(async (data) => {
-      data.uploadByUser = await quoteService.getUploaderUsername(data.uploadByUser)
+      data.uploadByUser = await userService.getUsername(data.uploadByUser)
     })
   }
   

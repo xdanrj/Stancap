@@ -16,27 +16,6 @@ export default function QuoteInfo(props) {
         setQuoteData(props.quoteData)
     }, [props.quoteData])
 
-//._set(quoteData, "uploadByUser", quoteService.getUploaderUsername(quoteData.uploadByUser))
-//quoteData.uploadByUser = quoteService.getUploaderUsername(quoteData.uploadByUser)
-
-    /*useEffect(() => {
-        async function setUploadersNames() {
-            console.log("tipo do quoteData: ", typeof(quoteData))
-            setQuoteData({ ...quoteData, uploadByUser: await quoteService.getUploaderUsername(quoteData.uploadByUser) })
-        }
-        setUploadersNames()
-    }, [])*/
-
-    //quoteData.uploadByUser = quoteService.getUploaderUsername(quoteData.uploadByUser)
-
-    // se der errado, tentar esse \/
-
-    /*useEffect(() => {
-        quoteData._set(quoteData.uploadByUser, quoteService.getUploaderUsername(quoteData.uploadByUser
-        )), []
-    })*/
-
-
     return (
         <>
             <Modal show={props.show} onHide={handleClose} centered>
