@@ -3,6 +3,7 @@ import { User } from "../models/User.js";
 import { userExists } from "./commonFunctions.js";
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
+import mail from "@sendgrid/mail";
 
 export const loginAndRegisterRoutes = (app) => {
     //variaveis globais para funcionamento da API Twilio
@@ -12,6 +13,27 @@ export const loginAndRegisterRoutes = (app) => {
     const client = twilio(accountSid, authToken)
     const secretKey = process.env.SECRET_KEY
     const apiUrl = process.env.API_URL
+    const sendgridApiKey = process.env.SENDGRID_API_KEY
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /*mail.setApiKey(process.env.SENDGRID_API_KEY)
+    const msg = {
+        to: 'xdanrj@gmail.com', // Change to your recipient
+        from: 'stancapdb@gmail.com', // Change to your verified sender
+        subject: 'Sending with SendGrid is Fun',
+        text: 'and easy to do anywhere, even with Node.js',
+        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    }
+    mail
+        .send(msg)
+        .then(() => {
+            console.log('Email sent')
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+*/
+    /////////////////////////////////////////////////////////////////////////////////////////////
 
     app.get("/testando", async (req, res) => {
         try {
