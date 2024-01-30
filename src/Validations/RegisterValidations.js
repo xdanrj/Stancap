@@ -13,7 +13,9 @@ export function passwordValidation(senha) {
 }
 
 export function usernameValidation(username) {
-    
-    console.log(quoteService.allUsers())
+    const allUsernames = (quoteService.allUsers())
+    allUsernames.map(user => {
+        user == username
+         })
 }
 
