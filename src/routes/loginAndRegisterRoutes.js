@@ -90,7 +90,8 @@ export const loginAndRegisterRoutes = (app) => {
                     })
 
                 const verificationStatus = verification.status
-                console.log(`verification.status: ${verificationStatus}`)
+                //console.log(`verification.status: ${verificationStatus}`)
+                console.log(verification)
                 res.status(200).json({
                     message: "Código de verificação enviado para o e-mail",
                     response: verificationStatus
