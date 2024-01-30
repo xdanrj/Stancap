@@ -8,14 +8,21 @@ export function passwordValidation(senha) {
             message: "A senha precisa ter no mínimo 5 caracteres"
         }
     } else {
-        return {response: true}
+        return { response: true }
     }
 }
 
 export function usernameValidation(username) {
     const allUsernames = (quoteService.allUsers())
-    allUsernames.map(user => {
-        user == username
-         })
+    for (let i = 0; i < allUsernames.length; i++) {
+        if (allUsernames[i] === username) {
+            return {
+                response: false,
+                message: "Esse nome de usuário já existe"
+            }
+        } else {
+            return { response: true }
+        }
+    }
 }
 

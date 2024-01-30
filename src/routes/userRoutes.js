@@ -35,8 +35,7 @@ export const userRoutes = (app) => {
   app.get("/all_users", requireToken, async (req, res) => {
     try {
       const response = await User.find().lean()
-      const removedKeys = response.map(userObj => (_.pick(userObj, "username"))).map(userName => Object.values(userName))
-      const finalResponse = _.flatten(removedKeys)
+      const finalResponse = response.map((user) => user.username)
       console.log(finalResponse)
       res.status(200).send(finalResponse)
 

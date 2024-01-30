@@ -1,0 +1,17 @@
+#   "http://localhost:3000"
+#   P "http://192.168.1.65:3000"
+#   N "http://192.168.1.89:3000"
+
+PORT=3000
+
+API_URL=http://192.168.1.65:3000
+
+USERNAME_DB=xdanrj
+PASSWORD_DB=014d3WZOH21OKN2x
+CONNECTION_DB=mongodb+srv://xdanrj:014d3WZOH21OKN2x@cluster0.ibujag1.mongodb.net/Stancap?retryWrites=true&w=majority
+SENDGRID_API_KEY=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
+TWILIO_ACCOUNT_SID=AC7065f34c00a23fb05a44f2ef1908c86b
+TWILIO_AUTH_TOKEN=b8b2a4cd2164fb52e2e94d790dbba039
+TWILIO_VERIFY_SID=VAfbf55d8de9858aac4bee66bf444ed45b
+
+SECRET_KEY=IDontTank762
