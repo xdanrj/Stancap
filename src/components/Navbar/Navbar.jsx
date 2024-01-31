@@ -35,7 +35,7 @@ export default function NavbarComponent() {
 
   return (
     <>
-      <MDBNavbar fixed="top" expand='lg' light bgColor='dark'>
+      <MDBNavbar fixed="top" expand='md' light bgColor='dark'>
         <MDBContainer fluid>
           <MDBNavbarBrand href='/quotes'>Stancapverso</MDBNavbarBrand>
           <MDBNavbarToggler
@@ -51,18 +51,17 @@ export default function NavbarComponent() {
             <MDBNavbarNav className='mb-2 mb-lg-0'>
 
               <MDBNavbarItem>
-                <CustomMDBNavbarLink href='/quotes'>Quotes</CustomMDBNavbarLink>
+                <CustomMDBNavbarLink href='/quotes'><MDBIcon fas icon="book" /></CustomMDBNavbarLink>
               </MDBNavbarItem>
 
               {isAuthenticated ?
                 <>
-
                   <MDBNavbarItem>
-                    <CustomMDBNavbarLink href='/add_quote'>Add Quote</CustomMDBNavbarLink>
+                    <CustomMDBNavbarLink href='/add_quote'><MDBIcon fas icon="plus-circle" /></CustomMDBNavbarLink>
                   </MDBNavbarItem>
 
                   <MDBNavbarItem>
-                    <CustomMDBNavbarLink href='/my_quotes'>My Quotes</CustomMDBNavbarLink>
+                    <CustomMDBNavbarLink href='/my_quotes'><MDBIcon fas icon="address-book" /></CustomMDBNavbarLink>
                   </MDBNavbarItem>
                 </>
                 :
