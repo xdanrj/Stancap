@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MDBNavbarLink, MDBNavbar, MDBContainer, MDBNavbarItem, MDBCollapse, MDBBtn, MDBIcon, MDBNavbarNav, MDBInputGroup } from 'mdb-react-ui-kit';
-import { CustomMDBNavbarLink, MDBNavbarBrand, MDBNavbarToggler } from './NavbarStyles';
+import { MDBNavbarLink, MDBNavbar, MDBContainer, MDBNavbarItem, MDBCollapse, MDBBtn, MDBNavbarNav, MDBInputGroup } from 'mdb-react-ui-kit';
+import { CustomMDBNavbarLink, MDBNavbarBrand, MDBNavbarToggler, MDBIcon } from './NavbarStyles';
 import { useModalBox } from '../Modal/ModalContext';
 import userServices from '../../services/userServices';
 
@@ -32,10 +32,10 @@ export default function NavbarComponent() {
   const handleNavToggler = () => {
     setShowNavNoTogglerSecond(!showNavNoTogglerSecond)
   }
-
+  //mdbcontainer tinha fluid
   return (
     <>
-      <MDBNavbar fixed="top" expand='md' light bgColor='dark'>
+      <MDBNavbar fixed="top" expand='sm' dark bgColor='dark'>
         <MDBContainer fluid>
           <MDBNavbarBrand href='/quotes'>Stancapverso</MDBNavbarBrand>
           <MDBNavbarToggler
@@ -48,38 +48,42 @@ export default function NavbarComponent() {
             <MDBIcon icon='bars' fas />
           </MDBNavbarToggler>
           <MDBCollapse navbar show={showNavNoTogglerSecond}>
-            <MDBNavbarNav className='mb-2 mb-lg-0'>
+            <MDBNavbarNav className='mb-2 mb-lg-0 justify-content-center'>
+              <div className="d-flex mx-auto">
 
-              <MDBNavbarItem>
-                <CustomMDBNavbarLink href='/quotes'><MDBIcon fas icon="book" /></CustomMDBNavbarLink>
-              </MDBNavbarItem>
+                <MDBNavbarItem>
+                  <CustomMDBNavbarLink href='/quotes'><MDBIcon fas icon="comments" /></CustomMDBNavbarLink>
+                </MDBNavbarItem>
 
-              {isAuthenticated ?
-                <>
-                  <MDBNavbarItem>
-                    <CustomMDBNavbarLink href='/add_quote'><MDBIcon fas icon="plus-circle" /></CustomMDBNavbarLink>
-                  </MDBNavbarItem>
+                {isAuthenticated ?
 
-                  <MDBNavbarItem>
-                    <CustomMDBNavbarLink href='/my_quotes'><MDBIcon fas icon="address-book" /></CustomMDBNavbarLink>
-                  </MDBNavbarItem>
-                </>
-                :
-                <>
-                  <MDBNavbarItem>
-                    <CustomMDBNavbarLink href='/login'>Login</CustomMDBNavbarLink>
-                  </MDBNavbarItem>
+                  <>
+                    <MDBNavbarItem>
+                      <CustomMDBNavbarLink href='/add_quote'><MDBIcon fas icon="plus-circle" /></CustomMDBNavbarLink>
+                    </MDBNavbarItem>
 
-                  <MDBNavbarItem>
-                    <CustomMDBNavbarLink href='/register'>Register</CustomMDBNavbarLink>
-                  </MDBNavbarItem>
-                </>
-              }
+                    <MDBNavbarItem>
+                      <CustomMDBNavbarLink href='/my_quotes'><MDBIcon fas icon="address-book" /></CustomMDBNavbarLink>
+                    </MDBNavbarItem>
 
+                  </>
+                  :
+                  <>
+                    <MDBNavbarItem>
+                      <CustomMDBNavbarLink href='/login'><MDBIcon fas icon="sign-in-alt" /></CustomMDBNavbarLink>
+                    </MDBNavbarItem>
+
+
+                  </>
+                }
+              </div>
+              <>
+                <MDBNavbarItem className='' >
+                  <MDBNavbarLink active onClick={() => useModal({ title: `Usuário ${username}`, paragraph: ``, buttons: [{ text: "Deslogar", action: [logoff, handleNavToggler, "handleClose()"] }] })} className='text-secondary'>Logado como {username}</MDBNavbarLink>
+                </MDBNavbarItem>
+              </>
             </MDBNavbarNav>
-            <MDBNavbarItem className='navbar-text mb-4'>
-              <MDBNavbarLink onClick={() => useModal({ title: `Usuário ${username}`, paragraph: ``, buttons: [{ text: "Deslogar", action: [logoff, handleNavToggler, "handleClose()"] }] })} className='text-secondary'>Logado como {username}</MDBNavbarLink>
-            </MDBNavbarItem>
+
           </MDBCollapse>
         </MDBContainer>
       </MDBNavbar>
@@ -88,6 +92,9 @@ export default function NavbarComponent() {
 }
 
 /*
+ <MDBNavbarItem className=''> 
+                    <CustomMDBNavbarLink href='/register'>Criar conta</CustomMDBNavbarLink>
+                  </MDBNavbarItem>
               <MDBNavbarItem>
                 <CustomMDBNavbarLink href='/new_password'>New Password</CustomMDBNavbarLink>
               </MDBNavbarItem>

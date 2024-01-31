@@ -39,7 +39,7 @@ export const MDBNavbarItem = styled(originalMDBNavbarItem).attrs(() => ({
 `;
 
 export const CustomMDBNavbarLink = styled(originalMDBNavbarLink).attrs(() => ({
-    className: "text-white"
+    className: "mx-4 text-white",
 }))`
 `;
 
@@ -54,7 +54,7 @@ export const MDBBtn = styled(originalMDBBtn).attrs(() => ({
 `;
 
 export const MDBIcon = styled(originalMDBIcon).attrs(() => ({
-    className: ""
+    size:'2x'
 }))`
 `;
 
