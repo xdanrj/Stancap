@@ -38,7 +38,7 @@ export const MDBNavbarItem = styled(originalMDBNavbarItem).attrs(() => ({
 }))`
 `;
 
-export const MDBNavbarLink = styled(originalMDBNavbarLink).attrs(() => ({
+export const CustomMDBNavbarLink = styled(originalMDBNavbarLink).attrs(() => ({
     className: "text-white"
 }))`
 `;

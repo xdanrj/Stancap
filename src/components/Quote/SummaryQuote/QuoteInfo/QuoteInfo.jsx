@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { NormalDate, NormalDateAndHour } from "../../../../Formatting/DateFormatting";
-import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
 import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph } from "./QuoteInfoStyles";
 import quoteEditingServices from "../../../../services/quoteServices";
 import _ from "lodash";
 
 export default function QuoteInfo(props) {
     const handleClose = () => props.setShow(false)
-
     const quoteService = new quoteEditingServices()
-
     const [quoteData, setQuoteData] = useState(props.quoteData)
     useEffect(() => {
         setQuoteData(props.quoteData)

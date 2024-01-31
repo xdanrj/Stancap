@@ -41,6 +41,5 @@ export const TextTitle = styled.p.attrs(() => ({
 export const TextParagraph = styled.p.attrs(() => ({
     className: ""
 }))`
-    
     font-size: 0.9em;
 `
