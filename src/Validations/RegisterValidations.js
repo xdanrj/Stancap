@@ -2,6 +2,7 @@ import userServices from "../services/userServices"
 const userService = new userServices()
 
 export function passwordValidation(senha) {
+    console.log(senha)
     if (/^.{1,4}$/.test(senha)) {
         return {
             response: false,
@@ -15,14 +16,13 @@ export function passwordValidation(senha) {
 export async function usernameValidation(username) {
     const allUsernames = (await userService.allUsers())
     for (let i = 0; i < allUsernames.length; i++) {
-        if (allUsernames[i] === username) {
+        if (allUsernames[i].toLowerCase() === username.toLowerCase()) {
             return {
                 response: false,
                 message: "Esse nome de usuário já existe"
             }
-        } else {
-            return { response: true }
-        }
+        }    
     }
+    return { response: true }
 }
 

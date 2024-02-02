@@ -3,7 +3,6 @@ import { User } from "../models/User.js";
 import { userExists } from "./commonFunctions.js";
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
-import mail from "@sendgrid/mail";
 
 export const loginAndRegisterRoutes = (app) => {
     const apiUrl = process.env.API_URL

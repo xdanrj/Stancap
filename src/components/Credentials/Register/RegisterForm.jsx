@@ -55,7 +55,8 @@ function RegisterForm() {
     const handleSubmitRegister = async (e) => {
         e.preventDefault();
         try {
-            const dataValidation = passwordValidation(registerData.password) && await usernameValidation(registerData.username)
+            const dataValidation = ( passwordValidation(registerData.password)).response && (await usernameValidation(registerData.username)).response
+            console.log(registerData)
             console.log(dataValidation)
             if (dataValidation.response) {
                 const response = await loginAndRegisterService.register(registerData)
