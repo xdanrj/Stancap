@@ -1,5 +1,5 @@
-import quoteEditingServices from "../services/quoteServices"
-const quoteService = new quoteEditingServices()
+import userServices from "../services/userServices"
+const userService = new userServices()
 
 export function passwordValidation(senha) {
     if (/^.{1,4}$/.test(senha)) {
@@ -12,8 +12,8 @@ export function passwordValidation(senha) {
     }
 }
 
-export function usernameValidation(username) {
-    const allUsernames = (quoteService.allUsers())
+export async function usernameValidation(username) {
+    const allUsernames = (await userService.allUsers())
     for (let i = 0; i < allUsernames.length; i++) {
         if (allUsernames[i] === username) {
             return {

@@ -6,34 +6,14 @@ import bcrypt from 'bcrypt'
 import mail from "@sendgrid/mail";
 
 export const loginAndRegisterRoutes = (app) => {
+    const apiUrl = process.env.API_URL
+    const secretKey = process.env.SECRET_KEY
+
     //variaveis globais para funcionamento da API Twilio
     const accountSid = process.env.TWILIO_ACCOUNT_SID
     const authToken = process.env.TWILIO_AUTH_TOKEN
     const verifySid = process.env.TWILIO_VERIFY_SID
-    const client = twilio(accountSid, authToken)
-    const secretKey = process.env.SECRET_KEY
-    const apiUrl = process.env.API_URL
-    const sendgridApiKey = process.env.SENDGRID_API_KEY
-
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    /*mail.setApiKey(process.env.SENDGRID_API_KEY)
-    const msg = {
-        to: 'xdanrj@gmail.com', // Change to your recipient
-        from: 'stancapdb@gmail.com', // Change to your verified sender
-        subject: 'Sending with SendGrid is Fun',
-        text: 'and easy to do anywhere, even with Node.js',
-        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-    }
-    mail
-        .send(msg)
-        .then(() => {
-            console.log('Email sent')
-        })
-        .catch((error) => {
-            console.error(error)
-        })
-*/
-    /////////////////////////////////////////////////////////////////////////////////////////////
+    const client = twilio(accountSid, authToken)    
 
     app.get("/testando", async (req, res) => {
         try {
@@ -138,7 +118,6 @@ export const loginAndRegisterRoutes = (app) => {
             const selectedUser = await userExists({ email: email })
             try {
                 password = await bcrypt.hash(req.body.password, 10)
-                console.log("hash de senha gerado: ", password)
             } catch (error) {
                 res.status(400).json({ message: error })
             }

@@ -32,7 +32,7 @@ export const userRoutes = (app) => {
   }
 
   // rota que retorna todos os usernames existentes
-  app.get("/all_users", requireToken, async (req, res) => {
+  app.get("/all_users", async (req, res) => {
     try {
       const response = await User.find().lean()
       const finalResponse = response.map((user) => user.username)

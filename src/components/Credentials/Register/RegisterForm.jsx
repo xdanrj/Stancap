@@ -55,7 +55,7 @@ function RegisterForm() {
     const handleSubmitRegister = async (e) => {
         e.preventDefault();
         try {
-            const dataValidation = passwordValidation(registerData.password) && usernameValidation(registerData.username)
+            const dataValidation = passwordValidation(registerData.password) && await usernameValidation(registerData.username)
             console.log(dataValidation)
             if (dataValidation.response) {
                 const response = await loginAndRegisterService.register(registerData)
@@ -72,14 +72,16 @@ function RegisterForm() {
                 useAlert(dataValidation.message)
             }
         } catch (error) {
-            useAlert(error.response.data.error)
+            console.log(error)
+            useAlert(error)
         }
     }
     const handleEmailChange = (e) => {
         setEmail({ ...email, [e.target.name]: e.target.value })
     }
     const handleCodeChange = (e) => {
-        setCode({ ...code, [e.target.name]: e.target.value })
+        setCode({ ...code, [e.target.name]: e.target.value.trim() })
+        console.log(code)
     }
     const handleRegisterChange = (e) => {
         setRegisterData({
