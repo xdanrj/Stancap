@@ -1,28 +1,33 @@
 import userServices from "../services/userServices"
 const userService = new userServices()
 
-export function passwordValidation(senha) {
-    console.log(senha)
-    if (/^.{1,4}$/.test(senha)) {
-        return {
-            response: false,
-            message: "A senha precisa ter no mínimo 5 caracteres"
+export function passwordValidation(password) {
+    console.log(password)
+    if (password) {
+        if (/^.{1,3}$/.test(password)) {
+            return {
+                response: false,
+                message: "A senha precisa ter no mínimo 5 caracteres"
+            }
+        } else {
+            return { response: true }
         }
-    } else {
-        return { response: true }
     }
 }
 
 export async function usernameValidation(username) {
-    const allUsernames = (await userService.allUsers())
-    for (let i = 0; i < allUsernames.length; i++) {
-        if (allUsernames[i].toLowerCase() === username.toLowerCase()) {
-            return {
-                response: false,
-                message: "Esse nome de usuário já existe"
+    if (username) {
+        console.log(username)
+        const allUsernames = (await userService.allUsers())
+        for (let i = 0; i < allUsernames.length; i++) {
+            if (allUsernames[i].toLowerCase() === username.toLowerCase()) {
+                return {
+                    response: false,
+                    message: "Esse nome de usuário já existe"
+                }
             }
-        }    
+        }
+        return { response: true }
     }
-    return { response: true }
 }
 
