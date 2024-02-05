@@ -31,7 +31,7 @@ function RegisterForm() {
                 setSendCodeForm(false)
                 setCheckCodeForm(true)
             }
-            else {                
+            else {
                 useAlert(response)
             }
         } catch (error) { alert(error.response.data.error) }
@@ -55,22 +55,16 @@ function RegisterForm() {
     const handleSubmitRegister = async (e) => {
         e.preventDefault();
         try {
-            const dataValidation = ( passwordValidation(registerData.password)).response && (await usernameValidation(registerData.username)).response
-            console.log(registerData)
-            console.log(dataValidation)
-            if (dataValidation.response) {
-                const response = await loginAndRegisterService.register(registerData)
-                if (response === true) {
-                    alert('Usuário cadastrado com sucesso')
-                    await loginAndRegisterService.login({
-                        email: email.email,
-                        password: registerData.password
-                    })
-                    navigate('/quotes')
-                }
+            const passwordResult = passwordValidation(registerData.password)
+            const usernameResult = await usernameValidation(registerData.username)
+
+            if (!passwordResult.response || !usernameResult.response) {
+                const errorMessage = passwordResult.response ? usernameResult.message : passwordResult.message
+                console.log(errorMessage)
+                alert(errorMessage)
             } else {
-                console.log(dataValidation.message)
-                useAlert(dataValidation.message)
+                alert('Usuário cadastrado com sucesso')
+                navigate('/quotes')
             }
         } catch (error) {
             console.log(error)

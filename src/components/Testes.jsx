@@ -19,17 +19,18 @@ export default function Testes() {
         console.log("registerData: ", registerData)
     }
     const handleSubmitRegister = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         try {
-            const dataValidation = (passwordValidation(registerData.password)).response && (await usernameValidation(registerData.username)).response
-            console.log(registerData)
-            console.log(dataValidation)
-            if (dataValidation.response) {
-                alert('TESTADO: Usuário cadastrado com sucesso')
+            const passwordResult = passwordValidation(registerData.password)
+            const usernameResult = await usernameValidation(registerData.username)
+
+            if (!passwordResult.response || !usernameResult.response) {
+                const errorMessage = passwordResult.response ? usernameResult.message : passwordResult.message
+                useAlert(errorMessage)              
             } else {
-                console.log(dataValidation.message)
-                useAlert(dataValidation.message)
+                alert('TESTADO: Usuário cadastrado com sucesso')
             }
+
         } catch (error) {
             console.log(error)
             useAlert(error)

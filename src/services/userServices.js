@@ -26,7 +26,6 @@ export default class userServices {
 
     async allUsers() {
         const response = await this.axios.get('/all_users')
-        console.log(response.data)
         return response.data
         
     }

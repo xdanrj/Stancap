@@ -4,7 +4,7 @@ const userService = new userServices()
 export function passwordValidation(password) {
     console.log(password)
     if (password) {
-        if (/^.{1,3}$/.test(password)) {
+        if (/^.{1,4}$/.test(password)) {
             return {
                 response: false,
                 message: "A senha precisa ter no mínimo 5 caracteres"
@@ -17,7 +17,6 @@ export function passwordValidation(password) {
 
 export async function usernameValidation(username) {
     if (username) {
-        console.log(username)
         const allUsernames = (await userService.allUsers())
         for (let i = 0; i < allUsernames.length; i++) {
             if (allUsernames[i].toLowerCase() === username.toLowerCase()) {
