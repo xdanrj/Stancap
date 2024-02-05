@@ -43,10 +43,9 @@ export default function LoginForm() {
 
     return (
         <>
-            <Form onSubmit={handleSubmitLogin}>
-                <Container className="mb-4">
+            <Form onSubmit={handleSubmitLogin}>                
                     <Row className="justify-content-center">
-                    <Col xs={12} sm={8} md={6} lg={3}>
+                    <Col xs={10} sm={8} md={6} lg={3}>
                     <FloatingLabel label="E-mail">
                         <Form.Control
                             name="email"
@@ -67,12 +66,11 @@ export default function LoginForm() {
                     </FloatingLabel>
                     </Col>
                     </Row>
-                </Container>
 
                 <Row>
-                    <Col className="mb-2">
+                    
                         <Button type="submit" size="sm">Logar</Button>
-                    </Col>
+                    
                 </Row>
                 <Row>
                     <Col>
