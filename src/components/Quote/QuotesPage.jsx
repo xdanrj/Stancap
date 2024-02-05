@@ -94,7 +94,7 @@ export default function QuotesPage() {
       <SearchBar searchFunction={fetchQuotesBySearch} urlQuery={urlQuery} />
 
       <Row className="justify-content-center">
-        <Col md={7} lg={6} xl={5} >
+        <Col xs={12} sm={9} md={7} lg={6} xl={5} >
           <SingleQuote singleQuotes={singleQuotesArray} />
           <MultipleQuote multipleQuotes={multipleQuotesArray} />
         </Col>

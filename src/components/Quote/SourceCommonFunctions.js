@@ -10,27 +10,15 @@ export const SourceNames = [
   { name: "Stancap Nobreza", value: "StancapNobreza" }
 ]
 
-/*export const OLD_SourceNames = [
-  "Anarco Feudalismo",
-  "Anarco Primitivismo",
-  "AnProm",
-  "Corujas Neto Lovers",
-  "Ditadura Cultural",
-  "Freudcap",
-  "Relatórios do Dmitri",
-  "Stancap",
-  "Stancap Nobreza",
-];*/
-
 export function sourceLogoSelector(source) {
-  const foundItem = SourceNames.find(item => item.value === source);
+  const foundItem = SourceNames.find(item => item.value === source)
 
   if (foundItem) {
-    const finalReturn = { "path": `/images/${source}.png`, "source": source };
-    console.log(finalReturn);
-    return finalReturn;
+    const finalReturn = { "path": `/images/${source}.png`, "source": source }
+    console.log(finalReturn)
+    return finalReturn
   } else {
-    console.log("Item não encontrado");
-    return null; // ou qualquer valor que indique que o item não foi encontrado
+    console.log("Item não encontrado")
+    return null
   }
 }
