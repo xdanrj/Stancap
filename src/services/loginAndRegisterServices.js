@@ -81,12 +81,10 @@ export default class loginAndRegisterServices {
     }
 
     async newPasswordCheckCode(dados) {
-        console.log("OLHA OS DADOS: ", dados)
         const emailAndCode = {
             ...dados.email,
             ...dados.code
         }
-        console.log("emailAndCode: ", emailAndCode)
         const response = await this.axios.post('/change_password_check', emailAndCode)
         if (response.data.response) {
             return true
@@ -96,7 +94,6 @@ export default class loginAndRegisterServices {
         }
     }
     async newPassword(dados) {
-        console.log("DADOS QUE TAO CHEGANDO PRO SERVICE: ", dados)
         const response = await this.axios.patch('/edit_user', dados)
         if (response.data.response) {
             return true

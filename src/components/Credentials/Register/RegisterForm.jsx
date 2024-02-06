@@ -61,7 +61,7 @@ function RegisterForm() {
             if (!passwordResult.response || !usernameResult.response) {
                 const errorMessage = passwordResult.response ? usernameResult.message : passwordResult.message
                 console.log(errorMessage)
-                alert(errorMessage)
+                useAlert(errorMessage)
             } else {
                 alert('Usuário cadastrado com sucesso')
                 navigate('/quotes')

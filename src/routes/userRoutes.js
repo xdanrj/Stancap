@@ -71,13 +71,13 @@ export const userRoutes = (app) => {
         const verification = await client.verify.v2.services(verifySid)
           .verifications.create({
             channelConfiguration: {
-              template_id: 'd-ab018621f4d84d32a83a746a5f69053e',
+              template_id: 'd-2126cb679bac48daba466e2fe1682b2e',
               from: 'stancapdb@gmail.com',
               from_name: 'Stancap'
             }, to: email, channel: 'email'
           })
         res.status(200).json({
-          message: "Código de verificação enviado para o e-mail",
+          message: "Código de recuperação enviado para o e-mail",
           response: selectedUser
         })
       } else {

@@ -3,8 +3,7 @@ import NewPasswordForm from "../../components/Credentials/NewPassword/NewPasswor
 
 export default function NewPassword (){
     return(
-        <>
-        <h1>Recuperar senha</h1>
+        <>        
         <NewPasswordForm />
         </>
     )
