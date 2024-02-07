@@ -3,7 +3,7 @@ import { device } from '../../../CommonStyles/device'
 import { MDBIcon as originalMDBIcon } from 'mdb-react-ui-kit'
 
 export const MinimalQuoteContainer = styled.div.attrs(() => ({
-    className: "pt-4 px-3 mb-5"
+    className: "pt-4 px-4 mb-5"
 }))`
     font-size: 0.85rem;
     background-color: rgb(40, 40, 40);
@@ -22,16 +22,16 @@ export const IconContainer = styled.div.attrs(() => ({
 export const Paragraph = styled.p.attrs(() => ({
     className: "font-italic text-start col-6"
 }))`
-    background-color: blue;
+    background-color: rgb(40, 40, 40);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 `;
 
 export const ParagraphAutor = styled.p.attrs(() => ({
-    className: `col-3 text-start`
+    className: `col-3 text-start text-truncate`
 }))`
-    background-color: green;
+    background-color: rgb(40, 40, 40);
     color: rgba(255, 255, 255, 0.7);
     font-weight: bold;
 `;

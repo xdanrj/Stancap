@@ -7,8 +7,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     font-family: Arial, Century Gothic
   }
-`;
-// /\
+`
 
 export const ButtonsFormGroup = styled(originalForm.Group).attrs(() => ({
   className: ""
@@ -26,7 +25,6 @@ export const CenteredFormGroup = styled(originalForm.Group).attrs(() => ({
 }))`
 `;
 
-//à fazer (centeredformcontrol) ainda \/
 export const CenteredFormControl = styled(originalFormControl).attrs(() => ({
   className: "mx-auto"
 }))`
@@ -77,8 +75,3 @@ export const InfoIconStyles = styled.i.attrs(() => ({
   font-size: 3vh;
   color: grey;
 `;
-
-export const FooterLine = styled.div.attrs(() => ({
-  className: ""
-}))`
-`

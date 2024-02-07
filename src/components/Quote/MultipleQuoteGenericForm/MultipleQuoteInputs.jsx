@@ -16,10 +16,10 @@ export default function MultipleQuoteInputs(props) {
     }, [])
 
     const addQuoteInput = (index) => {
-        if (!(multipleQuotes[index].quote) || !(multipleQuotes[index].author)) {
+        if (!(props.multipleQuotes[index].quote) || !(props.multipleQuotes[index].author)) {
             useAlert("Um ou mais campos vazios!")
         } else {
-            setMultipleQuotes([...multipleQuotes, { quote: "", author: "" }])
+            props.setMultipleQuotes([...props.multipleQuotes, { quote: "", author: "" }])
 
             let updatedIconVisible = [...iconVisible]
 
@@ -30,9 +30,9 @@ export default function MultipleQuoteInputs(props) {
     }
     const removeQuoteInput = (index) => {
         //deleta valores da array
-        let updatedmultipleQuotes = [...multipleQuotes]
+        let updatedmultipleQuotes = [...props.multipleQuotes]
         updatedmultipleQuotes.splice(index, 1)
-        setMultipleQuotes(updatedmultipleQuotes)
+        props.setMultipleQuotes(updatedmultipleQuotes)
 
         // altera a visibilidade dos icones
         let updatedIconVisible = [...iconVisible]

@@ -44,8 +44,8 @@ export default class quoteEditingServices {
         }
     }
 
-    async deleteQuote(query) {
-        const response = await this.axios.delete('/delete_quote', query)
+    async deleteQuote(quoteId, userId) {
+        const response = await this.axios.delete('/delete_quote', {quoteId, userId})
         if (response) {
             return true
         } else {

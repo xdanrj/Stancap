@@ -67,10 +67,10 @@ export default function LoginForm() {
                     </Col>
                     </Row>
 
-                <Row>
-                    
-                        <Button type="submit" size="sm">Logar</Button>
-                    
+                <Row>       
+                <Col>           
+                        <Button type="submit" size="sm" className="my-2">Logar</Button>        
+                        </Col>              
                 </Row>
                 <Row>
                     <Col>
