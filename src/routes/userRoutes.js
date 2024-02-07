@@ -3,6 +3,7 @@ import { User } from "../models/User.js"
 import { selectUser, userExists } from "./commonFunctions.js"
 import requireToken from "./middleware.js"
 import _ from "lodash"
+import bcrypt from 'bcrypt'
 
 export const userRoutes = (app) => {
   //variaveis globais para funcionamento da API Twilio
@@ -95,12 +96,11 @@ export const userRoutes = (app) => {
       const verification_check = await client.verify.v2.services(verifySid).verificationChecks.create({ to: email, code: otpCode })
 
       if (verification_check.status == "approved") {
-        const selectedUser = await User.updateOne(
+        await User.updateOne(
           { email: email },
-          { password: newPassword })
+          { password: await bcrypt.hash(newPassword, 10) })
         res.status(200).json({
-          message: "Senha alterada com sucesso",
-          response: selectedUser
+          message: "Senha alterada com sucesso"
         })
       } else {
         res.status(400).json({ message: "Código de verificação incorreto ou expirado" })

@@ -120,10 +120,9 @@ export const loginAndRegisterRoutes = (app) => {
             } catch (error) {
                 res.status(400).json({ message: error })
             }
-            // caso o email seja novo (condição redundante (segurança extra) pois a rota "/register" só será acessada caso a verificação por código (rota anterior) seja bem sucedida)
+            
             if (!selectedUser) {
-                const newUser = new User({
-                    // email será auto preenchido puxando no localStorage
+                const newUser = new User({                   
                     username: username,
                     email: email,
                     password: password
