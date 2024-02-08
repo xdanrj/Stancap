@@ -27,8 +27,8 @@ export default function SingleQuoteGenericForm(props) {
         context: '',
         tags: [],
     })
-    console.log(dayjs.tz.guess())
-    console.log(quoteData)
+    const [selectedSource, setSelectedSource] = useState(quoteData.source)
+
     useEffect(() => {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
@@ -50,10 +50,8 @@ export default function SingleQuoteGenericForm(props) {
 
     const handleSourceSelect = (eventKey) => {
         if (eventKey) {
-            setQuoteData((prevData) => ({
-                ...prevData,
-                source: eventKey
-            }))
+            setSelectedSource(eventKey)
+            const foundSource = SourceNames.find(obj => obj.value === selectedSource)
         }
     }
 
@@ -68,7 +66,8 @@ export default function SingleQuoteGenericForm(props) {
                     tags: tags,
                     uploadDate: dayjs(),
                     uploadByUser: localStorage.getItem("userId"),
-                    quoteType: "single"
+                    quoteType: "single",
+                    source: selectedSource
                 }
                 response = await quoteEditingService.addQuote(updatedQuoteData)
             } else if (props.type === "editQuote") {
@@ -94,7 +93,6 @@ export default function SingleQuoteGenericForm(props) {
     const handleSubmitQuote = async (e) => {
         e.preventDefault()
         try {
-            // condicoes
             let paragraph
             let buttons = [{
                 text: "Vou inserir", action: ["handleClose()"]
@@ -151,67 +149,72 @@ export default function SingleQuoteGenericForm(props) {
 
     return (
         <>
-            <Form onSubmit={handleSubmitQuote}>
-                <Row>
-                    <FormGroup>
-                        <FloatingLabel label="Quote">
-                            <Form.Control required name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes}>
-                            </Form.Control>
-                        </FloatingLabel>
-                    </FormGroup>
-
-                    <Col>
-                        <FormGroup>
-                            <FloatingLabel label="Autor">
-                                <Form.Control name="author" placeholder="Autor" onChange={handleGenericChange} value={quoteData.author}>
-                                </Form.Control>
-                            </FloatingLabel>
-                        </FormGroup>
-                    </Col>
-
-                    <Col>
-                        <FormGroup>
-                            <FloatingLabel label="Data">
-                                <Form.Control name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
-                                </Form.Control>
-                            </FloatingLabel>
-                        </FormGroup>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <FormGroup>
-                            <FloatingLabel label="Contexto (Opcional)">
-                                <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange} value={quoteData.context}>
-                                </Form.Control>
-                            </FloatingLabel>
-                        </FormGroup>
-                    </Col>
-                </Row>
-                <Col>
-
-                    <FormGroup>
-                        <DropdownButton drop="down" align="end" title={quoteData.source ? quoteData.source : "Source"} onSelect={handleSourceSelect}>
-                            {SourceNames.map((item) => (
-                                <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
-                            ))}
-                            <Dropdown.Divider />
-                            <div className="px-1 pb-2">
-                                <FloatingLabel label="Outro">
-                                    <Form.Control name="otherSourceName" placeholder="Outro" onChange={handleGenericChange} value={SourceNames.includes(quoteData.source) ? "" : quoteData.source}>
+            <Row className="justify-content-center">
+                <Col xs={12} sm={8} md={6} lg={5}>
+                    <Form onSubmit={handleSubmitQuote}>
+                        <Row>
+                            <FormGroup>
+                                <FloatingLabel label="Quote">
+                                    <Form.Control required name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes}>
                                     </Form.Control>
                                 </FloatingLabel>
-                            </div>
-                        </DropdownButton>
-                    </FormGroup>
+                            </FormGroup>
+
+                            <Col>
+                                <FormGroup>
+                                    <FloatingLabel label="Autor">
+                                        <Form.Control name="author" placeholder="Autor" onChange={handleGenericChange} value={quoteData.author}>
+                                        </Form.Control>
+                                    </FloatingLabel>
+                                </FormGroup>
+                            </Col>
+
+                            <Col>
+                                <FormGroup>
+                                    <FloatingLabel label="Data">
+                                        <Form.Control name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
+                                        </Form.Control>
+                                    </FloatingLabel>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <FormGroup>
+                                    <FloatingLabel label="Contexto (Opcional)">
+                                        <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange} value={quoteData.context}>
+                                        </Form.Control>
+                                    </FloatingLabel>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                        <Col>
+
+                            <FormGroup>
+                                <DropdownButton drop="down" align="end" title={selectedSource || "Source"}
+                                    onSelect={handleSourceSelect}>
+                                    {SourceNames.map((item) => (
+                                        <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
+                                    ))}
+                                    <Dropdown.Divider />
+                                    <div className="px-1 pb-2">
+                                        <FloatingLabel label="Outro">
+                                            <Form.Control name="otherSourceName" placeholder="Outro" onChange={handleGenericChange} value={SourceNames.includes(quoteData.source) ? "" : quoteData.source}>
+                                            </Form.Control>
+                                        </FloatingLabel>
+                                    </div>
+                                </DropdownButton>
+                            </FormGroup>
+                        </Col>
+
+                        <FormGroup>
+                            <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
+                        </FormGroup>
+
+                        <Button type="submit">{props.texts.submitButton}</Button>
+                    </Form>
                 </Col>
-
-                <FormGroup>
-                    <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
-                </FormGroup>
-
-                <Button type="submit">{props.texts.submitButton}</Button>
-            </Form>
+            </Row>
         </>
     )
 }
