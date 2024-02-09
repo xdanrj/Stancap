@@ -30,7 +30,7 @@ export default function LoginForm() {
                 alert('Logado com sucesso')
                 navigate('/quotes')
             }
-            else {                
+            else {
                 useAlert(response)
             }
         } catch (error) {
@@ -43,41 +43,46 @@ export default function LoginForm() {
 
     return (
         <>
-            <Form onSubmit={handleSubmitLogin}>                
-                    <Row className="justify-content-center">
+        <h2 className="mb-4">Login</h2>
+            <Form onSubmit={handleSubmitLogin}>
+                <Row className="justify-content-center">
                     <Col xs={10} sm={8} md={6} lg={3}>
-                    <FloatingLabel label="E-mail">
-                        <Form.Control
-                            name="email"
-                            type="email"
-                            placeholder="E-mail"
-                            onChange={handleLoginChange}
-                            className="mb-3">
-                        </Form.Control>
-                    </FloatingLabel>
+                        <FloatingLabel label="E-mail">
+                            <Form.Control
+                                name="email"
+                                type="email"
+                                placeholder="E-mail"
+                                onChange={handleLoginChange}
+                                className="mb-3">
+                            </Form.Control>
+                        </FloatingLabel>
 
-                    <FloatingLabel label="Senha">
-                        <Form.Control
-                            name="password"
-                            type="password"
-                            placeholder="Senha"
-                            onChange={handleLoginChange}>
-                        </Form.Control>
-                    </FloatingLabel>
+                        <FloatingLabel label="Senha">
+                            <Form.Control
+                                name="password"
+                                type="password"
+                                placeholder="Senha"
+                                onChange={handleLoginChange}>
+                            </Form.Control>
+                        </FloatingLabel>
                     </Col>
-                    </Row>
+                </Row>
 
-                <Row>       
-                <Col>           
-                        <Button type="submit" size="sm" className="my-2">Logar</Button>        
-                        </Col>              
+                <Row>
+                    <Col>
+                        <Button type="submit" size="sm" className="my-2">Logar</Button>
+                    </Col>
                 </Row>
                 <Row>
                     <Col>
-                        <Button href="/new_password" size="sm" >Esqueci minha senha</Button>
+                        <Button href="/new_password" size="sm" className="mb-2">Esqueci minha senha</Button>
                     </Col>
                 </Row>
-
+                <Row>
+                    <Col>
+                        <Button href="/register" size="sm" className="">Criar conta</Button>
+                    </Col>
+                </Row>
             </Form>
         </>
     )

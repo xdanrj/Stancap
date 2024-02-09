@@ -88,12 +88,13 @@ export default function NewPasswordForm() {
     return (
         <>
             <Row className="justify-content-center">
-                <h2 className="mb-6">Recuperação de senha</h2>
+                
                 <Col xs={7} sm={6} md={5} lg={4} >
                     {sendCodeForm && (
                         <>
-                            <h6>Digite o e-mail da conta</h6>
-                            <Form onSubmit={handleSubmitSendCode}>
+                        <h2 className="mb-4">Recuperação de senha</h2>
+                            <h5>Digite o e-mail da conta</h5>
+                            <Form onSubmit={handleSubmitSendCode} >
                                 <FloatingLabel label="E-mail">
                                     <Form.Control
                                         className="mb-3"
@@ -110,7 +111,7 @@ export default function NewPasswordForm() {
 
                     {checkCodeForm && (
                         <>
-                            <h6>Digite o código recebido no e-mail</h6>
+                            <h5>Digite o código recebido no e-mail</h5>
                             <Form onSubmit={handleSubmitCheckCode}>
                                 <FloatingLabel label="Código">
                                     <Form.Control
@@ -127,7 +128,7 @@ export default function NewPasswordForm() {
                     )}
                     {newPasswordForm && (
                         <>
-                            <h6>Crie sua nova senha</h6>
+                            <h5>Crie sua nova senha</h5>
                             <Form onSubmit={handleSubmitNewPassword}>
                                 <FloatingLabel label="Nova senha">
                                     <Form.Control

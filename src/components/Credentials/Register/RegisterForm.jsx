@@ -92,6 +92,8 @@ function RegisterForm() {
             <Col xs={8} sm={5} md={4} lg={3} >
                 {sendCodeForm && (
                     <>
+                    <h2 className="mb-4">Criação de conta</h2>
+                    <h5>Use um e-mail válido</h5>
                         <Form onSubmit={handleSubmitSendCode}>
                             <FloatingLabel label="E-mail">
                                 <Form.Control
@@ -101,7 +103,7 @@ function RegisterForm() {
                                     onChange={handleEmailChange}
                                     placeholder="E-mail" />
                             </FloatingLabel>
-                            <Button type="submit">Enviar código</Button>
+                            <Button type="submit">Enviar código de verificação</Button>
                         </Form>
                     </>
                 )}

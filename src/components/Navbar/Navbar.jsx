@@ -49,7 +49,7 @@ export default function NavbarComponent() {
           </MDBNavbarToggler>
           <MDBCollapse navbar show={showNavNoTogglerSecond}>
             <MDBNavbarNav className='mb-2 mb-lg-0 justify-content-center'>
-              <div className="d-flex mx-auto">
+              <div className="d-flex align-items-center">
 
                 <MDBNavbarItem>
                   <CustomMDBNavbarLink href='/quotes'><MDBIcon fas icon="comments" /></CustomMDBNavbarLink>
@@ -66,37 +66,29 @@ export default function NavbarComponent() {
                       <CustomMDBNavbarLink href='/my_quotes'><MDBIcon fas icon="address-book" /></CustomMDBNavbarLink>
                     </MDBNavbarItem>
 
+
+
                   </>
                   :
                   <>
                     <MDBNavbarItem>
                       <CustomMDBNavbarLink href='/login'><MDBIcon fas icon="sign-in-alt" /></CustomMDBNavbarLink>
                     </MDBNavbarItem>
-
-
                   </>
                 }
               </div>
-              <>
-                <MDBNavbarItem className='' >
-                  <MDBNavbarLink active onClick={() => useModal({ title: `Usuário ${username}`, paragraph: ``, buttons: [{ text: "Deslogar", action: [logoff, handleNavToggler, "handleClose()"] }] })} className='text-secondary'>Logado como {username}</MDBNavbarLink>
-                </MDBNavbarItem>
-              </>
+           
+              <MDBNavbarItem className='ms-auto' >
+                <MDBNavbarLink active onClick={() => useModal({
+                  title: `Usuário ${username}`,
+                  paragraph: ``,
+                  buttons: [{ text: "Deslogar", action: [logoff, handleNavToggler, "handleClose()"] }]
+                })} className='text-secondary'>Logado como {username}</MDBNavbarLink>
+              </MDBNavbarItem>
             </MDBNavbarNav>
-
           </MDBCollapse>
         </MDBContainer>
       </MDBNavbar>
     </>
   )
 }
-
-/*
- <MDBNavbarItem className=''> 
-                    <CustomMDBNavbarLink href='/register'>Criar conta</CustomMDBNavbarLink>
-                  </MDBNavbarItem>
-              <MDBNavbarItem>
-                <CustomMDBNavbarLink href='/new_password'>New Password</CustomMDBNavbarLink>
-              </MDBNavbarItem>
-
-*/
