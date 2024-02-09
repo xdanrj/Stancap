@@ -10,7 +10,7 @@ import {
 } from 'mdb-react-ui-kit';
 
 export const MDBTabs = styled(originalMDBTabs).attrs(() => ({
-    className: "mb-3"
+    className: "my-3"
 }))`
 
 `;
