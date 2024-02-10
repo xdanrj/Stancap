@@ -16,8 +16,8 @@ export default class quoteEditingServices {
         }
     }
 
-    async getQuote(dados) {
-        const response = await this.axios.post('/search_quote', dados)
+    async getQuote(data) {
+        const response = await this.axios.post('/search_quote', data)
         if (response.data) {
             return response.data
         } else {
@@ -25,8 +25,8 @@ export default class quoteEditingServices {
         }
     }
 
-    async addQuote(dados) {
-        const response = await this.axios.post('/add_quote', dados)
+    async addQuote(data) {
+        const response = await this.axios.post('/add_quote', data)
         if (response.data) {
             return true
         } else {
@@ -45,9 +45,10 @@ export default class quoteEditingServices {
     }
 
     async deleteQuote(quoteId, userId) {
-        console.log("quoteId: ", quoteId)
-        console.log("userid: ", userId)
-        const response = await this.axios.delete('/delete_quote', {quoteId, userId})
+        const data = {quoteId, userId}
+        console.log(quoteId)
+        console.log(userId)
+        const response = await this.axios.delete(`/delete_quote/${quoteId}/${userId}`)
         console.log(response)
         if (response.status === 200) {
             return true

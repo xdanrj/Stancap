@@ -37,7 +37,8 @@ export default function SummaryQuote() {
     const handleDeleteQuote = async (quoteId) => {
         try {
             console.log(quoteId)
-            const response = await quoteService.deleteQuote(quoteId, {userId: userId[0]})
+            console.log(userId[0])
+            const response = await quoteService.deleteQuote(quoteId, userId[0])
             if (response) {
                 useAlert("Quote deletada com sucesso")
             } else {
@@ -62,7 +63,7 @@ export default function SummaryQuote() {
                                             <Paragraph>{data.quotes[0].quote} </Paragraph>
                                             <ParagraphAutor>—{data.quoteType == "single" ? data.author : data.quotes[0].author}</ParagraphAutor>
                                             <MdbIcon icon="info-circle" />
-                                            <MdbIcon icon="trash-alt" onClick={() => handleDeleteQuote({ _id: data._id })} />
+                                            <MdbIcon icon="trash-alt" onClick={() => handleDeleteQuote(data._id)} />
                                             <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id, data.quoteType)} />                                           
                                         </InternalContainer>
                                     </MinimalQuoteContainer>

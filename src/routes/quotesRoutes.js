@@ -55,16 +55,29 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.delete("/delete_quote", requireToken, async (req, res) => {
+  app.delete("/delete_quote/:quoteId/:userId", requireToken, async (req, res) => {
     try {
-      const reqBodyAqui = await req.body
-      console.log(reqBodyAqui)
-      //const response = await Quotes.deleteMany(req.body)
-      if (response) {
-        res.status(200).send(true)
+      const quoteId = {_id: req.params.quoteId}
+      const userId = req.params.userId
+      const selectedQuote = await selectQuote(quoteId)
+      if(selectedQuote[0].uploadByUser === userId){
+        const response = await Quotes.deleteMany(quoteId)
+        console.log(response.deletedCount)
+        console.log(response)
+        if(response.deletedCount > 0) {
+          console.log("quote deletada")
+          res.status(200).send(true)
+        }
       } else {
+        console.log("nao deletada")
         res.status(400).send(false)
       }
+      //console.log(selectedQuote[0])
+      /*if (response) {
+        
+      } else {
+        
+      }*/
     } catch (error) {
       res.status(400).json({message: error})
     }
