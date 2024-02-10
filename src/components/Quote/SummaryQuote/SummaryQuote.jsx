@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import dayjs from "dayjs"
 import { MinimalQuoteContainer, InternalContainer, Paragraph, ParagraphAutor, MdbIcon } from "./SummaryQuoteStyles";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Button } from "react-bootstrap";
 import quoteEditingServices from "../../../services/quoteServices"
 import { useNavigate } from "react-router-dom";
 import QuoteInfo from "./QuoteInfo/QuoteInfo";
@@ -15,6 +15,7 @@ export default function SummaryQuote() {
     const [quotesResponse, setQuotesResponse] = useState([])
     const [quotesResponseArray, setQuotesResponseArray] = useState([])
     const [userId, setUserId] = useState([localStorage.getItem("userId")])
+    const [deletedQuotes, setDeletedQuotes] = useState([])
 
     useEffect(() => {
         async function fetchQuotes() {
@@ -39,14 +40,32 @@ export default function SummaryQuote() {
             console.log(quoteId)
             console.log(userId[0])
             const response = await quoteService.deleteQuote(quoteId, userId[0])
+            console.log(response)
             if (response) {
-                useAlert("Quote deletada com sucesso")
+                setDeletedQuotes(deletedQuotes => [...deletedQuotes, response])
+                useAlert("Quote excluída com sucesso")
             } else {
-                useAlert("Erro ao tentar deletar quote")
+                useAlert("Erro ao tentar excluir quote")
             }
         } catch (error) {
             useAlert(error)
             console.log(error)
+        }
+    }
+
+    const quoteToRecover = async (deletedQuoteId) => {
+        return deletedQuotes.find((obj) => obj._id === deletedQuoteId)
+    }
+
+    const handleUndoDeleteQuote = async (deletedQuoteId) => {
+        try {
+            const recoveredQuote = quoteToRecover(deletedQuoteId)
+            if(recoveredQuote){
+                await quoteService.addQuote(quoteToRecover)                
+                useAlert("Exclusão desfeita")
+            }            
+        } catch (error) {
+            
         }
     }
 
@@ -64,7 +83,16 @@ export default function SummaryQuote() {
                                             <ParagraphAutor>—{data.quoteType == "single" ? data.author : data.quotes[0].author}</ParagraphAutor>
                                             <MdbIcon icon="info-circle" />
                                             <MdbIcon icon="trash-alt" onClick={() => handleDeleteQuote(data._id)} />
-                                            <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id, data.quoteType)} />                                           
+                                            <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id, data.quoteType)} />
+
+                                            {quoteToRecover(data._id) ?
+                                                <>
+                                                    <Button onClick={handleUndoDeleteQuote(data._id)}> Desfazer exclusão</Button>
+                                                </>
+                                                :
+                                                <></>
+                                            }
+
                                         </InternalContainer>
                                     </MinimalQuoteContainer>
                                 </div>
@@ -74,7 +102,7 @@ export default function SummaryQuote() {
                         )
                     }
                 </Col>
-            </Row>
+            </Row >
         </>
     )
 }

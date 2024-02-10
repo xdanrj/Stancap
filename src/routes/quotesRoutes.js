@@ -60,24 +60,19 @@ export const quotesRoutes = (app) => {
       const quoteId = {_id: req.params.quoteId}
       const userId = req.params.userId
       const selectedQuote = await selectQuote(quoteId)
+      console.log(selectedQuote[0])
       if(selectedQuote[0].uploadByUser === userId){
         const response = await Quotes.deleteMany(quoteId)
         console.log(response.deletedCount)
         console.log(response)
         if(response.deletedCount > 0) {
           console.log("quote deletada")
-          res.status(200).send(true)
+          res.status(200).send(selectedQuote[0])
         }
       } else {
         console.log("nao deletada")
         res.status(400).send(false)
       }
-      //console.log(selectedQuote[0])
-      /*if (response) {
-        
-      } else {
-        
-      }*/
     } catch (error) {
       res.status(400).json({message: error})
     }
