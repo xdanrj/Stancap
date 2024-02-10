@@ -10,6 +10,7 @@ import { useAlertMsg } from "../../Alert/AlertContext";
 const quoteService = new quoteEditingServices()
 
 export default function SummaryQuote() {
+
     const useAlert = useAlertMsg()
     const navigate = useNavigate()
     const [quotesResponse, setQuotesResponse] = useState([])
@@ -18,6 +19,7 @@ export default function SummaryQuote() {
     const [deletedQuotes, setDeletedQuotes] = useState([])
 
     useEffect(() => {
+        setDeletedQuotes([])
         async function fetchQuotes() {
             let query = { "uploadByUser": userId }
             const response = await quoteService.getQuote(query)
@@ -49,23 +51,18 @@ export default function SummaryQuote() {
             }
         } catch (error) {
             useAlert(error)
-            console.log(error)
-        }
-    }
-
-    const quoteToRecover = async (deletedQuoteId) => {
-        return deletedQuotes.find((obj) => obj._id === deletedQuoteId)
-    }
-
-    const handleUndoDeleteQuote = async (deletedQuoteId) => {
-        try {
-            const recoveredQuote = quoteToRecover(deletedQuoteId)
-            if(recoveredQuote){
-                await quoteService.addQuote(quoteToRecover)                
+            console.log(error)        }}
+    const handleUndoDeleteQuote = async (quoteId) => {
+        try {            
+            const recoveredQuote = deletedQuotes.find((obj) => obj._id === quoteId)
+            console.log(recoveredQuote)
+            if (recoveredQuote) {
+                await quoteService.addQuote(recoveredQuote)
+                setDeletedQuotes(deletedQuotes.filter(item => item._id !== quoteId))
                 useAlert("Exclusão desfeita")
-            }            
+            }
         } catch (error) {
-            
+
         }
     }
 
@@ -85,9 +82,9 @@ export default function SummaryQuote() {
                                             <MdbIcon icon="trash-alt" onClick={() => handleDeleteQuote(data._id)} />
                                             <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id, data.quoteType)} />
 
-                                            {quoteToRecover(data._id) ?
+                                            {deletedQuotes.find((obj) => obj._id === data._id) ?
                                                 <>
-                                                    <Button onClick={handleUndoDeleteQuote(data._id)}> Desfazer exclusão</Button>
+                                                    <Button onClick={() => handleUndoDeleteQuote(data._id)}> Desfazer exclusão</Button>
                                                 </>
                                                 :
                                                 <></>
