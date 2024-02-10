@@ -16,11 +16,12 @@ export default function AddQuote() {
 
     return (
         <>
-            <MDBTabs justify>
-                <MDBTabsItem>
-                    <MDBTabsLink onClick={() => handleBasicClick('singleQuoteTab')} active={basicActive === 'singleQuoteTab'}>Quote única</MDBTabsLink>
+        
+            <MDBTabs className="justify-content-center">
+                <MDBTabsItem >
+                    <MDBTabsLink  onClick={() => handleBasicClick('singleQuoteTab')} active={basicActive === 'singleQuoteTab'}>Quote única</MDBTabsLink>
                 </MDBTabsItem>
-                <MDBTabsItem>
+                <MDBTabsItem > 
                     <MDBTabsLink onClick={() => handleBasicClick('multipleQuoteTab')} active={basicActive === 'multipleQuoteTab'}>
                         Diálogo
                     </MDBTabsLink >
@@ -45,6 +46,7 @@ export default function AddQuote() {
                         type={"addQuote"} />
                 </MDBTabsPane>
             </MDBTabsContent>
+           
         </>
     )
 }

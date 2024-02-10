@@ -37,9 +37,11 @@ export default function SummaryQuote() {
     const handleDeleteQuote = async (quoteId) => {
         try {
             console.log(quoteId)
-            const response = await quoteService.deleteQuote(quoteId, userId)
+            const response = await quoteService.deleteQuote(quoteId, {userId: userId[0]})
             if (response) {
                 useAlert("Quote deletada com sucesso")
+            } else {
+                useAlert("Erro ao tentar deletar quote")
             }
         } catch (error) {
             useAlert(error)

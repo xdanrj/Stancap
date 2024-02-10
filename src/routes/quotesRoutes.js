@@ -57,8 +57,9 @@ export const quotesRoutes = (app) => {
 
   app.delete("/delete_quote", requireToken, async (req, res) => {
     try {
-      console.log(req.body)
-      const response = await Quotes.deleteMany(req.body)
+      const reqBodyAqui = await req.body
+      console.log(reqBodyAqui)
+      //const response = await Quotes.deleteMany(req.body)
       if (response) {
         res.status(200).send(true)
       } else {

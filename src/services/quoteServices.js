@@ -45,8 +45,11 @@ export default class quoteEditingServices {
     }
 
     async deleteQuote(quoteId, userId) {
+        console.log("quoteId: ", quoteId)
+        console.log("userid: ", userId)
         const response = await this.axios.delete('/delete_quote', {quoteId, userId})
-        if (response) {
+        console.log(response)
+        if (response.status === 200) {
             return true
         } else {
             return false
