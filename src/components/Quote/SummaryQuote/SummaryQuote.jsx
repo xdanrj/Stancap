@@ -51,9 +51,11 @@ export default function SummaryQuote() {
             }
         } catch (error) {
             useAlert(error)
-            console.log(error)        }}
+            console.log(error)
+        }
+    }
     const handleUndoDeleteQuote = async (quoteId) => {
-        try {            
+        try {
             const recoveredQuote = deletedQuotes.find((obj) => obj._id === quoteId)
             console.log(recoveredQuote)
             if (recoveredQuote) {
@@ -76,20 +78,23 @@ export default function SummaryQuote() {
                                 <div key={data._id}>
                                     <MinimalQuoteContainer>
                                         <InternalContainer>
+
                                             <Paragraph>{data.quotes[0].quote} </Paragraph>
                                             <ParagraphAutor>—{data.quoteType == "single" ? data.author : data.quotes[0].author}</ParagraphAutor>
-                                            <MdbIcon icon="info-circle" />
-                                            <MdbIcon icon="trash-alt" onClick={() => handleDeleteQuote(data._id)} />
-                                            <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id, data.quoteType)} />
-
                                             {deletedQuotes.find((obj) => obj._id === data._id) ?
                                                 <>
-                                                    <Button onClick={() => handleUndoDeleteQuote(data._id)}> Desfazer exclusão</Button>
+                                                    <Col>
+                                                        <Button size="sm position-absolute" onClick={() => handleUndoDeleteQuote(data._id)}> Desfazer exclusão</Button>
+                                                    </Col>
                                                 </>
                                                 :
-                                                <></>
-                                            }
+                                                <>
+                                                    <MdbIcon icon="info-circle" />
+                                                    <MdbIcon icon="trash-alt" onClick={() => handleDeleteQuote(data._id)} />
+                                                    <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id, data.quoteType)} />
 
+                                                </>
+                                            }
                                         </InternalContainer>
                                     </MinimalQuoteContainer>
                                 </div>
