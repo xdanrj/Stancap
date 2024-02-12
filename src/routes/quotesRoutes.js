@@ -1,6 +1,6 @@
 import { Quotes } from "../models/Quotes.js"
 import { selectQuote, quoteExists } from "./commonFunctions.js"
-import requireToken from "./middleware.js"
+import { requireUserToken } from "./middleware.js"
 
 export const quotesRoutes = (app) => {
   async function functionEditQuote(selectedQuote, body) {
@@ -41,7 +41,7 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.patch("/edit_quote", requireToken, async (req, res) => {
+  app.patch("/edit_quote", requireUserToken, async (req, res) => {
     try {
       const selectedQuote = await selectQuote(req.body)
       if (selectedQuote) {
@@ -55,7 +55,7 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.delete("/delete_quote/:quoteId/:userId", requireToken, async (req, res) => {
+  app.delete("/delete_quote/:quoteId/:userId", requireUserToken, async (req, res) => {
     try {
       const quoteId = {_id: req.params.quoteId}
       const userId = req.params.userId
@@ -78,7 +78,7 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.post("/add_quote", requireToken, async (req, res) => {
+  app.post("/add_quote", requireUserToken, async (req, res) => {
     const quote = req.body
     try {
       const newQuote = new Quotes(quote)

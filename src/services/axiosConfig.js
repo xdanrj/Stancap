@@ -10,7 +10,7 @@ axiosInstance.interceptors.response.use(
         // Se o erro tem uma resposta, retorna a resposta mesmo que seja um erro 4xx
         if (error.response) {
             console.log(error)
-            if(error.response.status === 498) {
+            if (error.response.status === 498) {
                 alert("Token de usuário expirado. Faça login novamente.")
                 //userService.logout()
             }
@@ -23,14 +23,23 @@ axiosInstance.interceptors.response.use(
 
 axiosInstance.interceptors.request.use(
     (config) => {
-        const userToken = localStorage.getItem("token")
-        console.log("userToken aqui: ", userToken)
+        if (localStorage.getItem("userToken")) {
+            const userToken = localStorage.getItem("userToken")
+            console.log("userToken aqui: ", userToken)
 
-        if (userToken) {
-            config.headers['Authorization'] = `Bearer ${userToken}`
+            if (userToken) {
+                config.headers['Authorization'] = `Bearer ${userToken}`
+                return config
+            }
+            //nao terminei ainda
+        } else if (localStorage.getItem("tempToken")) {
+            const tempToken = localStorage.getItem("tempToken")
+            console.log("tempToken aqui: ", tempToken)
+            if (tempToken) {
+                config.headers
+            }
         }
 
-        return config
     },
     (error) => {
         return Promise.reject(error)

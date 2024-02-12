@@ -1,7 +1,7 @@
 import twilio from "twilio"
 import { User } from "../models/User.js"
 import { selectUser, userExists } from "./commonFunctions.js"
-import requireToken from "./middleware.js"
+import { requireUserToken } from "./middleware.js"
 import _ from "lodash"
 import bcrypt from 'bcrypt'
 
@@ -56,7 +56,7 @@ export const userRoutes = (app) => {
     }
   })
 
-  app.patch("/edit_user", requireToken, async (req, res) => {
+  app.patch("/edit_user", requireUserToken, async (req, res) => {
     try {
       const selectedUser = await selectUser(req.body)
       const response = await functionEditUser(selectedUser, req.body)

@@ -6,11 +6,11 @@ export default class userServices {
         this.axios = axiosInstance
     }
     authenticatedUser() {
-        return localStorage.getItem("token") ? true : false
+        return localStorage.getItem("userToken") ? true : false
     }
 
     async logout() {
-        localStorage.removeItem("token")  
+        localStorage.removeItem("userToken")  
         localStorage.removeItem("userId")      
     }
 

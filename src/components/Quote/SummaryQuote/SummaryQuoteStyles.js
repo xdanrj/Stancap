@@ -20,7 +20,7 @@ export const IconContainer = styled.div.attrs(() => ({
 `
 
 export const Paragraph = styled.p.attrs(() => ({
-    className: "font-italic text-start col-6"
+    className: "font-italic text-start col-6 text-truncate"
 }))`
     background-color: rgb(40, 40, 40);
     white-space: nowrap;

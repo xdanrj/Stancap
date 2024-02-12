@@ -78,7 +78,6 @@ export default function SummaryQuote() {
                                 <div key={data._id}>
                                     <MinimalQuoteContainer>
                                         <InternalContainer>
-
                                             <Paragraph>{data.quotes[0].quote} </Paragraph>
                                             <ParagraphAutor>—{data.quoteType == "single" ? data.author : data.quotes[0].author}</ParagraphAutor>
                                             {deletedQuotes.find((obj) => obj._id === data._id) ?

@@ -49,7 +49,7 @@ export default class loginAndRegisterServices {
         console.log("response do login abaixo:")
         console.log(response)
         if (response.status === 200) {
-            localStorage.setItem("token", response.data.token)
+            localStorage.setItem("userToken", response.data.token)
             localStorage.setItem("userId", response.data.userId)
             return true
             // se não: já retorna a "{message}" da API
@@ -59,7 +59,7 @@ export default class loginAndRegisterServices {
     }
 
     async isUserTokenValid() {
-        const token = localStorage.getItem("token")
+        const token = localStorage.getItem("userToken")
         if(!token) {
             return false
         }

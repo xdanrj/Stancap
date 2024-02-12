@@ -5,7 +5,7 @@ import { connectDB } from "./src/infra/db.js";
 import { userRoutes } from "./src/routes/userRoutes.js";
 import { quotesRoutes } from "./src/routes/quotesRoutes.js";
 import { loginAndRegisterRoutes } from "./src/routes/loginAndRegisterRoutes.js";
-import requireToken from "./src/routes/middleware.js";
+import { requireUserToken } from "./src/routes/middleware.js";
 
 import dotenv from "dotenv"
 dotenv.config()
@@ -41,7 +41,7 @@ app.get("/", async (req, res) => {
   res.status(200).send({ message: "API is ready to go!" });
 });
 //nem todas rotas precisam do token
-//app.use(requireToken)
+//app.use(requireUserToken)
 
 userRoutes(app)
 quotesRoutes(app)
