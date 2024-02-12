@@ -82,10 +82,8 @@ export default function SummaryQuote() {
                                             <Paragraph>{data.quotes[0].quote} </Paragraph>
                                             <ParagraphAutor>—{data.quoteType == "single" ? data.author : data.quotes[0].author}</ParagraphAutor>
                                             {deletedQuotes.find((obj) => obj._id === data._id) ?
-                                                <>
-                                                    <Col>
-                                                        <Button size="sm position-absolute" onClick={() => handleUndoDeleteQuote(data._id)}> Desfazer exclusão</Button>
-                                                    </Col>
+                                                <>                                                  
+                                                    <MdbIcon className="col-3"  fas icon="undo-alt" onClick={() => handleUndoDeleteQuote(data._id)}/>                                                    
                                                 </>
                                                 :
                                                 <>

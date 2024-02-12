@@ -44,6 +44,8 @@ export default function QuoteInfo(props) {
                         quoteData.context :
                         "Contexto não especificado"}
                     </TextParagraph>
+                    <TextTitle>Tags</TextTitle>
+                    <TextParagraph>{quoteData.tags ? quoteData.tags.join(" • ") : "Nenhuma tag adicionada (isso não deveria acontecer, contate o dev"}</TextParagraph>
                 </ModalBody>
             </Modal>
         </>
