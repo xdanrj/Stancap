@@ -4,11 +4,11 @@ import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 import { Row, Col } from "react-bootstrap";
-
-import loginAndRegisterServices from "../../../services/loginAndRegisterServices"
-import { useAlertMsg } from "../../Alert/AlertContext";
+import loginAndRegisterServices from "../../services/loginAndRegisterServices";
+import { useAlertMsg } from "../../components/Alert/AlertContext";
 const loginAndRegisterService = new loginAndRegisterServices()
-import { passwordValidation } from "../../../Validations/RegisterValidations";
+import { passwordValidation } from "../../Validations/RegisterValidations";
+
 export default function NewPasswordForm() {
     const navigate = useNavigate()
     const useAlert = useAlertMsg()
