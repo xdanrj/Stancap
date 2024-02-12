@@ -27,14 +27,12 @@ export const requireUserToken = (req, res, next) => {
     } catch (error) {
         console.log("caiu no catcherror")
         if (error instanceof jwt.TokenExpiredError) {            
-            return res.status(498).json({ message: "Token de usuário expirado. Faça login novamente." })
-            
+            return res.status(498).json({ message: "Token de usuário expirado. Faça login novamente." })            
         }
     }
 }
 
-
-export const tempToken = (req, res, next) => {
+export const requireTempToken = (req, res, next) => {
     let tempToken
     if(req.headers['authorization']){
         const rawtempToken = req.headers['authorization']
@@ -45,7 +43,7 @@ export const tempToken = (req, res, next) => {
     }
 
     if(!tempToken) {
-        return res.status(401).json({message: "Token de usuário não fornecido. Faça login."})
+        return res.status(401).json({message: "Token temporário não encontrado. Tente novamente."})
     }
 
     try {
@@ -53,12 +51,12 @@ export const tempToken = (req, res, next) => {
         if(legitToken) {
             next()
         } else {
-            return res.status(401).json({message: "Token de usuário inválido. Faça login."})
+            return res.status(401).json({message: "Token temporário inválido. Tente novamente."})
         }
     } catch (error) {
         console.log("caiu no catcherror")
         if (error instanceof jwt.TokenExpiredError) {            
-            return res.status(498).json({ message: "Token de usuário expirado. Faça login novamente." })
+            return res.status(498).json({ message: "Token temporário expirado. Tente novamente." })
             
         }
     }

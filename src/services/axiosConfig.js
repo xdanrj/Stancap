@@ -31,12 +31,13 @@ axiosInstance.interceptors.request.use(
                 config.headers['Authorization'] = `Bearer ${userToken}`
                 return config
             }
-            //nao terminei ainda
+
         } else if (localStorage.getItem("tempToken")) {
             const tempToken = localStorage.getItem("tempToken")
             console.log("tempToken aqui: ", tempToken)
             if (tempToken) {
-                config.headers
+                config.headers['TempAuthorization'] = `Bearer ${tempToken}`
+                return config
             }
         }
 
