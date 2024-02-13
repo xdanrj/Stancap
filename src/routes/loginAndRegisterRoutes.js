@@ -150,6 +150,7 @@ export const loginAndRegisterRoutes = (app) => {
         return userToken
     }
 
+    // não está sendo usado no momento
     function createTempToken(genericString) {
         const payload = {
             genericString: genericString

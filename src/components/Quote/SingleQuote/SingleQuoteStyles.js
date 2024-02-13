@@ -5,6 +5,7 @@ export const Paragraph = styled.p.attrs(() => ({
     className: "mb-0 mt-2 font-italic"
 }))`
     font-style: italic;
+    word-wrap: break-word;
 `;
 
 export const ParagraphAutor = styled.p.attrs((props) => ({

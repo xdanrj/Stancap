@@ -5,16 +5,21 @@ import { connectDB } from "./src/infra/db.js";
 import { userRoutes } from "./src/routes/userRoutes.js";
 import { quotesRoutes } from "./src/routes/quotesRoutes.js";
 import { loginAndRegisterRoutes } from "./src/routes/loginAndRegisterRoutes.js";
-import { requireUserToken } from "./src/routes/middleware.js";
 
 import dotenv from "dotenv"
 dotenv.config()
-
 const PORT = process.env.PORT || 3000;
 const app = express();
+console.log("process.env.MAIN_DOMAIN: ", process.env.MAIN_DOMAIN)
+
+const corsOptions = {
+  origin: process.env.MAIN_DOMAIN, 
+  optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use(cors());
 mongoose.set("strictQuery", false);
 
 app.use((req, res, next) => {
