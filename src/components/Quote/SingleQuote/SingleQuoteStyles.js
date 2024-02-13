@@ -9,7 +9,7 @@ export const Paragraph = styled.p.attrs(() => ({
 `;
 
 export const ParagraphAutor = styled.p.attrs((props) => ({
-    className: `mt-2 px-2`
+    className: `mt-2 px-2 text-truncate`
 }))`
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0;

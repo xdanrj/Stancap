@@ -10,9 +10,9 @@ import {
 } from 'mdb-react-ui-kit';
 
 export const MDBTabs = styled(originalMDBTabs).attrs(() => ({
-    className: "my-3"
+    className: "mb-3"
 }))`
-
+    margin-top: -10rem;
 `;
 
 export const MDBTabsLink = styled(originalMDBTabsLink).attrs(() => ({

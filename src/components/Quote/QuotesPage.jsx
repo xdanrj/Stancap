@@ -91,7 +91,8 @@ export default function QuotesPage() {
   */
   return (
     <>
-      <SearchBar searchFunction={fetchQuotesBySearch} urlQuery={urlQuery} />
+   
+      <SearchBar searchFunction={fetchQuotesBySearch} urlQuery={urlQuery}/>
 
       <Row className="justify-content-center">
         <Col xs={12} sm={9} md={7} lg={6} xl={5} >
@@ -99,6 +100,7 @@ export default function QuotesPage() {
           <MultipleQuote multipleQuotes={multipleQuotesArray} />
         </Col>
       </Row>
+     
     </>
   )
 }

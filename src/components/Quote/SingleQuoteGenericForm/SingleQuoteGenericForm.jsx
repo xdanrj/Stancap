@@ -163,7 +163,7 @@ export default function SingleQuoteGenericForm(props) {
                             <Col>
                                 <FormGroup>
                                     <FloatingLabel label="Autor">
-                                        <Form.Control name="author" placeholder="Autor" onChange={handleGenericChange} value={quoteData.author}>
+                                        <Form.Control name="author" placeholder="Autor" maxLength={50} onChange={handleGenericChange} value={quoteData.author}>
                                         </Form.Control>
                                     </FloatingLabel>
                                 </FormGroup>

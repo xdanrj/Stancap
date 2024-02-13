@@ -127,8 +127,7 @@ function RegisterForm() {
                 )}
 
                 {registerForm && (
-                    <>
-                        <h4>Você poderá logar usando e-mail ou username</h4>
+                    <>                      
                         <Form onSubmit={handleSubmitRegister}>
                             <FloatingLabel label="E-mail">
                                 <Form.Control style={{ color: 'grey' }}
