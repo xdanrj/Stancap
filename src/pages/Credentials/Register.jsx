@@ -6,6 +6,7 @@ import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 import { passwordValidation, usernameValidation } from "../../Validations/RegisterValidations";
 import loginAndRegisterServices from "../../services/loginAndRegisterServices";
 import { useAlertMsg } from "../../components/Alert/AlertContext";
+import dayjs from "dayjs";
 const loginAndRegisterService = new loginAndRegisterServices()
 
 function RegisterForm() {
@@ -21,7 +22,7 @@ function RegisterForm() {
     const [sendCodeForm, setSendCodeForm] = useState(true)
     const [checkCodeForm, setCheckCodeForm] = useState(false)
     const [registerForm, setRegisterForm] = useState(false)
-
+    console.log(dayjs())
     const handleSubmitSendCode = async (e) => {
         e.preventDefault()
         try {

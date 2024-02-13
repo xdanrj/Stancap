@@ -3,6 +3,7 @@ import { User } from "../models/User.js";
 import { userExists } from "./commonFunctions.js";
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
+import dayjs from "dayjs";
 
 export const loginAndRegisterRoutes = (app) => {
     const apiUrl = process.env.API_URL
@@ -12,7 +13,9 @@ export const loginAndRegisterRoutes = (app) => {
     const accountSid = process.env.TWILIO_ACCOUNT_SID
     const authToken = process.env.TWILIO_AUTH_TOKEN
     const verifySid = process.env.TWILIO_VERIFY_SID
-    const client = twilio(accountSid, authToken)    
+    const client = twilio(accountSid, authToken)   
+    
+    createTempToken(dayjs())
 
     app.get("/testando", async (req, res) => {
         try {
@@ -36,8 +39,8 @@ export const loginAndRegisterRoutes = (app) => {
                 const userId = user._id
                 const correctCredentials = bcrypt.compare(password, user.password)
                 if (correctCredentials) {
-                    const token = createToken(user._id)
-                    res.status(200).json({ token: token, userId: userId })
+                    const userToken = createUserToken(user._id)
+                    res.status(200).json({ userToken: userToken, userId: userId })
                 }
             }
             else if (!correctCredentials) {
@@ -139,11 +142,19 @@ export const loginAndRegisterRoutes = (app) => {
         } catch (error) { res.status(400).json({ message: error }) }
     })
 
-    function createToken(userId) {
+    function createUserToken(userId) {
         const payload = {
             userId: userId
         }
-        const token = jwt.sign(payload, secretKey, { expiresIn: '168h' })
-        return token
+        const userToken = jwt.sign(payload, secretKey, { expiresIn: '168h' })
+        return userToken
+    }
+
+    function createTempToken(genericString) {
+        const payload = {
+            genericString: genericString
+        }
+        const tempToken = jwt.sign(payload, secretKey, { expiresIn: '30m' })
+        return tempToken
     }
 }

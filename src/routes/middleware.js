@@ -34,12 +34,12 @@ export const requireUserToken = (req, res, next) => {
 
 export const requireTempToken = (req, res, next) => {
     let tempToken
-    if(req.headers['authorization']){
-        const rawtempToken = req.headers['authorization']
+    if(req.headers['tempauthorization']){
+        const rawtempToken = req.headers['tempauthorization']
         tempToken = rawtempToken.replace('Bearer ', '').trim()
     }
     else{
-        res.send({message: "Sem header de token de autorização."})
+        res.send({message: "Sem header de token temporário."})
     }
 
     if(!tempToken) {
