@@ -6,6 +6,8 @@ export default class loginAndRegisterServices {
         this.axios = axiosInstance
     }
 
+    
+
     async sendCode(email) {
         const response = await this.axios.post('/send_code', email)        
         console.log(response)
@@ -23,7 +25,6 @@ export default class loginAndRegisterServices {
             ...dados.code
         }
         const response = await this.axios.post('/check_code', emailAndCode)
-        // se recebeu um objeto com "{response}":
         if (response.data.response) {
             return true
         }
@@ -34,7 +35,6 @@ export default class loginAndRegisterServices {
 
     async register(dados) {
         const response = await this.axios.post('/register', dados)
-        // se recebeu um objeto com "{response}":
 
         if (response.data.response) {
             return true
