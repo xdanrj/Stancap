@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { device } from '../../../../CommonStyles/device'
+import { device } from '../../../CommonStyles/device'
 import { MDBIcon as originalMDBIcon } from 'mdb-react-ui-kit'
 import { Modal as originalModal } from 'react-bootstrap'
 

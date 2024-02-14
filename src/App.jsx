@@ -11,7 +11,7 @@ import NewPassword from './pages/Credentials/NewPassword';
 import Testes from './components/Testes';
 import AddQuote from './pages/Quotes/AddQuote/AddQuote';
 import EditQuote from './pages/Quotes/EditQuote';
-import MyQuotes from './pages/Quotes/MyQuotes';
+import MyQuotes from './pages/Quotes/MyQuotes/MyQuotes';
 import ProtectedRoutes from './pages/Credentials/ProtectedRoutes';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";

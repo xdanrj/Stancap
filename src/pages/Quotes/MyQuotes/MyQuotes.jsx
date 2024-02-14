@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react"
 import dayjs from "dayjs"
-import { MinimalQuoteContainer, InternalContainer, Paragraph, ParagraphAutor, MdbIcon } from "./SummaryQuoteStyles";
+import { MinimalQuoteContainer, InternalContainer, Paragraph, ParagraphAutor, MdbIcon } from "./MyQuotesStyles";
 import { Col, Row, Button } from "react-bootstrap";
 import quoteEditingServices from "../../../services/quoteServices"
 import { useNavigate } from "react-router-dom";
-import QuoteInfo from "./QuoteInfo/QuoteInfo";
-import { useAlertMsg } from "../../Alert/AlertContext";
+import QuoteInfo from "../../../components/Quote/QuoteInfo/QuoteInfo";
+import { useAlertMsg } from "../../../components/Alert/AlertContext"
+import { MyQuotesDiv } from "./MyQuotesStyles";
 const quoteService = new quoteEditingServices()
 
-export default function SummaryQuote() {
+export default function MyQuotes() {
     const useAlert = useAlertMsg()
     const navigate = useNavigate()
     const [quotesResponse, setQuotesResponse] = useState([])
@@ -68,6 +69,7 @@ export default function SummaryQuote() {
 
     return (
         <>
+        <MyQuotesDiv>
             <Row className="justify-content-center">
                 <Col xs={12} sm={8} md={6} lg={5}>
                     {
@@ -100,6 +102,7 @@ export default function SummaryQuote() {
                     }
                 </Col>
             </Row >
+            </MyQuotesDiv>
         </>
     )
 }

@@ -5,7 +5,7 @@ import { sourceLogoSelector } from "../SourceCommonFunctions";
 import { QuoteHeader, QuoteContainer, SourceLogo } from "../../../CommonStyles/CommonStyles";
 import { Ballon, Paragraph, ParagraphAutor } from "./MultipleQuoteStyles";
 const quoteService = new quoteEditingServices();
-import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
+import QuoteInfo from "../QuoteInfo/QuoteInfo";
 import InfoIcon from "../InfoIcon/InfoIcon";
 
 export default function MultipleQuotes({ multipleQuotes }) {

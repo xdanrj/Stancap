@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { NormalDate, NormalDateAndHour } from "../../../../Formatting/DateFormatting";
+import { NormalDate, NormalDateAndHour } from "../../../Formatting/DateFormatting";
 import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph } from "./QuoteInfoStyles";
-import quoteEditingServices from "../../../../services/quoteServices";
+import quoteEditingServices from "../../../services/quoteServices";
 import _ from "lodash";
 
 export default function QuoteInfo(props) {

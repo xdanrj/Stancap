@@ -5,7 +5,7 @@ import { sourceLogoSelector } from "../SourceCommonFunctions";
 import { QuoteHeader, SourceLogo, QuoteContainer } from "../../../CommonStyles/CommonStyles";
 import { Paragraph, ParagraphAutor, ParagraphDate } from "./SingleQuoteStyles"
 
-import QuoteInfo from "../SummaryQuote/QuoteInfo/QuoteInfo";
+import QuoteInfo from "../QuoteInfo/QuoteInfo";
 import { useNavigate } from "react-router-dom";
 import InfoIcon from "../InfoIcon/InfoIcon";
 
