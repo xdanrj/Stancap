@@ -42,6 +42,7 @@ export default function MultipleQuoteInputs(props) {
     }
     return (
         <>
+        <div className="position-relative">
             {props.multipleQuotes[0] && props.multipleQuotes.map((_, index) => (
                 <div key={index}>
                     <Row>
@@ -83,6 +84,7 @@ export default function MultipleQuoteInputs(props) {
                     )}
                 </div>
             ))}
+            </div>
         </>
     )
 }

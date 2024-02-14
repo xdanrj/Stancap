@@ -7,7 +7,6 @@ import { AddQuoteDiv } from "./AddQuoteStyles";
 
 export default function AddQuote() {
     const [basicActive, setBasicActive] = useState('singleQuoteTab');
-
     const handleBasicClick = (value) => {
         if (value === basicActive) {
             return
