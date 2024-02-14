@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import { Form, Col, Row, Dropdown, DropdownButton } from "react-bootstrap";
 import { FloatingLabel, FormGroup, CenteredFormControl, CenteredFormGroup } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
-import MultipleQuoteInputs from "./MultipleQuoteInputs";
+import MultipleQuoteInputs from "./MultipleQuoteInputs/MultipleQuoteInputs";
 import dayjs from "dayjs";
 import { SourceNames } from "../SourceCommonFunctions";
 import { useAlertMsg } from "../../Alert/AlertContext";
@@ -161,7 +161,7 @@ export default function MultipleQuoteGenericForm(props) {
     }
 
     return (
-        <>
+        <>        
             <Row className="justify-content-center">
                 <Col xs={12} sm={8} md={6} lg={5}>
                     <Form onSubmit={handleSubmitQuote}>
@@ -173,7 +173,6 @@ export default function MultipleQuoteGenericForm(props) {
                         <FormGroup className="mt-5 mx-auto">
                             <Row>
                                 <Col>
-
                                     <FloatingLabel label="Data">
                                         <CenteredFormControl name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
                                         </CenteredFormControl>

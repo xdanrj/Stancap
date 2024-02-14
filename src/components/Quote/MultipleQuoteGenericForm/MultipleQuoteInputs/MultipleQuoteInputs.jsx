@@ -1,8 +1,9 @@
 import { React, useState, useEffect } from "react"
 import { Form, Col, Row } from "react-bootstrap";
-import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../CommonStyles/CommonStyles";
-import { MdbIcon, FormGroupMultipleQuote } from "./MultipleQuoteGenericFormStyles";
-import { useAlertMsg } from "../../Alert/AlertContext";
+import { FloatingLabel, FormGroup, CenteredFormControl } from "../../../../CommonStyles/CommonStyles";
+import { MdbIcon, FormGroupMultipleQuote } from "../MultipleQuoteGenericFormStyles";
+import { useAlertMsg } from "../../../Alert/AlertContext";
+import { MultipleQuoteInputsDiv } from "./MultipleQuoteInputsStyles";
 
 export default function MultipleQuoteInputs(props) {
     const useAlert = useAlertMsg()
@@ -42,9 +43,9 @@ export default function MultipleQuoteInputs(props) {
     }
     return (
         <>
-        <div className="position-relative">
+        <MultipleQuoteInputsDiv>
             {props.multipleQuotes[0] && props.multipleQuotes.map((_, index) => (
-                <div key={index}>
+                <div key={index} className="">
                     <Row>
                         <Col>
                             <FormGroup>
@@ -84,7 +85,7 @@ export default function MultipleQuoteInputs(props) {
                     )}
                 </div>
             ))}
-            </div>
+            </MultipleQuoteInputsDiv>
         </>
     )
 }
