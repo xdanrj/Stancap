@@ -86,10 +86,10 @@ function RegisterForm() {
         })
         console.log("registerData: ", registerData)
     }
-
+    
     return (
         <>
-        <Row className="justify-content-center">
+        <Row className="justify-content-center">           
             <Col xs={8} sm={5} md={4} lg={3} >
                 {sendCodeForm && (
                     <>

@@ -150,7 +150,7 @@ export const loginAndRegisterRoutes = (app) => {
         return userToken
     }
 
-    // não está sendo usado no momento
+    // não está sendo usado no momento pois o CORS evita solicitacoes fora do site
     function createTempToken(genericString) {
         const payload = {
             genericString: genericString

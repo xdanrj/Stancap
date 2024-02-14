@@ -3,6 +3,7 @@ import { MDBTabsItem, MDBTabsContent, MDBTabsPane } from 'mdb-react-ui-kit';
 import { MDBTabs, MDBTabsLink } from "./AddQuoteStyles";
 import SingleQuoteGenericForm from "../../../components/Quote/SingleQuoteGenericForm/SingleQuoteGenericForm";
 import MultipleQuoteGenericForm from "../../../components/Quote/MultipleQuoteGenericForm/MultipleQuoteGenericForm";
+import { AddQuoteDiv } from "./AddQuoteStyles";
 
 export default function AddQuote() {
     const [basicActive, setBasicActive] = useState('singleQuoteTab');
@@ -16,6 +17,7 @@ export default function AddQuote() {
 
     return (
         <>
+        <AddQuoteDiv>
             <MDBTabs className="justify-content-center">
                 <MDBTabsItem >
                     <MDBTabsLink  onClick={() => handleBasicClick('singleQuoteTab')} active={basicActive === 'singleQuoteTab'}>Quote única</MDBTabsLink>
@@ -45,6 +47,7 @@ export default function AddQuote() {
                         type={"addQuote"} />
                 </MDBTabsPane>
             </MDBTabsContent>           
+            </AddQuoteDiv>
         </>
     )
 }

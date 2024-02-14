@@ -85,11 +85,12 @@ export default function NewPasswordForm() {
 
     const isPasswordMatching = newPassword.password === newPassword.confirmPassword && newPassword.password !== ''
 
+    //col: 7 6 5 4
     return (
         <>
             <Row className="justify-content-center">
                 
-                <Col xs={7} sm={6} md={5} lg={4} >
+                <Col xs={9} sm={6} md={5} lg={4} >
                     {sendCodeForm && (
                         <>
                         <h2 className="mb-4">Recuperação de senha</h2>
