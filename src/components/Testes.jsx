@@ -7,30 +7,21 @@ export default function Testes() {
 
     const handleClick = () => {
         setItem(item => [...item, "a"])
-        console.log(item)
     }
 
     return (
-        <>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start' }}>
             <Button onClick={handleClick}>+1</Button>
-            <div className="bg-primary position-fixed w-50">
+            <div className="bg-primary">
                 <p>div superior fixa</p>
             </div>
 
-            {item.map((item, index) => (                
-                <div key={index} className="bg-info">
-                    <p>item</p>
+            {item.map((item, index) => (
+                <div key={index} className="bg-info" >
+                    <p>{item}</p>
                 </div>
             ))
             }
-
-            <div className="bg-secondary">
-                <p>div inferior</p>
-            </div>
-
-            <div className="bg-secondary">
-                <p>div inferior 2</p>
-            </div>
-        </>
+        </div>
     )
 }

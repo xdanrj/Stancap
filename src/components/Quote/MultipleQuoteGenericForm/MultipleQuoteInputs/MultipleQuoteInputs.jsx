@@ -45,7 +45,7 @@ export default function MultipleQuoteInputs(props) {
         <>
         <MultipleQuoteInputsDiv>
             {props.multipleQuotes[0] && props.multipleQuotes.map((_, index) => (
-                <div key={index} className="">
+                <div key={index} className="" style={{ position: "", top: `calc(100% + ${index * 10}px)` }}>
                     <Row>
                         <Col>
                             <FormGroup>

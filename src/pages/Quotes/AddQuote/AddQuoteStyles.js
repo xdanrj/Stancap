@@ -13,7 +13,6 @@ export const AddQuoteDiv = styled.div.attrs((props) => ({
     className: ``
 }))`
     margin-top: 5rem;
-    position: relative;
 `;
 
 export const MDBTabs = styled(originalMDBTabs).attrs(() => ({
