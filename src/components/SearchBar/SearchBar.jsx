@@ -24,14 +24,10 @@ export function SearchBar(props) {
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
-    const [urlQuery, setUrlQuery] = useState(props.urlQuery)
-    //const [hasSearchedRef, setHasSearchedRef] = useState(false)
     console.log(props.urlQuery)
-    //console.log(hasSearchedRef)
+   
     useEffect(() => {
         if (props.urlQuery) {
-            //setHasSearchedRef(true)
-            console.log("rodou")
             async function getParams() {
                 const queryProp = Object.keys(props.urlQuery)
                 const foundType = SearchTypes.find((type) => type.value === queryProp[0])

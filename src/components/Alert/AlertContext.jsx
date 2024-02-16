@@ -1,24 +1,23 @@
-import React, {useContext, createContext} from "react"
+import React, { useContext, createContext } from "react"
 import { ToastContainer, toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 
 const AlertContext = createContext()
 
-export function AlertProvider({children}) {
-    const notify = (message) => toast(message)
-    
+export function AlertProvider({ children }) {
+    const notify = (message, duration) => toast(message, { autoClose: duration || 3500 })
+
     return (
         <>
-        <AlertContext.Provider value={notify}>
-            <ToastContainer
-                autoClose={3500}
-                position="top-center"
-                theme="dark"
-                limit={2}
-                closeButton={false}
-            />
-            {children}
-           </AlertContext.Provider>
+            <AlertContext.Provider value={notify}>
+                <ToastContainer
+                    position="top-center"
+                    theme="dark"
+                    limit={2}
+                    closeButton={false}
+                />
+                {children}
+            </AlertContext.Provider>
         </>
     )
 }

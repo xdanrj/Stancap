@@ -15,57 +15,53 @@ export default function QuotesPage() {
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
+  const [urlQuery, setUrlQuery] = useState(useParams())
+  console.log(urlQuery)
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
-  const { queryprop, queryvalue } = useParams()
-  let urlQuery
 
-  if (queryprop && queryvalue) {
-    urlQuery = { [queryprop]: queryvalue }
-  }
-
-  async function fetchAllQuotes() {
-    const response = await quoteService.getAllQuotes()
-    setQuotesResponse(response)
-  }
+  useEffect(() => {
+    async function fetchAllQuotes() {
+      const response = await quoteService.getAllQuotes()
+      setQuotesResponse(response)
+    }
+    fetchAllQuotes()
+  }, [])
 
   async function fetchQuotesBySearch(searchQuery) {
     const response = await quoteService.getQuote(searchQuery["query"])
-    response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`)
+    response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
     setQuotesResponse(response)
     console.log(searchQuery)
   }
 
-  useEffect(() => {
-    fetchAllQuotes()
-  }, [])
+
   useEffect(() => {
     const currentSingleQuotesArray = []
     const currentMultipleQuotesArray = []
 
     // TRATAMENTOS/ FORMATAÇÃO PRÉ DIVISÃO DE TIPOS DE QUOTE:
+    if (quotesResponse) {
+      const setUploadersNames = async () => {
+        quotesResponse.map(async (data) => {
+          data.uploadByUser = await userService.getUsername(data.uploadByUser)
+        })
+      }
+      setUploadersNames()
 
-  const setUploadersNames = async () => {
-    quotesResponse.map(async (data) => {
-      data.uploadByUser = await userService.getUsername(data.uploadByUser)
-    })
-  }
-  
-  setUploadersNames()
-
-    if (Array.isArray(quotesResponse)) {
-      quotesResponse.forEach((data) => {
-        if (data.quotes.length === 1) {
-          currentSingleQuotesArray.push(data)
-        }
-        else if (data.quotes.length > 1) {
-          currentMultipleQuotesArray.push(data)
-        }
-      })
-      setSingleQuotesArray(currentSingleQuotesArray)
-      setMultipleQuotesArray(currentMultipleQuotesArray)
+      if (Array.isArray(quotesResponse)) {
+        quotesResponse.forEach((data) => {
+          if (data.quotes.length === 1) {
+            currentSingleQuotesArray.push(data)
+          }
+          else if (data.quotes.length > 1) {
+            currentMultipleQuotesArray.push(data)
+          }
+        })
+        setSingleQuotesArray(currentSingleQuotesArray)
+        setMultipleQuotesArray(currentMultipleQuotesArray)
+      }
     }
-
   }, [quotesResponse])
 
   /*
@@ -92,15 +88,15 @@ export default function QuotesPage() {
   */
   return (
     <>
-   <QuotesPageDiv>
-      <SearchBar searchFunction={fetchQuotesBySearch} urlQuery={urlQuery}/>
+      <QuotesPageDiv>
+        <SearchBar searchFunction={fetchQuotesBySearch} urlQuery={urlQuery} />
 
-      <Row className="justify-content-center">
-        <Col xs={12} sm={9} md={7} lg={6} xl={5} >
-          <SingleQuote singleQuotes={singleQuotesArray} />
-          <MultipleQuote multipleQuotes={multipleQuotesArray} />
-        </Col>
-      </Row>
+        <Row className="justify-content-center">
+          <Col xs={12} sm={9} md={7} lg={6} xl={5} >
+            <SingleQuote singleQuotes={singleQuotesArray} />
+            <MultipleQuote multipleQuotes={multipleQuotesArray} />
+          </Col>
+        </Row>
       </QuotesPageDiv>
     </>
   )
