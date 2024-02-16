@@ -20,21 +20,18 @@ export default function QuotesPage() {
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
 
-  useEffect(() => {
-    async function fetchAllQuotes() {
-      const response = await quoteService.getAllQuotes()
-      setQuotesResponse(response)
-    }
-    fetchAllQuotes()
-  }, [])
-
-  async function fetchQuotesBySearch(searchQuery) {
-    const response = await quoteService.getQuote(searchQuery["query"])
-    response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
+  async function fetchAllQuotes() {
+    const response = await quoteService.getAllQuotes()
     setQuotesResponse(response)
-    console.log(searchQuery)
   }
 
+  async function fetchQuotesBySearch(searchQuery) {
+    console.log(searchQuery)
+    console.log(searchQuery.query)
+    const response = await quoteService.getQuote(searchQuery.query)
+    response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
+    setQuotesResponse(response)
+  }
 
   useEffect(() => {
     const currentSingleQuotesArray = []
@@ -89,7 +86,7 @@ export default function QuotesPage() {
   return (
     <>
       <QuotesPageDiv>
-        <SearchBar searchFunction={fetchQuotesBySearch} urlQuery={urlQuery} />
+        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} urlQuery={urlQuery} />
 
         <Row className="justify-content-center">
           <Col xs={12} sm={9} md={7} lg={6} xl={5} >

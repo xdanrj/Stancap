@@ -7,7 +7,7 @@ import { useAlertMsg } from "../Alert/AlertContext";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
-export function SearchBar(props) {
+export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
     const useAlert = useAlertMsg()
     const navigate = useNavigate()
     const SearchBarRef = useRef()
@@ -24,27 +24,34 @@ export function SearchBar(props) {
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
-    console.log(props.urlQuery)
-   
+
     useEffect(() => {
-        if (props.urlQuery) {
-            async function getParams() {
-                const queryProp = Object.keys(props.urlQuery)
-                const foundType = SearchTypes.find((type) => type.value === queryProp[0])
+        if (urlQuery) {
+            async function settingQuery() {
+                console.log(urlQuery)
+                console.log(urlQuery.queryprop)
+                console.log(urlQuery.queryvalue)
+                const queryProp = urlQuery.queryprop
+                const foundType = SearchTypes.find((type) => type.value === queryProp)
+                console.log(foundType)
                 setSelectedType(foundType)
                 setSearchQuery((prevSearchQuery) => ({
                     ...prevSearchQuery,
-                    "query": props.urlQuery,
+                    "query": {[queryProp]: urlQuery.queryvalue},
                     "label": foundType?.label,
                 }))
             }
-            getParams()
-            props.searchFunction(searchQuery)
+            settingQuery()
+            fetchQuotesBySearch(searchQuery)
+        } else {
+            console.log("caiu ELSE")
+            fetchAllQuotes()
         }
     }, [])
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(SearchTypes[eventKey])
+        console.log(searchQuery)
     }
 
     const handleSearchChange = (e) => {
@@ -68,34 +75,34 @@ export function SearchBar(props) {
     }
 
     const handleSearchClick = async () => {
-        await props.searchFunction(searchQuery)
-        const queryProp = [...Object.keys(searchQuery.query)][0]
-        navigate(`/quotes/${queryProp}/${searchQuery.query[queryProp]}`)
+        await fetchQuotesBySearch(searchQuery)
+        navigate(`/quotes/${selectedType.value}/${searchQuery.query[selectedType.value]}`)
     }
-
+    console.log(selectedType)
+    console.log(searchQuery)
     return (
         <>
-        <Row className="justify-content-center">
-            <Col md={8} lg={5}>
-            <InputGroup ref={SearchBarRef} >
-                <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
+            <Row className="justify-content-center">
+                <Col md={8} lg={5}>
+                    <InputGroup ref={SearchBarRef} >
+                        <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
 
-                    {SearchTypes.map((item, index) => (
-                        <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
-                    ))}
-                </DropdownButton>
+                            {SearchTypes.map((item, index) => (
+                                <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
+                            ))}
+                        </DropdownButton>
 
-                <Form.Control
+                        <Form.Control
+                            className={inputColor ? "bg-danger" : "bg-light"}
+                            placeholder="Pesquise..." onChange={handleSearchChange}
+                            value={searchQuery.query[selectedType?.value] || ""}
+                        />
 
-                    className={inputColor ? "bg-danger" : "bg-light"}
-                    placeholder="Pesquise..." onChange={handleSearchChange}
-                    value={searchQuery.query[Object.keys(searchQuery.query)] ? searchQuery.query[Object.keys(searchQuery.query)] : "" || ""} />
-
-                <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
-                    <MDBIcon icon="search" />
-                </Button>
-            </InputGroup>
-            </Col>
+                        <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
+                            <MDBIcon icon="search" />
+                        </Button>
+                    </InputGroup>
+                </Col>
             </Row>
         </>
     )
