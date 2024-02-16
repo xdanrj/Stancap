@@ -23,8 +23,8 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
     const [selectedType, setSelectedType] = useState()
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
+    const [tempSearchQuery, setTempSearchQuery] = useState({ "query": {}, "label": "" })
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
-
     useEffect(() => {
         if (urlQuery) {
             async function settingQuery() {
@@ -47,7 +47,13 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
             console.log("caiu ELSE")
             fetchAllQuotes()
         }
-    }, [])
+    }, [urlQuery])
+
+    useEffect(() => {
+        if (searchQuery?.query && Object.keys(searchQuery?.query).length > 0) {
+            fetchQuotesBySearch(searchQuery)
+        }
+    }, [searchQuery])
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(SearchTypes[eventKey])
@@ -55,8 +61,8 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
     }
 
     const handleSearchChange = (e) => {
-        setSearchQuery((prevSearchQuery) => ({
-            ...prevSearchQuery,
+        setTempSearchQuery((prevTempSearchQuery) => ({
+            ...prevTempSearchQuery,
             query: { [selectedType?.value]: e.target.value },
             label: selectedType?.label
         }))
@@ -75,8 +81,9 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
     }
 
     const handleSearchClick = async () => {
-        await fetchQuotesBySearch(searchQuery)
-        navigate(`/quotes/${selectedType.value}/${searchQuery.query[selectedType.value]}`)
+        setSearchQuery(setTempSearchQuery)
+        //await fetchQuotesBySearch(searchQuery)
+        //navigate(`/quotes/${selectedType?.value}/${searchQuery?.query[selectedType?.value]}`)
     }
     console.log(selectedType)
     console.log(searchQuery)
@@ -95,7 +102,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
                         <Form.Control
                             className={inputColor ? "bg-danger" : "bg-light"}
                             placeholder="Pesquise..." onChange={handleSearchChange}
-                            value={searchQuery.query[selectedType?.value] || ""}
+                            value={tempSearchQuery?.query[selectedType?.value] || ""}
                         />
 
                         <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
