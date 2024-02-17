@@ -29,7 +29,7 @@ axiosInstance.interceptors.request.use(
 
             if (userToken) {
                 config.headers['authorization'] = `Bearer ${userToken}`
-                return config
+                //return config
             }
 
         } else if (localStorage.getItem("tempToken")) {
@@ -37,10 +37,10 @@ axiosInstance.interceptors.request.use(
             console.log("tempToken aqui: ", tempToken)
             if (tempToken) {
                 config.headers['tempauthorization'] = `Bearer ${tempToken}`
-                return config
+                //return config
             }
         }
-
+        return config
     },
     (error) => {
         return Promise.reject(error)
