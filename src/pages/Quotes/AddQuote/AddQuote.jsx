@@ -38,7 +38,7 @@ export default function AddQuote() {
                     />
                 </MDBTabsPane>
 
-                <MDBTabsPane show={basicActive === 'multipleQuoteTab'}>
+                <MDBTabsPane show={basicActive === 'multipleQuoteTab'} style={{height: "1000px"}}>
                     <MultipleQuoteGenericForm
                         texts={{
                             submitButton: "Criar quote", submitSuccess: "Quote criada com sucesso"

@@ -162,7 +162,7 @@ export default function MultipleQuoteGenericForm(props) {
 
     return (
         <>        
-            <Row className="justify-content-center">
+            <Row className="justify-content-center">                
                 <Col xs={12} sm={8} md={6} lg={5}>
                     <Form onSubmit={handleSubmitQuote}>
                         <MultipleQuoteInputs
