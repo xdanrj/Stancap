@@ -23,10 +23,12 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
     const [selectedType, setSelectedType] = useState()
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
-    const [tempSearchQuery, setTempSearchQuery] = useState({ "query": {}, "label": "" })
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
+    const [didSearched, setDidSearched] = useState(false)
     useEffect(() => {
-        if (urlQuery) {
+        console.log(searchQuery)
+        console.log(Object.keys(urlQuery).length)
+        if (Object.keys(urlQuery).length > 0) {
             async function settingQuery() {
                 console.log(urlQuery)
                 console.log(urlQuery.queryprop)
@@ -40,20 +42,23 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
                     "query": {[queryProp]: urlQuery.queryvalue},
                     "label": foundType?.label,
                 }))
+                setDidSearched(!didSearched)
             }
             settingQuery()
-            fetchQuotesBySearch(searchQuery)
         } else {
             console.log("caiu ELSE")
             fetchAllQuotes()
         }
-    }, [urlQuery])
+    }, [])
 
     useEffect(() => {
-        if (searchQuery?.query && Object.keys(searchQuery?.query).length > 0) {
+        /*if (searchQuery?.query && Object.keys(searchQuery?.query).length > 0) {           
+        }*/
+        if(Object.keys(urlQuery).length > 0){
             fetchQuotesBySearch(searchQuery)
         }
-    }, [searchQuery])
+        
+    }, [didSearched])
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(SearchTypes[eventKey])
@@ -61,8 +66,8 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
     }
 
     const handleSearchChange = (e) => {
-        setTempSearchQuery((prevTempSearchQuery) => ({
-            ...prevTempSearchQuery,
+        setSearchQuery((prevSearchQuery) => ({
+            ...prevSearchQuery,
             query: { [selectedType?.value]: e.target.value },
             label: selectedType?.label
         }))
@@ -81,9 +86,9 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
     }
 
     const handleSearchClick = async () => {
-        setSearchQuery(setTempSearchQuery)
-        //await fetchQuotesBySearch(searchQuery)
-        //navigate(`/quotes/${selectedType?.value}/${searchQuery?.query[selectedType?.value]}`)
+        setSearchQuery(setSearchQuery)
+        await fetchQuotesBySearch(searchQuery)
+        navigate(`/quotes/${selectedType?.value}/${searchQuery?.query[selectedType?.value]}`)
     }
     console.log(selectedType)
     console.log(searchQuery)
@@ -102,7 +107,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
                         <Form.Control
                             className={inputColor ? "bg-danger" : "bg-light"}
                             placeholder="Pesquise..." onChange={handleSearchChange}
-                            value={tempSearchQuery?.query[selectedType?.value] || ""}
+                            value={searchQuery?.query[selectedType?.value] || ""}
                         />
 
                         <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
