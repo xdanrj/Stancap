@@ -49,15 +49,12 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
             console.log("caiu ELSE")
             fetchAllQuotes()
         }
-    }, [])
+    }, [urlQuery])
 
     useEffect(() => {
-        /*if (searchQuery?.query && Object.keys(searchQuery?.query).length > 0) {           
-        }*/
         if(Object.keys(urlQuery).length > 0){
             fetchQuotesBySearch(searchQuery)
-        }
-        
+        }        
     }, [didSearched])
 
     const handleTypeSelect = (eventKey) => {
