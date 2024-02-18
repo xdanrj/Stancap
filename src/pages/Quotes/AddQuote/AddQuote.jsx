@@ -17,7 +17,7 @@ export default function AddQuote() {
     return (
         <>
         <AddQuoteDiv>
-            <MDBTabs className="justify-content-center ">
+            <MDBTabs className="justify-content-center">
                 <MDBTabsItem >
                     <MDBTabsLink  onClick={() => handleBasicClick('singleQuoteTab')} active={basicActive === 'singleQuoteTab'}>Quote única</MDBTabsLink>
                 </MDBTabsItem>
@@ -38,7 +38,7 @@ export default function AddQuote() {
                     />
                 </MDBTabsPane>
 
-                <MDBTabsPane show={basicActive === 'multipleQuoteTab'} style={{height: "1000px"}}>
+                <MDBTabsPane show={basicActive === 'multipleQuoteTab'}/* bom valor height: 26rem style={{height: "56vh"}}*/ >
                     <MultipleQuoteGenericForm
                         texts={{
                             submitButton: "Criar quote", submitSuccess: "Quote criada com sucesso"

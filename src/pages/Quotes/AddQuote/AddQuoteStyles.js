@@ -18,7 +18,7 @@ export const AddQuoteDiv = styled.div.attrs((props) => ({
 export const MDBTabs = styled(originalMDBTabs).attrs(() => ({
     className: "mb-3"
 }))`
-    margin-top: -10rem;
+    margin-top: 0rem;
 `;
 
 export const MDBTabsLink = styled(originalMDBTabsLink).attrs(() => ({
