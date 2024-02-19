@@ -30,7 +30,16 @@ export function ModalProvider({ children }) {
                     </Modal.Header>
 
                     <ModalBody>
-                        {modalData.paragraph}
+                        {
+                            Array.isArray(modalData.paragraph) ?
+                                modalData.paragraph.map((paragraph, index) => (
+                                    <div key={index}>
+                                        {paragraph}
+                                    </div>
+                                ))
+                                :
+                                modalData.paragraph
+                        }
                     </ModalBody>
 
                     <ButtonContainer>
@@ -40,8 +49,6 @@ export function ModalProvider({ children }) {
                                     onClick={() => {
                                         button.action.forEach((buttonInList) => {
                                             if (typeof buttonInList === "string") {
-                                                console.log("entrou string")
-                                                console.log(buttonInList)
                                                 eval(buttonInList)
                                             } else if (typeof buttonInList === "function") {
                                                 console.log("entrou function")

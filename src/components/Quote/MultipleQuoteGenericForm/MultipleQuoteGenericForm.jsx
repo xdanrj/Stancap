@@ -5,6 +5,7 @@ import { Form, Col, Row, Dropdown, DropdownButton } from "react-bootstrap";
 import { FloatingLabel, FormGroup, CenteredFormControl, CenteredFormGroup } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import MultipleQuoteInputs from "./MultipleQuoteInputs/MultipleQuoteInputs";
+import { MDBIcon } from "mdb-react-ui-kit";
 import dayjs from "dayjs";
 import { SourceNames } from "../SourceCommonFunctions";
 import { useAlertMsg } from "../../Alert/AlertContext";
@@ -161,10 +162,24 @@ export default function MultipleQuoteGenericForm(props) {
     }
 
     return (
-        <>        
-            <Row className="justify-content-center">                
+        <>
+            <Row className="justify-content-center">
                 <Col xs={12} sm={8} md={6} lg={5}>
                     <Form onSubmit={handleSubmitQuote}>
+
+                        <Button onClick={() => useModal({
+                            title: "Preencher falas automaticamente",
+                            paragraph: [
+                                `Preencha os campos de "Autor" e "Quote" automaticamente colando o log da conversa.`,
+                                `Por exemplo: `,
+                                `"[1/12 12:30] João: Olá, tudo bem?`,
+                                `[1/12 12:32] Maria: Sim. E você?"`
+                            ],
+                            buttons: []
+                        })
+                            
+                        } className="mb-4"><MDBIcon fas icon="paste" /></Button>
+
                         <MultipleQuoteInputs
                             onChange={handleMultipleQuoteChange}
                             setMultipleQuotes={setMultipleQuotes}

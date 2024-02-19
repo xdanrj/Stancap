@@ -10,30 +10,30 @@ export default function Testes() {
 [9/1 03:96] Kayo Gameplaisu II: quis nostrum exercitationem
 `
     // first match everything after ] until : then match everything after : until [ then repeats
-    const regexChave = /]\s*([\w\s]+)\s*:/g;
-    const regexValor = /:\s*(\w+(?:\s+\w+)*)\s*$/;
+    const regexChave = /]\s*([\w\s]+)\s*:/g
+    const regexValor = /:\s*(\w+(?:\s+\w+)*)\s*$/
     let arrayResult
 
     useEffect(() => {
-        const regexChave = /]\s*([\w\s]+)\s*:/;
-        const regexValor = /:\s*(\w+(?:\s+\w+)*)\s*$/;
+        const regexChave = /]\s*([\w\s]+)\s*:/
+        const regexValor = /:\s*(\w+(?:\s+\w+)*)\s*$/
 
-        const linhas = text.trim().split('\n');
-        const objetos = [];
+        const linhas = text.trim().split('\n')
+        const objetos = []
 
         linhas.forEach((linha) => {
-            const chaveMatch = regexChave.exec(linha);
-            const valorMatch = regexValor.exec(linha);
+            const chaveMatch = regexChave.exec(linha)
+            const valorMatch = regexValor.exec(linha)
 
             if (chaveMatch && valorMatch) {
-                const chave = chaveMatch[1];
-                const valor = valorMatch[1];
-                const objeto = { [chave]: valor };
-                objetos.push(objeto);
+                const chave = chaveMatch[1]
+                const valor = valorMatch[1]
+                const objeto = { [chave]: valor }
+                objetos.push(objeto)
             }
         });
 
-        console.log(objetos);
+        console.log(objetos)
     }, [])
 
     return (
