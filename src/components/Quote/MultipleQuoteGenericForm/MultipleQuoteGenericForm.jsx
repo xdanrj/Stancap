@@ -12,7 +12,7 @@ import { useAlertMsg } from "../../Alert/AlertContext";
 import { useModalBox } from "../../Modal/ModalContext";
 import { isValidDate } from "../../../Formatting/DateFormatting";
 import quoteEditingServices from "../../../services/quoteServices"
-import { ChatLogUserInputModal } from "./ChatLogUserInputModal";
+import { FastQuotesFillModal } from "./FastQuotesFillModal";
 
 const quoteEditingService = new quoteEditingServices()
 
@@ -29,7 +29,7 @@ export default function MultipleQuoteGenericForm(props) {
         context: '',
         tags: [],
     })
-    const [rawChatLog, setRawChatLog] = useState([])
+    const [showFastQuotesFillModal, setShowFastQuotesFillModal] = useState(false)
 
     useEffect(() => {
         async function getQuoteToEdit() {
@@ -162,28 +162,13 @@ export default function MultipleQuoteGenericForm(props) {
         setMultipleQuotes(updatedMultipleQuotes)
     }
 
-    const handleChatLogUserInputChange = (e) => {
-        const value = e.target.value
-        setRawChatLog((prevData) => ({
-            ...prevData,
-            value
-        }))
-    }
-
-    return (
-        <>
-        <ChatLogUserInputModal onChange={handleChatLogUserInputChange}/>
-            <Row className="justify-content-center">
-                <Col xs={12} sm={8} md={6} lg={5}>
-                    <Form onSubmit={handleSubmitQuote}>
-
-                        <Button onClick={() => useModal({
+    /*useModal({
                             title: "Preencher falas automaticamente",
                             paragraph: [
                                 `Preencha os campos de "Autor" e "Quote" automaticamente colando o log da conversa.`,
                                 `Por exemplo: `,
                                 `"[1/12 12:30] João: Olá, tudo bem?`,
-                                `[1/12 12:32] Maria: Sim. E você?"`
+                                `[1/12 12:32] Ana: Sim. E você?"`
                             ],
                             buttons: [],
                             form: {
@@ -195,55 +180,63 @@ export default function MultipleQuoteGenericForm(props) {
                             }
                         })
 
-                        } className="mb-4"><MDBIcon fas icon="paste" /></Button>
+                        } */
+    return (
+        <>
+            <FastQuotesFillModal show={showFastQuotesFillModal} />
+            <Row className="justify-content-center">
+                <Col xs={12} sm={8} md={6} lg={5}>
+                    <Form onSubmit={handleSubmitQuote}>
 
-                        <MultipleQuoteInputs
-                            onChange={handleMultipleQuoteChange}
-                            setMultipleQuotes={setMultipleQuotes}
-                            multipleQuotes={multipleQuotes}
-                        />
-                        <FormGroup className="mt-5 mx-auto">
-                            <Row>
-                                <Col>
-                                    <FloatingLabel label="Data">
-                                        <CenteredFormControl name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
-                                        </CenteredFormControl>
-                                    </FloatingLabel>
+                        <Button onClick={() => setShowFastQuotesFillModal(true)} className = "mb-4" > <MDBIcon fas icon="paste" /></Button>
 
-                                </Col>
+                    <MultipleQuoteInputs
+                        onChange={handleMultipleQuoteChange}
+                        setMultipleQuotes={setMultipleQuotes}
+                        multipleQuotes={multipleQuotes}
+                    />
+                    <FormGroup className="mt-5 mx-auto">
+                        <Row>
+                            <Col>
+                                <FloatingLabel label="Data">
+                                    <CenteredFormControl name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
+                                    </CenteredFormControl>
+                                </FloatingLabel>
 
-                                <Col>
-                                    <FloatingLabel label="Contexto (Opcional)">
-                                        <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange} value={quoteData.context}>
+                            </Col>
+
+                            <Col>
+                                <FloatingLabel label="Contexto (Opcional)">
+                                    <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange} value={quoteData.context}>
+                                    </Form.Control>
+                                </FloatingLabel>
+
+                            </Col>
+                        </Row>
+                    </FormGroup>
+                    <Row>
+                        <FormGroup>
+                            <DropdownButton drop="down" align="end" title={quoteData.source ? quoteData.source : "Source"} onSelect={handleSourceSelect}>
+                                {SourceNames.map((item) => (
+                                    <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
+                                ))}
+                                <Dropdown.Divider />
+                                <div className="px-1 pb-2">
+                                    <FloatingLabel label="Outro">
+                                        <Form.Control name="otherSourceName" placeholder="Outro" onChange={handleGenericChange} value={SourceNames.includes(quoteData.source) ? "" : quoteData.source}>
                                         </Form.Control>
                                     </FloatingLabel>
-
-                                </Col>
-                            </Row>
+                                </div>
+                            </DropdownButton>
                         </FormGroup>
-                        <Row>
-                            <FormGroup>
-                                <DropdownButton drop="down" align="end" title={quoteData.source ? quoteData.source : "Source"} onSelect={handleSourceSelect}>
-                                    {SourceNames.map((item) => (
-                                        <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
-                                    ))}
-                                    <Dropdown.Divider />
-                                    <div className="px-1 pb-2">
-                                        <FloatingLabel label="Outro">
-                                            <Form.Control name="otherSourceName" placeholder="Outro" onChange={handleGenericChange} value={SourceNames.includes(quoteData.source) ? "" : quoteData.source}>
-                                            </Form.Control>
-                                        </FloatingLabel>
-                                    </div>
-                                </DropdownButton>
-                            </FormGroup>
-                            <FormGroup>
-                                <TagSelectorComponent tags={tags} setTags={setTags} />
-                            </FormGroup>
-                        </Row>
-                        <Button type="submit">{props.texts.submitButton}</Button>
-                    </Form>
-                </Col>
-            </Row>
+                        <FormGroup>
+                            <TagSelectorComponent tags={tags} setTags={setTags} />
+                        </FormGroup>
+                    </Row>
+                    <Button type="submit">{props.texts.submitButton}</Button>
+                </Form>
+            </Col>
+        </Row >
         </>
     )
 }
