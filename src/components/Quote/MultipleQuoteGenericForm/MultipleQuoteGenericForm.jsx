@@ -28,6 +28,7 @@ export default function MultipleQuoteGenericForm(props) {
         context: '',
         tags: [],
     })
+    const [rawChatLog, setRawChatLog] = useState([])
 
 
     useEffect(() => {
@@ -161,6 +162,14 @@ export default function MultipleQuoteGenericForm(props) {
         setMultipleQuotes(updatedMultipleQuotes)
     }
 
+    const handleRawChatLogChange = (e) => {
+        const value = e.target.value
+        setRawChatLog((prevData) => ({
+            ...prevData,
+            value
+        }))
+    }
+
     return (
         <>
             <Row className="justify-content-center">
@@ -175,9 +184,16 @@ export default function MultipleQuoteGenericForm(props) {
                                 `"[1/12 12:30] João: Olá, tudo bem?`,
                                 `[1/12 12:32] Maria: Sim. E você?"`
                             ],
-                            buttons: []
+                            buttons: [],
+                            form: {
+                                label: "Chat log",
+                                name: "rawchatlog",
+                                placeholder: "Chat log",
+                                onChange: "handleRawChatLogChange",
+                                value: "",
+                            }
                         })
-                            
+
                         } className="mb-4"><MDBIcon fas icon="paste" /></Button>
 
                         <MultipleQuoteInputs

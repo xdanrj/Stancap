@@ -8,7 +8,7 @@ const ModalContext = createContext()
 export function ModalProvider({ children }) {
 
     const [show, setShow] = useState(false)
-    const [modalData, setModalData] = useState({ title: "", paragraph: "", "buttons": [] })
+    const [modalData, setModalData] = useState({ title: "", paragraph: "", "buttons": [], form: { label: "", name: "", placeholder: "", onChange: "", value: "" } })
 
     const handleClose = () => {
         setShow(false)
@@ -18,10 +18,14 @@ export function ModalProvider({ children }) {
             ...prevData,
             title: data.title,
             paragraph: data.paragraph,
-            buttons: data.buttons
+            buttons: data.buttons,
+            form: data.form
+
         }))
         setShow(true)
     }
+    console.log(modalData)
+    console.log(modalData.form)
     return (
         <>
             <ModalContext.Provider value={modalBox}>
@@ -45,12 +49,15 @@ export function ModalProvider({ children }) {
 
                     <div>
                         {modalData.form ?
-                            <> 
+                            <>
                                 <FloatingLabel label={modalData.form.label} >
-                                    <Form.Control name={modalData.form.controlName} placeholder={modalData.form.placeholder} onChange={handle} value={quoteData.context}>
+                                    <Form.Control
+                                        name={modalData.form.controlName}
+                                        placeholder={modalData.form.placeholder}
+                                        onChange={eval(modalData.form.onChange)}
+                                        value={modalData.form.value}>
                                     </Form.Control>
                                 </FloatingLabel>
-
                             </>
                             : <></>}
                     </div>
