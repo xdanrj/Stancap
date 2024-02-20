@@ -1,6 +1,7 @@
 import React, { useContext, createContext, useState, useEffect } from "react"
-import { Modal, ModalFooter } from "react-bootstrap"
+import { Modal, ModalFooter, Form } from "react-bootstrap"
 import { ModalBody, ModalTitle, Button, ButtonContainer } from "./ModalContextStyles"
+import { FloatingLabel } from "../../CommonStyles/CommonStyles"
 
 const ModalContext = createContext()
 
@@ -41,6 +42,18 @@ export function ModalProvider({ children }) {
                                 modalData.paragraph
                         }
                     </ModalBody>
+
+                    <div>
+                        {modalData.form ?
+                            <> 
+                                <FloatingLabel label={modalData.form.label} >
+                                    <Form.Control name={modalData.form.controlName} placeholder={modalData.form.placeholder} onChange={handle} value={quoteData.context}>
+                                    </Form.Control>
+                                </FloatingLabel>
+
+                            </>
+                            : <></>}
+                    </div>
 
                     <ButtonContainer>
                         {
