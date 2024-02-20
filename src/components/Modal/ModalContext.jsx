@@ -45,22 +45,7 @@ export function ModalProvider({ children }) {
                                 :
                                 modalData.paragraph
                         }
-                    </ModalBody>
-
-                    <div>
-                        {modalData.form ?
-                            <>
-                                <FloatingLabel label={modalData.form.label} >
-                                    <Form.Control
-                                        name={modalData.form.controlName}
-                                        placeholder={modalData.form.placeholder}
-                                        onChange={eval(modalData.form.onChange)}
-                                        value={modalData.form.value}>
-                                    </Form.Control>
-                                </FloatingLabel>
-                            </>
-                            : <></>}
-                    </div>
+                    </ModalBody>                    
 
                     <ButtonContainer>
                         {

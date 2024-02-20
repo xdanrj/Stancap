@@ -12,6 +12,7 @@ import { useAlertMsg } from "../../Alert/AlertContext";
 import { useModalBox } from "../../Modal/ModalContext";
 import { isValidDate } from "../../../Formatting/DateFormatting";
 import quoteEditingServices from "../../../services/quoteServices"
+import { ChatLogUserInputModal } from "./ChatLogUserInputModal";
 
 const quoteEditingService = new quoteEditingServices()
 
@@ -29,7 +30,6 @@ export default function MultipleQuoteGenericForm(props) {
         tags: [],
     })
     const [rawChatLog, setRawChatLog] = useState([])
-
 
     useEffect(() => {
         async function getQuoteToEdit() {
@@ -162,7 +162,7 @@ export default function MultipleQuoteGenericForm(props) {
         setMultipleQuotes(updatedMultipleQuotes)
     }
 
-    const handleRawChatLogChange = (e) => {
+    const handleChatLogUserInputChange = (e) => {
         const value = e.target.value
         setRawChatLog((prevData) => ({
             ...prevData,
@@ -172,6 +172,7 @@ export default function MultipleQuoteGenericForm(props) {
 
     return (
         <>
+        <ChatLogUserInputModal onChange={handleChatLogUserInputChange}/>
             <Row className="justify-content-center">
                 <Col xs={12} sm={8} md={6} lg={5}>
                     <Form onSubmit={handleSubmitQuote}>
