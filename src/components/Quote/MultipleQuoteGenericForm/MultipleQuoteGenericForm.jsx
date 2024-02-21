@@ -238,7 +238,10 @@ export default function MultipleQuoteGenericForm(props) {
                 <Col xs={12} sm={8} md={6} lg={5}>
                     <Form onSubmit={handleSubmitQuote}>
 
-                        <Button onClick={() => setShowFastQuotesFillModal(true)} className="mb-4" > <MDBIcon fas icon="paste" /></Button>
+                        <div className="mb-4">
+                            <Button className="me-4" onClick={() => setShowFastQuotesFillModal(true)} > <MDBIcon fas icon="paste" /></Button>
+                            <Button><MDBIcon icon="trash-alt" onClick={() => removeQuoteInput(index)} /></Button>
+                        </div>
 
                         <MultipleQuoteInputs
                             onChange={handleMultipleQuoteChange}
