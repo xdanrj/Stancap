@@ -10,39 +10,38 @@ export function FastQuotesFillModal(props) {
     const [show, setShow] = useState(false)
 
     const handleRawChatLog = (e) => {
-        const {name, value} = e.target.value
-        setRawChatLog((prevData) => ({
-            ...prevData,
-            [name]: value
-        }))
+        const value = e.target.value
+        setRawChatLog(value)
         console.log(rawChatLog)
     }
-
     const handleClose = () => {
         setShow(false)
     }
 
     return (
         <>
-        <Modal show={props.show} onHide={handleClose} centered>
-        <Modal.Header>
-            <ModalTitle>Preencher falas automaticamente</ModalTitle>
-        </Modal.Header>
+            <Modal show={props.show} onHide={handleClose} centered >
+                <Modal.Header>
+                    <ModalTitle>Preencher falas automaticamente</ModalTitle>
+                </Modal.Header>
 
-        <ModalBody>
-            <p>Preencha os campos de "Autor" e "Quote" automaticamente colando o log da conversa.</p>
-            
-            <FloatingLabel label="Diálogo na íntegra" >
-                <Form.Control
-                    name="rawuserinput"
-                    placeholder="Diálogo na íntegra"
-                    onChange={handleRawChatLog}
-                    value={rawChatLog}>
-                </Form.Control>
-            </FloatingLabel>
-        </ModalBody>
-        </Modal>
-    
+                <ModalBody style={{height: "500px"}}>
+                    <p>Preencha os campos de "Autor" e "Quote" automaticamente colando o log da conversa.</p>
+
+                    <FloatingLabel label="Diálogo na íntegra" >
+                        <Form.Control
+                            as="textarea"
+                            style={{ resize: "vertical" }}
+                            rows={3}
+                            name="rawuserinput"
+                            placeholder="Diálogo na íntegra"
+                            onChange={handleRawChatLog}
+                            value={rawChatLog}>
+                        </Form.Control>
+                    </FloatingLabel>
+                </ModalBody>
+            </Modal>
+
 
         </>
     )
