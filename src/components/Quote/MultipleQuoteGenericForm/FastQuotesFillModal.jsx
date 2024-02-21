@@ -5,18 +5,12 @@ import { ButtonContainer, ModalTitle, ModalBody } from "../../Modal/ModalContext
 
 
 export function FastQuotesFillModal(props) {
-    const [rawChatLog, setRawChatLog] = useState(``)
-    const [chatLogResult, setChatLogResult] = useState([])
     const [show, setShow] = useState(false)
 
-    const handleRawChatLog = (e) => {
-        const value = e.target.value
-        setRawChatLog(value)
-        console.log(rawChatLog)
-    }
     const handleClose = () => {
         setShow(false)
     }
+
 
     return (
         <>
@@ -25,9 +19,11 @@ export function FastQuotesFillModal(props) {
                     <ModalTitle>Preencher falas automaticamente</ModalTitle>
                 </Modal.Header>
 
-                <ModalBody style={{height: "500px"}}>
+                <ModalBody style={{ height: "500px" }}>
                     <p>Preencha os campos de "Autor" e "Quote" automaticamente colando o log da conversa.</p>
-
+                    <p>Exemplo de formato válido: </p>
+                    <p className="mb-0">"[1/12 12:30] João: Olá, tudo bem?</p>
+                    <p>[1/12 12:32] Ana: Sim. E você?"</p>
                     <FloatingLabel label="Diálogo na íntegra" >
                         <Form.Control
                             as="textarea"
@@ -35,10 +31,11 @@ export function FastQuotesFillModal(props) {
                             rows={3}
                             name="rawuserinput"
                             placeholder="Diálogo na íntegra"
-                            onChange={handleRawChatLog}
-                            value={rawChatLog}>
+                            onChange={props.handleRawChatLog}
+                            value={props.rawChatLog}>
                         </Form.Control>
                     </FloatingLabel>
+                    <Button className="mt-2" onClick={props.convertRawChatLog}>Converter</Button>
                 </ModalBody>
             </Modal>
 
