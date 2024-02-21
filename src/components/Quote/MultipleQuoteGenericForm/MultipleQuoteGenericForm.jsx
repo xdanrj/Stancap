@@ -212,6 +212,16 @@ export default function MultipleQuoteGenericForm(props) {
         }
     }
 
+    const handleClearAll = () => {
+        useModal({
+            title: "Limpar todos os campos",
+            paragraph: "Apagar todos os campos Quote/Autor?",
+            buttons: [{ text: "Sim", action: [() => setMultipleQuotes([{ quote: "", author: "" }]), "handleClose()"] },
+            { text: "Não", action: ["handleClose()"] }]
+        })
+
+    }
+
     /*useModal({
                             title: "Preencher falas automaticamente",
                             paragraph: [
@@ -237,10 +247,9 @@ export default function MultipleQuoteGenericForm(props) {
             <Row className="justify-content-center">
                 <Col xs={12} sm={8} md={6} lg={5}>
                     <Form onSubmit={handleSubmitQuote}>
-
                         <div className="mb-4">
-                            <Button className="me-4" onClick={() => setShowFastQuotesFillModal(true)} > <MDBIcon fas icon="paste" /></Button>
-                            <Button><MDBIcon icon="trash-alt" onClick={() => removeQuoteInput(index)} /></Button>
+                            <Button onClick={() => setShowFastQuotesFillModal(true)} > <MDBIcon fas icon="paste" /></Button>
+                            {multipleQuotes.length > 1 && <Button className="ms-4" onClick={handleClearAll}><MDBIcon icon="trash-alt" /></Button>}
                         </div>
 
                         <MultipleQuoteInputs
