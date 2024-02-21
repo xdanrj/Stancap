@@ -6,7 +6,6 @@ import { FloatingLabel } from "../../CommonStyles/CommonStyles"
 const ModalContext = createContext()
 
 export function ModalProvider({ children }) {
-
     const [show, setShow] = useState(false)
     const [modalData, setModalData] = useState({ title: "", paragraph: "", "buttons": [], form: { label: "", name: "", placeholder: "", onChange: "", value: "" } })
 

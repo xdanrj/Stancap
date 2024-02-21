@@ -10,9 +10,10 @@ export default function MultipleQuoteInputs(props) {
     const [iconVisible, setIconVisible] = useState([true])
 
     useEffect(() => {
-        if (props.multipleQuotes.length === 0) {
+        /*if (props.multipleQuotes.length === 0) {
             props.setMultipleQuotes([{ quote: "", author: "" }])
-        }
+        }*/
+        props.setMultipleQuotes([{ quote: "", author: "" }])
         console.log(props.multipleQuotes[0])
     }, [])
 

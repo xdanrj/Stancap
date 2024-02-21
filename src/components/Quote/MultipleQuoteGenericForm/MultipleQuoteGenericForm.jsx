@@ -188,20 +188,28 @@ export default function MultipleQuoteGenericForm(props) {
                 const value = valueMatch[1]
                 const obj = { [key]: value }
                 objs.push(obj)
+
+                // [{quote: "", author: ""}]
+                // [{Fulano: "blablabla"}]
+
+            } else {
+                useAlert("Erro: verifique o formato.")
             }
-        })
-        // [{quote: "", author: ""}]
-        // [{Fulano: "blablabla"}]
-        objs.forEach((obj) => {
-            console.log(Object.keys(obj))
-            console.log(Object.values(obj))
-            tempMultipleQuotes.push({ "quote": Object.values(obj)[0], "author": Object.keys(obj)[0] })
 
         })
-        console.log(tempMultipleQuotes)
-        console.log(objs)
-        setMultipleQuotes(tempMultipleQuotes)
-        setChatLogResult(objs)
+        if (objs.length > 0) {
+            objs.forEach((obj) => {
+                console.log(Object.keys(obj))
+                console.log(Object.values(obj))
+                tempMultipleQuotes.push({ "quote": Object.values(obj)[0], "author": Object.keys(obj)[0] })
+
+            })
+
+            console.log(tempMultipleQuotes)
+            console.log(objs)
+            setMultipleQuotes(tempMultipleQuotes)
+            setChatLogResult(objs)
+        }
     }
 
     /*useModal({
@@ -225,7 +233,7 @@ export default function MultipleQuoteGenericForm(props) {
                         } */
     return (
         <>
-            <FastQuotesFillModal show={showFastQuotesFillModal} convertRawChatLog={convertRawChatLog} handleRawChatLog={handleRawChatLog} />
+            <FastQuotesFillModal show={showFastQuotesFillModal} setShow={setShowFastQuotesFillModal} convertRawChatLog={convertRawChatLog} handleRawChatLog={handleRawChatLog} />
             <Row className="justify-content-center">
                 <Col xs={12} sm={8} md={6} lg={5}>
                     <Form onSubmit={handleSubmitQuote}>
