@@ -17,6 +17,13 @@ export default function MultipleQuoteInputs(props) {
         console.log(props.multipleQuotes[0])
     }, [])
 
+    useEffect(() => {
+        let updatedIconVisible = [...iconVisible]
+        updatedIconVisible = Array(props.multipleQuotes.length).fill(false)
+        updatedIconVisible[props.multipleQuotes.length - 1] = true
+        setIconVisible(updatedIconVisible)
+    }, [props.multipleQuotes])
+
     const addQuoteInput = (index) => {
         if (!(props.multipleQuotes[index].quote) || !(props.multipleQuotes[index].author)) {
             useAlert("Um ou mais campos vazios!")
@@ -44,48 +51,48 @@ export default function MultipleQuoteInputs(props) {
     }
     return (
         <>
-        <MultipleQuoteInputsDiv>
-            {props.multipleQuotes[0] && props.multipleQuotes.map((_, index) => (
-                <div key={index} className="">
-                    <Row>
-                        <Col>
-                            <FormGroup>
-                                <FloatingLabel label="Quote">
-                                    <Form.Control
-                                        name="quote"
-                                        placeholder="Quote"
-                                        value={props.multipleQuotes[index].quote}
-                                        onChange={(e) => props.onChange(e, index)}
-                                    />
-                                </FloatingLabel>
-                            </FormGroup>
-                        </Col>
-                        <Col>
-                            <FormGroup>
-                                <FloatingLabel label="Autor">
-                                    <Form.Control
-                                        name="author"
-                                        placeholder="Autor"
-                                        value={props.multipleQuotes[index].author}
-                                        onChange={(e) => props.onChange(e, index)}
-                                    />
-                                </FloatingLabel>
-                            </FormGroup>
-                        </Col>
-                    </Row>
+            <MultipleQuoteInputsDiv>
+                {props.multipleQuotes[0] && props.multipleQuotes.map((_, index) => (
+                    <div key={index} className="">
+                        <Row>
+                            <Col>
+                                <FormGroup>
+                                    <FloatingLabel label="Quote">
+                                        <Form.Control
+                                            name="quote"
+                                            placeholder="Quote"
+                                            value={props.multipleQuotes[index].quote}
+                                            onChange={(e) => props.onChange(e, index)}
+                                        />
+                                    </FloatingLabel>
+                                </FormGroup>
+                            </Col>
+                            <Col>
+                                <FormGroup>
+                                    <FloatingLabel label="Autor">
+                                        <Form.Control
+                                            name="author"
+                                            placeholder="Autor"
+                                            value={props.multipleQuotes[index].author}
+                                            onChange={(e) => props.onChange(e, index)}
+                                        />
+                                    </FloatingLabel>
+                                </FormGroup>
+                            </Col>
+                        </Row>
 
-                    {iconVisible[index] && (
-                        <MdbIcon icon="plus-circle" onClick={() => addQuoteInput(index)} />
-                    )}
+                        {iconVisible[index] && (
+                            <MdbIcon icon="plus-circle" onClick={() => addQuoteInput(index)} />
+                        )}
 
-                    {!(props.multipleQuotes.length === 1) && (
-                        <MdbIcon
-                            icon="trash-alt"
-                            onClick={() => removeQuoteInput(index)}
-                        />
-                    )}
-                </div>
-            ))}
+                        {!(props.multipleQuotes.length === 1) && (
+                            <MdbIcon
+                                icon="trash-alt"
+                                onClick={() => removeQuoteInput(index)}
+                            />
+                        )}
+                    </div>
+                ))}
             </MultipleQuoteInputsDiv>
         </>
     )
