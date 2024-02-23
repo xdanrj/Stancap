@@ -188,10 +188,6 @@ export default function MultipleQuoteGenericForm(props) {
                 const value = valueMatch[1]
                 const obj = { [key]: value }
                 objs.push(obj)
-
-                // [{quote: "", author: ""}]
-                // [{Fulano: "blablabla"}]
-
             } else {
                 useAlert("Erro: verifique o formato.")
             }
@@ -209,6 +205,8 @@ export default function MultipleQuoteGenericForm(props) {
             console.log(objs)
             setMultipleQuotes(tempMultipleQuotes)
             setChatLogResult(objs)
+            setShowFastQuotesFillModal(false)
+            useAlert("Campos preenchidos com sucesso.")
         }
     }
 
