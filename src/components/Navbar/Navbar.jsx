@@ -41,8 +41,8 @@ export default function NavbarComponent() {
             <MDBIcon icon='bars' fas />
           </MDBNavbarToggler>
           <MDBCollapse navbar show={showNavNoTogglerSecond}>
-            <MDBNavbarNav className='mb-2 mb-lg-0 justify-content-center'>
-              <div className="d-flex align-items-center">
+            <MDBNavbarNav className='mb-2 mb-lg-0 '>
+              <div className={showNavNoTogglerSecond ? "justify-content-center" : "d-flex" }>
 
                 <MDBNavbarItem>
                   <CustomMDBNavbarLink href='/quotes'><MDBIcon fas icon="comments" /></CustomMDBNavbarLink>
