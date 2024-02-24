@@ -12,6 +12,7 @@ export default class userServices {
     async logout() {
         localStorage.removeItem("userToken")  
         localStorage.removeItem("userId")      
+        localStorage.removeItem("userName")
     }
 
     async getUsername(userId) {

@@ -35,12 +35,14 @@ export const loginAndRegisterRoutes = (app) => {
             const email = req.body.email
             const password = req.body.password
             const user = await userExists({ email: email })
+            console.log(user)
             if (user) {
                 const userId = user._id
+                const userName = user.username
                 const correctCredentials = bcrypt.compare(password, user.password)
                 if (correctCredentials) {
                     const userToken = createUserToken(user._id)
-                    res.status(200).json({ userToken: userToken, userId: userId })
+                    res.status(200).json({ userToken: userToken, userId: userId, userName: userName })
                 }
             }
             else if (!correctCredentials) {

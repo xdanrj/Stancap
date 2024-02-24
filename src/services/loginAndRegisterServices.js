@@ -1,12 +1,12 @@
 const apiUrl = process.env.API_URL
 import axiosInstance from "./axiosConfig"
+import userServices from "./userServices"
+const userService = new userServices()
 
 export default class loginAndRegisterServices {
     constructor() {
         this.axios = axiosInstance
     }
-
-    
 
     async sendCode(email) {
         const response = await this.axios.post('/send_code', email)        
@@ -51,7 +51,7 @@ export default class loginAndRegisterServices {
         if (response.status === 200) {
             localStorage.setItem("userToken", response.data.userToken)
             localStorage.setItem("userId", response.data.userId)
-            localStorage.setItem("userName", await userService.getUsername(response.data.userId))
+            localStorage.setItem("userName", response.data.userName)
             return true
             // se não: já retorna a "{message}" da API
         } else if (response.status === 401){

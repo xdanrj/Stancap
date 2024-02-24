@@ -27,6 +27,7 @@ export default function LoginForm() {
         try {
             const response = await loginAndRegisterService.login(loginData)
             if (response === true) {
+                console.log("logou")
                 alert('Logado com sucesso')
                 navigate('/quotes')
             }

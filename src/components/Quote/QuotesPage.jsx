@@ -17,17 +17,13 @@ export default function QuotesPage() {
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
   const [urlQuery, setUrlQuery] = useState({})
   const params = useParams()
-  //const location = useLocation()
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
 
- 
   useEffect(() => {
-    //console.log(location)
     console.log(params)
-    if(params.le) {}
     setUrlQuery(params)
-}, [params])
+  }, [params])
 
 
   async function fetchAllQuotes() {
