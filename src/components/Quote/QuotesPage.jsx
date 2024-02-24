@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import quoteEditingServices from "../../services/quoteServices";
 import SingleQuote from "./SingleQuote/SingleQuote";
 import MultipleQuote from "./MultipleQuote/MultipleQuote";
@@ -16,9 +16,25 @@ export default function QuotesPage() {
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
   const [urlQuery, setUrlQuery] = useState(useParams())
-  console.log(urlQuery)
+  //const location = useLocation()
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
+
+ 
+  /*useEffect(() => {
+    
+    // Escuta por mudanças na URL
+    const unlisten = history((location) => {
+      // Atualiza o estado "url" com a nova URL
+      setUrlQuery(location.pathname);
+    });
+
+    // Retorna uma função de limpeza para remover o listener quando o componente for desmontado
+    return () => unlisten();
+    
+   console.log(location)
+  }, [location]);*/
+
 
   async function fetchAllQuotes() {
     const response = await quoteService.getAllQuotes()
