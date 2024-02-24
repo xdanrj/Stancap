@@ -15,25 +15,19 @@ export default function QuotesPage() {
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
-  const [urlQuery, setUrlQuery] = useState(useParams())
+  const [urlQuery, setUrlQuery] = useState({})
+  const params = useParams()
   //const location = useLocation()
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
 
  
-  /*useEffect(() => {
-    
-    // Escuta por mudanças na URL
-    const unlisten = history((location) => {
-      // Atualiza o estado "url" com a nova URL
-      setUrlQuery(location.pathname);
-    });
-
-    // Retorna uma função de limpeza para remover o listener quando o componente for desmontado
-    return () => unlisten();
-    
-   console.log(location)
-  }, [location]);*/
+  useEffect(() => {
+    //console.log(location)
+    console.log(params)
+    if(params.le) {}
+    setUrlQuery(params)
+}, [params])
 
 
   async function fetchAllQuotes() {
