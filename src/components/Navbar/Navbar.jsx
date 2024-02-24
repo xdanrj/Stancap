@@ -8,17 +8,10 @@ import userServices from '../../services/userServices';
 export default function NavbarComponent() {
   const navigate = useNavigate()
   const useModal = useModalBox()
-  const [showNavNoTogglerSecond, setShowNavNoTogglerSecond] = useState(false);
-  const [username, setUsername] = useState('')
+  const [showNavNoTogglerSecond, setShowNavNoTogglerSecond] = useState(false)
+  const [username, setUsername] = useState(localStorage.getItem("userName"))
   const userService = new userServices()
   const isAuthenticated = userService.authenticatedUser()
-
-  useEffect(() => {
-    async function getUsername() {
-      setUsername(await userService.getUsername(localStorage.getItem("userId")))
-    }
-    getUsername()
-  }, [])
 
   console.log(username)
 
