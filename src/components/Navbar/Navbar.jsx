@@ -27,7 +27,8 @@ export default function NavbarComponent() {
   }
 
   //mdbcontainer tinha fluid
-  //"d-flex" : "justify-content-center"
+  //navbar fechada: d-flex justify-content-center
+  //navbar aberta: d-flex ms-auto justify-content-center
   return (
     <>
       <MDBNavbar fixed="top" expand='sm' dark bgColor='dark'  >
@@ -44,8 +45,7 @@ export default function NavbarComponent() {
           </MDBNavbarToggler>
           <MDBCollapse navbar show={showNavNoTogglerSecond} >
             <MDBNavbarNav className='mb-2 mb-lg-0 '>
-              <div className="">
-
+              <div className="d-flex ms-auto justify-content-center">
                 <MDBNavbarItem>
                   <CustomMDBNavbarLink href='/quotes'><MDBIcon fas icon="comments" /></CustomMDBNavbarLink>
                 </MDBNavbarItem>

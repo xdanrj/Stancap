@@ -9,6 +9,7 @@ import { useAlertMsg } from "../Alert/AlertContext";
 import { Col, Row, Container } from "react-bootstrap";
 import userServices from "../../services/userServices";
 import { QuotesPageDiv } from "./QuotesPageStyles";
+import { useModalBox } from "../Modal/ModalContext";
 
 export default function QuotesPage() {
   const useAlert = useAlertMsg()
@@ -19,6 +20,7 @@ export default function QuotesPage() {
   const params = useParams()
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
+  const useModal = useModalBox()
 
   useEffect(() => {
     console.log(params)
@@ -66,6 +68,12 @@ export default function QuotesPage() {
       }
     }
   }, [quotesResponse])
+
+  useEffect(() => {
+    if(!(localStorage.getItem("hadVisitedQuotesPageBefore"))) {
+      useModal({title: "Aviso importante", paragraph: "Não leve nada daqui a sério. Todas as frases são para fins unicamente cômicos.", buttons: [{text: "Entendi", action: ["handleClose()", () =>localStorage.setItem("hadVisitedQuotesPageBefore", true)]}]})
+    }
+  }, [])
 
   /*
     function getCurrentScreenSize() {
