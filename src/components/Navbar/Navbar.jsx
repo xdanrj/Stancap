@@ -25,10 +25,12 @@ export default function NavbarComponent() {
   const handleNavToggler = () => {
     setShowNavNoTogglerSecond(!showNavNoTogglerSecond)
   }
+
   //mdbcontainer tinha fluid
+  //"d-flex" : "justify-content-center"
   return (
     <>
-      <MDBNavbar fixed="top" expand='sm' dark bgColor='dark'>
+      <MDBNavbar fixed="top" expand='sm' dark bgColor='dark'  >
         <MDBContainer fluid>
           <MDBNavbarBrand href='/quotes'>Stancapverso</MDBNavbarBrand>
           <MDBNavbarToggler
@@ -40,9 +42,9 @@ export default function NavbarComponent() {
             onClick={() => handleNavToggler()}>
             <MDBIcon icon='bars' fas />
           </MDBNavbarToggler>
-          <MDBCollapse navbar show={showNavNoTogglerSecond}>
+          <MDBCollapse navbar show={showNavNoTogglerSecond} >
             <MDBNavbarNav className='mb-2 mb-lg-0 '>
-              <div className={showNavNoTogglerSecond ? "justify-content-center" : "d-flex" }>
+              <div className="">
 
                 <MDBNavbarItem>
                   <CustomMDBNavbarLink href='/quotes'><MDBIcon fas icon="comments" /></CustomMDBNavbarLink>
