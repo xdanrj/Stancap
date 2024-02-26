@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import dayjs from "dayjs"
-import { MinimalQuoteContainer, InternalContainer, Paragraph, ParagraphAutor, MdbIcon } from "./MyQuotesStyles";
+import { MinimalQuoteContainer, InternalContainer, Paragraph, ParagraphAuthor, MdbIcon } from "./MyQuotesStyles";
 import { Col, Row, Button } from "react-bootstrap";
 import quoteEditingServices from "../../../services/quoteServices"
 import { useNavigate } from "react-router-dom";
@@ -66,6 +66,7 @@ export default function MyQuotes() {
 
         }
     }
+    console.log(quotesResponseArray)
 
     return (
         <>
@@ -78,8 +79,8 @@ export default function MyQuotes() {
                                 <div key={data._id}>
                                     <MinimalQuoteContainer>
                                         <InternalContainer>
-                                            <Paragraph>{data.quotes[0].quote} </Paragraph>
-                                            <ParagraphAutor>—{data.quoteType == "single" ? data.author : data.quotes[0].author}</ParagraphAutor>
+                                            <Paragraph>{data.quotes[0].quote && data.quotes[0].quote} </Paragraph>
+                                            <ParagraphAuthor>—{data.quoteType == "single" ? data.author : data.quotes[0].author}</ParagraphAuthor>
                                             {deletedQuotes.find((obj) => obj._id === data._id) ?
                                                 <>                                                  
                                                     <MdbIcon className="col-3"  fas icon="undo-alt" onClick={() => handleUndoDeleteQuote(data._id)}/>                                                    

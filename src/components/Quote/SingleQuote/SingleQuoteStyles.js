@@ -8,13 +8,17 @@ export const Paragraph = styled.p.attrs(() => ({
     word-wrap: break-word;
 `;
 
-export const ParagraphAutor = styled.p.attrs((props) => ({
+export const ParagraphAuthor = styled.p.attrs((props) => ({
     className: `mt-2 px-2 text-truncate`
 }))`
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0;
     font-weight: bold;
     text-align: right;
+    &:hover{
+        color: rgb(50, 150, 150);
+        transition: 0.5s;
+    }
 `;
 
 export const ParagraphDate = styled.p.attrs((props) => ({

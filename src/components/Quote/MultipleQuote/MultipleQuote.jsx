@@ -3,15 +3,17 @@ import quoteEditingServices from "../../../services/quoteServices";
 import { NormalDate } from "../../../Formatting/DateFormatting";
 import { sourceLogoSelector } from "../SourceCommonFunctions";
 import { QuoteHeader, QuoteContainer, SourceLogo } from "../../../CommonStyles/CommonStyles";
-import { Ballon, Paragraph, ParagraphAutor } from "./MultipleQuoteStyles";
+import { Ballon, Paragraph, ParagraphAuthor } from "./MultipleQuoteStyles";
 const quoteService = new quoteEditingServices();
 import QuoteInfo from "../QuoteInfo/QuoteInfo";
 import InfoIcon from "../InfoIcon/InfoIcon";
+import { useNavigate } from "react-router-dom";
 
 export default function MultipleQuotes({ multipleQuotes }) {
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
     const [quoteInfoData, setQuoteInfoData] = useState("")
     const [imagePaths, setImagePaths] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         let paths = []
@@ -46,9 +48,9 @@ export default function MultipleQuotes({ multipleQuotes }) {
                             </QuoteHeader>
                             {data.quotes.map((quote, index) => (
                                 <Ballon key={index} ballonside={index % 2 === 0}>
-                                    <ParagraphAutor>
+                                    <ParagraphAuthor>
                                         {quote.author}
-                                    </ParagraphAutor>
+                                    </ParagraphAuthor>
                                     <Paragraph>
                                         {quote.quote}
                                     </Paragraph>

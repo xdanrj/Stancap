@@ -3,7 +3,7 @@ import quoteEditingServices from "../../../services/quoteServices";
 import { NormalDate } from "../../../Formatting/DateFormatting";
 import { sourceLogoSelector } from "../SourceCommonFunctions";
 import { QuoteHeader, SourceLogo, QuoteContainer } from "../../../CommonStyles/CommonStyles";
-import { Paragraph, ParagraphAutor, ParagraphDate } from "./SingleQuoteStyles"
+import { Paragraph, ParagraphAuthor, ParagraphDate } from "./SingleQuoteStyles"
 
 import QuoteInfo from "../QuoteInfo/QuoteInfo";
 import { useNavigate } from "react-router-dom";
@@ -51,9 +51,9 @@ export default function SingleQuotes({ singleQuotes }) {
                                 <Paragraph>
                                     ‟{data.quotes[0].quote}”
                                 </Paragraph>
-                                <ParagraphAutor onClick={() => navigate(`/quotes/author/${data.author}`)}>
+                                <ParagraphAuthor onClick={() => navigate(`/quotes/author/${data.author}`)}>
                                     —{data.author ? data.author : "Autor desconhecido"}
-                                </ParagraphAutor>
+                                </ParagraphAuthor>
                                 <ParagraphDate>
                                     ({data.date ? data.date : "Data desconhecida"})
                                 </ParagraphDate>

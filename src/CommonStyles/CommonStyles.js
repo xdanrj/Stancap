@@ -65,6 +65,11 @@ export const SourceLogo = styled.img.attrs(() => ({
 }))`
   margin-top: -1vh;
   width: 5.5vh;
+  &:hover,
+  &:not(:hover):focus{
+    width: 8vh;
+    transition: 0.25s ease-in-out;
+}
 `;
 
 export const InfoIconStyles = styled.i.attrs(() => ({

@@ -40,7 +40,7 @@ export const Paragraph = styled.p.attrs((props) => ({
 
 `;
 
-export const ParagraphAutor = styled.p.attrs((props) => ({
+export const ParagraphAuthor = styled.p.attrs((props) => ({
     className: `mt-2 px-2`
 }))`
     margin-bottom: 0;

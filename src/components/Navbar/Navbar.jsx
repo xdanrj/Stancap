@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MDBNavbarLink, MDBNavbar, MDBContainer, MDBNavbarItem, MDBCollapse, MDBBtn, MDBNavbarNav, MDBInputGroup } from 'mdb-react-ui-kit';
-import { CustomMDBNavbarLink, MDBNavbarBrand, MDBNavbarToggler, MDBIcon } from './NavbarStyles';
+import { CustomMDBNavbarLink, MDBNavbarBrand, MDBNavbarToggler, MDBIcon, NavbarIcon, NavbarIconText } from './NavbarStyles';
 import { useModalBox } from '../Modal/ModalContext';
 import userServices from '../../services/userServices';
 import { Row, Col } from 'react-bootstrap';
@@ -29,7 +29,7 @@ export default function NavbarComponent() {
   }
 
   const handleOnShowNavbar = () => {
-    setNavbarClassNames("justify-content-center")
+    setNavbarClassNames("justify-content-between")
     //setIconsTextVisible(true)
   }
   //mdbcontainer tinha fluid
@@ -50,42 +50,38 @@ export default function NavbarComponent() {
             <MDBIcon icon='bars' fas />
           </MDBNavbarToggler>
           <MDBCollapse navbar show={showNavNoTogglerSecond} onShow={() => handleOnShowNavbar()} >
-            <MDBNavbarNav className='mb-2 mb-lg-0'>
+            <MDBNavbarNav className='mt-3'>
               <span className={navbarClassNames}>
 
                 <MDBNavbarItem >
-
                   <CustomMDBNavbarLink href='/quotes'>
-                    <MDBIcon fas icon="comments" />
-                    <p style={{ fontSize: "0.7rem", margin: "0" }}>Quotes</p>
+                    < NavbarIcon fas icon="comments"/>
+                    <NavbarIconText>Quotes</NavbarIconText>
                   </CustomMDBNavbarLink>
                 </MDBNavbarItem>
 
                 {isAuthenticated ?
 
                   <>
-                    <MDBNavbarItem>
+                    <MDBNavbarItem >
                       <CustomMDBNavbarLink href='/add_quote'>
-                        <MDBIcon fas icon="plus-circle" />
-                        <p style={{fontSize: "0.7rem", margin: "0"}}>Adicionar quotes</p>
+                        < NavbarIcon fas icon="plus-circle" />
+                        <NavbarIconText >Adicionar</NavbarIconText>
                       </CustomMDBNavbarLink>
 
                     </MDBNavbarItem>
 
-                    <MDBNavbarItem>
+                    <MDBNavbarItem >
                       <CustomMDBNavbarLink href='/my_quotes'>
-                        <MDBIcon fas icon="address-book" />
-                        <p style={{fontSize: "0.7rem", margin: "0"}}>Minhas quotes</p>
+                        < NavbarIcon fas icon="address-book" />
+                        <NavbarIconText >Minhas</NavbarIconText>
                       </CustomMDBNavbarLink>
                     </MDBNavbarItem>
-
-
-
                   </>
                   :
                   <>
                     <MDBNavbarItem>
-                      <CustomMDBNavbarLink href='/login'><MDBIcon fas icon="sign-in-alt" /></CustomMDBNavbarLink>
+                      <CustomMDBNavbarLink href='/login'>< NavbarIcon fas icon="sign-in-alt" /></CustomMDBNavbarLink>
                     </MDBNavbarItem>
                   </>
                 }

@@ -54,10 +54,27 @@ export const MDBBtn = styled(originalMDBBtn).attrs(() => ({
 `;
 
 export const MDBIcon = styled(originalMDBIcon).attrs(() => ({
-    size:'2x',
+    size:'',
     className: ''
 }))`
 `;
+
+export const NavbarIcon = styled(originalMDBIcon).attrs(() => ({
+    
+    className: ''
+}))`
+    font-size: 1.2rem;
+`;
+
+
+
+export const NavbarIconText = styled.p.attrs(() => ({
+    className: ''
+}))`
+    font-size: "0.7rem";
+    margin: "0";
+`;
+
 
 export const MDBNavbarNav = styled(originalMDBNavbarNav).attrs(() => ({
     className: ""

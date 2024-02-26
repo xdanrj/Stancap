@@ -34,7 +34,7 @@ export const Paragraph = styled.p.attrs(() => ({
     text-overflow: ellipsis;
 `;
 
-export const ParagraphAutor = styled.p.attrs(() => ({
+export const ParagraphAuthor = styled.p.attrs(() => ({
     className: `col-3 text-start text-truncate`
 }))`
     background-color: rgb(40, 40, 40);
