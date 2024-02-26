@@ -4,11 +4,13 @@ import { MDBNavbarLink, MDBNavbar, MDBContainer, MDBNavbarItem, MDBCollapse, MDB
 import { CustomMDBNavbarLink, MDBNavbarBrand, MDBNavbarToggler, MDBIcon } from './NavbarStyles';
 import { useModalBox } from '../Modal/ModalContext';
 import userServices from '../../services/userServices';
+import { Row, Col } from 'react-bootstrap';
 
 export default function NavbarComponent() {
   const navigate = useNavigate()
   const useModal = useModalBox()
   const [showNavNoTogglerSecond, setShowNavNoTogglerSecond] = useState(false)
+  const [navbarClassNames, setNavbarClassNames] = useState("d-flex ms-auto justify-content-center")
   const [username, setUsername] = useState(localStorage.getItem("userName"))
   const userService = new userServices()
   const isAuthenticated = userService.authenticatedUser()
@@ -26,6 +28,10 @@ export default function NavbarComponent() {
     setShowNavNoTogglerSecond(!showNavNoTogglerSecond)
   }
 
+  const handleOnShowNavbar = () => {
+    setNavbarClassNames("justify-content-center")
+    //setIconsTextVisible(true)
+  }
   //mdbcontainer tinha fluid
   //navbar fechada: d-flex justify-content-center
   //navbar aberta: d-flex ms-auto justify-content-center
@@ -43,18 +49,29 @@ export default function NavbarComponent() {
             onClick={() => handleNavToggler()}>
             <MDBIcon icon='bars' fas />
           </MDBNavbarToggler>
-          <MDBCollapse navbar show={showNavNoTogglerSecond} >
-            <MDBNavbarNav className='mb-2 mb-lg-0 text-center d-inline-flex'>
-             <span className='justify-content-center'>
-                <MDBNavbarItem>
-                  <CustomMDBNavbarLink href='/quotes'><MDBIcon fas icon="comments" /></CustomMDBNavbarLink>
+          <MDBCollapse navbar show={showNavNoTogglerSecond} onShow={() => handleOnShowNavbar()} >
+            <MDBNavbarNav className='mb-2 mb-lg-0'>
+              <span className={navbarClassNames}>
+
+                <MDBNavbarItem >
+                  <Row>
+                    <Col>
+                      <CustomMDBNavbarLink href='/quotes'><MDBIcon fas icon="comments" /></CustomMDBNavbarLink>
+                    </Col>
+                    <Col>
+                      <p >Quotes</p>
+                    </Col>
+                  </Row>
                 </MDBNavbarItem>
+
+
 
                 {isAuthenticated ?
 
                   <>
                     <MDBNavbarItem>
                       <CustomMDBNavbarLink href='/add_quote'><MDBIcon fas icon="plus-circle" /></CustomMDBNavbarLink>
+
                     </MDBNavbarItem>
 
                     <MDBNavbarItem>
@@ -72,7 +89,7 @@ export default function NavbarComponent() {
                   </>
                 }
               </span>
-           
+
               <MDBNavbarItem className='ms-auto' >
                 <MDBNavbarLink active onClick={() => useModal({
                   title: `Usuário ${username}`,
