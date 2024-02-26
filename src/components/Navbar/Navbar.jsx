@@ -54,28 +54,29 @@ export default function NavbarComponent() {
               <span className={navbarClassNames}>
 
                 <MDBNavbarItem >
-                  <Row>
-                    <Col>
-                      <CustomMDBNavbarLink href='/quotes'><MDBIcon fas icon="comments" /></CustomMDBNavbarLink>
-                    </Col>
-                    <Col>
-                      <p >Quotes</p>
-                    </Col>
-                  </Row>
+
+                  <CustomMDBNavbarLink href='/quotes'>
+                    <MDBIcon fas icon="comments" />
+                    <p style={{ fontSize: "0.7rem", margin: "0" }}>Quotes</p>
+                  </CustomMDBNavbarLink>
                 </MDBNavbarItem>
-
-
 
                 {isAuthenticated ?
 
                   <>
                     <MDBNavbarItem>
-                      <CustomMDBNavbarLink href='/add_quote'><MDBIcon fas icon="plus-circle" /></CustomMDBNavbarLink>
+                      <CustomMDBNavbarLink href='/add_quote'>
+                        <MDBIcon fas icon="plus-circle" />
+                        <p style={{fontSize: "0.7rem", margin: "0"}}>Adicionar quotes</p>
+                      </CustomMDBNavbarLink>
 
                     </MDBNavbarItem>
 
                     <MDBNavbarItem>
-                      <CustomMDBNavbarLink href='/my_quotes'><MDBIcon fas icon="address-book" /></CustomMDBNavbarLink>
+                      <CustomMDBNavbarLink href='/my_quotes'>
+                        <MDBIcon fas icon="address-book" />
+                        <p style={{fontSize: "0.7rem", margin: "0"}}>Minhas quotes</p>
+                      </CustomMDBNavbarLink>
                     </MDBNavbarItem>
 
 
