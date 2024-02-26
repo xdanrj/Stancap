@@ -70,8 +70,8 @@ export default function QuotesPage() {
   }, [quotesResponse])
 
   useEffect(() => {
-    if(!(localStorage.getItem("hadVisitedQuotesPageBefore"))) {
-      useModal({title: "Aviso importante", paragraph: "Não leve nada daqui a sério. Todas as frases são para fins unicamente cômicos.", buttons: [{text: "Entendi", action: ["handleClose()", () =>localStorage.setItem("hadVisitedQuotesPageBefore", true)]}]})
+    if (!(localStorage.getItem("hadVisitedQuotesPageBefore"))) {
+      useModal({ title: "Aviso importante", paragraph: ["Não leve nada daqui a sério. Todas as frases são para fins unicamente cômicos.", "Clique no ícone de source ou no autor da quote para fazer uma pesquisa específica."], buttons: [{ text: "Entendi", action: ["handleClose()", () => localStorage.setItem("hadVisitedQuotesPageBefore", true)] }] })
     }
   }, [])
 

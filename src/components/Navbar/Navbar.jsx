@@ -44,8 +44,8 @@ export default function NavbarComponent() {
             <MDBIcon icon='bars' fas />
           </MDBNavbarToggler>
           <MDBCollapse navbar show={showNavNoTogglerSecond} >
-            <MDBNavbarNav className='mb-2 mb-lg-0 '>
-              <div className="d-flex ms-auto justify-content-center">
+            <MDBNavbarNav className='mb-2 mb-lg-0 text-center d-inline-flex'>
+             <span className='justify-content-center'>
                 <MDBNavbarItem>
                   <CustomMDBNavbarLink href='/quotes'><MDBIcon fas icon="comments" /></CustomMDBNavbarLink>
                 </MDBNavbarItem>
@@ -71,7 +71,7 @@ export default function NavbarComponent() {
                     </MDBNavbarItem>
                   </>
                 }
-              </div>
+              </span>
            
               <MDBNavbarItem className='ms-auto' >
                 <MDBNavbarLink active onClick={() => useModal({
