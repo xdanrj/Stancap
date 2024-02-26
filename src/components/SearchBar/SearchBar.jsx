@@ -84,7 +84,6 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
 
     const handleSearchClick = async () => {
         setSearchQuery(setSearchQuery)
-        await fetchQuotesBySearch(searchQuery)
         navigate(`/quotes/${selectedType?.value}/${searchQuery?.query[selectedType?.value]}`)
     }
     console.log(selectedType)
