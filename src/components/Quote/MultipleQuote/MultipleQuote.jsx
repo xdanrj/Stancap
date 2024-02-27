@@ -47,7 +47,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
                                 <InfoIcon handleQuoteInfoClick={handleQuoteInfoClick} data={data} />
                             </QuoteHeader>
                             {data.quotes.map((quote, index) => (
-                                <Ballon key={index} ballonside={index % 2 === 0}>
+                                <Ballon key={index} ballonside={index % 2 === 0} /*balloncolor={}*/>
                                     <ParagraphAuthor>
                                         {quote.author}
                                     </ParagraphAuthor>

@@ -25,8 +25,9 @@ export const InfoIcon = styled.i.attrs(() => ({
 
 export const Ballon = styled.div.attrs((props) => ({
     className: "text-start"
+    //https://imagecolorpicker.com/color-code/2596be
 }))`
-    background-color: ${({ ballonside }) => (ballonside ? 'rgb(0, 100, 0)' : 'rgb(0, 50, 100)')};
+    background-color: ${({ ballonside }) => (ballonside ? '#145369' : '#541469')};
     border-radius: ${({ ballonside }) => (ballonside ? '20px 20px 3px 20px' : '20px 20px 20px 3px')};
     margin-left: ${({ ballonside }) => (ballonside ? 'auto' : 'initial')};
     margin-right: ${({ ballonside }) => (ballonside ? 'initial' : 'auto')};

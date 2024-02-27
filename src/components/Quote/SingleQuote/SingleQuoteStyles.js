@@ -16,7 +16,7 @@ export const ParagraphAuthor = styled.p.attrs((props) => ({
     font-weight: bold;
     text-align: right;
     &:hover{
-        color: rgb(50, 150, 150);
+        color: rgb(40, 150, 190);
         transition: 0.5s;
     }
 `;

@@ -63,12 +63,12 @@ export const QuoteHeader = styled.div.attrs(() => ({
 export const SourceLogo = styled.img.attrs(() => ({
   className: "position-absolute top-0 start-50 translate-middle rounded-6"
 }))`
-  margin-top: -1vh;
-  width: 5.5vh;
+  margin-top: -0.5rem;
+  width: 2.4rem;
   &:hover,
   &:not(:hover):focus{
-    width: 8vh;
-    transition: 0.25s ease-in-out;
+    width: 2.9rem;
+    transition: 0.2s ease-in-out;
 }
 `;
 
