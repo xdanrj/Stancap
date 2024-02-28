@@ -71,9 +71,28 @@ export default function MultipleQuotes({ multipleQuotes }) {
                                 }
                                 <InfoIcon handleQuoteInfoClick={handleQuoteInfoClick} data={data} />
                             </QuoteHeader>
+                            {/*A FAZER:
+                             transformar Ballon em componente 
+                            const Ballons = ({ data }) => {
+  let previousAuthor = null;
+
+  return data.quotes.map((quote, index) => {
+    const isSameAuthor = quote.author === previousAuthor;
+    previousAuthor = quote.author; // Atualiza o autor anterior
+
+    return (
+      <Ballon
+        key={index}
+        ballonside={index % 2 === 0 || isSameAuthor} // Repete ballonside se autor anterior for igual
+      >
+      </Ballon>
+    );
+  });
+}                             
+                            */}
                             {data.quotes.map((quote, index) => (
                                 <Ballon key={index} ballonside={index % 2 === 0} >
-                                    {console.log(authorsColors.find(obj => obj.author === quote.author))}
+                                    {console.log(quote)}
                                     <ParagraphAuthor authorcolor={authorsColors.find(obj => obj.author === quote.author)?.color}>
                                         {quote.author}
                                     </ParagraphAuthor>

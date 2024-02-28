@@ -28,7 +28,7 @@ export const Ballon = styled.div.attrs((props) => ({
     //https://imagecolorpicker.com/color-code/2596be
     // antigo bg color: background-color: ${({ ballonside }) => (ballonside ? '#145369' : '#541469')};
 }))`
-    background-color: rgb(40, 45, 50);
+    background-color: #4c4c4c;
     border-radius: ${({ ballonside }) => (ballonside ? '20px 20px 3px 20px' : '20px 20px 20px 3px')};
     margin-left: ${({ ballonside }) => (ballonside ? 'auto' : 'initial')};
     margin-right: ${({ ballonside }) => (ballonside ? 'initial' : 'auto')};
