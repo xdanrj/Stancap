@@ -13,6 +13,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
     const [quoteInfoData, setQuoteInfoData] = useState("")
     const [imagePaths, setImagePaths] = useState([])
+    const [ballonColors, setBallonColors] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -24,6 +25,15 @@ export default function MultipleQuotes({ multipleQuotes }) {
             setImagePaths(paths)
         }
         loadImagePaths()
+    }, [multipleQuotes])
+
+    useEffect(() => {
+        const authorsNames = multipleQuotes.map((mainObj) => {
+            console.log(mainObj.quotes)
+            mainObj.quotes.map((quotesObjArray) => {
+                console.log(quotesObjArray)
+            })
+        })
     }, [multipleQuotes])
 
     const handleQuoteInfoClick = (data) => {
@@ -47,7 +57,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
                                 <InfoIcon handleQuoteInfoClick={handleQuoteInfoClick} data={data} />
                             </QuoteHeader>
                             {data.quotes.map((quote, index) => (
-                                <Ballon key={index} ballonside={index % 2 === 0} /*balloncolor={}*/>
+                                <Ballon key={index} ballonside={index % 2 === 0} balloncolor={ballonColors[index]}>
                                     <ParagraphAuthor>
                                         {quote.author}
                                     </ParagraphAuthor>

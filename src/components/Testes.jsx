@@ -13,7 +13,7 @@ export default function Testes() {
     const nomes = [{ quote: "aa", author: "joao" }, { quote: "bb", author: "ana" },
     { quote: "cc", author: "carlos" }, { quote: "dd", author: "joao" }]
    
-    const unicos = _.uniqBy(nomes, "author").map((obj) => {[obj.author]: "test"})
+    const unicos = _.uniqBy(nomes, "author").map((obj) => obj.author)
     console.log(unicos)
 
     return (
