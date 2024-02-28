@@ -28,7 +28,7 @@ export const Ballon = styled.div.attrs((props) => ({
     //https://imagecolorpicker.com/color-code/2596be
     // antigo bg color: background-color: ${({ ballonside }) => (ballonside ? '#145369' : '#541469')};
 }))`
-    background-color: ${({ balloncolor }) => (balloncolor ? balloncolor : "#071e26")};
+    background-color: rgb(40, 45, 50);
     border-radius: ${({ ballonside }) => (ballonside ? '20px 20px 3px 20px' : '20px 20px 20px 3px')};
     margin-left: ${({ ballonside }) => (ballonside ? 'auto' : 'initial')};
     margin-right: ${({ ballonside }) => (ballonside ? 'initial' : 'auto')};
@@ -45,6 +45,7 @@ export const Paragraph = styled.p.attrs((props) => ({
 export const ParagraphAuthor = styled.p.attrs((props) => ({
     className: `mt-2 px-2`
 }))`
+    color: ${({ authorcolor }) => (authorcolor ? authorcolor : "#071e26")};
     margin-bottom: 0;
     font-weight: bold;
 `;

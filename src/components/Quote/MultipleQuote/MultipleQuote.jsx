@@ -14,9 +14,8 @@ export default function MultipleQuotes({ multipleQuotes }) {
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
     const [quoteInfoData, setQuoteInfoData] = useState("")
     const [imagePaths, setImagePaths] = useState([])
-    const [ballonColors, setBallonColors] = useState([])
+    const [authorsColors, setAuthorsColors] = useState([])
     const navigate = useNavigate()
-    const colorPallet = ["#071e26", "#1e0726", "#260f07", "#0e2607", "#262207", "#070826", "#172607", "#072625", "#150726", "#1d2607"]
 
     useEffect(() => {
         let paths = []
@@ -27,46 +26,30 @@ export default function MultipleQuotes({ multipleQuotes }) {
             setImagePaths(paths)
         }
         loadImagePaths()
-
-
-        let uniqueAuthors = multipleQuotes.map((mainObj) => {
-            return mainObj.quotes
-            
-        })
-        console.log(uniqueAuthors)
-        uniqueAuthors = _.uniqBy(_.flattenDeep(uniqueAuthors), "author").map((obj) => obj.author)
-        
-        const uniqueAuthorsColors = uniqueAuthors.map((authorName, index) => {
-            return {
-                author: authorName,
-                color: colorPallet[index ? index : 0]
-            }
-        })
-        setBallonColors(uniqueAuthorsColors)
-        console.log(uniqueAuthorsColors)
-
     }, [multipleQuotes])
 
-    /*const colorPallet = ["#071e26", "#1e0726", "#260f07", "#0e2607", "#262207", "#070826", "#172607", "#072625", "#150726", "#1d2607"]
+    const colorPallet = ["#a791ff", "#25d356", "#fc9775", "#ffbc38", "#a5b335", "#e26ab6", "#ffd279", "#d88deb", "#7f66ff"]
 
     useEffect(() => {
-        let uniqueAuthors = multipleQuotes.map((mainObj) => {
-            return mainObj.quotes
-            
-        })
-        console.log(uniqueAuthors)
-        uniqueAuthors = _.uniqBy(_.flattenDeep(uniqueAuthors), "author").map((obj) => obj.author)
-        
-        const uniqueAuthorsColors = uniqueAuthors.map((authorName, index) => {
-            return {
-                author: authorName,
-                color: colorPallet[index ? index : 0]
-            }
-        })
-        setBallonColors(uniqueAuthorsColors)
-        console.log(uniqueAuthorsColors)
+        const loadAuthorsColors = async () => {
+            let uniqueAuthors = await multipleQuotes.map((mainObj) => {
+                return mainObj.quotes
 
-    }, [multipleQuotes])*/
+            })
+            console.log(uniqueAuthors)
+            uniqueAuthors = _.uniqBy(_.flattenDeep(uniqueAuthors), "author").map((obj) => obj.author)
+
+            const uniqueAuthorsColors = uniqueAuthors.map((authorName, index) => {
+                return {
+                    author: authorName,
+                    color: colorPallet[index ? index : 0]
+                }
+            })
+            setAuthorsColors(uniqueAuthorsColors)
+            console.log(uniqueAuthorsColors)
+        }
+        loadAuthorsColors()
+    }, [multipleQuotes])
 
     const handleQuoteInfoClick = (data) => {
         setQuoteInfoData(data)
@@ -89,9 +72,9 @@ export default function MultipleQuotes({ multipleQuotes }) {
                                 <InfoIcon handleQuoteInfoClick={handleQuoteInfoClick} data={data} />
                             </QuoteHeader>
                             {data.quotes.map((quote, index) => (
-                                <Ballon key={index} ballonside={index % 2 === 0} balloncolor={ballonColors.find(obj => obj.author === quote.author).color}>
-                                    {console.log(ballonColors.find(obj => obj.author === quote.author))}
-                                    <ParagraphAuthor>
+                                <Ballon key={index} ballonside={index % 2 === 0} >
+                                    {console.log(authorsColors.find(obj => obj.author === quote.author))}
+                                    <ParagraphAuthor authorcolor={authorsColors.find(obj => obj.author === quote.author)?.color}>
                                         {quote.author}
                                     </ParagraphAuthor>
                                     <Paragraph>
