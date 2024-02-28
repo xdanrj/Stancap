@@ -1,5 +1,6 @@
 import { Button } from "react-bootstrap"
 import React, { useEffect, useState } from "react"
+import _ from "lodash"
 
 export default function Testes() {
     const text = `
@@ -10,14 +11,10 @@ export default function Testes() {
 `
 
     const nomes = [{ quote: "aa", author: "joao" }, { quote: "bb", author: "ana" },
-    { quote: "cc", author: "carlos" }, { quote: "", author: "joao" }]
-    const valoresUnicos = new Map()
-
-    nomes.forEach((objeto) => {
-        valoresUnicos.set(objeto.author, Object.keys(valoresUnicos).length + 1);
-    });
-
-    console.log(valoresUnicos);
+    { quote: "cc", author: "carlos" }, { quote: "dd", author: "joao" }]
+   
+    const unicos = _.uniqBy(nomes, "author").map((obj) => {[obj.author]: "test"})
+    console.log(unicos)
 
     return (
         <>
