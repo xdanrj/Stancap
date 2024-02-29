@@ -101,7 +101,6 @@ export default function MultipleQuoteGenericForm(props) {
     const handleSubmitQuote = async (e) => {
         e.preventDefault()
         try {
-            // condicoes
             let paragraph
             let buttons = [{
                 text: "Vou inserir", action: ["handleClose()"]
@@ -220,25 +219,6 @@ export default function MultipleQuoteGenericForm(props) {
 
     }
 
-    /*useModal({
-                            title: "Preencher falas automaticamente",
-                            paragraph: [
-                                `Preencha os campos de "Autor" e "Quote" automaticamente colando o log da conversa.`,
-                                `Por exemplo: `,
-                                `"[1/12 12:30] João: Olá, tudo bem?`,
-                                `[1/12 12:32] Ana: Sim. E você?"`
-                            ],
-                            buttons: [],
-                            form: {
-                                label: "Chat log",
-                                name: "rawchatlog",
-                                placeholder: "Chat log",
-                                onChange: "handleRawChatLogChange",
-                                value: "",
-                            }
-                        })
-
-                        } */
     return (
         <>
             <FastQuotesFillModal show={showFastQuotesFillModal} setShow={setShowFastQuotesFillModal} convertRawChatLog={convertRawChatLog} handleRawChatLog={handleRawChatLog} />

@@ -4,10 +4,11 @@ import _ from "lodash";
 
 export default function Ballons({ data, multipleQuotes }) {   
     const [authorsColors, setAuthorsColors] = useState([])
-    const colorPallet = ["#a791ff", "#25d356", "#fc9775", "#ffbc38", "#a5b335", "#e26ab6", "#ffd279", "#d88deb", "#7f66ff"]
-
+    const colorPallet = ["#25d356", "#fc9775", "#ffbc38", "#e26ab6", "#ffd279", "#d88deb", "#7f66ff", "#a5b335"]
+//"#a791ff"
     useEffect(() => {
         const loadAuthorsColors = async () => {
+            
             let uniqueAuthors = await multipleQuotes.map((mainObj) => {
                 return mainObj.quotes
 
@@ -15,10 +16,20 @@ export default function Ballons({ data, multipleQuotes }) {
             console.log(uniqueAuthors)
             uniqueAuthors = _.uniqBy(_.flattenDeep(uniqueAuthors), "author").map((obj) => obj.author)
 
+            let actualColor
+            let remainColors = [...colorPallet]
             const uniqueAuthorsColors = uniqueAuthors.map((authorName, index) => {
+                if(remainColors.length >= 1) {
+                    remainColors = [...colorPallet]
+                }
+                actualColor = remainColors[_.random(remainColors.length -1)]
+                console.log(remainColors[_.random(remainColors.length -1)])
+                console.log(actualColor)
+               
+                _.pull(remainColors, actualColor)
                 return {
                     author: authorName,
-                    color: colorPallet[index ? index : 0]
+                    color: actualColor
                 }
             })
             setAuthorsColors(uniqueAuthorsColors)
