@@ -3,7 +3,7 @@ import quoteEditingServices from "../../../services/quoteServices";
 import { NormalDate } from "../../../Formatting/DateFormatting";
 import { sourceLogoSelector } from "../SourceCommonFunctions";
 import { QuoteHeader, QuoteContainer, SourceLogo } from "../../../CommonStyles/CommonStyles";
-import { Ballon, Paragraph, ParagraphAuthor } from "./MultipleQuoteStyles";
+import Ballons from "./Ballons/Ballons";
 const quoteService = new quoteEditingServices();
 import QuoteInfo from "../QuoteInfo/QuoteInfo";
 import InfoIcon from "../InfoIcon/InfoIcon";
@@ -14,7 +14,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
     const [quoteInfoData, setQuoteInfoData] = useState("")
     const [imagePaths, setImagePaths] = useState([])
-    const [authorsColors, setAuthorsColors] = useState([])
+    //const [authorsColors, setAuthorsColors] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -28,9 +28,8 @@ export default function MultipleQuotes({ multipleQuotes }) {
         loadImagePaths()
     }, [multipleQuotes])
 
-    const colorPallet = ["#a791ff", "#25d356", "#fc9775", "#ffbc38", "#a5b335", "#e26ab6", "#ffd279", "#d88deb", "#7f66ff"]
-
-    useEffect(() => {
+    
+    /*useEffect(() => {
         const loadAuthorsColors = async () => {
             let uniqueAuthors = await multipleQuotes.map((mainObj) => {
                 return mainObj.quotes
@@ -49,7 +48,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
             console.log(uniqueAuthorsColors)
         }
         loadAuthorsColors()
-    }, [multipleQuotes])
+    }, [multipleQuotes])*/
 
     const handleQuoteInfoClick = (data) => {
         setQuoteInfoData(data)
@@ -71,25 +70,8 @@ export default function MultipleQuotes({ multipleQuotes }) {
                                 }
                                 <InfoIcon handleQuoteInfoClick={handleQuoteInfoClick} data={data} />
                             </QuoteHeader>
-                            {/*A FAZER:
-                             transformar Ballon em componente 
-                            const Ballons = ({ data }) => {
-  let previousAuthor = null;
-
-  return data.quotes.map((quote, index) => {
-    const isSameAuthor = quote.author === previousAuthor;
-    previousAuthor = quote.author; // Atualiza o autor anterior
-
-    return (
-      <Ballon
-        key={index}
-        ballonside={index % 2 === 0 || isSameAuthor} // Repete ballonside se autor anterior for igual
-      >
-      </Ballon>
-    );
-  });
-}                             
-                            */}
+                         <Ballons data={data} multipleQuotes={multipleQuotes}/>
+                            {/*
                             {data.quotes.map((quote, index) => (
                                 <Ballon key={index} ballonside={index % 2 === 0} >
                                     {console.log(quote)}
@@ -100,7 +82,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
                                         {quote.quote}
                                     </Paragraph>
                                 </Ballon>
-                            ))}
+                            ))} */}
                         </QuoteContainer>
                     </div>
                 )
