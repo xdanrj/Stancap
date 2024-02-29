@@ -28,7 +28,7 @@ export default function Ballons({ data, multipleQuotes }) {
     }, [multipleQuotes])
 
     let previousAuthor = null
-    let actualSide = true
+    let actualSide = false
     return data.quotes.map((quote, index) => {        
         let isSameAuthor = quote.author === previousAuthor
         if(isSameAuthor){
@@ -41,7 +41,7 @@ export default function Ballons({ data, multipleQuotes }) {
         return (
             <Ballon
                 key={index}
-                ballonside={index % 2 === 0 || isSameAuthor}
+                ballonside={actualSide}
             >
                 <ParagraphAuthor authorcolor={authorsColors.find(obj => obj.author === quote.author)?.color}>
                     {quote.author}
