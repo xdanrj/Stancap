@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { MDBIcon as originalMDBIcon } from 'mdb-react-ui-kit'
 
 export const Ballon = styled.div.attrs((props) => ({
     className: "text-start"
@@ -25,4 +26,13 @@ export const ParagraphAuthor = styled.p.attrs((props) => ({
     color: ${({ authorcolor }) => (authorcolor ? authorcolor : "#071e26")};
     margin-bottom: 0;
     font-weight: bold;
+`;
+
+export const MdbIcon = styled(originalMDBIcon).attrs(() => ({
+    className: ""
+}))`
+&:hover{
+    cursor: pointer;
+    font-size: 2rem;
+    transition: 0.2s;
 `;

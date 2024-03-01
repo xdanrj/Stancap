@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Ballon, ParagraphAuthor, Paragraph } from "./BallonsStyles";
+import { ClickableText } from "../../../../CommonStyles/CommonStyles";
 import _ from "lodash";
+import { MdbIcon } from "./BallonsStyles";
+
 
 export default function Ballons({ data, multipleQuotes }) {
     const [authorsColors, setAuthorsColors] = useState([])
@@ -74,17 +77,19 @@ export default function Ballons({ data, multipleQuotes }) {
 
                 {index === 3 && !isExpanded && (
                     <>
-                    <Button className="btn-outline-primary outline-none border-0 focus-visible:outline-none focus-visible:ring-0 btn-lg btn-block " onClick={handleReadMore}>
-                        
-                        <p className="m-0">ᨆ</p>
-                    </Button>
+                        {/*<Button className="btn-outline-primary outline-none border-0 btn-lg btn-block " onClick={handleReadMore}></Button>*/}
+                        <p className="m-0">. . .</p>
+                        <div style={{height: "2.5rem", margin: "0rem"}}>
+                            <MdbIcon fas icon="chevron-down" onClick={handleReadMore}/>                            
+                        </div>
+
                     </>
                 )}
                 {isExpanded && index === data.quotes.length - 1 && (
                     <>
-                    <Button onClick={handleReadMore}><p>ᨈ</p>
-                        <p>Leia menos</p>
-                    </Button>
+
+                        <p style={{ cursor: "pointer" }} onClick={handleReadMore} className="m-0">ᨈ</p>
+
                     </>
                 )}
             </>
