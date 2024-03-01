@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import { Ballon, ParagraphAuthor, Paragraph } from "./BallonsStyles";
 import _ from "lodash";
 
-export default function Ballons({ data, multipleQuotes }) {   
+export default function Ballons({ data, multipleQuotes }) {
     const [authorsColors, setAuthorsColors] = useState([])
     const colorPallet = ["#25d356", "#fc9775", "#ffbc38", "#e26ab6", "#ffd279", "#d88deb", "#7f66ff", "#a5b335"]
-//"#a791ff"
+    //"#a791ff"
     useEffect(() => {
         const loadAuthorsColors = async () => {
-            
+
             let uniqueAuthors = await multipleQuotes.map((mainObj) => {
                 return mainObj.quotes
 
@@ -19,13 +20,13 @@ export default function Ballons({ data, multipleQuotes }) {
             let actualColor
             let remainColors = [...colorPallet]
             const uniqueAuthorsColors = uniqueAuthors.map((authorName, index) => {
-                if(remainColors.length >= 1) {
+                if (remainColors.length >= 1) {
                     remainColors = [...colorPallet]
                 }
-                actualColor = remainColors[_.random(remainColors.length -1)]
-                console.log(remainColors[_.random(remainColors.length -1)])
+                actualColor = remainColors[_.random(remainColors.length - 1)]
+                console.log(remainColors[_.random(remainColors.length - 1)])
                 console.log(actualColor)
-               
+
                 _.pull(remainColors, actualColor)
                 return {
                     author: authorName,
@@ -40,28 +41,43 @@ export default function Ballons({ data, multipleQuotes }) {
 
     let previousAuthor = null
     let actualSide = false
-    return data.quotes.map((quote, index) => {        
+
+    const [isExpanded, setIsExpanded] = useState(false)
+    const handleReadMore = () => {
+        setIsExpanded(!isExpanded)
+    }
+    
+    return data.quotes.map((quote, index) => {
+        let readMoreEnabled = false
         let isSameAuthor = quote.author === previousAuthor
-        if(isSameAuthor){
+        if (isSameAuthor) {
             actualSide = actualSide
         } else {
             actualSide = !actualSide
         }
         previousAuthor = quote.author
-
+        console.log("idx: ", index)
         return (
-            <Ballon
-                key={index}
-                ballonside={actualSide}
-            >
-                <ParagraphAuthor authorcolor={authorsColors.find(obj => obj.author === quote.author)?.color}>
-                    {quote.author}
-                </ParagraphAuthor>
-                <Paragraph>
-                    {quote.quote}
-                </Paragraph>
+            <>
+                {index < 3 && (
+                    <>
+                        <Ballon
+                            key={index}
+                            ballonside={actualSide}>
+                            <ParagraphAuthor authorcolor={authorsColors.find(obj => obj.author === quote.author)?.color}>
+                                {quote.author}
+                            </ParagraphAuthor>
+                            <Paragraph>
+                                {quote.quote}
+                            </Paragraph>
+                        </Ballon>
+                    </>
+                )}
 
-            </Ballon>
-        );
-    });
+                {index === 3 && (
+                    <Button onClick={handleReadMore}>Ler mais</Button>
+                )}
+            </>             
+        )
+})
 }           
