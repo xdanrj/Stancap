@@ -73,12 +73,21 @@ export default function Ballons({ data, multipleQuotes }) {
                 }
 
                 {index === 3 && !isExpanded && (
-                    <Button onClick={handleReadMore}>Leia mais</Button>
+                    <>
+                    <Button className="btn-outline-primary outline-none border-0 focus-visible:outline-none focus-visible:ring-0 btn-lg btn-block " onClick={handleReadMore}>
+                        
+                        <p className="m-0">ᨆ</p>
+                    </Button>
+                    </>
                 )}
-                {isExpanded && index === data.quotes.length -1 && (
-                     <Button onClick={handleReadMore}>Leia menos</Button>
+                {isExpanded && index === data.quotes.length - 1 && (
+                    <>
+                    <Button onClick={handleReadMore}><p>ᨈ</p>
+                        <p>Leia menos</p>
+                    </Button>
+                    </>
                 )}
-            </>             
+            </>
         )
-})
+    })
 }           
