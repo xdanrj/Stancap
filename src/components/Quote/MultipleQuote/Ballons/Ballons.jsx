@@ -41,14 +41,12 @@ export default function Ballons({ data, multipleQuotes }) {
 
     let previousAuthor = null
     let actualSide = false
-
     const [isExpanded, setIsExpanded] = useState(false)
     const handleReadMore = () => {
         setIsExpanded(!isExpanded)
     }
-    
     return data.quotes.map((quote, index) => {
-        let readMoreEnabled = false
+        let readMoreLimit = index < 3
         let isSameAuthor = quote.author === previousAuthor
         if (isSameAuthor) {
             actualSide = actualSide
@@ -59,7 +57,7 @@ export default function Ballons({ data, multipleQuotes }) {
         console.log("idx: ", index)
         return (
             <>
-                {index < 3 && (
+                {isExpanded || readMoreLimit ?
                     <>
                         <Ballon
                             key={index}
@@ -71,11 +69,14 @@ export default function Ballons({ data, multipleQuotes }) {
                                 {quote.quote}
                             </Paragraph>
                         </Ballon>
-                    </>
-                )}
+                    </> : null
+                }
 
-                {index === 3 && (
-                    <Button onClick={handleReadMore}>Ler mais</Button>
+                {index === 3 && !isExpanded && (
+                    <Button onClick={handleReadMore}>Leia mais</Button>
+                )}
+                {isExpanded && index === data.quotes.length -1 && (
+                     <Button onClick={handleReadMore}>Leia menos</Button>
                 )}
             </>             
         )
