@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useLayoutEffect } from "react"
 import { Modal, Form, Button } from "react-bootstrap"
 import { ButtonContainer, ModalTitle, ModalBody } from "../../Modal/ModalContextStyles"
 import { SourceNames } from "../SourceCommonFunctions"
@@ -7,6 +7,8 @@ import _ from "lodash"
 export function QuotesPageFirstVisitModalBox(props) {
     const [show, setShow] = useState(true)
 
+    useEffect
+    
 
     const handleClose = () => {
         setShow(false)
