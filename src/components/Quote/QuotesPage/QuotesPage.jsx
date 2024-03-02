@@ -15,6 +15,7 @@ import { QuotesPageFirstVisitModalBox } from "./QuotesPageFirstVisitModalBox";
 export default function QuotesPage() {
   const useAlert = useAlertMsg()
   const [quotesPageFirstVisitModalBoxVisible, setQuotesPageFirstVisitModalBoxVisible] = useState(localStorage.getItem("hadVisitedQuotesPageBefore"))
+  console.log(quotesPageFirstVisitModalBoxVisible)
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
@@ -71,10 +72,10 @@ export default function QuotesPage() {
     }
   }, [quotesResponse])
 
-  useEffect(() => {
+  /*useEffect(() => {
       useModal({ title: "Avisos importantes", paragraph: ["Não leve nada daqui a sério. Todas as frases são para fins unicamente cômicos.", "ㅤ", "Clique em qualquer ícone de source ou no autor da quote para fazer uma pesquisa específica.", "ㅤ", `Alguns dialógos são grandes então clique em ᨆ para expandir `], buttons: [{ text: "Entendi", action: ["handleClose()", () => localStorage.setItem("hadVisitedQuotesPageBefore", true)] }] })
     
-  }, [])
+  }, [])*/
 
   /*
     function getCurrentScreenSize() {

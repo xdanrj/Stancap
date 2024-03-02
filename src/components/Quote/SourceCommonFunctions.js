@@ -10,6 +10,8 @@ export const SourceNames = [
   { name: "Stancap Nobreza", value: "StancapNobreza" }
 ]
 
+console.log(SourceNames[6].value)
+
 export function sourceLogoSelector(source) {
   const foundItem = SourceNames.find(item => item.value === source)
 
