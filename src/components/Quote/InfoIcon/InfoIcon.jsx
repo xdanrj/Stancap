@@ -18,27 +18,6 @@ export default function InfoIcon({ handleQuoteInfoClick, data }) {
         transition: 'opacity 0.3s ease-in-out'
     }
 
-    /*const handleQuotesPageFirstVisit = () => {
-        let isFirstVisit = true
-        //const isFirstVisit = localStorage.getItem("quotesPageFirstVisit")
-        if(isFirstVisit === true){
-            const intervalId = setInterval(() => {
-                setOpacityValue(1)
-
-                setTimeout(() => {
-                    setOpacityValue(0.075)
-                }, 300)
-            }, 600)
-
-            setTimeout(() => {
-                clearInterval(intervalId)
-                isFirstVisit = false
-                console.log(isFirstVisit)
-                //localStorage.setItem("quotesPageFirstVisit", JSON.stringify(false))
-            }, 1200)
-        }         
-    }
-    handleQuotesPageFirstVisit()*/
     return (
         <>
             <InfoIconStyles

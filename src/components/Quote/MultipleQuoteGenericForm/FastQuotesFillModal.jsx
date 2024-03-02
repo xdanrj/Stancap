@@ -10,8 +10,6 @@ export function FastQuotesFillModal(props) {
     const handleClose = () => {
         props.setShow(false)
     }
-
-
     return (
         <>
             <Modal show={props.show} onHide={handleClose} centered >
@@ -32,13 +30,10 @@ export function FastQuotesFillModal(props) {
                             name="rawuserinput"
                             onChange={props.handleRawChatLog}
                             value={props.rawChatLog}>
-                        </Form.Control>
-                    
+                        </Form.Control>                    
                     <Button className="mt-2" onClick={props.convertRawChatLog}>Converter</Button>
                 </ModalBody>
             </Modal>
-
-
         </>
     )
 }

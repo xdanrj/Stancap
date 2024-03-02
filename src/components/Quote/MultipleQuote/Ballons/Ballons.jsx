@@ -78,18 +78,18 @@ export default function Ballons({ data, multipleQuotes }) {
                 {index === 3 && !isExpanded && (
                     <>
                         {/*<Button className="btn-outline-primary outline-none border-0 btn-lg btn-block " onClick={handleReadMore}></Button>*/}
-                        <p className="m-0">. . .</p>
-                        <div style={{height: "2.5rem", margin: "0rem"}}>
-                            <MdbIcon fas icon="chevron-down" onClick={handleReadMore}/>                            
+                        <p className="mb-2"><b>• • •</b></p>
+                        <div style={{ height: "2.5rem", margin: "0rem" }}>
+                            <MdbIcon fas icon="chevron-down" onClick={handleReadMore} />
                         </div>
 
                     </>
                 )}
                 {isExpanded && index === data.quotes.length - 1 && (
                     <>
-
-                        <p style={{ cursor: "pointer" }} onClick={handleReadMore} className="m-0">ᨈ</p>
-
+                    <div style={{ height: "2.5rem", margin: "0rem" }}>
+                        <MdbIcon fas icon="chevron-up" onClick={handleReadMore} />
+                        </div>
                     </>
                 )}
             </>

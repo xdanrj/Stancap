@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react"
 import { useParams, useLocation } from "react-router-dom";
-import quoteEditingServices from "../../services/quoteServices";
-import SingleQuote from "./SingleQuote/SingleQuote";
-import MultipleQuote from "./MultipleQuote/MultipleQuote";
-import { size } from "../../CommonStyles/device";
-import { SearchBar } from "../SearchBar/SearchBar";
-import { useAlertMsg } from "../Alert/AlertContext";
+import quoteEditingServices from "../../../services/quoteServices";
+import SingleQuote from "../SingleQuote/SingleQuote";
+import MultipleQuote from "../MultipleQuote/MultipleQuote";
+import { size } from "../../../CommonStyles/device";
+import { SearchBar } from "../../SearchBar/SearchBar";
+import { useAlertMsg } from "../../Alert/AlertContext";
 import { Col, Row, Container } from "react-bootstrap";
-import userServices from "../../services/userServices";
+import userServices from "../../../services/userServices";
 import { QuotesPageDiv } from "./QuotesPageStyles";
-import { useModalBox } from "../Modal/ModalContext";
+import { useModalBox } from "../../Modal/ModalContext";
+import { QuotesPageFirstVisitModalBox } from "./QuotesPageFirstVisitModalBox";
 
 export default function QuotesPage() {
   const useAlert = useAlertMsg()
+  const [quotesPageFirstVisitModalBoxVisible, setQuotesPageFirstVisitModalBoxVisible] = useState(localStorage.getItem("hadVisitedQuotesPageBefore"))
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
@@ -70,9 +72,8 @@ export default function QuotesPage() {
   }, [quotesResponse])
 
   useEffect(() => {
-    if (!(localStorage.getItem("hadVisitedQuotesPageBefore"))) {
-      useModal({ title: "Aviso importante", paragraph: ["Não leve nada daqui a sério. Todas as frases são para fins unicamente cômicos.", "ㅤ", "Clique no ícone da source ou no autor da quote para fazer uma pesquisa específica."], buttons: [{ text: "Entendi", action: ["handleClose()", () => localStorage.setItem("hadVisitedQuotesPageBefore", true)] }] })
-    }
+      useModal({ title: "Avisos importantes", paragraph: ["Não leve nada daqui a sério. Todas as frases são para fins unicamente cômicos.", "ㅤ", "Clique em qualquer ícone de source ou no autor da quote para fazer uma pesquisa específica.", "ㅤ", `Alguns dialógos são grandes então clique em ᨆ para expandir `], buttons: [{ text: "Entendi", action: ["handleClose()", () => localStorage.setItem("hadVisitedQuotesPageBefore", true)] }] })
+    
   }, [])
 
   /*
@@ -99,6 +100,9 @@ export default function QuotesPage() {
   */
   return (
     <>
+
+      {!quotesPageFirstVisitModalBoxVisible && (<QuotesPageFirstVisitModalBox />)}
+
       <QuotesPageDiv>
         <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} urlQuery={urlQuery} />
 
