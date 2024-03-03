@@ -7,18 +7,19 @@ import _ from "lodash"
 export function QuotesPageFirstVisitModalBox(props) {
     const [show, setShow] = useState(true)
 
-    useEffect
-    
-
     const handleClose = () => {
         setShow(false)
         localStorage.setItem("hadVisitedQuotesPageBefore", true)
     }
 
+    if(show){
+
+    }
+
     return (
         <>
             <Modal show={show} onHide={handleClose} centered >
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <ModalTitle>Avisos importantes</ModalTitle>
                 </Modal.Header>
 

@@ -3,13 +3,13 @@ import { Modal, Form, Button } from "react-bootstrap"
 import { FloatingLabel } from "../../../CommonStyles/CommonStyles"
 import { ButtonContainer, ModalTitle, ModalBody } from "../../Modal/ModalContextStyles"
 
-
 export function FastQuotesFillModal(props) {
     const [show, setShow] = useState(false)
-
+    
     const handleClose = () => {
         props.setShow(false)
     }
+
     return (
         <>
             <Modal show={props.show} onHide={handleClose} centered >

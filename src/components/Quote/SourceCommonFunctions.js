@@ -13,8 +13,6 @@ export const SourceNames = [
   { name: "Stancap", value: "Stancap" },
   { name: "Stancap Nobreza", value: "StancapNobreza" }
 ]
-console.log('');
-
 
 console.log(SourceNames[6].value)
 

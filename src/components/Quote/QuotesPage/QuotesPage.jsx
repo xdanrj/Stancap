@@ -71,14 +71,8 @@ export default function QuotesPage() {
       }
     }
   }, [quotesResponse])
-
-  /*useEffect(() => {
-      useModal({ title: "Avisos importantes", paragraph: ["Não leve nada daqui a sério. Todas as frases são para fins unicamente cômicos.", "ㅤ", "Clique em qualquer ícone de source ou no autor da quote para fazer uma pesquisa específica.", "ㅤ", `Alguns dialógos são grandes então clique em ᨆ para expandir `], buttons: [{ text: "Entendi", action: ["handleClose()", () => localStorage.setItem("hadVisitedQuotesPageBefore", true)] }] })
-    
-  }, [])*/
-
-  /*
-    function getCurrentScreenSize() {
+  
+   /* function getCurrentScreenSize() {
       const screenWidth = window.innerWidth;
       if (screenWidth >= parseInt(size.desktop)) {
         return "desktop";
