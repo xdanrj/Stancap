@@ -1,3 +1,7 @@
+
+import { useEffect } from "react"
+import { useFetcher } from "react-router-dom"
+
 export const SourceNames = [
   { name: "Anarco Feudalismo", value: "AnarcoFeudalismo" },
   { name: "Anarco Primitivismo", value: "AnarcoPrimitivismo" },
@@ -9,6 +13,8 @@ export const SourceNames = [
   { name: "Stancap", value: "Stancap" },
   { name: "Stancap Nobreza", value: "StancapNobreza" }
 ]
+console.log('');
+
 
 console.log(SourceNames[6].value)
 
