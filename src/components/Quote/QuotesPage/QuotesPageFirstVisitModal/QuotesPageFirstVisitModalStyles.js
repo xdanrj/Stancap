@@ -9,11 +9,10 @@ export const LogoDemo = styled.img.attrs(() => ({
 `;
 
 export const ParagraphAuthorDemo = styled.p.attrs((props) => ({
-    className: ``
+    className: `mb-0`
 }))`
     color: rgba(255, 255, 255, 0.7);
     font-weight: bold;
-    text-align: right;
     &:hover{
         color: rgb(40, 150, 190);
         transition: 0.5s;
@@ -21,11 +20,9 @@ export const ParagraphAuthorDemo = styled.p.attrs((props) => ({
 `;
 
 export const ParagraphDateDemo = styled.p.attrs((props) => ({
-    className: `px-2`
+    className: `mt-0`
 }))`
     font-size: 0.6em;
     color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 0;
     font-weight: bold;
-    text-align: right;
 `;

@@ -17,7 +17,7 @@ export function QuotesPageFirstVisitModal(props) {
         if (show) {
             const interval = setInterval(() => {
                 setLogoIndex((prevIndex) => (prevIndex + 1) % SourceNames.length)
-            }, 500)
+            }, 1500)
             return () => clearInterval(interval)
         }
     }, [show])
@@ -33,13 +33,24 @@ export function QuotesPageFirstVisitModal(props) {
                     <p>Não leve nada daqui a sério. Todas as frases são para fins unicamente cômicos</p>
                     <p>Clique em qualquer ícone de source ou no autor da quote para fazer uma pesquisa específica</p>
 
-                  
-                       <div className="d-flex justify-content-center">
-                            <LogoDemo src={`/images/${SourceNames[logoIndex].value}.png`} />
-                       
-                            <ParagraphAuthorDemo>—Fulano</ParagraphAuthorDemo>
-                   
-                            </div>
+
+                    <div className="d-flex justify-content-evenly">
+                        <Row>
+                            <Col>
+                                <LogoDemo src={`/images/${SourceNames[logoIndex].value}.png`} />
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col>
+                                <ParagraphAuthorDemo>—Fulano</ParagraphAuthorDemo>
+
+                                <ParagraphDateDemo>ㅤㅤㅤㅤ(01/12/2036)</ParagraphDateDemo>
+                               
+                            </Col>
+                        </Row>
+
+                    </div>
                     <p>Alguns dialógos são grandes então clique em ᨆ para expandir</p>
 
                     <Button onClick={handleClose}>Entendi</Button>
