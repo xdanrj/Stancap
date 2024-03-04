@@ -2,7 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from "react"
 import { Modal, Form, Button, Row, Col } from "react-bootstrap"
 import { ButtonContainer, ModalTitle, ModalBody } from "../../../Modal/ModalContextStyles"
 import { SourceNames } from "../../SourceCommonFunctions"
-import { LogoDemo, ParagraphAuthorDemo, ParagraphDateDemo } from "./QuotesPageFirstVisitModalStyles"
+import { ArrowIcon, LogoDemo, ParagraphAuthorDemo, ParagraphDateDemo } from "./QuotesPageFirstVisitModalStyles"
 import _ from "lodash"
 
 export function QuotesPageFirstVisitModal(props) {
@@ -15,10 +15,13 @@ export function QuotesPageFirstVisitModal(props) {
 
     useEffect(() => {
         if (show) {
-            const interval = setInterval(() => {
+            const logoInterval = setInterval(() => {
                 setLogoIndex((prevIndex) => (prevIndex + 1) % SourceNames.length)
             }, 1500)
-            return () => clearInterval(interval)
+            return () => clearInterval(logoInterval)
+            const authorInterval = setInterval(() => {
+                setAuthorColor()
+            })
         }
     }, [show])
 
@@ -46,13 +49,15 @@ export function QuotesPageFirstVisitModal(props) {
                                 <ParagraphAuthorDemo>—Fulano</ParagraphAuthorDemo>
 
                                 <ParagraphDateDemo>ㅤㅤㅤㅤ(01/12/2036)</ParagraphDateDemo>
-                               
+
                             </Col>
                         </Row>
 
                     </div>
-                    <p>Alguns dialógos são grandes então clique em ᨆ para expandir</p>
-
+                    
+                    
+                        <p >Alguns dialógos são grandes então clique em <ArrowIcon>ᨆ</ArrowIcon> para expandir</p>
+                   
                     <Button onClick={handleClose}>Entendi</Button>
                 </ModalBody>
             </Modal>
