@@ -10,12 +10,12 @@ import { Col, Row, Container } from "react-bootstrap";
 import userServices from "../../../services/userServices";
 import { QuotesPageDiv } from "./QuotesPageStyles";
 import { useModalBox } from "../../Modal/ModalContext";
-import { QuotesPageFirstVisitModalBox } from "./QuotesPageFirstVisitModalBox";
+import { QuotesPageFirstVisitModal } from "./QuotesPageFirstVisitModal/QuotesPageFirstVisitModal";
 
 export default function QuotesPage() {
   const useAlert = useAlertMsg()
-  const [quotesPageFirstVisitModalBoxVisible, setQuotesPageFirstVisitModalBoxVisible] = useState(localStorage.getItem("hadVisitedQuotesPageBefore"))
-  console.log(quotesPageFirstVisitModalBoxVisible)
+  const [quotesPageFirstVisitModalVisible, setQuotesPageFirstVisitModalVisible] = useState(localStorage.getItem("hadVisitedQuotesPageBefore"))
+  console.log(quotesPageFirstVisitModalVisible)
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
@@ -96,7 +96,7 @@ export default function QuotesPage() {
   return (
     <>
 
-      {!quotesPageFirstVisitModalBoxVisible && (<QuotesPageFirstVisitModalBox />)}
+      {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
       <QuotesPageDiv>
         <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} urlQuery={urlQuery} />

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useLayoutEffect } from "react"
-import { Modal, Form, Button } from "react-bootstrap"
-import { ButtonContainer, ModalTitle, ModalBody } from "../../Modal/ModalContextStyles"
-import { SourceNames } from "../SourceCommonFunctions"
+import { Modal, Form, Button, Row, Col } from "react-bootstrap"
+import { ButtonContainer, ModalTitle, ModalBody } from "../../../Modal/ModalContextStyles"
+import { SourceNames } from "../../SourceCommonFunctions"
+import { LogoDemo, ParagraphAuthorDemo, ParagraphDateDemo } from "./QuotesPageFirstVisitModalStyles"
 import _ from "lodash"
 
-export function QuotesPageFirstVisitModalBox(props) {
+export function QuotesPageFirstVisitModal(props) {
     const [show, setShow] = useState(true)
     const [logoIndex, setLogoIndex] = useState(0)
     const handleClose = () => {
@@ -15,14 +16,11 @@ export function QuotesPageFirstVisitModalBox(props) {
     useEffect(() => {
         if (show) {
             const interval = setInterval(() => {
-                setLogoIndex(prevIndex => (prevIndex + 1) % SourceNames.length)
-                console.log(logoIndex)
-            }, 1000)
+                setLogoIndex((prevIndex) => (prevIndex + 1) % SourceNames.length)
+            }, 500)
             return () => clearInterval(interval)
         }
     }, [show])
-    
-
 
     return (
         <>
@@ -34,7 +32,14 @@ export function QuotesPageFirstVisitModalBox(props) {
                 <ModalBody>
                     <p>Não leve nada daqui a sério. Todas as frases são para fins unicamente cômicos</p>
                     <p>Clique em qualquer ícone de source ou no autor da quote para fazer uma pesquisa específica</p>
-                    <img src={`/images/${SourceNames[logoIndex]}.png`}></img>
+
+                  
+                       <div className="d-flex justify-content-center">
+                            <LogoDemo src={`/images/${SourceNames[logoIndex].value}.png`} />
+                       
+                            <ParagraphAuthorDemo>—Fulano</ParagraphAuthorDemo>
+                   
+                            </div>
                     <p>Alguns dialógos são grandes então clique em ᨆ para expandir</p>
 
                     <Button onClick={handleClose}>Entendi</Button>
