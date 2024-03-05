@@ -81,7 +81,10 @@ export default function NavbarComponent() {
                   :
                   <>
                     <MDBNavbarItem>
-                      <CustomMDBNavbarLink href='/login'>< NavbarIcon fas icon="sign-in-alt" /></CustomMDBNavbarLink>
+                      <CustomMDBNavbarLink href='/login'>
+                        < NavbarIcon fas icon="sign-in-alt" />
+                        <NavbarIconText >Login</NavbarIconText>
+                        </CustomMDBNavbarLink>
                     </MDBNavbarItem>
                   </>
                 }

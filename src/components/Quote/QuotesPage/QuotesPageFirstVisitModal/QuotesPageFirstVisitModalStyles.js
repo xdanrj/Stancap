@@ -35,21 +35,3 @@ export const ParagraphDateDemo = styled.p.attrs((props) => ({
     color: rgba(255, 255, 255, 0.5);
     font-weight: bold;
 `;
-
-const changeSize = keyframes`
-0%{
-    font-size: 1.6rem;
-}
-100%{
-    font-size: 2.1rem;
-}
-`
-export const ArrowIcon = styled.span.attrs((props) => ({
-    className: ""
-}))`
-    
-    display: inline-block;
-    font-size: 1.6rem;
-    animation: ${changeSize} 750ms linear infinite alternate;
-    
-`;

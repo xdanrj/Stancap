@@ -32,7 +32,7 @@ export async function userExists(proprietyTarget) {
   }
 }
 
-export async function selectQuote(body) {
+export async function selectQuote(body, limit=null) {
   let property = Object.keys(body)[0]
   let target = body[property]
   let query = { [property]: target }
@@ -40,8 +40,14 @@ export async function selectQuote(body) {
   if (property == "password") {
     return false
   }
+  
+  let foundQuote
+  if (limit !== null) {
+    foundQuote = await Quotes.find(query).limit(limit)
+  } else {
+    foundQuote = await Quotes.find(query)
+  }
 
-  const foundQuote = await Quotes.find(query)
   if (foundQuote.length > 0) {
     return foundQuote
   } else {

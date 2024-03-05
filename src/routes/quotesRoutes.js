@@ -23,6 +23,7 @@ export const quotesRoutes = (app) => {
     return true
   }
 
+  //todas as quotes SEM limite
   app.get("/all_quotes", async (req, res) => {
     try {
       const response = await Quotes.find()
@@ -32,7 +33,8 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.post("/search_quote", async (req, res) => {
+  //busca especifica SEM limite
+  app.post("/search_all_quotes", async (req, res) => {
     try {
       const foundQuote = await selectQuote(req.body)
       res.status(200).json(foundQuote)
@@ -40,6 +42,32 @@ export const quotesRoutes = (app) => {
       res.status(400).json({message: error})
     }
   })
+
+  //todas as quotes COM limite de 5 por page
+  app.get("/get_five_quotes", async (req, res) => {
+    try {
+      const page = req.query.page ? parseInt(req.query.page) : 1
+      const response = await Quotes.find().skip(skipItems).limit(perPage)
+      res.status(200).json(response)
+    } catch (error) {
+      res.status(400).json({message: error})
+    }
+  })
+
+//busca especifica COM limite de 5 por page
+//TODO: parei aqui
+  app.post("/search_five_quotes", async (req, res) => {
+    try {
+      const page = req.query.page ? parseInt(req.query.page) : 1
+      const foundQuote = await selectQuote(req.body, 5)
+      console.log(foundQuote)
+      res.status(200).json(foundQuote)
+    } catch (error) {
+      res.status(400).json({message: error})
+    }
+  })
+
+ 
 
   app.patch("/edit_quote", requireUserToken, async (req, res) => {
     try {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from "react"
 import { Modal, Form, Button, Row, Col } from "react-bootstrap"
 import { ButtonContainer, ModalTitle, ModalBody } from "../../../Modal/ModalContextStyles"
 import { SourceNames } from "../../SourceCommonFunctions"
-import { ArrowIcon, LogoDemo, ParagraphAuthorDemo, ParagraphDateDemo } from "./QuotesPageFirstVisitModalStyles"
+import { LogoDemo, ParagraphAuthorDemo, ParagraphDateDemo } from "./QuotesPageFirstVisitModalStyles"
 import _ from "lodash"
 
 export function QuotesPageFirstVisitModal(props) {
@@ -36,7 +36,6 @@ export function QuotesPageFirstVisitModal(props) {
                     <p>Não leve nada daqui a sério. Todas as frases são para fins unicamente cômicos</p>
                     <p>Clique em qualquer ícone de source ou no autor da quote para fazer uma pesquisa específica</p>
 
-
                     <div className="d-flex justify-content-evenly">
                         <Row>
                             <Col>
@@ -53,10 +52,9 @@ export function QuotesPageFirstVisitModal(props) {
                             </Col>
                         </Row>
 
-                    </div>
+                    </div>                    
                     
-                    
-                        <p >Alguns dialógos são grandes então clique em <ArrowIcon>ᨆ</ArrowIcon> para expandir</p>
+                        <p>Alguns dialógos são grandes então clique em ᨆ para expandir</p>
                    
                     <Button onClick={handleClose}>Entendi</Button>
                 </ModalBody>

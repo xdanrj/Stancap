@@ -16,8 +16,19 @@ export default class quoteEditingServices {
         }
     }
 
+    async get5Quotes() {
+        try {
+            const response = await this.axios.get('/all_quotes')
+            if (response.status === 200) {
+                return response.data
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async getQuote(data) {
-        const response = await this.axios.post('/search_quote', data)
+        const response = await this.axios.post('/search_five_quotes', data)
         if (response.data) {
             return response.data
         } else {
