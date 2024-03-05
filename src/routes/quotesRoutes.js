@@ -48,7 +48,7 @@ export const quotesRoutes = (app) => {
   //todas as quotes COM limite de 5 por page
   app.get(`/get_quotes`, async (req, res) => {
     try {
-      con
+      console.log(await Quotes.countDocuments())
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
       const response = await Quotes.find().skip(skipItems).limit(perPage)
