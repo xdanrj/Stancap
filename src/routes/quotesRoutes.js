@@ -48,6 +48,7 @@ export const quotesRoutes = (app) => {
   //todas as quotes COM limite de 5 por page
   app.get(`/get_quotes`, async (req, res) => {
     try {
+      con
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
       const response = await Quotes.find().skip(skipItems).limit(perPage)
@@ -58,7 +59,8 @@ export const quotesRoutes = (app) => {
     }
   })
 
-//busca especifica COM limite de 5 por page
+// toda rota/ serviço que nao tiver "all" no nome retornará até 5 itens
+//busca especifíca COM limite de 5 por page
   app.post("/search_quotes", async (req, res) => {
     try {
       const page = req.query.page ? parseInt(req.query.page) : 1
@@ -69,8 +71,6 @@ export const quotesRoutes = (app) => {
       res.status(400).json({message: error})
     }
   })
-
- 
 
   app.patch("/edit_quote", requireUserToken, async (req, res) => {
     try {

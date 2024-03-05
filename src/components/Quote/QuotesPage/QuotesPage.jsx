@@ -32,14 +32,14 @@ export default function QuotesPage() {
 
 
   async function fetchAllQuotes() {
-    const response = await quoteService.getAllQuotes()
+    const response = await quoteService.getQuotes()
     setQuotesResponse(response)
   }
 
   async function fetchQuotesBySearch(searchQuery) {
     console.log(searchQuery)
     console.log(searchQuery.query)
-    const response = await quoteService.getQuote(searchQuery.query)
+    const response = await quoteService.getQuotes(searchQuery.query)
     response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
     setQuotesResponse(response)
   }

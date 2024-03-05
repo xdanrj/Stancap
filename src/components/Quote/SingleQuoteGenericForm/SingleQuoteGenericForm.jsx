@@ -32,7 +32,7 @@ export default function SingleQuoteGenericForm(props) {
     useEffect(() => {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
-                const apiResponse = await quoteEditingService.getQuote(props.quoteIdToEdit)
+                const apiResponse = await quoteEditingService.getQuotes(props.quoteIdToEdit)
                 const response = await apiResponse[0]
                 setQuoteData((prevData) => ({
                     ...prevData,

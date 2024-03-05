@@ -21,7 +21,7 @@ export default function MyQuotes() {
         setDeletedQuotes([])
         async function fetchQuotes() {
             let query = { "uploadByUser": userId }
-            const response = await quoteService.getQuote(query)
+            const response = await quoteService.getQuotes(query)
             setQuotesResponse(response)
             setQuotesResponseArray(response)
         }

@@ -16,8 +16,28 @@ export default class quoteEditingServices {
         }
     }
 
-    async getQuote(data) {
-        const response = await this.axios.post('/get_quotes', data)
+    async searchAllQuotes(data) {
+        const response = await this.axios.post('/search_all_quotes', data)
+        if (response.data) {
+            return response.data
+        } else {
+            return false
+        }
+    }
+
+    async getQuotes() {
+        const response = await this.axios.get('/get_quotes')
+        console.log(response)
+        if (response.data) {
+            return response.data
+        } else {
+            console.log(response)
+            return false
+        }
+    }
+
+    async searchQuotes(data) {
+        const response = await this.axios.post('/search_quotes', data)
         if (response.data) {
             return response.data
         } else {

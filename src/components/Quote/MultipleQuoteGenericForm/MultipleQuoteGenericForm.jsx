@@ -36,7 +36,7 @@ export default function MultipleQuoteGenericForm(props) {
     useEffect(() => {
         async function getQuoteToEdit() {
             if (props.quoteIdToEdit) {
-                const response = await quoteEditingService.getQuote(props.quoteIdToEdit)
+                const response = await quoteEditingService.getQuotes(props.quoteIdToEdit)
                 console.log(response[0].tags)
                 setMultipleQuotes(response[0].quotes)
                 setTags(response[0].tags)
