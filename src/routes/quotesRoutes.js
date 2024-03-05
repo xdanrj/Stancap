@@ -3,6 +3,8 @@ import { selectQuote, quoteExists } from "./commonFunctions.js"
 import { requireUserToken } from "./middleware.js"
 
 export const quotesRoutes = (app) => {
+  //resultados perPage para todas as rotas com limite de resultado
+  const perPage = 5
   async function functionEditQuote(selectedQuote, body) {
     const entries = Object.entries(body)
     const data = Object.fromEntries(entries.slice(1))
@@ -44,23 +46,24 @@ export const quotesRoutes = (app) => {
   })
 
   //todas as quotes COM limite de 5 por page
-  app.get("/get_five_quotes", async (req, res) => {
+  app.get(`/get_quotes`, async (req, res) => {
     try {
       const page = req.query.page ? parseInt(req.query.page) : 1
+      const skipItems = (page - 1) * perPage
       const response = await Quotes.find().skip(skipItems).limit(perPage)
       res.status(200).json(response)
     } catch (error) {
+      console.log(error)
       res.status(400).json({message: error})
     }
   })
 
 //busca especifica COM limite de 5 por page
-//TODO: parei aqui
-  app.post("/search_five_quotes", async (req, res) => {
+  app.post("/search_quotes", async (req, res) => {
     try {
       const page = req.query.page ? parseInt(req.query.page) : 1
-      const foundQuote = await selectQuote(req.body, 5)
-      console.log(foundQuote)
+      const skipItems = (page - 1) * perPage
+      const foundQuote = await selectQuote(req.body, skipItems, perPage)
       res.status(200).json(foundQuote)
     } catch (error) {
       res.status(400).json({message: error})

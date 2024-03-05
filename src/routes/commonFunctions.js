@@ -32,7 +32,7 @@ export async function userExists(proprietyTarget) {
   }
 }
 
-export async function selectQuote(body, limit=null) {
+export async function selectQuote(body, skipItems=null, limit=null) {
   let property = Object.keys(body)[0]
   let target = body[property]
   let query = { [property]: target }
@@ -42,8 +42,9 @@ export async function selectQuote(body, limit=null) {
   }
   
   let foundQuote
-  if (limit !== null) {
-    foundQuote = await Quotes.find(query).limit(limit)
+  if (limit !== null && skipItems !== null) {
+    console.log(`limit: ${limit} // skipItems: ${skipItems}`)
+    foundQuote = await Quotes.find(query).skip(skipItems).limit(limit)
   } else {
     foundQuote = await Quotes.find(query)
   }
