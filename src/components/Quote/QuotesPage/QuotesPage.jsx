@@ -11,11 +11,12 @@ import userServices from "../../../services/userServices";
 import { QuotesPageDiv } from "./QuotesPageStyles";
 import { useModalBox } from "../../Modal/ModalContext";
 import { QuotesPageFirstVisitModal } from "./QuotesPageFirstVisitModal/QuotesPageFirstVisitModal";
+import PageSelector from "../../PageSelector/PageSelector";
 
 export default function QuotesPage() {
+  const location = useLocation()
   const useAlert = useAlertMsg()
   const [quotesPageFirstVisitModalVisible, setQuotesPageFirstVisitModalVisible] = useState(localStorage.getItem("hadVisitedQuotesPageBefore"))
-  console.log(quotesPageFirstVisitModalVisible)
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
@@ -25,6 +26,14 @@ export default function QuotesPage() {
   const userService = new userServices()
   const useModal = useModalBox()
 
+  useEffect(() => {
+  const searchParams = new URLSearchParams(location.search)
+  let params = {}
+  for(let param of searchParams) {
+    params[param[0]] = param[1]
+  }
+  console.log(params)
+  }, [])
   useEffect(() => {
     console.log(params)
     setUrlQuery(params)
@@ -108,6 +117,7 @@ export default function QuotesPage() {
           </Col>
         </Row>
       </QuotesPageDiv>
+      <PageSelector /*page={actualPage}*/ />
     </>
   )
 }

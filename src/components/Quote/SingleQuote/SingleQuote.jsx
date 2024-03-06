@@ -42,7 +42,7 @@ export default function SingleQuotes({ singleQuotes }) {
                             <QuoteHeader>
                                 {
                                     imagePaths[index] ? (
-                                        <SourceLogo src={imagePaths[index].path} onClick={() => navigate(`/quotes/source/${imagePaths[index].source}`)} />
+                                        <SourceLogo src={imagePaths[index].path} onClick={() => navigate(`/quotes?source=${imagePaths[index].source}`)} />
                                     ) : (<></>)
                                 }
                                 <InfoIcon handleQuoteInfoClick={handleQuoteInfoClick} data={data} />
@@ -51,7 +51,7 @@ export default function SingleQuotes({ singleQuotes }) {
                                 <Paragraph>
                                     ‟{data.quotes[0].quote}”
                                 </Paragraph>
-                                <ParagraphAuthor onClick={() => navigate(`/quotes/author/${data.author}`)}>
+                                <ParagraphAuthor onClick={() => navigate(`/quotes?author=${data.author}`)}>
                                     —{data.author ? data.author : "Autor desconhecido"}
                                 </ParagraphAuthor>
                                 <ParagraphDate>

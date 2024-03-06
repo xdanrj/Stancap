@@ -4,13 +4,12 @@ import { InputGroup } from "./SearchBarStyles";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { useAlertMsg } from "../Alert/AlertContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
 export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
-    const useAlert = useAlertMsg()
+    const location = useLocation()
     const navigate = useNavigate()
-    const SearchBarRef = useRef()
 
     const SearchTypes = [
         { label: "Autor", value: "author" },
@@ -26,20 +25,22 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
     const [didSearched, setDidSearched] = useState(false)
     useEffect(() => {
-        console.log(searchQuery)
-        console.log(Object.keys(urlQuery).length)
-        if (Object.keys(urlQuery).length > 0) {
+        const searchParams = new URLSearchParams(location.search)
+        let queryString = {}
+        for (let param of searchParams) {
+            queryString[param[0]] = param[1]
+        }
+        console.log(queryString)
+        if (Object.keys(queryString).length > 0) {
             async function settingQuery() {
-                console.log(urlQuery)
-                console.log(urlQuery.queryprop)
-                console.log(urlQuery.queryvalue)
-                const queryProp = urlQuery.queryprop
-                const foundType = SearchTypes.find((type) => type.value === queryProp)
+                console.log( Object.keys(queryString))
+                //se der ruim, tente querystring[0]
+                const foundType = SearchTypes.find((type) => type.value === Object.keys(queryString))
                 console.log(foundType)
                 setSelectedType(foundType)
                 setSearchQuery((prevSearchQuery) => ({
                     ...prevSearchQuery,
-                    "query": {[queryProp]: urlQuery.queryvalue},
+                    "query":  queryString,
                     "label": foundType?.label,
                 }))
                 setDidSearched(!didSearched)
@@ -49,13 +50,13 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
             console.log("caiu ELSE")
             fetchAllQuotes()
         }
-    }, [urlQuery])
+    }, [location.search])
 
-    useEffect(() => {
-        if(Object.keys(urlQuery).length > 0){
+    /*useEffect(() => {
+        if (Object.keys(queryString).length > 0) {
             fetchQuotesBySearch(searchQuery)
-        }        
-    }, [didSearched])
+        }
+    }, [didSearched])*/
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(SearchTypes[eventKey])
@@ -84,7 +85,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
 
     const handleSearchClick = async () => {
         setSearchQuery(setSearchQuery)
-        navigate(`/quotes/${selectedType?.value}/${searchQuery?.query[selectedType?.value]}`)
+        navigate(`/quotes?${selectedType?.value}=${searchQuery?.query[selectedType?.value]}`)
     }
     console.log(selectedType)
     console.log(searchQuery)
@@ -92,7 +93,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
         <>
             <Row className="justify-content-center">
                 <Col md={8} lg={5}>
-                    <InputGroup ref={SearchBarRef} >
+                    <InputGroup >
                         <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
 
                             {SearchTypes.map((item, index) => (
