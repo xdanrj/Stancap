@@ -30,15 +30,17 @@ export default function QuotesPage() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search)
+    if (searchParams.get("page") === null) {
+      console.log("foiiiw")
+      searchParams.set("page", "1");
+    }
     let params = {}
     for (let param of searchParams) {
       params[param[0]] = param[1]
     }
     console.log(params)
     setActualPage(params?.page)
-    if (searchParams.get("page") === null) {
-      searchParams.set("page", "1");
-    }
+   
   }, [])
 
   useEffect(() => {
