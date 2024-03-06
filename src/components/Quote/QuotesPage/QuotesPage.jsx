@@ -27,19 +27,31 @@ export default function QuotesPage() {
   const userService = new userServices()
   const useModal = useModalBox()
 
+
   useEffect(() => {
-  const searchParams = new URLSearchParams(location.search)
-  let params = {}
-  for(let param of searchParams) {
-    params[param[0]] = param[1]
-  }
-  console.log(params)
-  setActualPage(params?.page)
+    const searchParams = new URLSearchParams(location.search)
+    let params = {}
+    for (let param of searchParams) {
+      params[param[0]] = param[1]
+    }
+    console.log(params)
+    setActualPage(params?.page)
+    if (searchParams.get("page") === null) {
+      searchParams.set("page", "1");
+    }
   }, [])
+
   useEffect(() => {
     console.log(params)
     setUrlQuery(params)
   }, [params])
+
+  
+  /*useEffect(() => {
+    if (searchParams.get("page") === null) {
+      searchParams.set("page", "1");
+    }
+  }, [searchParams]);*/
 
 
   async function fetchAllQuotes() {
@@ -82,28 +94,28 @@ export default function QuotesPage() {
       }
     }
   }, [quotesResponse])
-  
-   /* function getCurrentScreenSize() {
-      const screenWidth = window.innerWidth;
-      if (screenWidth >= parseInt(size.desktop)) {
-        return "desktop";
-      } else if (screenWidth >= parseInt(size.laptopL)) {
-        return "laptopL";
-      } else if (screenWidth >= parseInt(size.laptop)) {
-        return "laptop";
-      } else if (screenWidth >= parseInt(size.tablet)) {
-        return "tablet";
-      } else if (screenWidth >= parseInt(size.mobileL)) {
-        return "mobileL";
-      } else if (screenWidth >= parseInt(size.mobileM)) {
-        return "mobileM";
-      } else {
-        return "mobileS";
-      }
-    }
-    const currentSize = getCurrentScreenSize()
-    log("Tamanho atual da tela:", currentSize)
-  */
+
+  /* function getCurrentScreenSize() {
+     const screenWidth = window.innerWidth;
+     if (screenWidth >= parseInt(size.desktop)) {
+       return "desktop";
+     } else if (screenWidth >= parseInt(size.laptopL)) {
+       return "laptopL";
+     } else if (screenWidth >= parseInt(size.laptop)) {
+       return "laptop";
+     } else if (screenWidth >= parseInt(size.tablet)) {
+       return "tablet";
+     } else if (screenWidth >= parseInt(size.mobileL)) {
+       return "mobileL";
+     } else if (screenWidth >= parseInt(size.mobileM)) {
+       return "mobileM";
+     } else {
+       return "mobileS";
+     }
+   }
+   const currentSize = getCurrentScreenSize()
+   log("Tamanho atual da tela:", currentSize)
+ */
   return (
     <>
 

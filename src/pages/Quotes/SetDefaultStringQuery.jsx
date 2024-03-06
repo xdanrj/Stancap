@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
-import { useSearchParams, Outlet } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 
-const SetDefaultStringQuery = () => {
+const SetDefaultStringQuery = ({children}) => {
     const [searchParams, setSearchParams] = useState(useSearchParams())
     useEffect(() => {
         if(searchParams.get("page") === null) {
@@ -10,7 +10,7 @@ const SetDefaultStringQuery = () => {
         }
     }, [searchParams, setSearchParams])
 
-    return <Outlet/>
+    return children
     }
 
 export default SetDefaultStringQuery

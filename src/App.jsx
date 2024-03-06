@@ -28,9 +28,9 @@ export default function App() {
         <Route path="/testes" element={<Testes />} />
         <Route path="/new_password" element={<NewPassword />} />
 
-        <SetDefaultStringQuery>
+     
           <Route path="/quotes" element={<Quotes />} />
-        </SetDefaultStringQuery>
+      
 
         <Route path="/add_quote" element={
           <ProtectedRoutes>
@@ -47,9 +47,9 @@ export default function App() {
 
         <Route path="/my_quotes" element={
           <ProtectedRoutes>
-            <SetDefaultStringQuery>
+            
               <MyQuotes />
-            </SetDefaultStringQuery>
+           
           </ProtectedRoutes>
         } />
 
