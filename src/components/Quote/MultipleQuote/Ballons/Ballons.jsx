@@ -17,7 +17,7 @@ export default function Ballons({ data, multipleQuotes }) {
                 return mainObj.quotes
 
             })
-            console.log(uniqueAuthors)
+            
             uniqueAuthors = _.uniqBy(_.flattenDeep(uniqueAuthors), "author").map((obj) => obj.author)
 
             let actualColor
@@ -26,9 +26,7 @@ export default function Ballons({ data, multipleQuotes }) {
                 if (remainColors.length >= 1) {
                     remainColors = [...colorPallet]
                 }
-                actualColor = remainColors[_.random(remainColors.length - 1)]
-                console.log(remainColors[_.random(remainColors.length - 1)])
-                console.log(actualColor)
+                actualColor = remainColors[_.random(remainColors.length - 1)]               
 
                 _.pull(remainColors, actualColor)
                 return {
@@ -37,7 +35,7 @@ export default function Ballons({ data, multipleQuotes }) {
                 }
             })
             setAuthorsColors(uniqueAuthorsColors)
-            console.log(uniqueAuthorsColors)
+            
         }
         loadAuthorsColors()
     }, [multipleQuotes])
@@ -57,7 +55,7 @@ export default function Ballons({ data, multipleQuotes }) {
             actualSide = !actualSide
         }
         previousAuthor = quote.author
-        console.log("idx: ", index)
+        
         return (
             <>
                 {isExpanded || readMoreLimit ?

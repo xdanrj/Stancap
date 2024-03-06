@@ -12,27 +12,26 @@ import { QuotesPageDiv } from "./QuotesPageStyles";
 import { useModalBox } from "../../Modal/ModalContext";
 import { QuotesPageFirstVisitModal } from "./QuotesPageFirstVisitModal/QuotesPageFirstVisitModal";
 import PageSelector from "../../PageSelector/PageSelector";
+import { useNavigate } from "react-router-dom";
 
 export default function QuotesPage() {
+  const navigate = useNavigate()
   const location = useLocation()
   const useAlert = useAlertMsg()
   const [quotesPageFirstVisitModalVisible, setQuotesPageFirstVisitModalVisible] = useState(localStorage.getItem("hadVisitedQuotesPageBefore"))
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
-  const [urlQuery, setUrlQuery] = useState({})
   const [actualPage, setActualPage] = useState()
-  const params = useParams()
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
-  const useModal = useModalBox()
-
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search)
     if (searchParams.get("page") === null) {
-      console.log("foiiiw")
-      searchParams.set("page", "1");
+      searchParams.set("page", "1")
+      navigate({search: searchParams.toString()})
+      
     }
     let params = {}
     for (let param of searchParams) {
@@ -42,19 +41,6 @@ export default function QuotesPage() {
     setActualPage(params?.page)
    
   }, [])
-
-  useEffect(() => {
-    console.log(params)
-    setUrlQuery(params)
-  }, [params])
-
-  
-  /*useEffect(() => {
-    if (searchParams.get("page") === null) {
-      searchParams.set("page", "1");
-    }
-  }, [searchParams]);*/
-
 
   async function fetchAllQuotes() {
     const response = await quoteService.getQuotes()
@@ -124,7 +110,7 @@ export default function QuotesPage() {
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
       <QuotesPageDiv>
-        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} urlQuery={urlQuery} />
+        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} actualPage={actualPage} setActualPage={setActualPage}/>
 
         <Row className="justify-content-center">
           <Col xs={12} sm={9} md={7} lg={6} xl={5} >

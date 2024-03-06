@@ -7,7 +7,7 @@ import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
-export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes }) {
+export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, actualPage, setActualPage }) {
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -28,8 +28,14 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes }) {
         const searchParams = new URLSearchParams(location.search)
         let queryString = {}
         for (let param of searchParams) {
-            queryString[param[0]] = param[1]
+            if(param[0] === "page") {
+                console.log(param[1])
+                setActualPage(param[1])
+            } else {
+                queryString[param[0]] = param[1]
+            }            
         }
+        console.log(actualPage)
         console.log(queryString)
         if (Object.keys(queryString).length > 0) {
             async function settingQuery() {
@@ -53,10 +59,8 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes }) {
         }
     }, [location.search])
 
-    useEffect(() => {
-        //if (Object.keys(queryString).length > 0) {
-            fetchQuotesBySearch(searchQuery)
-        //}
+    useEffect(() => {        
+            fetchQuotesBySearch(searchQuery)        
     }, [didSearched])
 
     const handleTypeSelect = (eventKey) => {

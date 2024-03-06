@@ -36,9 +36,14 @@ export async function selectQuote(body, skipItems=null, limit=null) {
   let property = Object.keys(body)[0]
   let target = body[property]
   let query = { [property]: target }
-
+  console.log("arrrroooooz")
   if (property == "password") {
     return false
+  }
+
+  if (property == "uploadByUser") {
+    const userId = User.find(query.uploadByUser)
+    console.log(userId)
   }
   
   let foundQuote
