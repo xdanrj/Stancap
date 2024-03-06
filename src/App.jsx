@@ -15,6 +15,7 @@ import MyQuotes from './pages/Quotes/MyQuotes/MyQuotes';
 import ProtectedRoutes from './pages/Credentials/ProtectedRoutes';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import SetDefaultStringQuery from './pages/Quotes/SetDefaultStringQuery';
 
 export default function App() {
   return (
@@ -27,7 +28,9 @@ export default function App() {
         <Route path="/testes" element={<Testes />} />
         <Route path="/new_password" element={<NewPassword />} />
 
-        <Route path="/quotes/:queryprop?/:queryvalue?" element={<Quotes />} />
+        <SetDefaultStringQuery>
+          <Route path="/quotes" element={<Quotes />} />
+        </SetDefaultStringQuery>
 
         <Route path="/add_quote" element={
           <ProtectedRoutes>
@@ -41,9 +44,12 @@ export default function App() {
           </ProtectedRoutes>
         } />
 
+
         <Route path="/my_quotes" element={
           <ProtectedRoutes>
-            <MyQuotes />
+            <SetDefaultStringQuery>
+              <MyQuotes />
+            </SetDefaultStringQuery>
           </ProtectedRoutes>
         } />
 

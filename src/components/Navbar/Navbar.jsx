@@ -39,7 +39,7 @@ export default function NavbarComponent() {
     <>
       <MDBNavbar fixed="top" expand='sm' dark bgColor='dark'  >
         <MDBContainer fluid>
-          <MDBNavbarBrand href='/quotes'>Stancapverso</MDBNavbarBrand>
+          <MDBNavbarBrand href='/quotes?page=1'>Stancapverso</MDBNavbarBrand>
           <MDBNavbarToggler
             type='button'
             data-target='#navbarTogglerDemo02'

@@ -7,7 +7,7 @@ import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
-export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
+export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes }) {
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -33,9 +33,10 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
         console.log(queryString)
         if (Object.keys(queryString).length > 0) {
             async function settingQuery() {
-                console.log( Object.keys(queryString))
-                //se der ruim, tente querystring[0]
-                const foundType = SearchTypes.find((type) => type.value === Object.keys(queryString))
+                const queryprop = Object.keys(queryString).filter(key => key !== "page")
+                console.log(queryprop)
+                
+                const foundType = SearchTypes.find((type) => type.value === Object.keys(queryString)[0])
                 console.log(foundType)
                 setSelectedType(foundType)
                 setSearchQuery((prevSearchQuery) => ({
@@ -52,11 +53,11 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, urlQuery }) {
         }
     }, [location.search])
 
-    /*useEffect(() => {
-        if (Object.keys(queryString).length > 0) {
+    useEffect(() => {
+        //if (Object.keys(queryString).length > 0) {
             fetchQuotesBySearch(searchQuery)
-        }
-    }, [didSearched])*/
+        //}
+    }, [didSearched])
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(SearchTypes[eventKey])

@@ -21,6 +21,7 @@ export default function QuotesPage() {
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
   const [urlQuery, setUrlQuery] = useState({})
+  const [actualPage, setActualPage] = useState()
   const params = useParams()
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
@@ -33,6 +34,7 @@ export default function QuotesPage() {
     params[param[0]] = param[1]
   }
   console.log(params)
+  setActualPage(params?.page)
   }, [])
   useEffect(() => {
     console.log(params)
@@ -48,7 +50,7 @@ export default function QuotesPage() {
   async function fetchQuotesBySearch(searchQuery) {
     console.log(searchQuery)
     console.log(searchQuery.query)
-    const response = await quoteService.getQuotes(searchQuery.query)
+    const response = await quoteService.searchQuotes(searchQuery.query, actualPage)
     response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
     setQuotesResponse(response)
   }
