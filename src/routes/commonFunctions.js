@@ -2,6 +2,7 @@ import { User } from "../models/User.js"
 import { Quotes } from "../models/Quotes.js"
 import mongoose from "mongoose"
 import _ from "lodash"
+import { ObjectId } from "mongodb"
 
 // Função que seleciona o usuário através de qualquer propriedade. Usa sempre o primeiro objeto da requisição ( {propriedade: valorDaPropriedade} ). Serve para selecionar o usuário caso a rota não explicite a propriedade selecionada.
 export async function selectUser(body) {
@@ -35,21 +36,26 @@ export async function userExists(proprietyTarget) {
 export async function selectQuote(body, skipItems=null, limit=null) {
   let property = Object.keys(body)[0]
   let target = body[property]
-  let query = { [property]: target }
-  console.log("arrrroooooz")
+  let query = { [property]: target }  
   if (property == "password") {
     return false
   }
 
   if (property == "uploadByUser") {
-    const userId = User.find(query.uploadByUser)
-    console.log(userId)
+    const foundUser = await User.find({username: query.uploadByUser})
+    const userId = _.pick(foundUser[0], "_id")
+    const userIdStr = userId._id.toString()  
+    query = {uploadByUser: userIdStr}
   }
   
   let foundQuote
   if (limit !== null && skipItems !== null) {
+    console.log("query abaixo")
+    console.log(query)
     console.log(`limit: ${limit} // skipItems: ${skipItems}`)
     foundQuote = await Quotes.find(query).skip(skipItems).limit(limit)
+    console.log('foundquote abaixo')
+    console.log(foundQuote)
   } else {
     foundQuote = await Quotes.find(query)
   }
