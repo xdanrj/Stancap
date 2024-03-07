@@ -25,13 +25,15 @@ export const quotesRoutes = (app) => {
     return true
   }
 
+  // toda rota/ serviço que nao tiver "all" no nome retornará até 5 itens
+
   //todas as quotes SEM limite
   app.get("/all_quotes", async (req, res) => {
     try {
       const response = await Quotes.find()
       res.status(200).json(response)
     } catch (error) {
-      res.status(400).json({message: error})
+      res.status(400).json({ message: error })
     }
   })
 
@@ -41,7 +43,7 @@ export const quotesRoutes = (app) => {
       const foundQuote = await selectQuote(req.body)
       res.status(200).json(foundQuote)
     } catch (error) {
-      res.status(400).json({message: error})
+      res.status(400).json({ message: error })
     }
   })
 
@@ -55,12 +57,12 @@ export const quotesRoutes = (app) => {
       res.status(200).json(response)
     } catch (error) {
       console.log(error)
-      res.status(400).json({message: error})
+      res.status(400).json({ message: error })
     }
   })
 
-// toda rota/ serviço que nao tiver "all" no nome retornará até 5 itens
-//busca especifíca COM limite de 5 por page
+
+  //busca especifíca COM limite de 5 por page
   app.post("/search_quotes", async (req, res) => {
     try {
       const page = req.query.page ? parseInt(req.query.page) : 1
@@ -68,7 +70,7 @@ export const quotesRoutes = (app) => {
       const foundQuote = await selectQuote(req.body, skipItems, perPage)
       res.status(200).json(foundQuote)
     } catch (error) {
-      res.status(400).json({message: error})
+      res.status(400).json({ message: error })
     }
   })
 
@@ -82,21 +84,21 @@ export const quotesRoutes = (app) => {
         res.status(400).send(false)
       }
     } catch (error) {
-      res.status(400).json({message: error})
+      res.status(400).json({ message: error })
     }
   })
 
   app.delete("/delete_quote/:quoteId/:userId", requireUserToken, async (req, res) => {
     try {
-      const quoteId = {_id: req.params.quoteId}
+      const quoteId = { _id: req.params.quoteId }
       const userId = req.params.userId
       const selectedQuote = await selectQuote(quoteId)
       console.log(selectedQuote[0])
-      if(selectedQuote[0].uploadByUser === userId){
+      if (selectedQuote[0].uploadByUser === userId) {
         const response = await Quotes.deleteMany(quoteId)
         console.log(response.deletedCount)
         console.log(response)
-        if(response.deletedCount > 0) {
+        if (response.deletedCount > 0) {
           console.log("quote deletada")
           res.status(200).send(selectedQuote[0])
         }
@@ -105,7 +107,7 @@ export const quotesRoutes = (app) => {
         res.status(400).send(false)
       }
     } catch (error) {
-      res.status(400).json({message: error})
+      res.status(400).json({ message: error })
     }
   })
 
@@ -116,7 +118,7 @@ export const quotesRoutes = (app) => {
       const savedQuote = await newQuote.save()
       res.status(200).json(savedQuote)
     } catch (error) {
-      res.status(400).json({message: error})
+      res.status(400).json({ message: error })
     }
   })
 }
