@@ -25,8 +25,13 @@ export const quotesRoutes = (app) => {
     return true
   }
 
-  // toda rota/ serviço que nao tiver "all" no nome retornará até 5 itens
+  app.get("/quotes_quantity", async (req, res) => {
+    const quotesQtd = await Quotes.countDocuments()
+    console.log(quotesQtd)
+    res.status(200).json(quotesQtd)
+  })
 
+  // toda rota/ serviço que nao tiver "all" no nome retornará até 5 itens
   //todas as quotes SEM limite
   app.get("/all_quotes", async (req, res) => {
     try {
@@ -50,8 +55,8 @@ export const quotesRoutes = (app) => {
   //todas as quotes COM limite de 5 por page
   app.get(`/get_quotes`, async (req, res) => {
     try {
-      //console.log(await Quotes.countDocuments())
       const page = req.query.page ? parseInt(req.query.page) : 1
+      console.log("page: ", page)
       const skipItems = (page - 1) * perPage
       const response = await Quotes.find().skip(skipItems).limit(perPage)
       res.status(200).json(response)

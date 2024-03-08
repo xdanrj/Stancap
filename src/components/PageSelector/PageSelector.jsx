@@ -9,12 +9,15 @@ export default function PageSelector() {
 
     const handlePageClick = (item) => {
         let navTarget
+        console.log(item)
         console.log("TIPO do ITEM: ", typeof (item))
 
-        if (typeof (item) === number) {
+        if (typeof (item) === "number") {
             navTarget = item
         } else if (item === "last") {
             navTarget = -1
+        } else {
+            console.log("navTarget nao definido de nenhuma forma")
         }
         navigate({
             search: `?page=${navTarget}`

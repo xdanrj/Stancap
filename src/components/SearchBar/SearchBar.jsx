@@ -28,12 +28,9 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, actualPage, set
         const searchParams = new URLSearchParams(location.search)
         let queryString = {}
         for (let param of searchParams) {
-            if(param[0] === "page") {
-                console.log(param[1])
-                setActualPage(param[1])
-            } else {
+            if (param[0] !== "page") {
                 queryString[param[0]] = param[1]
-            }            
+            }
         }
         console.log(actualPage)
         console.log(queryString)
@@ -41,13 +38,13 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, actualPage, set
             async function settingQuery() {
                 const queryprop = Object.keys(queryString).filter(key => key !== "page")
                 console.log(queryprop)
-                
+
                 const foundType = SearchTypes.find((type) => type.value === Object.keys(queryString)[0])
                 console.log(foundType)
                 setSelectedType(foundType)
                 setSearchQuery((prevSearchQuery) => ({
                     ...prevSearchQuery,
-                    "query":  queryString,
+                    "query": queryString,
                     "label": foundType?.label,
                 }))
                 setDidSearched(!didSearched)
@@ -55,12 +52,12 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, actualPage, set
             settingQuery()
         } else {
             console.log("caiu ELSE")
-            fetchAllQuotes()
+            //fetchAllQuotes()
         }
     }, [location.search])
 
-    useEffect(() => {        
-            fetchQuotesBySearch(searchQuery)        
+    useEffect(() => {
+        fetchQuotesBySearch(searchQuery)
     }, [didSearched])
 
     const handleTypeSelect = (eventKey) => {

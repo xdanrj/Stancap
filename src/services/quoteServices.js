@@ -5,6 +5,15 @@ export default class quoteEditingServices {
         this.axios = axiosInstance
     }
 
+    async quotesQuantity() {
+        try {
+            const response = await this.axios.get('/quotes_quantity')
+            return response
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async getAllQuotes() {
         try {
             const response = await this.axios.get('/all_quotes')

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react"
-import { useParams, useLocation } from "react-router-dom";
-import quoteEditingServices from "../../../services/quoteServices";
-import SingleQuote from "../SingleQuote/SingleQuote";
-import MultipleQuote from "../MultipleQuote/MultipleQuote";
-import { size } from "../../../CommonStyles/device";
-import { SearchBar } from "../../SearchBar/SearchBar";
-import { useAlertMsg } from "../../Alert/AlertContext";
-import { Col, Row, Container } from "react-bootstrap";
-import userServices from "../../../services/userServices";
-import { QuotesPageDiv } from "./QuotesPageStyles";
-import { useModalBox } from "../../Modal/ModalContext";
-import { QuotesPageFirstVisitModal } from "./QuotesPageFirstVisitModal/QuotesPageFirstVisitModal";
-import PageSelector from "../../PageSelector/PageSelector";
-import { useNavigate } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom"
+import quoteEditingServices from "../../../services/quoteServices"
+import SingleQuote from "../SingleQuote/SingleQuote"
+import MultipleQuote from "../MultipleQuote/MultipleQuote"
+import { size } from "../../../CommonStyles/device"
+import { SearchBar } from "../../SearchBar/SearchBar"
+import { useAlertMsg } from "../../Alert/AlertContext"
+import { Col, Row, Container } from "react-bootstrap"
+import userServices from "../../../services/userServices"
+import { QuotesPageDiv } from "./QuotesPageStyles"
+import { useModalBox } from "../../Modal/ModalContext"
+import { QuotesPageFirstVisitModal } from "./QuotesPageFirstVisitModal/QuotesPageFirstVisitModal"
+import PageSelector from "../../PageSelector/PageSelector"
+import { useNavigate } from "react-router-dom"
 
 export default function QuotesPage() {
   const navigate = useNavigate()
@@ -22,33 +22,38 @@ export default function QuotesPage() {
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
-  const [actualPage, setActualPage] = useState()
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
+  const searchParams = new URLSearchParams(location.search)
+  const [actualPage, setActualPage] = useState(1)
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search)
-    if (searchParams.get("page") === null) {
+    let page = searchParams.get("page")
+    if (page === null) {
       searchParams.set("page", "1")
-      navigate({search: searchParams.toString()})
-      
+      page = "1"
+    } else {
+      setActualPage(parseInt(page))
     }
-    let params = {}
-    for (let param of searchParams) {
-      params[param[0]] = param[1]
+    for (let [key, value] of searchParams.entries()) {
+      if (key !== "page") {
+        searchParams.set(key, value)
+      }
     }
-    console.log(params)
-    setActualPage(params?.page)   
-  }, [])
+    navigate({ search: searchParams.toString() })
+  }, [location.search])
+
+  useEffect(() => {
+    fetchAllQuotes()
+  }, [actualPage])
 
   async function fetchAllQuotes() {
-    const response = await quoteService.getQuotes()
+    const response = await quoteService.getQuotes(actualPage)
     setQuotesResponse(response)
   }
 
   async function fetchQuotesBySearch(searchQuery) {
     console.log(searchQuery)
-    console.log(searchQuery.query)
     const response = await quoteService.searchQuotes(searchQuery.query, actualPage)
     response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
     setQuotesResponse(response)
@@ -83,21 +88,21 @@ export default function QuotesPage() {
   }, [quotesResponse])
 
   /* function getCurrentScreenSize() {
-     const screenWidth = window.innerWidth;
+     const screenWidth = window.innerWidth
      if (screenWidth >= parseInt(size.desktop)) {
-       return "desktop";
+       return "desktop"
      } else if (screenWidth >= parseInt(size.laptopL)) {
-       return "laptopL";
+       return "laptopL"
      } else if (screenWidth >= parseInt(size.laptop)) {
-       return "laptop";
+       return "laptop"
      } else if (screenWidth >= parseInt(size.tablet)) {
-       return "tablet";
+       return "tablet"
      } else if (screenWidth >= parseInt(size.mobileL)) {
-       return "mobileL";
+       return "mobileL"
      } else if (screenWidth >= parseInt(size.mobileM)) {
-       return "mobileM";
+       return "mobileM"
      } else {
-       return "mobileS";
+       return "mobileS"
      }
    }
    const currentSize = getCurrentScreenSize()
@@ -109,7 +114,7 @@ export default function QuotesPage() {
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
       <QuotesPageDiv>
-        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} actualPage={actualPage} setActualPage={setActualPage}/>
+        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} actualPage={actualPage} setActualPage={setActualPage} />
 
         <Row className="justify-content-center">
           <Col xs={12} sm={9} md={7} lg={6} xl={5} >
