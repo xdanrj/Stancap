@@ -38,8 +38,7 @@ export default function QuotesPage() {
       params[param[0]] = param[1]
     }
     console.log(params)
-    setActualPage(params?.page)
-   
+    setActualPage(params?.page)   
   }, [])
 
   async function fetchAllQuotes() {

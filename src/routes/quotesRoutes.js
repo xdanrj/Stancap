@@ -3,7 +3,7 @@ import { selectQuote, quoteExists } from "./commonFunctions.js"
 import { requireUserToken } from "./middleware.js"
 
 export const quotesRoutes = (app) => {
-  //resultados perPage para todas as rotas com limite de resultado
+  //resultados perPage para todas as rotas com limite de resultado. padrao: 5
   const perPage = 5
   async function functionEditQuote(selectedQuote, body) {
     const entries = Object.entries(body)
