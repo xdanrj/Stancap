@@ -25,36 +25,26 @@ export default function QuotesPage() {
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
   const searchParams = new URLSearchParams(location.search)
-  const [actualPage, setActualPage] = useState(1)
 
   useEffect(() => {
-    let page = searchParams.get("page")
-    if (page === null) {
+    if (!searchParams.has("page")) {
       searchParams.set("page", "1")
-      page = "1"
-    } else {
-      setActualPage(parseInt(page))
-    }
-    for (let [key, value] of searchParams.entries()) {
-      if (key !== "page") {
-        searchParams.set(key, value)
-      }
     }
     navigate({ search: searchParams.toString() })
   }, [location.search])
 
   useEffect(() => {
     fetchAllQuotes()
-  }, [actualPage])
+  }, [location.search])
 
   async function fetchAllQuotes() {
-    const response = await quoteService.getQuotes(actualPage)
+    const response = await quoteService.getQuotes(searchParams.get("page"))
     setQuotesResponse(response)
   }
 
   async function fetchQuotesBySearch(searchQuery) {
     console.log(searchQuery)
-    const response = await quoteService.searchQuotes(searchQuery.query, actualPage)
+    const response = await quoteService.searchQuotes(searchQuery.query, searchParams.get("page"))
     response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
     setQuotesResponse(response)
   }
@@ -114,7 +104,7 @@ export default function QuotesPage() {
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
       <QuotesPageDiv>
-        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} actualPage={actualPage} setActualPage={setActualPage} />
+        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} />
 
         <Row className="justify-content-center">
           <Col xs={12} sm={9} md={7} lg={6} xl={5} >
@@ -123,7 +113,7 @@ export default function QuotesPage() {
           </Col>
         </Row>
       </QuotesPageDiv>
-      <PageSelector /*page={actualPage}*/ />
+      <PageSelector />
     </>
   )
 }

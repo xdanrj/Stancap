@@ -35,6 +35,7 @@ export default class quoteEditingServices {
     }
 
     async getQuotes(actualPage) {
+        console.log(actualPage)
         const response = await this.axios.get(`/get_quotes?page=${actualPage}`)
         console.log(response)
         if (response.data) {
