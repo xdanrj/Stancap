@@ -26,16 +26,19 @@ export default function QuotesPage() {
   const userService = new userServices()
   const searchParams = new URLSearchParams(location.search)
 
+  //TODO: td funciona exceto a pesquisa especifica que carrega rapidamente o resultado depois volta a mostrar todas as quotes
   useEffect(() => {
     if (!searchParams.has("page")) {
       searchParams.set("page", "1")
     }
+    fetchAllQuotes()
     navigate({ search: searchParams.toString() })
   }, [location.search])
 
-  useEffect(() => {
-    fetchAllQuotes()
-  }, [location.search])
+  const handlePageChange = (pageTarget) => {
+    searchParams.set("page", pageTarget)
+    navigate({ search: searchParams.toString() })
+  }
 
   async function fetchAllQuotes() {
     const response = await quoteService.getQuotes(searchParams.get("page"))
@@ -113,7 +116,7 @@ export default function QuotesPage() {
           </Col>
         </Row>
       </QuotesPageDiv>
-      <PageSelector />
+      <PageSelector handlePageChange={handlePageChange}/>
     </>
   )
 }

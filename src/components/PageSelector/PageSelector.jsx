@@ -3,25 +3,23 @@ import { useNavigate } from "react-router-dom"
 import { Button, ButtonGroup, ButtonToolbar } from "react-bootstrap"
 import { MDBIcon } from "mdb-react-ui-kit"
 
-export default function PageSelector({searchParams}) {
+export default function PageSelector({handlePageChange}) {
     const [itemsQtd, setItemsQtd] = useState([1, 2, 3, 4, 5, 6, 7])
     const navigate = useNavigate()
 
     const handlePageClick = (item) => {
-        let navTarget
+        let pageTarget
         console.log(`${typeof(item)}: ${item}`)
 
         if (typeof (item) === "number") {
-            navTarget = item
+            pageTarget = item
         } else if (item === "last") {
             //TODO: pegar ultima pag
-            navTarget = -1
+            pageTarget = -1
         } else {
-            console.log("navTarget nao definido de nenhuma forma")
+            console.log("pageTarget nao definido de nenhuma forma")
         }
-        navigate({
-            search: `?page=${navTarget}`
-        })
+        handlePageChange(pageTarget)
     }
     return (
         <>

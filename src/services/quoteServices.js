@@ -46,8 +46,9 @@ export default class quoteEditingServices {
         }
     }
 
-    async searchQuotes(data, actualPage) {
-        const response = await this.axios.post(`/search_quotes?page=${actualPage}`, data)
+    async searchQuotes(query, actualPage) {
+        console.log(query)
+        const response = await this.axios.post(`/search_quotes?page=${actualPage}`, query)
         if (response.data) {
             return response.data
         } else {

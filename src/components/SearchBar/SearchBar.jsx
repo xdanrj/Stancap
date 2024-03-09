@@ -7,7 +7,7 @@ import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
-export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, actualPage, setActualPage }) {
+export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes }) {
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -32,7 +32,6 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, actualPage, set
                 queryString[param[0]] = param[1]
             }
         }
-        console.log(actualPage)
         console.log(queryString)
         if (Object.keys(queryString).length > 0) {
             async function settingQuery() {
@@ -57,6 +56,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, actualPage, set
     }, [location.search])
 
     useEffect(() => {
+        console.log("pesquisou")
         fetchQuotesBySearch(searchQuery)
     }, [didSearched])
 
@@ -89,8 +89,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, actualPage, set
         setSearchQuery(setSearchQuery)
         navigate(`/quotes?${selectedType?.value}=${searchQuery?.query[selectedType?.value]}`)
     }
-    console.log(selectedType)
-    console.log(searchQuery)
+    
     return (
         <>
             <Row className="justify-content-center">
