@@ -7,7 +7,7 @@ import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
-export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes }) {
+export function SearchBar({ fetchQuotesBySearch, searchParams, fetchAllQuotes }) {
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -51,7 +51,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes }) {
             settingQuery()
         } else {
             console.log("caiu ELSE")
-            //fetchAllQuotes()
+            fetchAllQuotes()
         }
     }, [location.search])
 

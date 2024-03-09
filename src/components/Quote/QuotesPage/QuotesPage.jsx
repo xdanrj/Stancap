@@ -26,12 +26,10 @@ export default function QuotesPage() {
   const userService = new userServices()
   const searchParams = new URLSearchParams(location.search)
 
-  //TODO: td funciona exceto a pesquisa especifica que carrega rapidamente o resultado depois volta a mostrar todas as quotes
   useEffect(() => {
     if (!searchParams.has("page")) {
       searchParams.set("page", "1")
     }
-    fetchAllQuotes()
     navigate({ search: searchParams.toString() })
   }, [location.search])
 
