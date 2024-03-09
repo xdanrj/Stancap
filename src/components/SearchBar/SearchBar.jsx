@@ -7,7 +7,8 @@ import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
-export function SearchBar({ fetchQuotesBySearch, searchParams, fetchAllQuotes }) {
+export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, queryString }) {
+    console.log(searchParams)
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -25,7 +26,7 @@ export function SearchBar({ fetchQuotesBySearch, searchParams, fetchAllQuotes })
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
     const [didSearched, setDidSearched] = useState(false)
     useEffect(() => {
-        const searchParams = new URLSearchParams(location.search)
+        //TODO: fazer com que ao acessar o url ja com uma query diretamente, faça a pesquisa auto.
         let queryString = {}
         for (let param of searchParams) {
             if (param[0] !== "page") {

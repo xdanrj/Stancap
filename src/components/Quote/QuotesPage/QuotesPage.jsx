@@ -25,13 +25,14 @@ export default function QuotesPage() {
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
   const searchParams = new URLSearchParams(location.search)
+  //const [queryString, setQueryString] = useState()
 
   useEffect(() => {
     if (!searchParams.has("page")) {
       searchParams.set("page", "1")
     }
     navigate({ search: searchParams.toString() })
-  }, [location.search])
+  }, [location.search, queryString])
 
   const handlePageChange = (pageTarget) => {
     searchParams.set("page", pageTarget)
@@ -105,7 +106,7 @@ export default function QuotesPage() {
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
       <QuotesPageDiv>
-        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} />
+        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} searchParams={searchParams} /*queryString={queryString}*/ />
 
         <Row className="justify-content-center">
           <Col xs={12} sm={9} md={7} lg={6} xl={5} >
