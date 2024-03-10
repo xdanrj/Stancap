@@ -129,22 +129,21 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
                                 }
                             </DropdownButton>
                         )}
-
-                        {!(selectedType?.value === "source") && (
-                            <div className="">
+                    </InputGroup>
+                    {!(selectedType?.value === "source") && (
+                        <>
                             <Form.Control
                                 className={inputColor ? "bg-danger" : "bg-light"}
                                 placeholder="Pesquise..." onChange={handleSearchChange}
                                 value={searchQuery?.query[selectedType?.value] || ""}
                             />
-                        
 
-                        <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
-                            <MDBIcon icon="search" />
-                        </Button>
-                        </div>
-                        )}
-                    </InputGroup>
+                            <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
+                                <MDBIcon icon="search" />
+                            </Button>
+                        </>
+                    )}
+
                 </Col>
             </Row>
         </>
