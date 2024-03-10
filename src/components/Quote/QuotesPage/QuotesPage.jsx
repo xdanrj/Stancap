@@ -32,7 +32,7 @@ export default function QuotesPage() {
       searchParams.set("page", "1")
     }
     navigate({ search: searchParams.toString() })
-  }, [location.search, queryString])
+  }, [location.search])
 
   const handlePageChange = (pageTarget) => {
     searchParams.set("page", pageTarget)

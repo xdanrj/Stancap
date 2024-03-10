@@ -6,6 +6,7 @@ import { MDBIcon } from "mdb-react-ui-kit";
 import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import { SourceNames } from "../Quote/SourceCommonFunctions";
 
 export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, queryString }) {
     console.log(searchParams)
@@ -19,6 +20,9 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
         { label: "Upload por", value: "uploadByUser" },
         { label: "Contexto", value: "context" }
     ]
+    SourceNames.map((item, index) => {
+        console.log(item.value)
+    })
 
     const [selectedType, setSelectedType] = useState()
     const [typeColor, setTypeColor] = useState(false)
@@ -26,7 +30,6 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
     const [didSearched, setDidSearched] = useState(false)
     useEffect(() => {
-        //TODO: fazer com que ao acessar o url ja com uma query diretamente, faça a pesquisa auto.
         let queryString = {}
         for (let param of searchParams) {
             if (param[0] !== "page") {
@@ -63,7 +66,17 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(SearchTypes[eventKey])
-        console.log(searchQuery)
+        console.log(selectedType)
+    }
+
+    const handleSourceSelect = (eventKey) => {
+        console.log(SourceNames[eventKey])
+        setSelectedType({label: "Source", value: "source"})
+        setSearchQuery((prevSearchQuery) => ({
+            ...prevSearchQuery,
+            "query": {"source": eventKey.value},
+            "label": "Source"
+        }))
     }
 
     const handleSearchChange = (e) => {
@@ -90,7 +103,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
         setSearchQuery(setSearchQuery)
         navigate(`/quotes?${selectedType?.value}=${searchQuery?.query[selectedType?.value]}`)
     }
-    
+
     return (
         <>
             <Row className="justify-content-center">
@@ -101,6 +114,15 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
                             {SearchTypes.map((item, index) => (
                                 <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
                             ))}
+                        </DropdownButton>
+
+
+                        <DropdownButton variant="dark" menuVariant="dark" title="Source" onSelect={handleSourceSelect}>
+                            {SourceNames.map((item, index) => (
+                                <DropdownItem eventKey={index} key={item.value}>{item.name}</DropdownItem>
+                            ))
+
+                            }
                         </DropdownButton>
 
                         <Form.Control
