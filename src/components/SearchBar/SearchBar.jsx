@@ -61,6 +61,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
 
     useEffect(() => {
         console.log("pesquisou")
+        console.log(searchQuery)
         fetchQuotesBySearch(searchQuery)
     }, [didSearched])
 
@@ -71,12 +72,14 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
 
     const handleSourceSelect = (eventKey) => {
         console.log(SourceNames[eventKey])
-        setSelectedType({label: "Source", value: "source"})
+        console.log(eventKey)
+        setSelectedType({ label: "Source", value: "source" })
         setSearchQuery((prevSearchQuery) => ({
             ...prevSearchQuery,
-            "query": {"source": eventKey.value},
+            "query": { "source": SourceNames[eventKey].value },
             "label": "Source"
         }))
+        setDidSearched(!didSearched)
     }
 
     const handleSearchChange = (e) => {
@@ -117,23 +120,30 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
                         </DropdownButton>
 
 
-                        <DropdownButton variant="dark" menuVariant="dark" title="Source" onSelect={handleSourceSelect}>
-                            {SourceNames.map((item, index) => (
-                                <DropdownItem eventKey={index} key={item.value}>{item.name}</DropdownItem>
-                            ))
+                        {selectedType?.value === "source" && (
+                            <DropdownButton variant="dark" menuVariant="dark" title="Nome" onSelect={handleSourceSelect}>
+                                {SourceNames.map((item, index) => (
+                                    <DropdownItem eventKey={index} key={item.value}>{item.name}</DropdownItem>
+                                ))
 
-                            }
-                        </DropdownButton>
+                                }
+                            </DropdownButton>
+                        )}
 
-                        <Form.Control
-                            className={inputColor ? "bg-danger" : "bg-light"}
-                            placeholder="Pesquise..." onChange={handleSearchChange}
-                            value={searchQuery?.query[selectedType?.value] || ""}
-                        />
+                        {!(selectedType?.value === "source") && (
+                            <div className="">
+                            <Form.Control
+                                className={inputColor ? "bg-danger" : "bg-light"}
+                                placeholder="Pesquise..." onChange={handleSearchChange}
+                                value={searchQuery?.query[selectedType?.value] || ""}
+                            />
+                        
 
                         <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
                             <MDBIcon icon="search" />
                         </Button>
+                        </div>
+                        )}
                     </InputGroup>
                 </Col>
             </Row>
