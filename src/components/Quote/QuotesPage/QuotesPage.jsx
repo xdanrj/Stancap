@@ -25,7 +25,6 @@ export default function QuotesPage() {
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
   const searchParams = new URLSearchParams(location.search)
-  //const [queryString, setQueryString] = useState()
 
   useEffect(() => {
     if (!searchParams.has("page")) {

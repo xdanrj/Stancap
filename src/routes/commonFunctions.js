@@ -33,7 +33,8 @@ export async function userExists(proprietyTarget) {
   }
 }
 
-export async function selectQuote(body, skipItems=null, limit=null) {
+//todo: verificar se sort order ta funfando
+export async function selectQuote(body, order, skipItems=null, limit=null) {
   let property = Object.keys(body)[0]
   let target = body[property]
   let query = { [property]: target }  
@@ -53,7 +54,7 @@ export async function selectQuote(body, skipItems=null, limit=null) {
     console.log("query abaixo")
     console.log(query)
     console.log(`limit: ${limit} // skipItems: ${skipItems}`)
-    foundQuote = await Quotes.find(query).skip(skipItems).limit(limit)
+    foundQuote = await Quotes.find(query).sort({uploadDate: order}).skip(skipItems).limit(limit)
     console.log('foundquote abaixo')
     console.log(foundQuote)
   } else {

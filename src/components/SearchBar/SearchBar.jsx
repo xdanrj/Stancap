@@ -32,14 +32,14 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
     useEffect(() => {
         let queryString = {}
         for (let param of searchParams) {
-            if (param[0] !== "page") {
+            if (param[0] !== "page" && param[0] !== "sort") {
                 queryString[param[0]] = param[1]
             }
         }
         console.log(queryString)
         if (Object.keys(queryString).length > 0) {
             async function settingQuery() {
-                const queryprop = Object.keys(queryString).filter(key => key !== "page")
+                const queryprop = Object.keys(queryString).filter(key => key !== "page" && key !== "sort")
                 console.log(queryprop)
 
                 const foundType = SearchTypes.find((type) => type.value === Object.keys(queryString)[0])
@@ -107,45 +107,81 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
         navigate(`/quotes?${selectedType?.value}=${searchQuery?.query[selectedType?.value]}`)
     }
 
+    const handleSortOrder = () => {
+        console.log("handle sort order clicado")
+
+        if (searchParams.get("sort") === "ascending" || searchParams.get("sort") === null) {
+            searchParams.set("sort", "descending")
+        } else if (searchParams.get("sort") === "descending") {
+            searchParams.set("sort", "ascending")
+        }
+        navigate({ search: searchParams.toString() })
+    }
+
     return (
         <>
-            <Row className="justify-content-center">
-                <Col md={8} lg={5}>
-                    <InputGroup >
-                        <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
+            {!(selectedType?.value === "source") && (
+                <Row className="justify-content-center">
+                    <Col md={8} lg={5}>
+                        <InputGroup >
+                            <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
+                                {SearchTypes.map((item, index) => (
+                                    <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
+                                ))}
+                            </DropdownButton>
 
-                            {SearchTypes.map((item, index) => (
-                                <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
-                            ))}
-                        </DropdownButton>
+                            <>
+                                <Form.Control
+                                    className={inputColor ? "bg-danger" : "bg-light"}
+                                    placeholder="Pesquise..." onChange={handleSearchChange}
+                                    value={searchQuery?.query[selectedType?.value] || ""}
+                                />
 
+                                <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
+                                    <MDBIcon icon="search" />
+                                </Button>
+                            </>
+                            <Button onClick={() => handleSortOrder()}><i className="bi bi-sort-down-alt"></i></Button>
+                        </InputGroup>
+                    </Col>
+                </Row>
+            )}
+            {selectedType?.value === "source" && (
+                <Row className="justify-content-center">
+                    <Col md={8} lg={5}>
+                        <InputGroup className="d-flex justify-content-center">
+                            <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
 
-                        {selectedType?.value === "source" && (
+                                {SearchTypes.map((item, index) => (
+                                    <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
+                                ))}
+                            </DropdownButton>
+
                             <DropdownButton variant="dark" menuVariant="dark" title="Nome" onSelect={handleSourceSelect}>
                                 {SourceNames.map((item, index) => (
                                     <DropdownItem eventKey={index} key={item.value}>{item.name}</DropdownItem>
                                 ))
-
                                 }
                             </DropdownButton>
-                        )}
-                    </InputGroup>
-                    {!(selectedType?.value === "source") && (
-                        <>
-                            <Form.Control
-                                className={inputColor ? "bg-danger" : "bg-light"}
-                                placeholder="Pesquise..." onChange={handleSearchChange}
-                                value={searchQuery?.query[selectedType?.value] || ""}
-                            />
+                            <Button onClick={() => handleSortOrder()}><i className="bi bi-sort-down-alt"></i></Button>
+                        </InputGroup>
+                    </Col>
+                </Row>
 
-                            <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
-                                <MDBIcon icon="search" />
-                            </Button>
-                        </>
-                    )}
-
-                </Col>
-            </Row>
+            )}
+            <>
+               
+            </>
         </>
     )
 }
+
+
+/*
+fazendo:
+filtros sempre disponiveis: 
+-crescente, decrescente:
+-data
+-tds os outros filtros
+
+*/
