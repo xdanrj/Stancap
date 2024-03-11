@@ -72,6 +72,7 @@ export const quotesRoutes = (app) => {
   app.post("/search_quotes", async (req, res) => {
     try {
       const order = req.query.order === "ascending" ? 1 : -1
+      console.log("order:", order)
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
       const foundQuote = await selectQuote(req.body, order, skipItems, perPage)

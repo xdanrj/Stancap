@@ -46,9 +46,10 @@ export default class quoteEditingServices {
         }
     }
 
-    async searchQuotes(query, actualPage) {
+    async searchQuotes(query, params) {
         console.log(query)
-        const response = await this.axios.post(`/search_quotes?page=${actualPage}`, query)
+        //todo: refazer as rotas com pesquisa pra usarem req.query ao inves de req.body
+        const response = await this.axios.post(`/search_quotes`, query, {params: params})
         if (response.data) {
             return response.data
         } else {

@@ -54,9 +54,7 @@ export async function selectQuote(body, order, skipItems=null, limit=null) {
     console.log("query abaixo")
     console.log(query)
     console.log(`limit: ${limit} // skipItems: ${skipItems}`)
-    foundQuote = await Quotes.find(query).sort({uploadDate: order}).skip(skipItems).limit(limit)
-    console.log('foundquote abaixo')
-    console.log(foundQuote)
+    foundQuote = await Quotes.find(query).sort({uploadDate: order}).skip(skipItems).limit(limit)    
   } else {
     foundQuote = await Quotes.find(query)
   }

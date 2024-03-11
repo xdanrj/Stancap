@@ -110,11 +110,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
     const handleSortOrder = () => {
         console.log("handle sort order clicado")
 
-        if (searchParams.get("sort") === "ascending" || searchParams.get("sort") === null) {
-            searchParams.set("sort", "descending")
-        } else if (searchParams.get("sort") === "descending") {
-            searchParams.set("sort", "ascending")
-        }
+        searchParams.set("sort", searchParams.get("sort") === "ascending" ? "descending" : "ascending")
         navigate({ search: searchParams.toString() })
     }
 
