@@ -48,6 +48,7 @@ export default function QuotesPage() {
   async function fetchQuotesBySearch(searchQuery) {
     console.log(searchQuery)
     // old argumentos pra searchquotes(): searchQuery.query, searchParams.get("page")
+    console.log(Object.fromEntries(searchParams))
     const response = await quoteService.searchQuotes(Object.fromEntries(searchParams))
     response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
     setQuotesResponse(response)

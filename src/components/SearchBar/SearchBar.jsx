@@ -102,12 +102,15 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
         }
     }
 
-    const handleSearchClick = async () => {
-        setSearchQuery(setSearchQuery)
-        navigate(`/quotes?${selectedType?.value}=${searchQuery?.query[selectedType?.value]}`)
+    const handleSearchClick = async () => {    
+        const query = Object.entries(searchQuery.query)[0]
+        console.log(query[0])
+        console.log(query[1])
+        searchParams.set(query[0], query[1])
+        navigate({ search: searchParams.toString() })
     }
 
-    const handleSortOrder = () => {
+    const handleSortChange = () => {
         console.log("handle sort order clicado")
 
         searchParams.set("sort", searchParams.get("sort") === "ascending" ? "descending" : "ascending")
@@ -137,7 +140,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
                                     <MDBIcon icon="search" />
                                 </Button>
                             </>
-                            <Button onClick={() => handleSortOrder()}><i className="bi bi-sort-down-alt"></i></Button>
+                            <Button onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
                         </InputGroup>
                     </Col>
                 </Row>
@@ -159,7 +162,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
                                 ))
                                 }
                             </DropdownButton>
-                            <Button onClick={() => handleSortOrder()}><i className="bi bi-sort-down-alt"></i></Button>
+                            <Button onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
                         </InputGroup>
                     </Col>
                 </Row>

@@ -55,11 +55,11 @@ export const quotesRoutes = (app) => {
   //todas as quotes COM limite de 5 por page
   app.get(`/get_quotes`, async (req, res) => {
     try {
-      const order = req.query.order === "ascending" ? 1 : -1
+      const sort = req.query.sort === "ascending" ? 1 : -1
       const page = req.query.page ? parseInt(req.query.page) : 1
       console.log("page: ", page)
       const skipItems = (page - 1) * perPage
-      const response = await Quotes.find().sort({uploadDate: order}).skip(skipItems).limit(perPage)
+      const response = await Quotes.find().sort({uploadDate: sort}).skip(skipItems).limit(perPage)
       res.status(200).json(response)
     } catch (error) {
       console.log(error)
@@ -71,11 +71,11 @@ export const quotesRoutes = (app) => {
   //busca especifíca COM limite de 5 por page
   app.post("/search_quotes", async (req, res) => {
     try {
-      const order = req.query.order === "ascending" ? 1 : -1
-      console.log("order:", order)
+      const sort = req.query.sort === "ascending" ? 1 : -1
+      console.log("sort:", sort)
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
-      const foundQuote = await selectQuote(req.body, order, skipItems, perPage)
+      const foundQuote = await selectQuote(req.body, sort, skipItems, perPage)
       res.status(200).json(foundQuote)
     } catch (error) {
       res.status(400).json({ message: error })
