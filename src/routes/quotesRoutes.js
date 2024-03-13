@@ -1,7 +1,7 @@
 import { Quotes } from "../models/Quotes.js"
 import { selectQuote, quoteExists } from "./commonFunctions.js"
 import { requireUserToken } from "./middleware.js"
-
+import queryString from "query-string"
 
 export const quotesRoutes = (app) => {
   //resultados perPage para todas as rotas com limite de resultado. padrao: 5
@@ -72,7 +72,10 @@ export const quotesRoutes = (app) => {
   //busca especifíca COM limite de 5 por page
   app.get("/search_quotes", async (req, res) => {
     try {
-      console.log("req.query abaixo: ")
+      console.log("querystring ABAIXO")
+      console.log(req.params.author)
+      console.log(queryString.parse(req.url))
+      
       console.log(req.url.query)
       const sort = req.query.sort === "ascending" ? 1 : -1
       console.log("sort:", sort)
