@@ -1,7 +1,6 @@
 import { Quotes } from "../models/Quotes.js"
 import { selectQuote, quoteExists } from "./commonFunctions.js"
 import { requireUserToken } from "./middleware.js"
-import queryString from "query-string"
 import _ from "lodash"
 
 export const quotesRoutes = (app) => {
@@ -73,18 +72,13 @@ export const quotesRoutes = (app) => {
   //busca especifíca COM limite de 5 por page
   app.get("/search_quotes", async (req, res) => {
     try {
-      const reqQuery = req.query
-      console.log("reqQuery: ")
-      console.log(reqQuery)
-      //TODO: usar .filter() pra pegar somente o obj q é a querystring
-      const querystring = _.find(req.query, 'page')
-      console.log("querystring: ")
-      console.log(querystring)
-      console.log("fim")
+      const searchquery = _.omit(req.query, ['page', 'sort'])
+      console.log("searchquery: ")
+      console.log(searchquery)
       const sort = req.query.sort === "ascending" ? 1 : -1
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
-      const foundQuote = await selectQuote(querystring, sort, skipItems, perPage)
+      const foundQuote = await selectQuote(searchquery, sort, skipItems, perPage)
       res.status(200).json(foundQuote)
     } catch (error) {
       res.status(400).json({ message: error })
