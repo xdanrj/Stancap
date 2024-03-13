@@ -5,9 +5,9 @@ import _ from "lodash"
 import { ObjectId } from "mongodb"
 
 // Função que seleciona o usuário através de qualquer propriedade. Usa sempre o primeiro objeto da requisição ( {propriedade: valorDaPropriedade} ). Serve para selecionar o usuário caso a rota não explicite a propriedade selecionada.
-export async function selectUser(body) {
-  let property = Object.keys(body)[0]
-  let target = body[property]
+export async function selectUser(querystring) {
+  let property = Object.keys(querystring)[0]
+  let target = querystring[property]
   let query = { [property]: target }
 
   if (property !== "_id") {
@@ -34,9 +34,9 @@ export async function userExists(proprietyTarget) {
 }
 
 //todo: verificar se sort ta funfando
-export async function selectQuote(body, sort, skipItems=null, limit=null) {
-  let property = Object.keys(body)[0]
-  let target = body[property]
+export async function selectQuote(querystring, sort, skipItems=null, limit=null) {
+  let property = Object.keys(querystring)[0]
+  let target = querystring[property]
   let query = { [property]: target }  
   if (property == "password") {
     return false

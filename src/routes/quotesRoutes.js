@@ -73,15 +73,14 @@ export const quotesRoutes = (app) => {
   app.get("/search_quotes", async (req, res) => {
     try {
       console.log("querystring ABAIXO")
-      console.log(req.params.author)
-      console.log(queryString.parse(req.url))
-      
-      console.log(req.url.query)
+      console.log(req.query)
+      //TODO: usar .filter() pra pegar somente o obj q é a querystring
+      const querystring = 
       const sort = req.query.sort === "ascending" ? 1 : -1
       console.log("sort:", sort)
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
-      const foundQuote = await selectQuote(req.body, sort, skipItems, perPage)
+      const foundQuote = await selectQuote(querystring, sort, skipItems, perPage)
       res.status(200).json(foundQuote)
     } catch (error) {
       res.status(400).json({ message: error })
