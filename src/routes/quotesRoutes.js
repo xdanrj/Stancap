@@ -2,6 +2,7 @@ import { Quotes } from "../models/Quotes.js"
 import { selectQuote, quoteExists } from "./commonFunctions.js"
 import { requireUserToken } from "./middleware.js"
 import queryString from "query-string"
+import _ from "lodash"
 
 export const quotesRoutes = (app) => {
   //resultados perPage para todas as rotas com limite de resultado. padrao: 5
@@ -72,12 +73,15 @@ export const quotesRoutes = (app) => {
   //busca especifíca COM limite de 5 por page
   app.get("/search_quotes", async (req, res) => {
     try {
-      console.log("querystring ABAIXO")
-      console.log(req.query)
+      const reqQuery = req.query
+      console.log("reqQuery: ")
+      console.log(reqQuery)
       //TODO: usar .filter() pra pegar somente o obj q é a querystring
-      const querystring = 
+      const querystring = _.find(req.query, 'page')
+      console.log("querystring: ")
+      console.log(querystring)
+      console.log("fim")
       const sort = req.query.sort === "ascending" ? 1 : -1
-      console.log("sort:", sort)
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
       const foundQuote = await selectQuote(querystring, sort, skipItems, perPage)
