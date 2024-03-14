@@ -74,14 +74,14 @@ export const quotesRoutes = (app) => {
   app.get("/search_quotes", async (req, res) => {
     try {
       const searchquery = _.omit(req.query, ['page', 'sort'])
-      console.log("searchquery: ")
-      console.log(searchquery)
       const sort = req.query.sort === "ascending" ? 1 : -1
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
-      const foundQuote = await selectQuote(searchquery, sort, skipItems, perPage)
+      const {foundQuote, quotesQtd} = await selectQuote(searchquery, sort, skipItems, perPage)
+      console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
       console.log(foundQuote)
-      res.status(200).json(foundQuote.foundQuote, foundQuote.quotesQtd)
+      console.log(quotesQtd)
+      res.status(200).json({foundQuote, quotesQtd})
     } catch (error) {
       res.status(400).json({ message: error })
     }

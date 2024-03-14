@@ -101,6 +101,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
         const query = Object.entries(searchQuery.query)[0]
         console.log(query[0])
         console.log(query[1])
+        searchParams.set("page", 1)
         searchParams.set(query[0], query[1])
         navigate({ search: searchParams.toString() })
     }

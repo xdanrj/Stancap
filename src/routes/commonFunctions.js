@@ -34,32 +34,45 @@ export async function userExists(proprietyTarget) {
 }
 
 
-export async function selectQuote(searchquery, sort, skipItems=null, limit=null) {
+export async function selectQuote(searchquery, sort, skipItems = null, limit = null) {
   console.log("searchquery ABAIXO: ")
   console.log(searchquery)
   let property = Object.keys(searchquery)[0]
   let target = searchquery[property]
+  let quotesQtd
+  let foundQuote
+  console.log(target)
+  console.log("PROPERTY: ")
+  console.log(property)
   //let query = { [property]: target }  
 
   if (property == "uploadByUser") {
-    const foundUser = await User.find({username: searchquery.uploadByUser})
+    const foundUser = await User.find({ username: searchquery.uploadByUser })
     const userId = _.pick(foundUser[0], "_id")
-    const userIdStr = userId._id.toString()  
-    searchquery = {uploadByUser: userIdStr}
+    const userIdStr = userId._id.toString()
+    searchquery = { uploadByUser: userIdStr }
   }
-  
-  const quotesQtd = await Quotes.find(searchquery).countDocuments()
+
+  quotesQtd = await Quotes.find(searchquery).countDocuments()
   console.log(quotesQtd)
-  let foundQuote
-  if (limit !== null && skipItems !== null) {
-    console.log(`limit: ${limit} // skipItems: ${skipItems}`)
-    foundQuote = await Quotes.find(searchquery).sort({uploadDate: sort}).skip(skipItems).limit(limit)    
+  console.log("property === tag?: ", property === "tag")
+  if (property === "tag") {
+    quotesQtd = await Quotes.find({ tags: { $in: [target] } }).countDocuments()
+    foundQuote = await Quotes.find({ tags: { $in: [target] } }).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
+ 
   } else {
-    foundQuote = await Quotes.find(searchquery)
+    if (limit !== null && skipItems !== null) {
+      console.log(`limit: ${limit} // skipItems: ${skipItems}`)
+      foundQuote = await Quotes.find(searchquery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
+    } else {
+      foundQuote = await Quotes.find(searchquery)
+    }
   }
 
   if (foundQuote.length > 0) {
-    return foundQuote, quotesQtd
+    console.log("FOUNDQUOTEEEEEEEEEEEEEEEE")
+    console.log(foundQuote)
+    return {foundQuote, quotesQtd}
   } else {
     return false
   }
