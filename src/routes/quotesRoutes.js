@@ -6,16 +6,16 @@ import _ from "lodash"
 export const quotesRoutes = (app) => {
   //resultados perPage para todas as rotas com limite de resultado. padrao: 5
   const perPage = 5
-  async function functionEditQuote(selectedQuote, body) {
-    const entries = Object.entries(body)
-    const data = Object.fromEntries(entries.slice(1))
-    const firstPropriety = entries[0]
-    const query = { [firstPropriety[0]]: firstPropriety[1] }
+  async function functionEditQuote(selectedQuote, newBody) {
+    // const entries = Object.entries(body)
+    // const data = Object.fromEntries(entries.slice(1))
+    // const firstPropriety = entries[0]
+    // const query = { [firstPropriety[0]]: firstPropriety[1] }
 
     if (selectedQuote.length > 1) {
       Quotes.updateMany(
         query,
-        { ...data }
+        { ...newBody }
       )
     } else if (selectedQuote.length == 1) {
       await Quotes.updateOne(
@@ -89,7 +89,7 @@ export const quotesRoutes = (app) => {
 
   app.patch("/edit_quote", requireUserToken, async (req, res) => {
     try {
-      const selectedQuote = await selectQuote(req.body)
+      const selectedQuote = await selectQuote(req.query)
       if (selectedQuote) {
         const response = await functionEditQuote(selectedQuote, req.body)
         response ? res.status(200).send(true) : res.status(400).send(false)

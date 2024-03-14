@@ -19,6 +19,7 @@ export default function MyQuotes() {
 
     useEffect(() => {
         setDeletedQuotes([])
+        //TODO: rever funcao de editquote
         async function fetchQuotes() {
             let query = { "uploadByUser": userId }
             const response = await quoteService.getQuotes(query)
