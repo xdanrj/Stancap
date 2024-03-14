@@ -35,12 +35,8 @@ export default function QuotesPage() {
     navigate({ search: searchParams.toString() })
   }, [location.search])
 
-  const handlePageChange = (pageTarget) => {
-    searchParams.set("page", pageTarget)
-    navigate({ search: searchParams.toString() })
-  }
-
   async function fetchAllQuotes() {
+    console.log(Object.fromEntries(searchParams))
     const response = await quoteService.getQuotes(Object.fromEntries(searchParams))
     setQuotesResponse(response)
   }
@@ -118,7 +114,7 @@ export default function QuotesPage() {
           </Col>
         </Row>
       </QuotesPageDiv>
-      <PageSelector handlePageChange={handlePageChange}/>
+      <PageSelector searchParams={searchParams}/>
     </>
   )
 }

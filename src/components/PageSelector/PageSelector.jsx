@@ -2,31 +2,38 @@ import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button, ButtonGroup, ButtonToolbar } from "react-bootstrap"
 import { MDBIcon } from "mdb-react-ui-kit"
+import quoteEditingServices from "../../services/quoteServices"
 
-export default function PageSelector({handlePageChange}) {
-    const [itemsQtd, setItemsQtd] = useState([1, 2, 3, 4, 5, 6, 7])
+export default function PageSelector({ searchParams }) {
+    const quoteService = new quoteEditingServices()
+    const [itemsQtd, setItemsQtd] = useState([1])
+    const [totalPages, setTotalPages] = useState(1)
     const navigate = useNavigate()
 
-    const handlePageClick = (item) => {
-        let pageTarget
-        console.log(`${typeof(item)}: ${item}`)
-
-        if (typeof (item) === "number") {
-            pageTarget = item
-        } else if (item === "last") {
-            //TODO: pegar ultima pag
-            pageTarget = -1
-        } else {
-            console.log("pageTarget nao definido de nenhuma forma")
+    useEffect(() => {
+        async function getPagesQtd() {
+            const quotesQtd = await quoteService.quotesQuantity()
+            let totalPagesCalc = Math.ceil((quotesQtd / 5)) 
+            console.log(totalPagesCalc)
+            setTotalPages(totalPagesCalc)
+            setItemsQtd(Array.from({ length: totalPagesCalc }, (_, i) => i + 1))
         }
-        handlePageChange(pageTarget)
+        getPagesQtd()
+    }, [])
+
+    const handlePageClick = (pageNum) => {
+        console.log(`${typeof (pageNum)}: ${pageNum}`)
+        console.log(totalPages)
+
+        searchParams.set("page", pageNum)
+        navigate({ search: searchParams.toString() })
     }
     return (
         <>
             <ButtonGroup className="me-2">
-                {itemsQtd.map((item, idx) => (
+                {itemsQtd.map((item) => (
                     item < 5 ? (
-                        <Button key={idx} onClick={() => handlePageClick(item)}>
+                        <Button key={item} onClick={() => handlePageClick(item)}>
                             {item}
                         </Button>
                     ) : null
@@ -34,7 +41,7 @@ export default function PageSelector({handlePageChange}) {
             </ButtonGroup>
 
             <ButtonGroup>
-                <Button><MDBIcon fas icon="angle-double-right" onClick={() => handlePageClick("last")} /> </Button>
+                <Button><MDBIcon fas icon="angle-double-right" onClick={() => handlePageClick(totalPages)} /> </Button>
             </ButtonGroup>
         </>
     )

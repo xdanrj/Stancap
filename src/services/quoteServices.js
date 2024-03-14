@@ -8,7 +8,8 @@ export default class quoteEditingServices {
     async quotesQuantity() {
         try {
             const response = await this.axios.get('/quotes_quantity')
-            return response
+            console.log(response)
+            return response.data
         } catch (error) {
             console.log(error)
         }
@@ -34,9 +35,8 @@ export default class quoteEditingServices {
         }
     }
 
-    async getQuotes(actualPage) {
-        console.log(actualPage)
-        const response = await this.axios.get(`/get_quotes?page=${actualPage}`)
+    async getQuotes(params) {
+        const response = await this.axios.get(`/get_quotes`, {params})
         console.log(response)
         if (response.data) {
             return response.data

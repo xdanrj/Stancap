@@ -44,7 +44,7 @@ export default function MyQuotes() {
             console.log(response)
             if (response) {
                 setDeletedQuotes(deletedQuotes => [...deletedQuotes, response])
-                useAlert("Quote excluída com sucesso")
+                useAlert("Quote excluída com sucesso", 1000)
             } else {
                 useAlert("Erro ao tentar excluir quote")
             }
