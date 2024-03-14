@@ -22,6 +22,7 @@ export default function QuotesPage() {
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
+  const [quotesQtd, setQuotesQtd] = useState(0)
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
   const searchParams = new URLSearchParams(location.search)
@@ -38,16 +39,21 @@ export default function QuotesPage() {
   async function fetchAllQuotes() {
     console.log(Object.fromEntries(searchParams))
     const response = await quoteService.getQuotes(Object.fromEntries(searchParams))
-    setQuotesResponse(response)
+    console.log(response.quotesQtd)
+    setQuotesQtd(response.quotesQtd)
+    setQuotesResponse(response.response)
+    
   }
 
   async function fetchQuotesBySearch(searchQuery) {
     console.log(searchQuery)
-    // old argumentos pra searchquotes(): searchQuery.query, searchParams.get("page")
     console.log(Object.fromEntries(searchParams))
     const response = await quoteService.searchQuotes(Object.fromEntries(searchParams))
-    response ? setQuotesResponse(response) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
-    setQuotesResponse(response)
+    setQuotesQtd(response.quotesQtd)
+    response ? setQuotesResponse(response.response) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
+    setQuotesResponse(response.response)
+    console.log(response.quotesQtd)
+    
   }
 
   useEffect(() => {
@@ -114,7 +120,7 @@ export default function QuotesPage() {
           </Col>
         </Row>
       </QuotesPageDiv>
-      <PageSelector searchParams={searchParams}/>
+      <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd}/>
     </>
   )
 }

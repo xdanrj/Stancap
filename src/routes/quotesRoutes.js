@@ -60,8 +60,9 @@ export const quotesRoutes = (app) => {
       const page = req.query.page ? parseInt(req.query.page) : 1
       console.log("page: ", page)
       const skipItems = (page - 1) * perPage
-      const response = await Quotes.find().sort({uploadDate: sort}).skip(skipItems).limit(perPage)
-      res.status(200).json(response)
+      const quotesQtd = await Quotes.countDocuments()
+      const response = await Quotes.find().sort({uploadDate: sort}).skip(skipItems).limit(perPage)      
+      res.status(200).json({response, quotesQtd})
     } catch (error) {
       console.log(error)
       res.status(400).json({ message: error })
@@ -79,7 +80,8 @@ export const quotesRoutes = (app) => {
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
       const foundQuote = await selectQuote(searchquery, sort, skipItems, perPage)
-      res.status(200).json(foundQuote)
+      console.log(foundQuote)
+      res.status(200).json(foundQuote.foundQuote, foundQuote.quotesQtd)
     } catch (error) {
       res.status(400).json({ message: error })
     }

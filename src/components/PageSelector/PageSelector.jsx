@@ -4,7 +4,7 @@ import { Button, ButtonGroup, ButtonToolbar } from "react-bootstrap"
 import { MDBIcon } from "mdb-react-ui-kit"
 import quoteEditingServices from "../../services/quoteServices"
 
-export default function PageSelector({ searchParams }) {
+export default function PageSelector({ searchParams, quotesQtd }) {
     const quoteService = new quoteEditingServices()
     const [itemsQtd, setItemsQtd] = useState([1])
     const [totalPages, setTotalPages] = useState(1)
@@ -12,14 +12,14 @@ export default function PageSelector({ searchParams }) {
 
     useEffect(() => {
         async function getPagesQtd() {
-            const quotesQtd = await quoteService.quotesQuantity()
+            console.log(quotesQtd)
             let totalPagesCalc = Math.ceil((quotesQtd / 5)) 
             console.log(totalPagesCalc)
             setTotalPages(totalPagesCalc)
             setItemsQtd(Array.from({ length: totalPagesCalc }, (_, i) => i + 1))
         }
         getPagesQtd()
-    }, [])
+    }, [quotesQtd])
 
     const handlePageClick = (pageNum) => {
         console.log(`${typeof (pageNum)}: ${pageNum}`)

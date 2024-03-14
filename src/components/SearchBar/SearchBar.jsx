@@ -60,19 +60,14 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
     }, [location.search])
 
     useEffect(() => {
-        console.log("pesquisou")
-        console.log(searchQuery)
         fetchQuotesBySearch(searchQuery)
     }, [didSearched])
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(SearchTypes[eventKey])
-        console.log(selectedType)
     }
 
     const handleSourceSelect = (eventKey) => {
-        console.log(SourceNames[eventKey])
-        console.log(eventKey)
         setSelectedType({ label: "Source", value: "source" })
         setSearchQuery((prevSearchQuery) => ({
             ...prevSearchQuery,
