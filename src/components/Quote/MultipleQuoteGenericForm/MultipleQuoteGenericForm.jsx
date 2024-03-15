@@ -84,6 +84,7 @@ export default function MultipleQuoteGenericForm(props) {
                         quotes: multipleQuotes,
                         tags: tags
                     }
+                    console.log(props.quoteIdToEdit)
                     searchParams.set("quote", props.quoteIdToEdit)
                     response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
                 }

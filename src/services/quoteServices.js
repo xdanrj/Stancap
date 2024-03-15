@@ -67,10 +67,10 @@ export default class quoteEditingServices {
         }
     }
 
-    async editQuote(params) {
+    async editQuote(params, updatedBody) {
         console.log("QUERY:")
-        console.log(query)
-        const response = await this.axios.patch('/edit_quote', {params })
+        console.log(params)
+        const response = await this.axios.patch('/edit_quote', {params}, updatedBody)
         console.log(response)
         if (response.data) {
             return true

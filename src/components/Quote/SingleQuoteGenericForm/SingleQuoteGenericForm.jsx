@@ -10,6 +10,7 @@ import { SourceNames } from "../SourceCommonFunctions";
 import { useModalBox } from "../../Modal/ModalContext";
 import { useAlertMsg } from "../../Alert/AlertContext";
 import dayjs from "dayjs"
+import { useSearchParams } from "react-router-dom";
 
 import quoteEditingServices from "../../../services/quoteServices"
 const quoteEditingService = new quoteEditingServices()
@@ -19,6 +20,7 @@ export default function SingleQuoteGenericForm(props) {
     const useAlert = useAlertMsg()
     const [quotes, setQuotes] = useState([])
     const [tags, setTags] = useState([])
+    const [searchParams, setSearchParams] = useSearchParams()
     const [quoteData, setQuoteData] = useState({
         quotes: [],
         author: '',
@@ -31,9 +33,10 @@ export default function SingleQuoteGenericForm(props) {
 
     useEffect(() => {
         async function getQuoteToEdit() {
+            console.log(props.quoteIdToEdit)
             if (props.quoteIdToEdit) {
-                const apiResponse = await quoteEditingService.getQuotes(props.quoteIdToEdit)
-                const response = await apiResponse[0]
+                const response = await quoteEditingService.searchQuotes(props.quoteIdToEdit)
+                console.log(response.response)
                 setQuoteData((prevData) => ({
                     ...prevData,
                     quotes: response.quotes[0].quote,
@@ -76,7 +79,8 @@ export default function SingleQuoteGenericForm(props) {
                     quotes: quotes,
                     tags: tags
                 }
-                response = await quoteEditingService.editQuote(props.quoteIdToEdit, updatedQuoteData)
+                searchParams.set("quote", props.quoteIdToEdit)
+                response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
             }
             if (response === true) {
                 alert(props.texts.submitSuccess)
