@@ -36,15 +36,16 @@ export default function SingleQuoteGenericForm(props) {
             console.log(searchParams.get("_id"))
             if (searchParams.get("_id")) {
                 const response = await quoteEditingService.searchQuotes({_id: searchParams.get("_id")})
-                console.log(response.foundQuote[0].quotes[0].quote)
+                const data = response.foundQuote[0]
+                console.log(data)
                 setQuoteData((prevData) => ({
                     ...prevData,
-                    quotes: response.foundQuote[0].quotes[0].quote,
-                    author: response.foundQuote.author,
-                    date: response.foundQuote.date,
-                    source: response.foundQuote.source,
-                    context: response.foundQuote.context,
-                    tags: response.foundQuote.tags
+                    quotes: data.quotes[0].quote,
+                    author: data.author,
+                    date: data.date,
+                    source: data.source,
+                    context: data.context,
+                    tags: data.tags
                 }))
             }
         }
