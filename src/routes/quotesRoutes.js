@@ -78,9 +78,6 @@ export const quotesRoutes = (app) => {
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
       const {foundQuote, quotesQtd} = await selectQuote(searchquery, sort, skipItems, perPage)
-      console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
-      console.log(foundQuote)
-      console.log(quotesQtd)
       res.status(200).json({foundQuote, quotesQtd})
     } catch (error) {
       res.status(400).json({ message: error })

@@ -17,7 +17,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
         { label: "Autor", value: "author" },
         { label: "Tag", value: "tag" },
         { label: "Source", value: "source" },
-        { label: "Upload por", value: "uploadByUser" },
+        { label: "Upload por", value: "uploadByUsername" },
         { label: "Contexto", value: "context" }
     ]
     SourceNames.map((item, index) => {

@@ -13,7 +13,6 @@ export default function MyQuotes() {
     const useAlert = useAlertMsg()
     const navigate = useNavigate()
     const [quotesResponse, setQuotesResponse] = useState([])
-    const [quotesResponseArray, setQuotesResponseArray] = useState([])
     const [userId, setUserId] = useState([localStorage.getItem("userId")])
     const [deletedQuotes, setDeletedQuotes] = useState([])
 
@@ -22,9 +21,10 @@ export default function MyQuotes() {
         //TODO: rever funcao de editquote
         async function fetchQuotes() {
             let query = { "uploadByUser": userId }
-            const response = await quoteService.getQuotes(query)
-            setQuotesResponse(response)
-            setQuotesResponseArray(response)
+            const response = await quoteService.searchQuotes(query)
+            console.log("rrrrrrrrrrrrrrrrr")
+            console.log(response.foundQuote)
+            setQuotesResponse(response.foundQuote)
         }
         fetchQuotes()
     }, [])
@@ -67,7 +67,6 @@ export default function MyQuotes() {
 
         }
     }
-    console.log(quotesResponseArray)
 
     return (
         <>
@@ -76,7 +75,7 @@ export default function MyQuotes() {
                 <Col xs={12} sm={8} md={6} lg={5}>
                     {
                         quotesResponse.length > 0 ? (
-                            quotesResponseArray.map((data) => (
+                            quotesResponse.map((data) => (
                                 <div key={data._id}>
                                     <MinimalQuoteContainer>
                                         <InternalContainer>
