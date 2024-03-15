@@ -7,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 import QuoteInfo from "../../../components/Quote/QuoteInfo/QuoteInfo";
 import { useAlertMsg } from "../../../components/Alert/AlertContext"
 import { MyQuotesDiv } from "./MyQuotesStyles";
+import { useSearchParams } from "react-router-dom";
 const quoteService = new quoteEditingServices()
 
 export default function MyQuotes() {
     const useAlert = useAlertMsg()
     const navigate = useNavigate()
+    const [searchParams, setSearchParams] = useSearchParams()
     const [quotesResponse, setQuotesResponse] = useState([])
     const [userId, setUserId] = useState([localStorage.getItem("userId")])
     const [deletedQuotes, setDeletedQuotes] = useState([])
@@ -31,7 +33,10 @@ export default function MyQuotes() {
 
     const handleEditQuote = async (quoteId, quoteType) => {
         try {
-            navigate(`/edit_quote/${quoteType}/${quoteId}`)
+            searchParams.set("type", quoteType)
+            searchParams.set("_id", quoteId)
+            console.log(searchParams.toString())
+            navigate({ pathname: "/edit_quote", search: searchParams.toString() })
         } catch (error) {
             useAlert(error)
         }
@@ -80,10 +85,10 @@ export default function MyQuotes() {
                                     <MinimalQuoteContainer>
                                         <InternalContainer>
                                             <Paragraph>{data.quotes[0].quote && data.quotes[0].quote} </Paragraph>
-                                            <ParagraphAuthor>—{data.quoteType == "single" ? data.author : data.quotes[0].author}</ParagraphAuthor>
+                                            <ParagraphAuthor>—{data.quoteType === "single" ? data.author : data.quotes[0].author}</ParagraphAuthor>
                                             {deletedQuotes.find((obj) => obj._id === data._id) ?
                                                 <>                                                  
-                                                    <MdbIcon className="col-3"  fas icon="undo-alt" onClick={() => handleUndoDeleteQuote(data._id)}/>                                                    
+                                                    <MdbIcon className="col-3" fas icon="undo-alt" onClick={() => handleUndoDeleteQuote(data._id)}/>                                                    
                                                 </>
                                                 :
                                                 <>

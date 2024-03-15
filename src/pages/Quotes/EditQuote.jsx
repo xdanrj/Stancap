@@ -12,8 +12,6 @@ export default function EditQuote() {
     // const quoteId = { _id: id }
     // const { quotetype } = useParams()
     useEffect(() => {
-        console.log(searchParams.get("type"))
-        console.log(searchParams.get("quote"))
         setQuoteType(searchParams.get("type"))
         setQuoteId(searchParams.get("quote"))
     }, [])
@@ -26,7 +24,6 @@ export default function EditQuote() {
                         submitButton: "Editar quote", submitSuccess: "Quote editada com sucesso"
                     }}
                     type={"editQuote"}
-                    quoteIdToEdit={quoteId}
                 />
             ) : quoteType === "multiple" ? (
                 <MultipleQuoteGenericForm
@@ -34,7 +31,6 @@ export default function EditQuote() {
                         submitButton: "Editar quote", submitSuccess: "Quote editada com sucesso"
                     }}
                     type={"editQuote"}
-                    quoteIdToEdit={quoteId}
                 />
             ) : null}
         </>

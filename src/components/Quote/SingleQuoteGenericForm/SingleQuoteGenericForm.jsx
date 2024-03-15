@@ -33,18 +33,18 @@ export default function SingleQuoteGenericForm(props) {
 
     useEffect(() => {
         async function getQuoteToEdit() {
-            console.log(props.quoteIdToEdit)
-            if (props.quoteIdToEdit) {
-                const response = await quoteEditingService.searchQuotes(props.quoteIdToEdit)
-                console.log(response.response)
+            console.log(searchParams.get("_id"))
+            if (searchParams.get("_id")) {
+                const response = await quoteEditingService.searchQuotes({_id: searchParams.get("_id")})
+                console.log(response.foundQuote[0].quotes[0].quote)
                 setQuoteData((prevData) => ({
                     ...prevData,
-                    quotes: response.quotes[0].quote,
-                    author: response.author,
-                    date: response.date,
-                    source: response.source,
-                    context: response.context,
-                    tags: response.tags
+                    quotes: response.foundQuote[0].quotes[0].quote,
+                    author: response.foundQuote.author,
+                    date: response.foundQuote.date,
+                    source: response.foundQuote.source,
+                    context: response.foundQuote.context,
+                    tags: response.foundQuote.tags
                 }))
             }
         }
@@ -79,8 +79,9 @@ export default function SingleQuoteGenericForm(props) {
                     quotes: quotes,
                     tags: tags
                 }
-                searchParams.set("quote", props.quoteIdToEdit)
+                //abc
                 response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
+                console.log(response)
             }
             if (response === true) {
                 alert(props.texts.submitSuccess)

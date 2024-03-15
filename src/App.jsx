@@ -35,7 +35,7 @@ export default function App() {
           </ProtectedRoutes>
         } />
 
-        <Route path="/edit_quote/:quotetype/:id" element={
+        <Route path="/edit_quote" element={
           <ProtectedRoutes>
             <EditQuote />
           </ProtectedRoutes>
