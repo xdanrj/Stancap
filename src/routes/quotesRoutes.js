@@ -88,7 +88,7 @@ export const quotesRoutes = (app) => {
     try {
       const selectedQuote = await selectQuote(req.query)
       if (selectedQuote) {
-        const response = await functionEditQuote(selectedQuote, req.body)
+        const response = await functionEditQuote(selectedQuote, req.query.editedquote)
         response ? res.status(200).send(true) : res.status(400).send(false)
       } else {
         res.status(400).send(false)

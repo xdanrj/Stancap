@@ -13,6 +13,7 @@ import { useModalBox } from "../../Modal/ModalContext";
 import { isValidDate } from "../../../Formatting/DateFormatting";
 import quoteEditingServices from "../../../services/quoteServices"
 import { FastQuotesFillModal } from "./FastQuotesFillModal";
+import { useSearchParams } from "react-router-dom";
 
 const quoteEditingService = new quoteEditingServices()
 
@@ -20,6 +21,7 @@ export default function MultipleQuoteGenericForm(props) {
     const useAlert = useAlertMsg()
     const useModal = useModalBox()
     //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
+    const [searchParams, setSearchParams] = useSearchParams()
     const [multipleQuotes, setMultipleQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [quoteData, setQuoteData] = useState({
@@ -82,7 +84,8 @@ export default function MultipleQuoteGenericForm(props) {
                         quotes: multipleQuotes,
                         tags: tags
                     }
-                    response = await quoteEditingService.editQuote(props.quoteIdToEdit, updatedQuoteData)
+                    searchParams.set("quote", props.quoteIdToEdit)
+                    response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
                 }
                 if (response === true) {
                     alert(props.texts.submitSuccess)

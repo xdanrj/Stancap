@@ -57,6 +57,7 @@ export default class quoteEditingServices {
         }
     }
 
+    //todo: refazer servico de addquote com {params}
     async addQuote(data) {
         const response = await this.axios.post('/add_quote', data)
         if (response.data) {
@@ -66,7 +67,7 @@ export default class quoteEditingServices {
         }
     }
 
-    async editQuote(query, body) {
+    async editQuote(params) {
         console.log("QUERY:")
         console.log(query)
         const response = await this.axios.patch('/edit_quote', {params })
