@@ -46,10 +46,10 @@ export default function MultipleQuoteGenericForm(props) {
 
                 setQuoteData((prevData) => ({
                     ...prevData,
-                    date: response.date,
-                    source: response.source,
-                    context: response.context,
-                    tags: response.tags
+                    date: data.date,
+                    source: data.source,
+                    context: data.context,
+                    tags: data.tags
                 }))
             }
         }
@@ -220,7 +220,6 @@ export default function MultipleQuoteGenericForm(props) {
             buttons: [{ text: "Sim", action: [() => setMultipleQuotes([{ quote: "", author: "" }]), "handleClose()"] },
             { text: "Não", action: ["handleClose()"] }]
         })
-
     }
 
     return (

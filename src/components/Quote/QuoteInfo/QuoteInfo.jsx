@@ -46,6 +46,14 @@ export default function QuoteInfo(props) {
                     </TextParagraph>
                     <TextTitle>Tags</TextTitle>
                     <TextParagraph>{quoteData.tags ? quoteData.tags.join(" • ") : "Nenhuma tag adicionada (isso não deveria acontecer, contate o dev"}</TextParagraph>
+
+                    {quoteData.quoteType === "multiple" && (
+                        <>
+                            <TextTitle>Data</TextTitle>
+                            <TextParagraph>{quoteData.date ?
+                                quoteData.date : "Data não especificada"}</TextParagraph>
+                        </>
+                    )}
                 </ModalBody>
             </Modal>
         </>
