@@ -39,7 +39,10 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
             setSearchTypes(searchTypes)
         }
         if (location.pathname === "/quotes") {
-
+            if (!(searchTypes.find((obj) => obj.value === "uploadByUsername"))){
+                searchTypes.push({ label: "Upload por", value: "uploadByUsername" })
+            }
+            setSearchTypes(searchTypes)
         }
 
         let queryString = {}
@@ -73,6 +76,9 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
     }, [location.search])
 
     useEffect(() => {
+        console.log(searchQuery)
+        console.log(Object.entries(searchQuery.query))
+        //searchParams.set(searchQuery.query[0], searchQuery.query[1])
         fetchQuotesBySearch(searchQuery)
     }, [didSearched])
 
@@ -81,13 +87,15 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
     }
 
     const handleSourceSelect = (eventKey) => {
+        console.log(eventKey)
         setSelectedType({ label: "Source", value: "source" })
 
         setSearchQuery((prevSearchQuery) => ({
             ...prevSearchQuery,
-            "query": { "source": SourceNames[eventKey].value },
+            "query": { "source": eventKey },
             "label": "Source"
         }))
+        console.log("uuuuu")
         setDidSearched(!didSearched)
     }
 
@@ -110,7 +118,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
             return true
         }
     }
-
+    //todo: descobrir pq pesquisa alguma esta sendo feita
     const handleSearchClick = async () => {
         const query = Object.entries(searchQuery.query)[0]
         console.log(query[0])
@@ -167,7 +175,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
 
                             <DropdownButton variant="dark" menuVariant="dark" title="Nome" onSelect={handleSourceSelect}>
                                 {SourceNames.map((item, index) => (
-                                    <DropdownItem eventKey={index} key={item.value}>{item.name}</DropdownItem>
+                                    <DropdownItem eventKey={item.value} key={item.value}>{item.name}</DropdownItem>
                                 ))
                                 }
                             </DropdownButton>

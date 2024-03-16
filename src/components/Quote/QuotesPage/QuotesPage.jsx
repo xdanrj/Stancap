@@ -52,6 +52,7 @@ export default function QuotesPage() {
     setQuotesQtd(response.quotesQtd)
     response ? setQuotesResponse(response.foundQuote) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
     setQuotesResponse(response.foundQuote)
+    console.log("ueba")
     console.log(response.foundQuote)
     console.log(response.quotesQtd)
   }
