@@ -7,19 +7,13 @@ import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { SourceNames } from "../Quote/SourceCommonFunctions";
+import _ from "lodash";
 
 export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, queryString }) {
     console.log(searchParams)
     const location = useLocation()
     const navigate = useNavigate()
 
-    const SearchTypes = [
-        { label: "Autor", value: "author" },
-        { label: "Tag", value: "tag" },
-        { label: "Source", value: "source" },
-        { label: "Upload por", value: "uploadByUsername" },
-        { label: "Contexto", value: "context" }
-    ]
     SourceNames.map((item, index) => {
         console.log(item.value)
     })
@@ -29,20 +23,39 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
     const [inputColor, setInputColor] = useState(false)
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
     const [didSearched, setDidSearched] = useState(false)
+    const [searchTypes, setSearchTypes] = useState([
+        { label: "Autor", value: "author" },
+        { label: "Tag", value: "tag" },
+        { label: "Source", value: "source" },
+        { label: "Upload por", value: "uploadByUsername" },
+        { label: "Contexto", value: "context" }])
+
     useEffect(() => {
+        console.log(location.pathname)
+        if (location.pathname === "/my_quotes") {
+            _.remove(searchTypes, function (obj) {
+                return obj.value === "uploadByUsername"
+            })
+            setSearchTypes(searchTypes)
+        }
+        if (location.pathname === "/quotes") {
+
+        }
+
         let queryString = {}
         for (let param of searchParams) {
             if (param[0] !== "page" && param[0] !== "sort") {
                 queryString[param[0]] = param[1]
             }
         }
+
         console.log(queryString)
         if (Object.keys(queryString).length > 0) {
             async function settingQuery() {
                 const queryprop = Object.keys(queryString).filter(key => key !== "page" && key !== "sort")
                 console.log(queryprop)
 
-                const foundType = SearchTypes.find((type) => type.value === Object.keys(queryString)[0])
+                const foundType = searchTypes.find((type) => type.value === Object.keys(queryString)[0])
                 console.log(foundType)
                 setSelectedType(foundType)
                 setSearchQuery((prevSearchQuery) => ({
@@ -64,11 +77,12 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
     }, [didSearched])
 
     const handleTypeSelect = (eventKey) => {
-        setSelectedType(SearchTypes[eventKey])
+        setSelectedType(searchTypes.find((type) => type.value === eventKey))
     }
 
     const handleSourceSelect = (eventKey) => {
         setSelectedType({ label: "Source", value: "source" })
+
         setSearchQuery((prevSearchQuery) => ({
             ...prevSearchQuery,
             "query": { "source": SourceNames[eventKey].value },
@@ -97,7 +111,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
         }
     }
 
-    const handleSearchClick = async () => {    
+    const handleSearchClick = async () => {
         const query = Object.entries(searchQuery.query)[0]
         console.log(query[0])
         console.log(query[1])
@@ -119,8 +133,8 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
                     <Col md={8} lg={5}>
                         <InputGroup >
                             <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
-                                {SearchTypes.map((item, index) => (
-                                    <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
+                                {searchTypes.map((item, index) => (
+                                    <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
                                 ))}
                             </DropdownButton>
 
@@ -146,8 +160,8 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
                         <InputGroup className="d-flex justify-content-center">
                             <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedType ? selectedType.label : "Tipo"} onSelect={handleTypeSelect}>
 
-                                {SearchTypes.map((item, index) => (
-                                    <DropdownItem eventKey={index} key={item.value}>{item.label}</DropdownItem>
+                                {searchTypes.map((item, index) => (
+                                    <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
                                 ))}
                             </DropdownButton>
 
@@ -164,7 +178,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
 
             )}
             <>
-               
+
             </>
         </>
     )

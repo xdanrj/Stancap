@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useParams, useLocation } from "react-router-dom"
+import { useParams, useLocation, useSearchParams } from "react-router-dom"
 import quoteEditingServices from "../../../services/quoteServices"
 import SingleQuote from "../SingleQuote/SingleQuote"
 import MultipleQuote from "../MultipleQuote/MultipleQuote"
@@ -22,10 +22,11 @@ export default function QuotesPage() {
   const [quotesResponse, setQuotesResponse] = useState([])
   const [singleQuotesArray, setSingleQuotesArray] = useState([])
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
+  const [searchParams, setSearchParams] = useSearchParams()
   const [quotesQtd, setQuotesQtd] = useState(0)
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
-  const searchParams = new URLSearchParams(location.search)
+  // const searchParams = new URLSearchParams(location.search)
 
   useEffect(() => {
     if (!searchParams.has("page")) {
