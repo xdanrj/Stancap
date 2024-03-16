@@ -32,7 +32,7 @@ export default function QuotesPage() {
       searchParams.set("page", "1")
     }
     console.log(searchParams.get("sort"))
-    
+
     navigate({ search: searchParams.toString() })
   }, [location.search])
 
@@ -42,7 +42,6 @@ export default function QuotesPage() {
     console.log(response.quotesQtd)
     setQuotesQtd(response.quotesQtd)
     setQuotesResponse(response.response)
-    
   }
 
   async function fetchQuotesBySearch(searchQuery) {
@@ -54,7 +53,6 @@ export default function QuotesPage() {
     setQuotesResponse(response.foundQuote)
     console.log(response.foundQuote)
     console.log(response.quotesQtd)
-    
   }
 
   useEffect(() => {
@@ -121,7 +119,8 @@ export default function QuotesPage() {
           </Col>
         </Row>
       </QuotesPageDiv>
-      <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd}/>
+      <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
     </>
   )
 }
+

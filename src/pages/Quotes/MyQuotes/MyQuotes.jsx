@@ -8,6 +8,8 @@ import QuoteInfo from "../../../components/Quote/QuoteInfo/QuoteInfo";
 import { useAlertMsg } from "../../../components/Alert/AlertContext"
 import { MyQuotesDiv } from "./MyQuotesStyles";
 import { useSearchParams } from "react-router-dom";
+import { SearchBar } from "../../../components/SearchBar/SearchBar";
+import PageSelector from "../../../components/PageSelector/PageSelector";
 const quoteService = new quoteEditingServices()
 
 export default function MyQuotes() {
@@ -17,10 +19,10 @@ export default function MyQuotes() {
     const [quotesResponse, setQuotesResponse] = useState([])
     const [userId, setUserId] = useState([localStorage.getItem("userId")])
     const [deletedQuotes, setDeletedQuotes] = useState([])
+    const [quotesQtd, setQuotesQtd] = useState(0)
 
     useEffect(() => {
         setDeletedQuotes([])
-        //TODO: rever funcao de editquote
         async function fetchQuotes() {
             let query = { "uploadByUser": userId }
             const response = await quoteService.searchQuotes(query)
@@ -30,6 +32,25 @@ export default function MyQuotes() {
         }
         fetchQuotes()
     }, [])
+
+    async function fetchAllQuotes() {
+        console.log(Object.fromEntries(searchParams))
+        const response = await quoteService.getQuotes(Object.fromEntries(searchParams))
+        console.log(response.quotesQtd)
+        setQuotesQtd(response.quotesQtd)
+        setQuotesResponse(response.response)
+      }
+    
+      async function fetchQuotesBySearch(searchQuery) {
+        console.log(searchQuery)
+        console.log(Object.fromEntries(searchParams))
+        const response = await quoteService.searchQuotes(Object.fromEntries(searchParams))
+        setQuotesQtd(response.quotesQtd)
+        response ? setQuotesResponse(response.foundQuote) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
+        setQuotesResponse(response.foundQuote)
+        console.log(response.foundQuote)
+        console.log(response.quotesQtd)
+      }
 
     const handleEditQuote = async (quoteId, quoteType) => {
         try {
@@ -69,7 +90,7 @@ export default function MyQuotes() {
                 useAlert("Exclusão desfeita")
             }
         } catch (error) {
-
+            console.log(error)
         }
     }
 
@@ -77,7 +98,9 @@ export default function MyQuotes() {
         <>
         <MyQuotesDiv>
             <Row className="justify-content-center">
+            <SearchBar searchParams={searchParams} fetchAllQuotes={fetchAllQuotes} fetchQuotesBySearch={fetchQuotesBySearch}/>
                 <Col xs={12} sm={8} md={6} lg={5}>
+                   
                     {
                         quotesResponse.length > 0 ? (
                             quotesResponse.map((data) => (
@@ -95,7 +118,6 @@ export default function MyQuotes() {
                                                     <MdbIcon icon="info-circle" />
                                                     <MdbIcon icon="trash-alt" onClick={() => handleDeleteQuote(data._id)} />
                                                     <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id, data.quoteType)} />
-
                                                 </>
                                             }
                                         </InternalContainer>
