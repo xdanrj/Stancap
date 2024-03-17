@@ -10,7 +10,6 @@ import { SourceNames } from "../Quote/SourceCommonFunctions";
 import _ from "lodash";
 
 export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, queryString }) {
-    console.log(searchParams)
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -55,9 +54,6 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
         console.log(queryString)
         if (Object.keys(queryString).length > 0) {
             async function settingQuery() {
-                const queryprop = Object.keys(queryString).filter(key => key !== "page" && key !== "sort")
-                console.log(queryprop)
-
                 const foundType = searchTypes.find((type) => type.value === Object.keys(queryString)[0])
                 console.log(foundType)
                 setSelectedType(foundType)
@@ -76,9 +72,17 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
     }, [location.search])
 
     useEffect(() => {
+        const query = Object.entries(searchQuery.query)[0]
+        if(query){
+            console.log(query)
+            searchParams.set(query[0], query[1])
+            searchParams.set("page", 1)
+        }
+    }, [searchQuery])
+
+    useEffect(() => {
         console.log(searchQuery)
         console.log(Object.entries(searchQuery.query))
-        //searchParams.set(searchQuery.query[0], searchQuery.query[1])
         fetchQuotesBySearch(searchQuery)
     }, [didSearched])
 
@@ -118,13 +122,11 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
             return true
         }
     }
-    //todo: descobrir pq pesquisa alguma esta sendo feita
     const handleSearchClick = async () => {
         const query = Object.entries(searchQuery.query)[0]
-        console.log(query[0])
-        console.log(query[1])
-        searchParams.set("page", 1)
-        searchParams.set(query[0], query[1])
+        
+        // searchParams.set("page", 1)
+        // searchParams.set(query[0], query[1])
         navigate({ search: searchParams.toString() })
     }
 

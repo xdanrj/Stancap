@@ -38,9 +38,7 @@ export default function QuotesPage() {
   }, [location.search])
 
   async function fetchAllQuotes() {
-    console.log(Object.fromEntries(searchParams))
     const response = await quoteService.getQuotes(Object.fromEntries(searchParams))
-    console.log(response.quotesQtd)
     setQuotesQtd(response.quotesQtd)
     setQuotesResponse(response.response)
   }
@@ -52,7 +50,6 @@ export default function QuotesPage() {
     setQuotesQtd(response.quotesQtd)
     response ? setQuotesResponse(response.foundQuote) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
     setQuotesResponse(response.foundQuote)
-    console.log("ueba")
     console.log(response.foundQuote)
     console.log(response.quotesQtd)
   }
