@@ -38,7 +38,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
             setSearchTypes(searchTypes)
         }
         if (location.pathname === "/quotes") {
-            if (!(searchTypes.find((obj) => obj.value === "uploadByUsername"))){
+            if (!(searchTypes.find((obj) => obj.value === "uploadByUsername"))) {
                 searchTypes.push({ label: "Upload por", value: "uploadByUsername" })
             }
             setSearchTypes(searchTypes)
@@ -71,20 +71,27 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
         }
     }, [location.search])
 
-    useEffect(() => {
+    /*useEffect(() => {
         const query = Object.entries(searchQuery.query)[0]
         if(query){
             console.log(query)
             searchParams.set(query[0], query[1])
             searchParams.set("page", 1)
+            setDidSearched(!didSearched)
         }
-    }, [searchQuery])
+    }, [searchQuery])*/
 
     useEffect(() => {
-        console.log(searchQuery)
-        console.log(Object.entries(searchQuery.query))
+        const query = Object.entries(searchQuery.query)[0]
+        if (query) {
+            console.log(query)
+            searchParams.set(query[0], query[1])
+            searchParams.set("page", 1)
+        }
         fetchQuotesBySearch(searchQuery)
-    }, [didSearched])
+    }, [])
+    //ANTES ERA: }, [didSearched])
+    //a ideia é descartar o state didsearched por completo e usar somente searchquery como dependencia
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(searchTypes.find((type) => type.value === eventKey))
@@ -124,7 +131,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
     }
     const handleSearchClick = async () => {
         const query = Object.entries(searchQuery.query)[0]
-        
+
         // searchParams.set("page", 1)
         // searchParams.set(query[0], query[1])
         navigate({ search: searchParams.toString() })
