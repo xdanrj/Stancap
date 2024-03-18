@@ -65,13 +65,7 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
     // OLD:  }, [location.search])
 
     useEffect(() => {
-        console.log(Object.entries(searchQuery.query))
-        // const query = Object.entries(searchQuery.query)[0]
-        // if (query) {
-        //     console.log(query)
-        //     searchParams.set(query[0], query[1])
-        //     searchParams.set("page", 1)
-        // }
+        console.log(Object.entries(searchQuery.query))       
         for (const key of searchParams.keys()) {
             searchParams.delete(key);
         }
