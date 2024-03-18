@@ -10,20 +10,13 @@ import { SourceNames } from "../Quote/SourceCommonFunctions";
 import { useSearchParams } from "react-router-dom";
 import _ from "lodash";
 
-export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, searchQuery, setSearchQuery }) {
-    const [searchParams, setSearchParams] = useSearchParams()
+export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
     const location = useLocation()
     const navigate = useNavigate()
-
-    SourceNames.map((item, index) => {
-        console.log(item.value)
-    })
-
+    const [searchParams, setSearchParams] = useSearchParams()
     const [selectedType, setSelectedType] = useState()
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
-    
-    const [didSearched, setDidSearched] = useState(false)
     const [searchTypes, setSearchTypes] = useState([
         { label: "Autor", value: "author" },
         { label: "Tag", value: "tag" },
@@ -32,7 +25,6 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, s
         { label: "Contexto", value: "context" }])
 
     useEffect(() => {
-        console.log(location.pathname)
         if (location.pathname === "/my_quotes") {
             _.remove(searchTypes, function (obj) {
                 return obj.value === "uploadByUsername"
@@ -64,32 +56,29 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, s
                     "query": queryString,
                     "label": foundType?.label,
                 }))
-                //setDidSearched(!didSearched)
             }
             settingQuery()
         } else {
             fetchAllQuotes()
         }
-    }, [location.search])
-
-    /*useEffect(() => {
-        const query = Object.entries(searchQuery.query)[0]
-        if(query){
-            console.log(query)
-            searchParams.set(query[0], query[1])
-            searchParams.set("page", 1)
-            setDidSearched(!didSearched)
-        }
-    }, [searchQuery])*/
+    }, [])
+    // OLD:  }, [location.search])
 
     useEffect(() => {
-        const query = Object.entries(searchQuery.query)[0]
-        if (query) {
-            console.log(query)
-            searchParams.set(query[0], query[1])
-            searchParams.set("page", 1)
+        console.log(Object.entries(searchQuery.query))
+        // const query = Object.entries(searchQuery.query)[0]
+        // if (query) {
+        //     console.log(query)
+        //     searchParams.set(query[0], query[1])
+        //     searchParams.set("page", 1)
+        // }
+        for (const key of searchParams.keys()) {
+            searchParams.delete(key);
         }
-        fetchQuotesBySearch(searchQuery)
+        // Adicionar novos parâmetros de pesquisa
+        for (const [key, value] of Object.entries(searchQuery.query)) {
+            searchParams.set(key, value);
+        }
     }, [searchQuery])
     //ANTES ERA: }, [didSearched])
     //todo: a ideia é descartar o state didsearched por completo e usar somente searchquery como dependencia pra fazer a pesquisa td vez que searchquery for alterado
@@ -108,7 +97,6 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, s
             "label": "Source"
         }))
         console.log("uuuuu")
-        setDidSearched(!didSearched)
     }
 
     const handleSearchChange = (e) => {
@@ -131,11 +119,9 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, s
         }
     }
     const handleSearchClick = async () => {
-        const query = Object.entries(searchQuery.query)[0]
-
-        // searchParams.set("page", 1)
-        // searchParams.set(query[0], query[1])
-        navigate({ search: searchParams.toString() })
+        //navigate({ search: searchParams.toString() })
+        setSearchParams(_.pick(searchParams, ["page", "sort", ...Object.keys(searchQuery.query)]));
+        navigate({ search: searchParams.toString() });
     }
 
     const handleSortChange = () => {

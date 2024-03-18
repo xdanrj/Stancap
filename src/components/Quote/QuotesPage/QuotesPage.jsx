@@ -32,8 +32,9 @@ export default function QuotesPage() {
     if (!searchParams.has("page")) {
       searchParams.set("page", "1")
     }
-    console.log(searchParams.get("sort"))
-
+    // console.log(searchParams.get("sort"))
+    fetchQuotesBySearch()
+    console.log(location.search)
     navigate({ search: searchParams.toString() })
   }, [location.search])
 
@@ -43,7 +44,7 @@ export default function QuotesPage() {
     setQuotesResponse(response.response)
   }
 
-  async function fetchQuotesBySearch(searchQuery) {
+  async function fetchQuotesBySearch() {
     console.log(searchQuery)
     console.log(Object.fromEntries(searchParams))
     const response = await quoteService.searchQuotes(Object.fromEntries(searchParams))

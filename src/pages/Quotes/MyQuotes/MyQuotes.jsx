@@ -26,7 +26,6 @@ export default function MyQuotes() {
         async function fetchQuotes() {
             let query = { "uploadByUser": userId }
             const response = await quoteService.searchQuotes(query)
-            console.log("rrrrrrrrrrrrrrrrr")
             console.log(response.foundQuote)
             setQuotesResponse(response.foundQuote)
         }
