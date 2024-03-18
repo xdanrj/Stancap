@@ -31,11 +31,13 @@ export default function QuotesPage() {
   useEffect(() => {
     if (!searchParams.has("page")) {
       searchParams.set("page", "1")
+      navigate({ search: searchParams.toString() })
     }
     // console.log(searchParams.get("sort"))
-    fetchQuotesBySearch()
+    
     console.log(location.search)
-    navigate({ search: searchParams.toString() })
+    //navigate({ search: searchParams.toString() })
+    fetchQuotesBySearch()
   }, [location.search])
 
   async function fetchAllQuotes() {
@@ -48,9 +50,9 @@ export default function QuotesPage() {
     console.log(searchQuery)
     console.log(Object.fromEntries(searchParams))
     const response = await quoteService.searchQuotes(Object.fromEntries(searchParams))
+    console.log(response)
     setQuotesQtd(response.quotesQtd)
-    response ? setQuotesResponse(response.foundQuote) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
-    setQuotesResponse(response.foundQuote)
+    response.foundQuote ? setQuotesResponse(response.foundQuote) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
   }
 
   useEffect(() => {

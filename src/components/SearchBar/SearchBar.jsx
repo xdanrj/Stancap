@@ -67,15 +67,12 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
     useEffect(() => {
         console.log(Object.entries(searchQuery.query))       
         for (const key of searchParams.keys()) {
-            searchParams.delete(key);
+            searchParams.delete(key)
         }
-        // Adicionar novos parâmetros de pesquisa
         for (const [key, value] of Object.entries(searchQuery.query)) {
-            searchParams.set(key, value);
+            searchParams.set(key, value)
         }
     }, [searchQuery])
-    //ANTES ERA: }, [didSearched])
-    //todo: a ideia é descartar o state didsearched por completo e usar somente searchquery como dependencia pra fazer a pesquisa td vez que searchquery for alterado
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(searchTypes.find((type) => type.value === eventKey))
@@ -113,9 +110,7 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
         }
     }
     const handleSearchClick = async () => {
-        //navigate({ search: searchParams.toString() })
-        setSearchParams(_.pick(searchParams, ["page", "sort", ...Object.keys(searchQuery.query)]));
-        navigate({ search: searchParams.toString() });
+        navigate({ search: searchParams.toString() })
     }
 
     const handleSortChange = () => {
