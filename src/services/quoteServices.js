@@ -48,8 +48,8 @@ export default class quoteEditingServices {
 
     async searchQuotes(params) {
         console.log(params)
-        //todo: refazer as rotas com pesquisa pra usarem req.query ao inves de req.body
         const response = await this.axios.get(`/search_quotes`, {params})
+        console.log(response)
         if (response.data) {
             return response.data
         } else {
@@ -57,7 +57,6 @@ export default class quoteEditingServices {
         }
     }
 
-    //todo: refazer servico de addquote com {params}
     async addQuote(data) {
         const response = await this.axios.post('/add_quote', data)
         if (response.data) {

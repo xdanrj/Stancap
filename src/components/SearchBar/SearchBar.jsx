@@ -7,9 +7,11 @@ import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { SourceNames } from "../Quote/SourceCommonFunctions";
+import { useSearchParams } from "react-router-dom";
 import _ from "lodash";
 
-export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, queryString }) {
+export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, searchQuery, setSearchQuery }) {
+    const [searchParams, setSearchParams] = useSearchParams()
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -20,7 +22,7 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
     const [selectedType, setSelectedType] = useState()
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
-    const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
+    
     const [didSearched, setDidSearched] = useState(false)
     const [searchTypes, setSearchTypes] = useState([
         { label: "Autor", value: "author" },
@@ -62,11 +64,10 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
                     "query": queryString,
                     "label": foundType?.label,
                 }))
-                setDidSearched(!didSearched)
+                //setDidSearched(!didSearched)
             }
             settingQuery()
         } else {
-            console.log("caiu ELSE")
             fetchAllQuotes()
         }
     }, [location.search])
@@ -89,9 +90,9 @@ export function SearchBar({ fetchQuotesBySearch, fetchAllQuotes, searchParams, q
             searchParams.set("page", 1)
         }
         fetchQuotesBySearch(searchQuery)
-    }, [])
+    }, [searchQuery])
     //ANTES ERA: }, [didSearched])
-    //a ideia é descartar o state didsearched por completo e usar somente searchquery como dependencia
+    //todo: a ideia é descartar o state didsearched por completo e usar somente searchquery como dependencia pra fazer a pesquisa td vez que searchquery for alterado
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(searchTypes.find((type) => type.value === eventKey))

@@ -24,9 +24,9 @@ export default function QuotesPage() {
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
   const [searchParams, setSearchParams] = useSearchParams()
   const [quotesQtd, setQuotesQtd] = useState(0)
+  const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
-  // const searchParams = new URLSearchParams(location.search)
 
   useEffect(() => {
     if (!searchParams.has("page")) {
@@ -50,8 +50,6 @@ export default function QuotesPage() {
     setQuotesQtd(response.quotesQtd)
     response ? setQuotesResponse(response.foundQuote) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
     setQuotesResponse(response.foundQuote)
-    console.log(response.foundQuote)
-    console.log(response.quotesQtd)
   }
 
   useEffect(() => {
@@ -109,7 +107,7 @@ export default function QuotesPage() {
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
       <QuotesPageDiv>
-        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} searchParams={searchParams} /*queryString={queryString}*/ />
+        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} searchParams={searchParams} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
         <Row className="justify-content-center">
           <Col xs={12} sm={9} md={7} lg={6} xl={5} >
