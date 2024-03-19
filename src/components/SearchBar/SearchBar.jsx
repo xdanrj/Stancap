@@ -54,7 +54,7 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
                 setSearchQuery((prevSearchQuery) => ({
                     ...prevSearchQuery,
                     "query": queryString,
-                    "label": foundType?.label,
+                    "label": foundType?.label
                 }))
             }
             settingQuery()
@@ -65,7 +65,10 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
     // OLD:  }, [location.search])
 
     useEffect(() => {
-        console.log(Object.entries(searchQuery.query))       
+        console.log(Object.entries(searchQuery.query))
+        for (const key of searchParams.keys()) {
+            console.log(key)
+        }
         for (const key of searchParams.keys()) {
             searchParams.delete(key)
         }
@@ -79,14 +82,14 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
     }
 
     const handleSourceSelect = (eventKey) => {
-        console.log(eventKey)
-        setSelectedType({ label: "Source", value: "source" })
+        async function setSourceQuery() {
+            console.log(eventKey)
+            setSelectedType({ label: "Source", value: "source" })
 
-        setSearchQuery((prevSearchQuery) => ({
-            ...prevSearchQuery,
-            "query": { "source": eventKey },
-            "label": "Source"
-        }))
+            setSearchQuery({"query": { "source": eventKey }, "label": "Source"})
+        }
+        setSourceQuery()
+        //navigate({ search: searchParams.toString() })
         console.log("uuuuu")
     }
 

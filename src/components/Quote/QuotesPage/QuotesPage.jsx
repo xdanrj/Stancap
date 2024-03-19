@@ -33,10 +33,8 @@ export default function QuotesPage() {
       searchParams.set("page", "1")
       navigate({ search: searchParams.toString() })
     }
-    // console.log(searchParams.get("sort"))
     
     console.log(location.search)
-    //navigate({ search: searchParams.toString() })
     fetchQuotesBySearch()
   }, [location.search])
 
