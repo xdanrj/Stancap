@@ -75,21 +75,20 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
         for (const [key, value] of Object.entries(searchQuery.query)) {
             searchParams.set(key, value)
         }
+        //navigate({ search: searchParams.toString() })
     }, [searchQuery])
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(searchTypes.find((type) => type.value === eventKey))
     }
 
-    const handleSourceSelect = (eventKey) => {
-        async function setSourceQuery() {
+    const handleSourceSelect = async (eventKey) => {        
             console.log(eventKey)
             setSelectedType({ label: "Source", value: "source" })
 
-            setSearchQuery({"query": { "source": eventKey }, "label": "Source"})
-        }
-        setSourceQuery()
-        //navigate({ search: searchParams.toString() })
+            await setSearchQuery({"query": { "source": eventKey }, "label": "Source"})
+        
+        navigate({ search: searchParams.toString() })
         console.log("uuuuu")
     }
 
