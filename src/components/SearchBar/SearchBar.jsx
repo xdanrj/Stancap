@@ -59,7 +59,7 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
             }
             settingQuery()
         } else {
-            fetchAllQuotes()
+            fetchAllQuotes ? fetchAllQuotes() : null
         }
     }, [])
     // OLD:  }, [location.search])
@@ -75,19 +75,18 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
         for (const [key, value] of Object.entries(searchQuery.query)) {
             searchParams.set(key, value)
         }
-        //navigate({ search: searchParams.toString() })
     }, [searchQuery])
 
     const handleTypeSelect = (eventKey) => {
         setSelectedType(searchTypes.find((type) => type.value === eventKey))
     }
 
-    const handleSourceSelect = async (eventKey) => {        
-            console.log(eventKey)
-            setSelectedType({ label: "Source", value: "source" })
+    const handleSourceSelect = async (eventKey) => {
+        console.log(eventKey)
+        setSelectedType({ label: "Source", value: "source" })
 
-            await setSearchQuery({"query": { "source": eventKey }, "label": "Source"})
-        
+        await setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })
+
         navigate({ search: searchParams.toString() })
         console.log("uuuuu")
     }
@@ -116,8 +115,8 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
     }
 
     const handleSortChange = () => {
-        console.log("handle sort order clicado")
         searchParams.set("sort", searchParams.get("sort") === "ascending" ? "descending" : "ascending")
+        searchParams.set("page", 1)
         navigate({ search: searchParams.toString() })
     }
 
@@ -144,7 +143,9 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
                                     <MDBIcon icon="search" />
                                 </Button>
                             </>
-                            <Button onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
+                            <Button onClick={() => handleSortChange()}><i className=
+                                {searchParams.get("sort") === "ascending" ? "bi bi-sort-down-alt" : "bi bi-sort-up-alt"}>
+                            </i></Button>
                         </InputGroup>
                     </Col>
                 </Row>

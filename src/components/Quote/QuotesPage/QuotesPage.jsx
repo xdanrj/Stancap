@@ -33,7 +33,6 @@ export default function QuotesPage() {
       searchParams.set("page", "1")
       navigate({ search: searchParams.toString() })
     }
-    //navigate({ search: searchParams.toString() })
     console.log(location.search)
     fetchQuotesBySearch()
   }, [location.search])
@@ -45,7 +44,6 @@ export default function QuotesPage() {
   }
 
   async function fetchQuotesBySearch() {
-    console.log(searchQuery)
     console.log(Object.fromEntries(searchParams))
     const response = await quoteService.searchQuotes(Object.fromEntries(searchParams))
     console.log(response)

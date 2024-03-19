@@ -20,35 +20,38 @@ export default function MyQuotes() {
     const [userId, setUserId] = useState([localStorage.getItem("userId")])
     const [deletedQuotes, setDeletedQuotes] = useState([])
     const [quotesQtd, setQuotesQtd] = useState(0)
+    const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
+
+    // useEffect(() => {
+    //     setDeletedQuotes([])
+    //     async function fetchQuotes() {
+    //         let query = { "uploadByUser": userId }
+    //         const response = await quoteService.searchQuotes(query)
+    //         console.log(response.foundQuote)
+    //         setQuotesResponse(response.foundQuote)
+    //     }
+    //     fetchQuotes()
+    // }, [])
 
     useEffect(() => {
-        setDeletedQuotes([])
-        async function fetchQuotes() {
-            let query = { "uploadByUser": userId }
-            const response = await quoteService.searchQuotes(query)
-            console.log(response.foundQuote)
-            setQuotesResponse(response.foundQuote)
+        Object.fromEntries(searchParams)
+        if (!searchParams.has("page")) {
+          searchParams.set("page", "1")
+          navigate({ search: searchParams.toString() })
         }
-        fetchQuotes()
-    }, [])
-
-    async function fetchAllQuotes() {
-        console.log(Object.fromEntries(searchParams))
-        const response = await quoteService.getQuotes(Object.fromEntries(searchParams))
-        console.log(response.quotesQtd)
-        setQuotesQtd(response.quotesQtd)
-        setQuotesResponse(response.response)
-      }
+        fetchQuotesBySearch()
+      }, [location.search])
     
-      async function fetchQuotesBySearch(searchQuery) {
-        console.log(searchQuery)
+      async function fetchQuotesBySearch() {
         console.log(Object.fromEntries(searchParams))
-        const response = await quoteService.searchQuotes(Object.fromEntries(searchParams))
+        const searchParamsQuery = Object.fromEntries(searchParams)
+        const queryWithUserId = { ...searchParamsQuery, "uploadByUser": userId }
+        console.log(queryWithUserId)
+        //todo: ver se a pesquisa com 2 criterios (userid + propriedade qlqr) esta funcionando
+        const response = await quoteService.searchQuotes(queryWithUserId)
+        console.log(response)
         setQuotesQtd(response.quotesQtd)
-        response ? setQuotesResponse(response.foundQuote) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
-        setQuotesResponse(response.foundQuote)
-        console.log(response.foundQuote)
-        console.log(response.quotesQtd)
+        response.foundQuote ? setQuotesResponse(response.foundQuote) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
       }
 
     const handleEditQuote = async (quoteId, quoteType) => {
@@ -97,7 +100,7 @@ export default function MyQuotes() {
         <>
         <MyQuotesDiv>
             <Row className="justify-content-center">
-            <SearchBar searchParams={searchParams} fetchAllQuotes={fetchAllQuotes} fetchQuotesBySearch={fetchQuotesBySearch}/>
+            <SearchBar searchParams={searchParams} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
                 <Col xs={12} sm={8} md={6} lg={5}>
                    
                     {
@@ -127,6 +130,7 @@ export default function MyQuotes() {
                             <h4>Você ainda não criou nenhuma quote</h4>
                         )
                     }
+                    <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd}/>
                 </Col>
             </Row >
             </MyQuotesDiv>
