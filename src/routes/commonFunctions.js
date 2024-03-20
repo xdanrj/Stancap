@@ -54,6 +54,8 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   quotesQtd = await Quotes.find(searchquery).countDocuments()
   if (searchQueryKeys.includes("tags")) {
     let tagsToSearch = searchquery.tags.split(",")
+    console.log("tagsToSearch:")
+    console.log(tagsToSearch)
     if (searchQueryKeys.includes("uploadByUser")) {
       finalQuery = { tags: { $in: tagsToSearch }, uploadByUser: searchquery.uploadByUser }
     } else {
