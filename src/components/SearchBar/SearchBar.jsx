@@ -19,7 +19,7 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
     const [inputColor, setInputColor] = useState(false)
     const [searchTypes, setSearchTypes] = useState([
         { label: "Autor", value: "author" },
-        { label: "Tag", value: "tag" },
+        { label: "Tags", value: "tags" },
         { label: "Source", value: "source" },
         { label: "Upload por", value: "uploadByUsername" },
         { label: "Contexto", value: "context" }])
@@ -135,7 +135,7 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
                             <>
                                 <Form.Control
                                     className={inputColor ? "bg-danger" : "bg-light"}
-                                    placeholder="Pesquise..." onChange={handleSearchChange}
+                                    placeholder={selectedType?.value === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleSearchChange}
                                     value={searchQuery?.query[selectedType?.value] || ""}
                                 />
 

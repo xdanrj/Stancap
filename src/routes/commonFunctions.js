@@ -52,11 +52,12 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   }
 
   quotesQtd = await Quotes.find(searchquery).countDocuments()
-  if (searchQueryKeys.includes("tag")) {
+  if (searchQueryKeys.includes("tags")) {
+    let tagsToSearch = searchquery.tags.split(",")
     if (searchQueryKeys.includes("uploadByUser")) {
-      finalQuery = { tags: { $in: [searchquery.tag] }, uploadByUser: searchquery.uploadByUser }
+      finalQuery = { tags: { $in: tagsToSearch }, uploadByUser: searchquery.uploadByUser }
     } else {
-      finalQuery = searchquery
+      finalQuery = { tags: { $in: tagsToSearch }}
     }
     quotesQtd = await Quotes.find(finalQuery).countDocuments()
     foundQuote = await Quotes.find(finalQuery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
