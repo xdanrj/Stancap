@@ -40,10 +40,9 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   const searchQueryKeys = Object.keys(searchquery)
   console.log("searchQueryKeys: ")
   console.log(searchQueryKeys)
-  console.log("searchquery.tag: ")
-  console.log(searchquery.tag)
   let quotesQtd
   let foundQuote
+  let finalQuery
 
   if (searchQueryKeys.includes("uploadByUsername")) {
     const foundUser = await User.find({ username: searchquery.uploadByUsername })
@@ -54,9 +53,14 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
 
   quotesQtd = await Quotes.find(searchquery).countDocuments()
   if (searchQueryKeys.includes("tag")) {
-    quotesQtd = await Quotes.find({ tags: { $in: [searchquery.tag] } }).countDocuments()
-    foundQuote = await Quotes.find({ tags: { $in: [searchquery.tag] } }).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
- 
+    if (searchQueryKeys.includes("uploadByUser")) {
+      finalQuery = { tags: { $in: [searchquery.tag] }, uploadByUser: searchquery.uploadByUser }
+    } else {
+      finalQuery = searchquery
+    }
+    quotesQtd = await Quotes.find(finalQuery).countDocuments()
+    foundQuote = await Quotes.find(finalQuery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
+
   } else {
     if (limit !== null && skipItems !== null) {
       foundQuote = await Quotes.find(searchquery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
@@ -67,7 +71,7 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   console.log("quotesQTD:")
   console.log(quotesQtd)
   if (foundQuote.length > 0) {
-    return {foundQuote, quotesQtd}
+    return { foundQuote, quotesQtd }
   } else {
     return false
   }
