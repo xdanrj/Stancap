@@ -14,7 +14,7 @@ const QuoteSchema = new mongoose.Schema(
         },
         tags: {
             type: Array,
-            items: { type: String }
+            items: { type: String },
         },
         author: { type: String },
         context: { type: String },
@@ -25,5 +25,6 @@ const QuoteSchema = new mongoose.Schema(
         quoteType: { type: String }
     }
 )
+QuoteSchema.path('tags').index({tags: {text: true,}})
 
 export const Quotes = mongoose.model('Quotes', QuoteSchema)

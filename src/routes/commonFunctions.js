@@ -2,7 +2,6 @@ import { User } from "../models/User.js"
 import { Quotes } from "../models/Quotes.js"
 import mongoose from "mongoose"
 import _ from "lodash"
-import { ObjectId } from "mongodb"
 
 // Função que seleciona o usuário através de qualquer propriedade. Usa sempre o primeiro objeto da requisição ( {propriedade: valorDaPropriedade} ). Serve para selecionar o usuário caso a rota não explicite a propriedade selecionada.
 export async function selectUser(searchquery) {
