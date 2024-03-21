@@ -14,17 +14,20 @@ const QuoteSchema = new mongoose.Schema(
         },
         tags: {
             type: Array,
+            collation: { locale: 'pt', strength: 2 },
             items: { type: String },
         },
-        author: { type: String },
-        context: { type: String },
-        source: { type: String },
+        author: {
+            type: String, collation: { locale: 'pt', strength: 2 },
+        },
+        context: { type: String, collation: { locale: 'pt', strength: 2 } },
+        source: { type: String, collation: { locale: 'pt', strength: 2 } },
         date: { type: String },
         uploadDate: { type: String },
-        uploadByUser: { type: String },
-        quoteType: { type: String }
+        uploadByUser: { type: String, collation: { locale: 'pt', strength: 2 } },
+        quoteType: { type: String, collation: { locale: 'pt', strength: 2 } }
     }
 )
-QuoteSchema.path('tags').index({tags: {text: true,}})
+QuoteSchema.path('tags').index({ tags: { text: true, } })
 
 export const Quotes = mongoose.model('Quotes', QuoteSchema)
