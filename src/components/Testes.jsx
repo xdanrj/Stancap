@@ -6,62 +6,52 @@ import { useSearchParams } from "react-router-dom"
 
 export default function Testes() {
     const [searchParams, setSearchParams] = useSearchParams()
-    const [totalPages, setTotalPages] = useState(1);
     const [itemsQtd, setItemsQtd] = useState([])
     const navigate = useNavigate()
 
+    let actualPage = searchParams.get("page")
+    let totalPages
     useEffect(() => {
         async function getPagesQtd() {
-            let totalPagesCalc = Math.ceil((30 / 5)) 
+            let totalPagesCalc = Math.ceil((75 / 5))
             console.log(totalPagesCalc)
-            setTotalPages(totalPagesCalc)
-            // [1, 2, 3, 4]
-            // [2, 3, 4, 5]
-            //possivel formula pro indice
-            // totalPages === 5
-            // actualPage === 4
+            totalPages = totalPagesCalc
+            
+            console.log(actualPage)
             let itemsQtd = []
-            let initialIndex = searchParams.get("page")
-            for (let i = 1; i <= totalPagesCalc; i++) {
+            let initialIndex = 1
+            if (actualPage >= 4) {
+                initialIndex = actualPage - 1
+            }
+
+            for (let i = initialIndex; i <= totalPagesCalc; i++) {
                 itemsQtd.push(i)
-              }
-              setItemsQtd(itemsQtd)
+            }
+            setItemsQtd(itemsQtd)
         }
         getPagesQtd()
-    }, [])
+    }, [searchParams.get("page")])
 
     const handlePageClick = (pageNum) => {
         searchParams.set("page", pageNum)
         navigate({ search: searchParams.toString() })
     }
 
-    const updateButtonNumbers = (totalPages, current_page) => {
-        if (current_page === totalPages - 1) {
-            // When on the penultimate page, advance the button numbers
-            return [current_page - 1, current_page, current_page + 1, current_page + 2];
-        } else {
-            return [current_page - 2, current_page - 1, current_page, current_page + 1];
-        }
-    }
-
-    // Get the current page from searchParams (you can replace this with your actual logic)
-    const currentPage = parseInt(searchParams.get("page")) || 1;
-    const updatedButtons = updateButtonNumbers(totalPages, currentPage);
     return (
         <>
-            <ButtonGroup className="me-2">
-                {updatedButtons.map((item) => (
-                    item < 5 ? (
-                        <Button key={item} onClick={() => handlePageClick(item)}>
-                            {item}
-                        </Button>
-                    ) : null
+            {actualPage >= 4 && (
+                <Button><MDBIcon fas icon="angle-double-left" onClick={() => handlePageClick(totalPages)} /> </Button>
+            )}
+
+            <ButtonGroup className="mx-2">
+                {itemsQtd.slice(0, 4).map((item) => (
+                    <Button key={item} onClick={() => handlePageClick(item)}>
+                        {item}
+                    </Button>
+
                 ))}
             </ButtonGroup>
-
-            <ButtonGroup>
-                <Button><MDBIcon fas icon="angle-double-right" onClick={() => handlePageClick(totalPages)} /> </Button>
-            </ButtonGroup>
+            <Button><MDBIcon fas icon="angle-double-right" onClick={() => handlePageClick(totalPages)} /> </Button>
         </>
     )
 }
