@@ -1,23 +1,55 @@
-import { Button } from "react-bootstrap"
 import React, { useEffect, useState } from "react"
-import _ from "lodash"
+import { useNavigate } from "react-router-dom"
+import { Button, ButtonGroup, ButtonToolbar } from "react-bootstrap"
+import { MDBIcon } from "mdb-react-ui-kit"
+import { useSearchParams } from "react-router-dom"
 
 export default function Testes() {
-    const text = `
-[5/2 16:35] Joao: Lorem ipsum dolor sit amet
-[8/3 21:26] Chev: ullamco laboris nisi ut aliquip
-[7/2 14:04] Danilo: deserunt mollit anim id est laborum
-[9/1 03:96] Kayo Gameplaisu II: quis nostrum exercitationem
-`
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [totalPages, setTotalPages] = useState(1);
+    const navigate = useNavigate();
 
-    const nomes = [{ quote: "aa", author: "joao" }, { quote: "bb", author: "ana" },
-    { quote: "cc", author: "carlos" }, { quote: "dd", author: "joao" }]
-   
-    const unicos = _.uniqBy(nomes, "author").map((obj) => obj.author)
-    console.log(unicos)
+    useEffect(() => {
+        async function getPagesQtd() {
+            let totalPagesCalc = Math.ceil(20 / 5);
+            setTotalPages(totalPagesCalc);
+            let itemsQtd = []
+            for (let i = 1; i <= totalPagesCalc; i++) {
+                itemsQtd.push(i)
+            }
+        }
+        getPagesQtd();
+    }, []);
+
+    const handlePageClick = (pageNum) => {
+        // Verifica se pageNum é o primeiro ou o último
+        if (pageNum === 1) {
+            // Se for o primeiro, move o último para o primeiro lugar
+            const lastPage = totalPages;
+            searchParams.set("page", lastPage);
+            navigate({ search: searchParams.toString() });
+        } else if (pageNum === totalPages) {
+            // Se for o último, move o primeiro para o último lugar
+            const firstPage = 1;
+            searchParams.set("page", firstPage);
+            navigate({ search: searchParams.toString() });
+        } else {
+            // Se não for o primeiro nem o último, apenas navega para a página selecionada
+            searchParams.set("page", pageNum);
+            navigate({ search: searchParams.toString() });
+        }
+    };
 
     return (
         <>
+            {itemsQtd.map((item) => (
+                item < 5 ? (
+                    <Button key={item} onClick={() => handlePageClick(item)}>
+                        {item}
+                    </Button>
+                ) : null
+            ))}
+            <MDBIcon fas icon="angle-double-right" onClick={() => handlePageClick(totalPages)} />
         </>
-    )
+    );
 }

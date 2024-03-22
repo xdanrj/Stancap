@@ -14,7 +14,7 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
     const [selectedSearchType, setSelectedSearchType] = useState()
-    const [selectedQuoteType, setSelectedQuoteType] = useState(searchParams.get("type") ? searchParams.get("type") : "single")
+    const [selectedQuoteType, setSelectedQuoteType] = useState(searchParams.get("quoteType") ? searchParams.get("quoteType") : "single")
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
     const [searchTypes, setSearchTypes] = useState([
@@ -93,7 +93,7 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
 
     const handleQuoteTypeSelect = (value) => {
         setSelectedQuoteType(value)
-        searchParams.set("type", value)
+        searchParams.set("quoteType", value)
         navigate({ search: searchParams.toString() })
     }
 
@@ -136,7 +136,7 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
                                 {searchTypes.map((item, index) => (
                                     <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
                                 ))}
-                                <ToggleButtonGroup type="radio" name="quotetype" value={selectedQuoteType}
+                                <ToggleButtonGroup type="radio" name="quoteType" value={selectedQuoteType}
                                  onChange={(value)=> handleQuoteTypeSelect(value)}>
                                     <ToggleButton id="single" value={"single"} size="sm">Citação</ToggleButton>
                                     <ToggleButton id="multiple" value={"multiple"} size="sm">Diálogo</ToggleButton>
@@ -182,16 +182,10 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
                         </InputGroup>
                     </Col>
                 </Row>
-
             )}
-            <>
-
-            </>
         </>
     )
 }
-
-
 /*
 fazendo:
 filtros sempre disponiveis: 
