@@ -40,7 +40,7 @@ export default function Testes() {
     return (
         <>
             {actualPage >= 4 && (
-                <Button><MDBIcon fas icon="angle-double-left" onClick={() => handlePageClick(totalPages)} /> </Button>
+                <Button><MDBIcon fas icon="angle-double-left" onClick={() => handlePageClick(1)} /> </Button>
             )}
 
             <ButtonGroup className="mx-2">
