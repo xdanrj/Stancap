@@ -5,16 +5,15 @@ import { MDBIcon } from "mdb-react-ui-kit"
 
 export default function PageSelector({ searchParams, quotesQtd }) {
     const [itemsQtd, setItemsQtd] = useState([])
+    const [totalPages, setTotalPages] = useState()
     const navigate = useNavigate()
 
     let actualPage = searchParams.get("page")
-    let totalPages
-     useEffect(() => {
-        async function getPagesQtd() {
+    useEffect(() => {
+        if (quotesQtd) {
             let totalPagesCalc = Math.ceil((quotesQtd / 5))
             console.log(totalPagesCalc)
-            totalPages = totalPagesCalc
-            
+            setTotalPages(totalPagesCalc)
             console.log(actualPage)
             let tempItemsQtd = []
             let initialIndex = 1
@@ -27,18 +26,21 @@ export default function PageSelector({ searchParams, quotesQtd }) {
             }
             setItemsQtd(tempItemsQtd)
         }
-        getPagesQtd()
+
+
+
     }, [actualPage, quotesQtd, searchParams])
 
     const handlePageClick = (pageNum) => {
         searchParams.set("page", pageNum)
+        console.log(pageNum)
         navigate({ search: searchParams.toString() })
     }
 
     return (
         <>
             {actualPage >= 4 && (
-                <Button><MDBIcon fas icon="angle-double-left" onClick={() => handlePageClick(1)} /> </Button>
+                <Button onClick={() => handlePageClick(1)}><MDBIcon fas icon="angle-double-left" /> </Button>
             )}
 
             <ButtonGroup className="mx-2">
@@ -49,7 +51,7 @@ export default function PageSelector({ searchParams, quotesQtd }) {
 
                 ))}
             </ButtonGroup>
-            <Button><MDBIcon fas icon="angle-double-right" onClick={() => handlePageClick(totalPages)} /> </Button>
+            <Button onClick={() => handlePageClick(totalPages)}><MDBIcon fas icon="angle-double-right" /> </Button>
         </>
     )
 }
