@@ -1,8 +1,6 @@
 import React from 'react'
 import './App.css'
-import { Routes, Route } from 'react-router-dom';
-
-import Home from './pages/Home';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import NavbarComponent from './components/Navbar/Navbar';
 import Quotes from './pages/Quotes/Quotes';
 import Login from './pages/Credentials/Login';
@@ -21,14 +19,15 @@ export default function App() {
     <div>
       <NavbarComponent />
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route path="/" element={<Navigate replace to="/quotes" />} />
+        <Route path="/quotes" element={<Quotes />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/testes" element={<Testes />} />
         <Route path="/new_password" element={<NewPassword />} />
 
-          <Route path="/quotes" element={<Quotes />} />
-      
+
+
         <Route path="/add_quote" element={
           <ProtectedRoutes>
             <AddQuote />
@@ -44,9 +43,9 @@ export default function App() {
 
         <Route path="/my_quotes" element={
           <ProtectedRoutes>
-            
-              <MyQuotes />
-           
+
+            <MyQuotes />
+
           </ProtectedRoutes>
         } />
 
