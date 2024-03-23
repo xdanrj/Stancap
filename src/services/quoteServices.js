@@ -50,11 +50,11 @@ export default class quoteEditingServices {
         console.log(params)
         const response = await this.axios.get(`/search_quotes`, {params})
         console.log(response)
-        if (response.data) {
+        if (response) {
             return response.data
-        } else {
-            return false
         }
+            
+        
     }
 
     async addQuote(data) {

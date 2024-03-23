@@ -39,6 +39,9 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   const searchQueryKeys = Object.keys(searchquery)
   console.log("searchQueryKeys: ")
   console.log(searchQueryKeys)
+  let property = _.without(searchQueryKeys, "sort", "page")[0]
+  console.log("---------------")
+  console.log(property)
   let quotesQtd
   let foundQuote
   let finalQuery
@@ -81,7 +84,7 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   if (foundQuote.length > 0) {
     return { foundQuote, quotesQtd }
   } else {
-    return false
+    return {message:`${property} não encontrado!`}
   }
 }
 

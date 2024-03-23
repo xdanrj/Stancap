@@ -9,7 +9,7 @@ import { SourceNames } from "../Quote/SourceCommonFunctions";
 import { useSearchParams } from "react-router-dom";
 import _ from "lodash";
 
-export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
+export function SearchBar({ fetchAllQuotes }) {
     const location = useLocation()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
@@ -17,6 +17,7 @@ export function SearchBar({ fetchAllQuotes, searchQuery, setSearchQuery }) {
     const [selectedQuoteType, setSelectedQuoteType] = useState(searchParams.get("quoteType") ? searchParams.get("quoteType") : "single")
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
+    const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
     const [searchTypes, setSearchTypes] = useState([
         { label: "Autor", value: "author" },
         { label: "Tags", value: "tags" },
