@@ -5,6 +5,7 @@ export default class quoteEditingServices {
         this.axios = axiosInstance
     }
 
+    //service/route sem utilidade ate entao \/
     async quotesQuantity() {
         try {
             const response = await this.axios.get('/quotes_quantity')
@@ -79,10 +80,11 @@ export default class quoteEditingServices {
     }
 
     async deleteQuote(quoteId, userId) {
-        const data = {quoteId, userId}
+        const params = {quoteId, userId}
         console.log(quoteId)
         console.log(userId)
-        const response = await this.axios.delete(`/delete_quote/${quoteId}/${userId}`)
+        console.log(params)
+        const response = await this.axios.delete(`/delete_quote`, {params: params})
         console.log(response.data)
         if (response.status === 200) {
             return response.data

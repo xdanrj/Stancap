@@ -107,18 +107,22 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.delete("/delete_quote/:quoteId/:userId", requireUserToken, async (req, res) => {
+  //OLD: app.delete("/delete_quote/:quoteId/:userId"
+  app.delete("/delete_quote", requireUserToken, async (req, res) => {
     try {
       const quoteId = { _id: req.params.quoteId }
+      console.log("reqparams.quoteid")
+      console.log(req.params.quoteId)
       const userId = req.params.userId
       const selectedQuote = await selectQuote(quoteId)
+      console.log("selectedQuote[0]")
       console.log(selectedQuote[0])
       if (selectedQuote[0].uploadByUser === userId) {
         const response = await Quotes.deleteMany(quoteId)
         console.log(response.deletedCount)
         console.log(response)
         if (response.deletedCount > 0) {
-          console.log("quote deletada")
+          console.log(response.deletedCount, "quotes deletadas")
           res.status(200).send(selectedQuote[0])
         }
       } else {
@@ -126,6 +130,7 @@ export const quotesRoutes = (app) => {
         res.status(400).send(false)
       }
     } catch (error) {
+      console.log(error)
       res.status(400).json({ message: error })
     }
   })

@@ -57,9 +57,9 @@ export default function Ballons({ data, multipleQuotes }) {
         previousAuthor = quote.author
         
         return (
-            <>
+            <div key={index}>
                 {isExpanded || readMoreLimit ?
-                    <>
+                    <div key={index}>
                         <Ballon
                             key={index}
                             ballonside={actualSide}>
@@ -70,26 +70,24 @@ export default function Ballons({ data, multipleQuotes }) {
                                 {quote.quote}
                             </Paragraph>
                         </Ballon>
-                    </> : null
+                    </div> : null
                 }
 
                 {index === 3 && !isExpanded && (
                     <div key={index}>
-                        {/*<Button className="btn-outline-primary outline-none border-0 btn-lg btn-block " onClick={handleReadMore}></Button>*/}
                         <p className="mb-2"><b>• • •</b></p>
                         <div style={{ height: "2.5rem", margin: "0rem" }}>
                             <MdbIcon fas icon="chevron-down" onClick={handleReadMore} />
                         </div>
                     </div>
                 )}
-                {isExpanded && index === data.quotes.length - 1 && (
-                    <div key={index}>
-                    <div style={{ height: "2.5rem", margin: "0rem" }}>
+                {isExpanded && index === data.quotes.length - 1 && (                   
+                    <div key={index} style={{ height: "2.5rem", margin: "0rem" }}>
                         <MdbIcon fas icon="chevron-up" onClick={handleReadMore} />
                         </div>
-                        </div>
+                       
                 )}
-            </>
+            </div>
         )
     })
 }           
