@@ -85,7 +85,7 @@ export const quotesRoutes = (app) => {
         res.status(200).json({foundQuote, quotesQtd})
       }
       else {
-        res.status(400).json({ message: response })
+        res.status(400).json(response)
       }
     } catch (error) {
       console.log(error)
