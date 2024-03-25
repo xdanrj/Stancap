@@ -53,9 +53,7 @@ export default class quoteEditingServices {
         console.log(response)
         if (response) {
             return response.data
-        }
-            
-        
+        }            
     }
 
     async addQuote(data) {

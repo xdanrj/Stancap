@@ -84,7 +84,7 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   if (foundQuote.length > 0) {
     return { foundQuote, quotesQtd }
   } else {
-    return {message:`${property} não encontrado!`}
+    return {message:`${_.capitalize(property)} não encontrado!`}
   }
 }
 
