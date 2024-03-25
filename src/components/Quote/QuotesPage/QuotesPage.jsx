@@ -47,7 +47,6 @@ export default function QuotesPage() {
     console.log(Object.fromEntries(searchParams))
     const response = await quoteService.searchQuotes(Object.fromEntries(searchParams))
     console.log(response)
-    //response.foundQuote ? setQuotesResponse(response.foundQuote) : useAlert(response.message, 1000)
     if(response.foundQuote){
       setQuotesQtd(response.quotesQtd)
       setQuotesResponse(response.foundQuote)

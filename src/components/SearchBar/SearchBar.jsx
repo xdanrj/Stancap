@@ -8,6 +8,7 @@ import { useRef } from "react";
 import { SourceNames } from "../Quote/SourceCommonFunctions";
 import { useSearchParams } from "react-router-dom";
 import _ from "lodash";
+import { QuotesProperties } from "../../Formatting/QuotesProperties";
 
 export function SearchBar({ fetchAllQuotes }) {
     const location = useLocation()
@@ -18,12 +19,7 @@ export function SearchBar({ fetchAllQuotes }) {
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
-    const [searchTypes, setSearchTypes] = useState([
-        { label: "Autor", value: "author" },
-        { label: "Tags", value: "tags" },
-        { label: "Source", value: "source" },
-        { label: "Upload por", value: "uploadByUsername" },
-        { label: "Contexto", value: "context" }])
+    const [searchTypes, setSearchTypes] = useState(QuotesProperties)
 
     useEffect(() => {
         if (location.pathname === "/my_quotes") {

@@ -3,6 +3,12 @@ import { Quotes } from "../models/Quotes.js"
 import mongoose from "mongoose"
 import _ from "lodash"
 
+export const QuotesProperties =
+[   { label: "Autor", value: "author" },
+    { label: "Tags", value: "tags" },
+    { label: "Source", value: "source" },
+    { label: "Upload por", value: "uploadByUsername" },
+    { label: "Contexto", value: "context" }]
 // Função que seleciona o usuário através de qualquer propriedade. Usa sempre o primeiro objeto da requisição ( {propriedade: valorDaPropriedade} ). Serve para selecionar o usuário caso a rota não explicite a propriedade selecionada.
 export async function selectUser(searchquery) {
   let property = Object.keys(searchquery)[0]
