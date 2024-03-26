@@ -2,7 +2,7 @@ import { Quotes } from "../models/Quotes.js"
 import { selectQuote, quoteExists } from "./commonFunctions.js"
 import { requireUserToken } from "./middleware.js"
 import _ from "lodash"
-
+  
 export const quotesRoutes = (app) => {
   //resultados perPage para todas as rotas com limite de resultado. padrao: 5
   const perPage = 5

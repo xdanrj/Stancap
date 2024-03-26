@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import mongoose from "mongoose";
 import SingleQuoteGenericForm from "../../components/Quote/SingleQuoteGenericForm/SingleQuoteGenericForm";
 import MultipleQuoteGenericForm from "../../components/Quote/MultipleQuoteGenericForm/MultipleQuoteGenericForm";
 import { useSearchParams } from "react-router-dom";
