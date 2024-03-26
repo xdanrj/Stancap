@@ -9,7 +9,7 @@
   "dependencies": {
     "axios": "^1.4.0",
     "bcrypt": "^5.1.1",
-    "concurrently": "^8.2.0",
+    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
@@ -23,5 +23,5 @@
     "patch-package": "^8.0.0",
     "twilio": "^3.40.0",
     "util": "^0.12.5"
-}
+  }
 }

@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import { connectDB } from "./src/infra/db.js";
+import { connectDB } from "infra/db.js";
 import { userRoutes } from "./src/routes/userRoutes.js";
 import { quotesRoutes } from "./src/routes/quotesRoutes.js";
 import { loginAndRegisterRoutes } from "./src/routes/loginAndRegisterRoutes.js";
