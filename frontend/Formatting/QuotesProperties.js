@@ -7,7 +7,7 @@ export const QuotesProperties =
     { label: "Contexto", value: "context" }]
 
 export function getPropertyLabel(rawValue){
-    return QuotesProperties.find((prop) => prop.value === rawValue).label
+    const label = QuotesProperties.find((prop) => prop.value === rawValue).label
+    console.log(label)
+    return label ? label : "Propriedade"
 }
-
-console.log(getPropertyLabel("context"))
