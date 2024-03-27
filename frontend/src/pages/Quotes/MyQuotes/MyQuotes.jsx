@@ -86,8 +86,7 @@ export default function MyQuotes() {
         <MyQuotesDiv>
             <Row className="justify-content-center">
             <SearchBar searchParams={searchParams} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
-                <Col xs={12} sm={8} md={6} lg={5}>
-                   
+                <Col xs={12} sm={8} md={6} lg={5}>                   
                     {
                         quotesResponse.length > 0 ? (
                             quotesResponse.map((data) => (

@@ -88,14 +88,15 @@ export default function MultipleQuoteGenericForm(props) {
                     //abc
                     response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
                 }
-                if (response === true) {
+                if (response.message) {
+                    useAlert(response.message)
+                    
+                } else {
                     alert(props.texts.submitSuccess)
                     window.location.reload()
-                } else {
-                    useAlert(response)
                 }
             } else {
-                useAlert("Diálogos precisam de 2 ou mais falas")
+                useAlert("Diálogos precisam de no mínimo 2 falas")
             }
         } catch (error) {
             useAlert(error)

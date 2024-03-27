@@ -75,22 +75,21 @@ export default function SingleQuoteGenericForm(props) {
                     source: selectedSource
                 }
                 response = await quoteEditingService.addQuote(updatedQuoteData)
+                console.log(response)
             } else if (props.type === "editQuote") {
                 const updatedQuoteData = {
                     ...quoteData,
                     quotes: quotes,
                     tags: tags
-                }
-                //abc
+                }                
                 response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
                 console.log(response)
             }
-            if (response === true) {
+            if (response.message) {
+                useAlert(response.message)               
+            } else {
                 alert(props.texts.submitSuccess)
                 window.location.reload()
-
-            } else {
-                useAlert(response)
             }
         } catch (error) {
             alert(error)

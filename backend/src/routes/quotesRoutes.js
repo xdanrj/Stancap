@@ -1,6 +1,6 @@
 import { Quotes } from "../models/Quotes.js"
 import { selectQuote, quoteExists } from "./commonFunctions.js"
-import { requireUserToken } from "./middleware.js"
+import { requireUserToken, reqLimit } from "./middleware.js"
 import _ from "lodash"
 
 export const quotesRoutes = (app) => {
@@ -26,14 +26,9 @@ export const quotesRoutes = (app) => {
     return true
   }
 
-  app.get("/quotes_quantity", async (req, res) => {
-    const quotesQtd = await Quotes.countDocuments()
-    res.status(200).json(quotesQtd)
-  })
-
   // toda rota/ serviço que nao tiver "all" no nome retornará até 5 itens
   //todas as quotes SEM limite
-  app.get("/all_quotes", async (req, res) => {
+  app.get("/all_quotes", reqLimit(200), async (req, res) => {
     try {
       const response = await Quotes.find()
       res.status(200).json(response)
@@ -43,7 +38,7 @@ export const quotesRoutes = (app) => {
   })
 
   //busca especifica SEM limite
-  app.post("/search_all_quotes", async (req, res) => {
+  app.post("/search_all_quotes", reqLimit(200), async (req, res) => {
     try {
       const foundQuote = await selectQuote(req.body)
       res.status(200).json(foundQuote)
@@ -53,7 +48,7 @@ export const quotesRoutes = (app) => {
   })
 
   //todas as quotes COM limite de 5 por page
-  app.get(`/get_quotes`, async (req, res) => {
+  app.get(`/get_quotes`, reqLimit(200), async (req, res) => {
     try {
       const sort = req.query.sort === "ascending" ? 1 : -1
       const page = req.query.page ? parseInt(req.query.page) : 1
@@ -69,7 +64,7 @@ export const quotesRoutes = (app) => {
 
 
   //busca especifíca COM limite de 5 por page
-  app.get("/search_quotes", async (req, res) => {
+  app.get("/search_quotes", reqLimit(200), async (req, res) => {
     try {
       const searchquery = _.omit(req.query, ['page', 'sort'])
       const sort = req.query.sort === "ascending" ? 1 : -1
@@ -89,7 +84,7 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.patch("/edit_quote", requireUserToken, async (req, res) => {
+  app.patch("/edit_quote", reqLimit(40), requireUserToken, async (req, res) => {
     try {
       const selectedQuote = await selectQuote(req.query)
       if (selectedQuote) {
@@ -104,7 +99,7 @@ export const quotesRoutes = (app) => {
   })
 
   //OLD: app.delete("/delete_quote/:quoteId/:userId"
-  app.delete("/delete_quote", requireUserToken, async (req, res) => {
+  app.delete("/delete_quote", reqLimit(25), requireUserToken, async (req, res) => {
     try {
       const quoteId = { _id: req.query.quoteId }
       const userId = req.query.userId
@@ -132,7 +127,7 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  app.post("/add_quote", requireUserToken, async (req, res) => {
+  app.post("/add_quote", reqLimit(50), requireUserToken, async (req, res) => {
     const quote = req.body
     try {
       const newQuote = new Quotes(quote)

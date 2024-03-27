@@ -12,7 +12,7 @@ axiosInstance.interceptors.response.use(
             console.log(error)
             if (error.response.status === 498) {
                 alert("Token de usuário expirado. Faça login novamente.")
-                //userService.logout()
+                
             }
             return Promise.resolve(error.response)
         }

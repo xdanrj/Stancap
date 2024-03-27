@@ -1,7 +1,16 @@
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
+import { rateLimit } from 'express-rate-limit'
 dotenv.config()
 const secretKey = process.env.SECRET_KEY
+
+export function reqLimit(maxRequests) {
+    return rateLimit({
+      windowMs: 60 * 60 * 1000, 
+      max: maxRequests,
+      message: {message: "Limite de solicitações atingido. Tente novamente daqui 1 hora."}
+    })
+  }
 
 export const requireUserToken = (req, res, next) => {
     let userToken
