@@ -38,7 +38,7 @@ export default function MultipleQuoteGenericForm(props) {
     useEffect(() => {
         async function getQuoteToEdit() {
             if (searchParams.get("_id")) {
-                const response = await quoteEditingService.searchQuotes({_id: searchParams.get("_id")})                
+                const response = await quoteEditingService.searchQuotes({ _id: searchParams.get("_id") })
                 const data = response.foundQuote[0]
                 console.log(data)
                 setMultipleQuotes(data.quotes)
@@ -90,7 +90,7 @@ export default function MultipleQuoteGenericForm(props) {
                 }
                 if (response.message) {
                     useAlert(response.message)
-                    
+
                 } else {
                     alert(props.texts.submitSuccess)
                     window.location.reload()
@@ -227,7 +227,7 @@ export default function MultipleQuoteGenericForm(props) {
         <>
             <FastQuotesFillModal show={showFastQuotesFillModal} setShow={setShowFastQuotesFillModal} convertRawChatLog={convertRawChatLog} handleRawChatLog={handleRawChatLog} />
             <Row className="justify-content-center">
-                <Col xs={12} sm={8} md={6} lg={5}>
+                <Col xs={12} sm={8} md={8} lg={5} xl={4}>
                     <Form onSubmit={handleSubmitQuote}>
                         <div className="mb-4">
                             <Button onClick={() => setShowFastQuotesFillModal(true)} > <MDBIcon fas icon="paste" /></Button>
@@ -239,25 +239,23 @@ export default function MultipleQuoteGenericForm(props) {
                             setMultipleQuotes={setMultipleQuotes}
                             multipleQuotes={multipleQuotes}
                         />
-                        <FormGroup className="mt-5 mx-auto">
-                            <Row>
-                                <Col>
-                                    <FloatingLabel label="Data">
-                                        <CenteredFormControl name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
-                                        </CenteredFormControl>
-                                    </FloatingLabel>
 
-                                </Col>
+                        <FormGroup className="mt-3 mx-auto">
+                            <Col xs={4}  className="mx-auto">
+                                <FloatingLabel className="" label="Data">
+                                    <CenteredFormControl name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
+                                    </CenteredFormControl>
+                                </FloatingLabel>
+                            </Col>
 
-                                <Col>
+                                <Col className="mt-4">
                                     <FloatingLabel label="Contexto (Opcional)">
                                         <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange} value={quoteData.context}>
                                         </Form.Control>
                                     </FloatingLabel>
-
-                                </Col>
-                            </Row>
+                                </Col>                            
                         </FormGroup>
+
                         <Row>
                             <FormGroup>
                                 <DropdownButton drop="down" align="end" title={quoteData.source ? quoteData.source : "Source"} onSelect={handleSourceSelect}>

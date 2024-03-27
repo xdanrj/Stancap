@@ -9,6 +9,12 @@ export const GlobalStyles = createGlobalStyle`
   }
 `
 
+export const FormControl = styled(originalForm.Control).attrs(() => ({
+  className: ""
+}))`
+  
+`;
+
 export const ButtonsFormGroup = styled(originalForm.Group).attrs(() => ({
   className: ""
 }))`

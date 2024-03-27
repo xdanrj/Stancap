@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { Form, Col, Row, Dropdown, DropdownButton } from "react-bootstrap";
-import { FloatingLabel, FormGroup, CenteredFormGroup } from "../../../CommonStyles/CommonStyles";
+import { FloatingLabel, FormGroup, CenteredFormGroup, FormControl } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import { isValidDate } from "../../../Formatting/DateFormatting";
 import { SourceNames } from "../SourceCommonFunctions";
@@ -156,21 +156,22 @@ export default function SingleQuoteGenericForm(props) {
     return (
         <>
             <Row className="justify-content-center">
-                <Col xs={12} sm={8} md={6} lg={5}>
+                <Col xs={12} sm={8} md={6} lg={5} xl={4}>
                     <Form onSubmit={handleSubmitQuote}>
                         <Row>
                             <FormGroup>
                                 <FloatingLabel label="Quote">
-                                    <Form.Control required name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes}>
-                                    </Form.Control>
+                                    <FormControl required name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes}>
+                                    </FormControl>
                                 </FloatingLabel>
                             </FormGroup>
+                            
 
                             <Col>
                                 <FormGroup>
                                     <FloatingLabel label="Autor">
-                                        <Form.Control name="author" placeholder="Autor" maxLength={50} onChange={handleGenericChange} value={quoteData.author}>
-                                        </Form.Control>
+                                        <FormControl name="author" placeholder="Autor" maxLength={50} onChange={handleGenericChange} value={quoteData.author}>
+                                        </FormControl>
                                     </FloatingLabel>
                                 </FormGroup>
                             </Col>

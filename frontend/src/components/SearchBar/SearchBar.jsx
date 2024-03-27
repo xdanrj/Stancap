@@ -119,7 +119,7 @@ export function SearchBar({ fetchAllQuotes }) {
         <>
             {!(selectedSearchType?.value === "source") && (
                 <Row className="justify-content-center">
-                    <Col md={8} lg={5}>
+                    <Col xs={12} md={8} lg={5}>
                         <InputGroup >
                             <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedSearchType ? selectedSearchType.label : "Tipo"} onSelect={handleTypeSelect}>
                                 {searchTypes.map((item, index) => (
