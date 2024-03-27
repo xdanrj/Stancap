@@ -76,14 +76,7 @@ export default class quoteEditingServices {
     }
 
     async deleteQuote(quoteId, userId) {
-        const params = {quoteId, userId}
-        console.log("=======================")
-        console.log("quoteId")
-        console.log(quoteId)
-        console.log("userId")
-        console.log(userId)
-        console.log("PARAMS DELETE:")
-        console.log(params)
+        const params = {quoteId, userId}     
         const response = await this.axios.delete('/delete_quote', {params})
         console.log(response.data)
         if (response.status === 200) {

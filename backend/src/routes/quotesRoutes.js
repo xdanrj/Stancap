@@ -106,32 +106,21 @@ export const quotesRoutes = (app) => {
   //OLD: app.delete("/delete_quote/:quoteId/:userId"
   app.delete("/delete_quote", requireUserToken, async (req, res) => {
     try {
-      console.log("req.query")
-      console.log(req.query)
-      console.log("chaves abaixoooooooooooooooooooooooooooooooooooo")
-      for (const key in req.query) {
-        console.log(`${key}: ${req.query[key]}`);
-      }
       const quoteId = { _id: req.query.quoteId }
       const userId = req.query.userId
-      let selectedQuote = (await selectQuote(quoteId)).foundQuote
-      
-      console.log("selectedQuote")
-      console.log(selectedQuote)
+      let findingQuote = (await selectQuote(quoteId)).foundQuote
+      let selectedQuote = findingQuote[0]
 
-      // console.log("req.query.userId: ", req.query.userId)
+       console.log("req.query.userId: ", req.query.userId)
       // console.log("reqquery.Quoteid: ", req.query.quoteId)
       // console.log("quoteId: ", quoteId)
-      console.log("selectedQuote.uploadByUser")
-      console.log(selectedQuote.uploadByUser)
 
       if (selectedQuote.uploadByUser === userId) {
         const response = await Quotes.deleteMany(quoteId)
-        console.log(response.deletedCount)
-        console.log(response)
+        console.log("response.deletedCount: ", response.deletedCount)
         if (response.deletedCount > 0) {
           console.log(response.deletedCount, "quotes deletadas")
-          res.status(200).send(selectedQuote[0])
+          res.status(200).send(selectedQuote)
         }
       } else {
         console.log("nao deletada")

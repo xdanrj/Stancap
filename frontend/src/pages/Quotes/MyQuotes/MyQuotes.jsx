@@ -55,13 +55,13 @@ export default function MyQuotes() {
             console.log("quoteId: ", quoteId)
             console.log("userId: ", userId)
              const response = await quoteService.deleteQuote(quoteId, userId)
-            // console.log(response)
-            // if (response) {
-            //     setDeletedQuotes(deletedQuotes => [...deletedQuotes, response])
-            //     useAlert("Quote excluída com sucesso", 1000)
-            // } else {
-            //     useAlert("Erro ao tentar excluir quote")
-            // }
+             console.log(response)
+            if (response) {
+                setDeletedQuotes(deletedQuotes => [...deletedQuotes, response])
+                useAlert("Quote excluída com sucesso", 500)
+            } else {
+                useAlert("Erro ao tentar excluir quote", 1000)
+            }
         } catch (error) {
             useAlert(error)
             console.log(error)
@@ -74,7 +74,7 @@ export default function MyQuotes() {
             if (recoveredQuote) {
                 await quoteService.addQuote(recoveredQuote)
                 setDeletedQuotes(deletedQuotes.filter(item => item._id !== quoteId))
-                useAlert("Exclusão desfeita")
+                useAlert("Exclusão desfeita", 500)
             }
         } catch (error) {
             console.log(error)
