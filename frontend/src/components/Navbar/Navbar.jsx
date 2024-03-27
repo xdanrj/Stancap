@@ -15,8 +15,6 @@ export default function NavbarComponent() {
   const userService = new userServices()
   const isAuthenticated = userService.authenticatedUser()
 
-  console.log(username)
-
   const logoff = () => {
     userService.logout()
     setUsername('')

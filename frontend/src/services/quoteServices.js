@@ -48,9 +48,7 @@ export default class quoteEditingServices {
     }
 
     async searchQuotes(params) {
-        console.log(params)
         const response = await this.axios.get(`/search_quotes`, {params})
-        console.log(response)
         if (response) {
             return response.data
         }            
@@ -79,10 +77,14 @@ export default class quoteEditingServices {
 
     async deleteQuote(quoteId, userId) {
         const params = {quoteId, userId}
+        console.log("=======================")
+        console.log("quoteId")
         console.log(quoteId)
+        console.log("userId")
         console.log(userId)
+        console.log("PARAMS DELETE:")
         console.log(params)
-        const response = await this.axios.delete(`/delete_quote`, {params: params})
+        const response = await this.axios.delete('/delete_quote', {params})
         console.log(response.data)
         if (response.status === 200) {
             return response.data

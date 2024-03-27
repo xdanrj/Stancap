@@ -24,7 +24,6 @@ export default function QuotesPage() {
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
   const [searchParams, setSearchParams] = useSearchParams()
   const [quotesQtd, setQuotesQtd] = useState(0)
-  //const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
 

@@ -12,9 +12,9 @@ export default function PageSelector({ searchParams, quotesQtd }) {
     useEffect(() => {
         if (quotesQtd) {
             let totalPagesCalc = Math.ceil((quotesQtd / 5))
-            console.log(totalPagesCalc)
+           
             setTotalPages(totalPagesCalc)
-            console.log(actualPage)
+           
             let tempItemsQtd = []
             let initialIndex = 1
             if (actualPage >= 4) {
@@ -33,7 +33,6 @@ export default function PageSelector({ searchParams, quotesQtd }) {
 
     const handlePageClick = (pageNum) => {
         searchParams.set("page", pageNum)
-        console.log(pageNum)
         navigate({ search: searchParams.toString() })
     }
 

@@ -10,7 +10,6 @@ import dotenv from "dotenv"
 dotenv.config()
 const PORT = process.env.PORT || 3000;
 const app = express();
-console.log("process.env.MAIN_DOMAIN: ", process.env.MAIN_DOMAIN)
 
 const corsOptions = {
   origin: process.env.MAIN_DOMAIN, 

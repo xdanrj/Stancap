@@ -42,11 +42,9 @@ export function SearchBar({ fetchAllQuotes }) {
             }
         }
 
-        console.log(queryString)
         if (Object.keys(queryString).length > 0) {
             async function settingQuery() {
-                const foundType = searchTypes.find((type) => type.value === Object.keys(queryString)[0])
-                console.log(foundType)
+                const foundType = searchTypes.find((type) => type.value === Object.keys(queryString)[0])              
                 setSelectedSearchType(foundType)
                 setSearchQuery((prevSearchQuery) => ({
                     ...prevSearchQuery,
@@ -61,11 +59,7 @@ export function SearchBar({ fetchAllQuotes }) {
     }, [])
     // OLD:  }, [location.search])
 
-    useEffect(() => {
-        console.log(Object.entries(searchQuery.query))
-        for (const key of searchParams.keys()) {
-            console.log(key)
-        }
+    useEffect(() => {       
         for (const key of searchParams.keys()) {
             searchParams.delete(key)
         }
@@ -79,13 +73,11 @@ export function SearchBar({ fetchAllQuotes }) {
     }
 
     const handleSourceSelect = async (eventKey) => {
-        console.log(eventKey)
         setSelectedSearchType({ label: "Source", value: "source" })
 
         await setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })
 
         navigate({ search: searchParams.toString() })
-        console.log("uuuuu")
     }
 
     const handleQuoteTypeSelect = (value) => {

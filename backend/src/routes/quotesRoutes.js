@@ -2,7 +2,7 @@ import { Quotes } from "../models/Quotes.js"
 import { selectQuote, quoteExists } from "./commonFunctions.js"
 import { requireUserToken } from "./middleware.js"
 import _ from "lodash"
-  
+
 export const quotesRoutes = (app) => {
   //resultados perPage para todas as rotas com limite de resultado. padrao: 5
   const perPage = 5
@@ -28,7 +28,6 @@ export const quotesRoutes = (app) => {
 
   app.get("/quotes_quantity", async (req, res) => {
     const quotesQtd = await Quotes.countDocuments()
-    console.log(quotesQtd)
     res.status(200).json(quotesQtd)
   })
 
@@ -58,11 +57,10 @@ export const quotesRoutes = (app) => {
     try {
       const sort = req.query.sort === "ascending" ? 1 : -1
       const page = req.query.page ? parseInt(req.query.page) : 1
-      console.log("page: ", page)
       const skipItems = (page - 1) * perPage
       const quotesQtd = await Quotes.countDocuments()
-      const response = await Quotes.find().sort({uploadDate: sort}).skip(skipItems).limit(perPage)      
-      res.status(200).json({response, quotesQtd})
+      const response = await Quotes.find().sort({ uploadDate: sort }).skip(skipItems).limit(perPage)
+      res.status(200).json({ response, quotesQtd })
     } catch (error) {
       console.log(error)
       res.status(400).json({ message: error })
@@ -78,18 +76,16 @@ export const quotesRoutes = (app) => {
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
       const response = await selectQuote(searchquery, sort, skipItems, perPage)
-      console.log("response:")
-      console.log(response)
-      if("foundQuote" in response){
-        const {foundQuote, quotesQtd} = response
-        res.status(200).json({foundQuote, quotesQtd})
+      if ("foundQuote" in response) {
+        const { foundQuote, quotesQtd } = response
+        res.status(200).json({ foundQuote, quotesQtd })
       }
       else {
         res.status(400).json(response)
       }
     } catch (error) {
       console.log(error)
-      res.status(400).json({ message: "error" })
+      res.status(400).json({ message: error })
     }
   })
 
@@ -110,14 +106,26 @@ export const quotesRoutes = (app) => {
   //OLD: app.delete("/delete_quote/:quoteId/:userId"
   app.delete("/delete_quote", requireUserToken, async (req, res) => {
     try {
-      const quoteId = { _id: req.params.quoteId }
-      console.log("reqparams.quoteid")
-      console.log(req.params.quoteId)
-      const userId = req.params.userId
-      const selectedQuote = await selectQuote(quoteId)
-      console.log("selectedQuote[0]")
-      console.log(selectedQuote[0])
-      if (selectedQuote[0].uploadByUser === userId) {
+      console.log("req.query")
+      console.log(req.query)
+      console.log("chaves abaixoooooooooooooooooooooooooooooooooooo")
+      for (const key in req.query) {
+        console.log(`${key}: ${req.query[key]}`);
+      }
+      const quoteId = { _id: req.query.quoteId }
+      const userId = req.query.userId
+      let selectedQuote = (await selectQuote(quoteId)).foundQuote
+      
+      console.log("selectedQuote")
+      console.log(selectedQuote)
+
+      // console.log("req.query.userId: ", req.query.userId)
+      // console.log("reqquery.Quoteid: ", req.query.quoteId)
+      // console.log("quoteId: ", quoteId)
+      console.log("selectedQuote.uploadByUser")
+      console.log(selectedQuote.uploadByUser)
+
+      if (selectedQuote.uploadByUser === userId) {
         const response = await Quotes.deleteMany(quoteId)
         console.log(response.deletedCount)
         console.log(response)

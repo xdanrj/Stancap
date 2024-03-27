@@ -23,8 +23,7 @@ export function ModalProvider({ children }) {
         }))
         setShow(true)
     }
-    console.log(modalData)
-    console.log(modalData.form)
+    
     return (
         <>
             <ModalContext.Provider value={modalBox}>
@@ -55,7 +54,6 @@ export function ModalProvider({ children }) {
                                             if (typeof buttonInList === "string") {
                                                 eval(buttonInList)
                                             } else if (typeof buttonInList === "function") {
-                                                console.log("entrou function")
                                                 buttonInList()
                                             }
                                         })

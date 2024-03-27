@@ -17,21 +17,10 @@ export default function MyQuotes() {
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
     const [quotesResponse, setQuotesResponse] = useState([])
-    const [userId, setUserId] = useState([localStorage.getItem("userId")])
+    const [userId, setUserId] = useState([localStorage.getItem("userId")][0])
     const [deletedQuotes, setDeletedQuotes] = useState([])
     const [quotesQtd, setQuotesQtd] = useState(0)
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
-
-    // useEffect(() => {
-    //     setDeletedQuotes([])
-    //     async function fetchQuotes() {
-    //         let query = { "uploadByUser": userId }
-    //         const response = await quoteService.searchQuotes(query)
-    //         console.log(response.foundQuote)
-    //         setQuotesResponse(response.foundQuote)
-    //     }
-    //     fetchQuotes()
-    // }, [])
 
     useEffect(() => {
         Object.fromEntries(searchParams)
@@ -43,15 +32,11 @@ export default function MyQuotes() {
       }, [location.search])
     
       async function fetchQuotesBySearch() {
-        console.log(Object.fromEntries(searchParams))
         const searchParamsQuery = Object.fromEntries(searchParams)
         const queryWithUserId = { ...searchParamsQuery, "uploadByUser": userId }
-        console.log(queryWithUserId)
-        //todo: ver se a pesquisa com 2 criterios (userid + propriedade qlqr) esta funcionando
         const response = await quoteService.searchQuotes(queryWithUserId)
-        console.log(response)
         setQuotesQtd(response.quotesQtd)
-        response.foundQuote ? setQuotesResponse(response.foundQuote) : useAlert(` ${searchQuery.label} não encontrado.`, 1000)
+        response.foundQuote ? setQuotesResponse(response.foundQuote) : useAlert(response.message, 1000)
       }
 
     const handleEditQuote = async (quoteId, quoteType) => {
@@ -67,16 +52,16 @@ export default function MyQuotes() {
 
     const handleDeleteQuote = async (quoteId) => {
         try {
-            console.log(quoteId)
-            console.log(userId[0])
-            const response = await quoteService.deleteQuote(quoteId, userId[0])
-            console.log(response)
-            if (response) {
-                setDeletedQuotes(deletedQuotes => [...deletedQuotes, response])
-                useAlert("Quote excluída com sucesso", 1000)
-            } else {
-                useAlert("Erro ao tentar excluir quote")
-            }
+            console.log("quoteId: ", quoteId)
+            console.log("userId: ", userId)
+             const response = await quoteService.deleteQuote(quoteId, userId)
+            // console.log(response)
+            // if (response) {
+            //     setDeletedQuotes(deletedQuotes => [...deletedQuotes, response])
+            //     useAlert("Quote excluída com sucesso", 1000)
+            // } else {
+            //     useAlert("Erro ao tentar excluir quote")
+            // }
         } catch (error) {
             useAlert(error)
             console.log(error)

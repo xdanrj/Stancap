@@ -4,11 +4,18 @@ import mongoose from "mongoose"
 import _ from "lodash"
 
 export const QuotesProperties =
-[   { label: "Autor", value: "author" },
-    { label: "Tags", value: "tags" },
-    { label: "Source", value: "source" },
-    { label: "Upload por", value: "uploadByUsername" },
-    { label: "Contexto", value: "context" }]
+  [{ label: "Autor", value: "author" },
+  { label: "Tags", value: "tags" },
+  { label: "Source", value: "source" },
+  { label: "Upload por", value: "uploadByUsername" },
+  { label: "Contexto", value: "context" }]
+
+  export function getPropertyLabel(rawValue){
+    let response
+    const findLabel = QuotesProperties.find((prop) => prop.value === rawValue)
+    findLabel ? response = findLabel.label : response = `Propriedade "${rawValue}"`
+    return response
+}
 // Função que seleciona o usuário através de qualquer propriedade. Usa sempre o primeiro objeto da requisição ( {propriedade: valorDaPropriedade} ). Serve para selecionar o usuário caso a rota não explicite a propriedade selecionada.
 export async function selectUser(searchquery) {
   let property = Object.keys(searchquery)[0]
@@ -40,14 +47,8 @@ export async function userExists(proprietyTarget) {
 
 
 export async function selectQuote(searchquery, sort, skipItems = null, limit = null) {
-  console.log("searchquery: ")
-  console.log(searchquery)
   const searchQueryKeys = Object.keys(searchquery)
-  console.log("searchQueryKeys: ")
-  console.log(searchQueryKeys)
   let property = _.without(searchQueryKeys, "sort", "page")[0]
-  console.log("---------------")
-  console.log(property)
   let quotesQtd
   let foundQuote
   let finalQuery
@@ -64,16 +65,9 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   if (searchQueryKeys.includes("tags")) {
     let tagsToSearch = searchquery.tags.split(",")
     tagsToSearch = tagsToSearch.map(tag => tag.trim())
-    console.log("tagsToSearch:")
-    console.log(tagsToSearch)
-   
-    delete searchquery.tags
-    console.log("searchquery pos:")
-    console.log(searchquery)
-    finalQuery = { tags: { $in: tagsToSearch }, ...searchquery }
-    console.log("finalQuery: ")
-    console.log(finalQuery)
 
+    delete searchquery.tags
+    finalQuery = { tags: { $in: tagsToSearch }, ...searchquery }
 
     quotesQtd = await Quotes.find(finalQuery).countDocuments()
     foundQuote = await Quotes.find(finalQuery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
@@ -85,12 +79,10 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
       foundQuote = await Quotes.find(searchquery)
     }
   }
-  console.log("quotesQTD:")
-  console.log(quotesQtd)
   if (foundQuote.length > 0) {
     return { foundQuote, quotesQtd }
   } else {
-    return {message:`${_.capitalize(property)} não encontrado!`}
+    return { message: `${getPropertyLabel(property)} não encontrado(a)!` }
   }
 }
 

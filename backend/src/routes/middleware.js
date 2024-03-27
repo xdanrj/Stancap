@@ -25,7 +25,7 @@ export const requireUserToken = (req, res, next) => {
             return res.status(401).json({message: "Token de usuário inválido. Faça login."})
         }
     } catch (error) {
-        console.log("caiu no catcherror")
+        console.log(error)
         if (error instanceof jwt.TokenExpiredError) {            
             return res.status(498).json({ message: "Token de usuário expirado. Faça login novamente." })            
         }
@@ -54,7 +54,7 @@ export const requireTempToken = (req, res, next) => {
             return res.status(401).json({message: "Token temporário inválido. Tente novamente."})
         }
     } catch (error) {
-        console.log("caiu no catcherror")
+        console.log(error)
         if (error instanceof jwt.TokenExpiredError) {            
             return res.status(498).json({ message: "Token temporário expirado. Tente novamente." })
             
