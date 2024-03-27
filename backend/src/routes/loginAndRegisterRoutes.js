@@ -4,6 +4,7 @@ import { userExists } from "./commonFunctions.js";
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
 import dayjs from "dayjs";
+import { reqLimit } from "./middleware.js";
 
 export const loginAndRegisterRoutes = (app) => {
     const apiUrl = process.env.API_URL
@@ -17,20 +18,7 @@ export const loginAndRegisterRoutes = (app) => {
     
     createTempToken(dayjs())
 
-    app.get("/testando", async (req, res) => {
-        try {
-            res.status(200).json({
-                accountSid: accountSid,
-                authToken: authToken,
-                verifySid: verifySid,
-                client: client,
-                secretKey: secretKey,
-                apiUrl: apiUrl
-            })
-        } catch (error) { res.status(400).json({ message: error }) }
-    })
-
-    app.post("/login", async (req, res) => {
+    app.post("/login", reqLimit(20, 10), async (req, res) => {
         try {
             const email = req.body.email
             const password = req.body.password
@@ -54,7 +42,7 @@ export const loginAndRegisterRoutes = (app) => {
         }
 
     })
-    app.post("/send_code", async (req, res) => {
+    app.post("/send_code", reqLimit(5, 10), async (req, res) => {
         try {
             const email = req.body.email
             //verifica se o email ja existe no DB
@@ -87,7 +75,7 @@ export const loginAndRegisterRoutes = (app) => {
         }
     })
 
-    app.post("/check_code", async (req, res) => {
+    app.post("/check_code", reqLimit(5, 10), async (req, res) => {
         try {
             let email = req.body.email
             let otpCode = req.body.code
@@ -113,7 +101,7 @@ export const loginAndRegisterRoutes = (app) => {
         } catch (error) { res.status(400).json({ message: error }) }
     })
 
-    app.post("/register", async (req, res) => {
+    app.post("/register", reqLimit(5, 10), async (req, res) => {
         try {
             // na rota anterior o email verificado sera guardado no localstorage (??nao sei, hein?? ignorar isso aqui talvez?)
             const email = req.body.email
@@ -152,7 +140,7 @@ export const loginAndRegisterRoutes = (app) => {
         return userToken
     }
 
-    // não está sendo usado no momento pois o CORS evita solicitacoes fora do site
+    // não está sendo usado no momento pois o CORS evita solicitacoes fora do site (MAIN_DOMAIN no env)
     function createTempToken(genericString) {
         const payload = {
             genericString: genericString

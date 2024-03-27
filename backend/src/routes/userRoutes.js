@@ -4,6 +4,7 @@ import { selectUser, userExists } from "./commonFunctions.js"
 import { requireUserToken } from "./middleware.js"
 import _ from "lodash"
 import bcrypt from 'bcrypt'
+import { reqLimit } from "./middleware.js"
 
 export const userRoutes = (app) => {
   //variaveis globais para funcionamento da API Twilio
@@ -33,7 +34,7 @@ export const userRoutes = (app) => {
   }
 
   // rota que retorna todos os usernames existentes
-  app.get("/all_users", async (req, res) => {
+  app.get("/all_users", reqLimit(5, 10), async (req, res) => {
     try {
       const response = await User.find().lean()
       const finalResponse = response.map((user) => user.username)
@@ -47,7 +48,7 @@ export const userRoutes = (app) => {
   })
 
   //rota que retorna apenas o username usando _id como filtro
-  app.post("/search_user", async (req, res) => {
+  app.post("/search_user", reqLimit(200), async (req, res) => {
     try {
       const foundUser = await selectUser(req.body)
       res.status(200).json(foundUser.username)
@@ -56,7 +57,7 @@ export const userRoutes = (app) => {
     }
   })
 
-  app.patch("/edit_user", requireUserToken, async (req, res) => {
+  app.patch("/edit_user", reqLimit(5, 10), requireUserToken, async (req, res) => {
     try {
       const selectedUser = await selectUser(req.body)
       const response = await functionEditUser(selectedUser, req.body)
@@ -64,7 +65,7 @@ export const userRoutes = (app) => {
     } catch (error) { res.status(400).json({ message: error }) }
   })
 
-  app.post("/change_password_send", async (req, res) => {
+  app.post("/change_password_send", reqLimit(5, 10), async (req, res) => {
     try {
       const email = req.body.email
       const selectedUser = await userExists({ email: email })
@@ -77,6 +78,7 @@ export const userRoutes = (app) => {
               from_name: 'Stancap'
             }, to: email, channel: 'email'
           })
+          verification()
         res.status(200).json({
           message: "Código de recuperação enviado para o e-mail",
           response: selectedUser
@@ -87,7 +89,7 @@ export const userRoutes = (app) => {
     } catch (error) { res.status(400).json({ message: error }) }
   })
 
-  app.post("/change_password_check", async (req, res) => {
+  app.post("/change_password_check", reqLimit(5, 10), async (req, res) => {
     try {
       const otpCode = req.body.code
       const email = req.body.email

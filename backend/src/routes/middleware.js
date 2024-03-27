@@ -4,9 +4,9 @@ import { rateLimit } from 'express-rate-limit'
 dotenv.config()
 const secretKey = process.env.SECRET_KEY
 
-export function reqLimit(maxRequests) {
+export function reqLimit(maxRequests, time=60) {
     return rateLimit({
-      windowMs: 60 * 60 * 1000, 
+      windowMs: time * 60 * 1000, 
       max: maxRequests,
       message: {message: "Limite de solicitações atingido. Tente novamente daqui 1 hora."}
     })
