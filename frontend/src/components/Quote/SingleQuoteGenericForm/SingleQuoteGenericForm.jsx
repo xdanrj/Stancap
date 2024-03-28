@@ -98,6 +98,9 @@ export default function SingleQuoteGenericForm(props) {
 
     const handleSubmitQuote = async (e) => {
         e.preventDefault()
+        //ativa o disabled so caso a quote realmente seja enviada
+        
+        // e.target.querySelector('button[type="submit"]').disabled = true
         try {
             let paragraph
             let buttons = [{
@@ -218,7 +221,7 @@ export default function SingleQuoteGenericForm(props) {
                             <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
                         </FormGroup>
 
-                        <Button type="submit">{props.texts.submitButton}</Button>
+                        <Button name="submit" type="submit">{props.texts.submitButton}</Button>
                     </Form>
                 </Col>
             </Row>
