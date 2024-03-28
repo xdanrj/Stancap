@@ -11,6 +11,7 @@ import { useModalBox } from "../../Modal/ModalContext";
 import { useAlertMsg } from "../../Alert/AlertContext";
 import dayjs from "dayjs"
 import { useSearchParams } from "react-router-dom";
+import CdButton from "../../CdButton/CdButton";
 
 import quoteEditingServices from "../../../services/quoteServices"
 const quoteEditingService = new quoteEditingServices()
@@ -98,9 +99,8 @@ export default function SingleQuoteGenericForm(props) {
 
     const handleSubmitQuote = async (e) => {
         e.preventDefault()
-        //ativa o disabled so caso a quote realmente seja enviada
         
-        // e.target.querySelector('button[type="submit"]').disabled = true
+         e.target.querySelector('button[type="submit"]').disabled = true
         try {
             let paragraph
             let buttons = [{
@@ -221,7 +221,7 @@ export default function SingleQuoteGenericForm(props) {
                             <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
                         </FormGroup>
 
-                        <Button name="submit" type="submit">{props.texts.submitButton}</Button>
+                        <CdButton type="submit">{props.texts.submitButton}</CdButton>
                     </Form>
                 </Col>
             </Row>
