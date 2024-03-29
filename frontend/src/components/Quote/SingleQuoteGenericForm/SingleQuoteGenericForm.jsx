@@ -220,7 +220,7 @@ export default function SingleQuoteGenericForm(props) {
                             <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
                         </FormGroup>
 
-                        <CdButton type="submit">{props.texts.submitButton}</CdButton>
+                        <CdButton>{props.texts.submitButton}</CdButton>
                     </Form>
                 </Col>
             </Row>

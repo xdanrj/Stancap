@@ -8,13 +8,13 @@ export default function Testes() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log("entrou submit")
+        console.log("entrou SUBMIT")
     }
     return (
         <>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
-                <CdButton type="submit" onClick={() => {}}>
+                <CdButton >
                     texto botao
                 </CdButton>
                 </FormGroup>

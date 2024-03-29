@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { Button } from "react-bootstrap"
 
-export default function CdButton({onClick, children, ...props}){
-const [cooldown, setCooldown] = useState(false)
-
-useEffect(() => {
-    if(cooldown){
-        const timer = setTimeout(() => {
-            setCooldown(false)
-        }, 1000)
-        return () => clearTimeout(timer)
+export default function CdButton({ onClick, children, ...props }) {
+    const [disabled, setDisabled] = useState(false)
+    console.log({...props})
+    const handleClick = () => {
+        //onClick ? onClick() : null
+        console.log("handleClickou")
+       /* setDisabled(true)
+        setTimeout(() => {
+            setDisabled(false)
+        }, 1000)*/
     }
-}, [cooldown])
 
-const handleClick = () => {
-   
-    setCooldown(true)
+    return (
+        <Button onClick={handleClick} disabled={disabled} {...props} >
+            {children}
+        </Button>
+    );
 }
-
-return (
-<>
-    <Button onClick={handleClick} disabled={cooldown} {...props}>
-    {children}
-    </Button>
-</>
-)
-}   
