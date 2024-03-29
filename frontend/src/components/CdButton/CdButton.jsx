@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Button } from "react-bootstrap"
 
-export default function CdButton({children, ...props}){
+export default function CdButton({onClick, children, ...props}){
 const [cooldown, setCooldown] = useState(false)
 
 useEffect(() => {
@@ -14,9 +14,9 @@ useEffect(() => {
 }, [cooldown])
 
 const handleClick = () => {
+   
     setCooldown(true)
 }
-
 
 return (
 <>

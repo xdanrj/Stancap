@@ -36,7 +36,7 @@ export default function SingleQuoteGenericForm(props) {
         async function getQuoteToEdit() {
             console.log(searchParams.get("_id"))
             if (searchParams.get("_id")) {
-                const response = await quoteEditingService.searchQuotes({_id: searchParams.get("_id")})
+                const response = await quoteEditingService.searchQuotes({ _id: searchParams.get("_id") })
                 const data = response.foundQuote[0]
                 console.log(data)
                 console.log(data.date)
@@ -82,12 +82,12 @@ export default function SingleQuoteGenericForm(props) {
                     ...quoteData,
                     quotes: quotes,
                     tags: tags
-                }                
+                }
                 response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
                 console.log(response)
             }
             if (response.message) {
-                useAlert(response.message)               
+                useAlert(response.message)
             } else {
                 alert(props.texts.submitSuccess)
                 window.location.reload()
@@ -99,8 +99,7 @@ export default function SingleQuoteGenericForm(props) {
 
     const handleSubmitQuote = async (e) => {
         e.preventDefault()
-        
-         e.target.querySelector('button[type="submit"]').disabled = true
+        //e.target.querySelector('button[type="submit"]').disabled = true
         try {
             let paragraph
             let buttons = [{
@@ -168,7 +167,7 @@ export default function SingleQuoteGenericForm(props) {
                                     </FormControl>
                                 </FloatingLabel>
                             </FormGroup>
-                            
+
 
                             <Col>
                                 <FormGroup>
