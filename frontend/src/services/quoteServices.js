@@ -57,21 +57,21 @@ export default class quoteEditingServices {
     async addQuote(data) {
         try {
             const response = await this.axios.post('/add_quote', data)
-            console.log(response)
             return response.data
-
         } catch (error) {
-            console.log("~~~~~~~~~~~~~~~~~~")
-            console.log(error.response.data)
             return error.response.data
         }
     }
 
     async editQuote(params, updatedBody) {
-        console.log("QUERY:")
-        console.log(params)
-        const response = await this.axios.patch('/edit_quote', { params }, updatedBody)
-        console.log(response)
+        try {
+            const response = await this.axios.patch('/edit_quote', { params }, updatedBody)
+            console.log(response)
+            return true
+        } catch (error) {
+            return error.response.data
+        }
+        
         if (response.data) {
             return true
         } else {

@@ -19,6 +19,7 @@ const quoteEditingService = new quoteEditingServices()
 export default function SingleQuoteGenericForm(props) {
     const useModal = useModalBox()
     const useAlert = useAlertMsg()
+    const [cdBtn, setCdBtn] = useState(false)
     const [quotes, setQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [searchParams, setSearchParams] = useSearchParams()
@@ -99,7 +100,11 @@ export default function SingleQuoteGenericForm(props) {
 
     const handleSubmitQuote = async (e) => {
         e.preventDefault()
-        //e.target.querySelector('button[type="submit"]').disabled = true
+        setCdBtn(true)
+        setTimeout(() => {
+            setCdBtn(false)
+        }, 1000)
+
         try {
             let paragraph
             let buttons = [{
@@ -220,7 +225,7 @@ export default function SingleQuoteGenericForm(props) {
                             <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
                         </FormGroup>
 
-                        <CdButton>{props.texts.submitButton}</CdButton>
+                        <Button type="submit" disabled={cdBtn}>{props.texts.submitButton}</Button>
                     </Form>
                 </Col>
             </Row>

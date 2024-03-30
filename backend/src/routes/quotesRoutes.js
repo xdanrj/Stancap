@@ -89,7 +89,9 @@ export const quotesRoutes = (app) => {
       const selectedQuote = await selectQuote(req.query)
       if (selectedQuote) {
         const response = await functionEditQuote(selectedQuote, req.body)
-        response ? res.status(200).send(true) : res.status(400).send(false)
+        console.log("RESPONSE DO EDIT")
+        console.log(response)
+        response ? res.status(200).send(true) : res.status(400).send({message: "Erro ao editar quote"})
       } else {
         res.status(400).send(false)
       }
@@ -106,19 +108,13 @@ export const quotesRoutes = (app) => {
       let findingQuote = (await selectQuote(quoteId)).foundQuote
       let selectedQuote = findingQuote[0]
 
-       console.log("req.query.userId: ", req.query.userId)
-      // console.log("reqquery.Quoteid: ", req.query.quoteId)
-      // console.log("quoteId: ", quoteId)
-
       if (selectedQuote.uploadByUser === userId) {
         const response = await Quotes.deleteMany(quoteId)
         console.log("response.deletedCount: ", response.deletedCount)
         if (response.deletedCount > 0) {
-          console.log(response.deletedCount, "quotes deletadas")
           res.status(200).send(selectedQuote)
         }
       } else {
-        console.log("nao deletada")
         res.status(400).send(false)
       }
     } catch (error) {

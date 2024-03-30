@@ -4,7 +4,7 @@ import { Form, FormGroup } from "react-bootstrap"
 
 export default function Testes() {
     const handleClick = () => {
-        console.log("clicou")
+        console.log("ACAO")
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -14,7 +14,7 @@ export default function Testes() {
         <>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
-                <CdButton >
+                <CdButton onClick={handleClick}>
                     texto botao
                 </CdButton>
                 </FormGroup>

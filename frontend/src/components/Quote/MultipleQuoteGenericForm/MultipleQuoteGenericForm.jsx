@@ -20,7 +20,7 @@ const quoteEditingService = new quoteEditingServices()
 export default function MultipleQuoteGenericForm(props) {
     const useAlert = useAlertMsg()
     const useModal = useModalBox()
-    //form pra: quote, tags, autor, source e data. As outras propriedades são automaticas
+    const [cdBtn, setCdBtn] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
     const [multipleQuotes, setMultipleQuotes] = useState([])
     const [tags, setTags] = useState([])
@@ -79,13 +79,12 @@ export default function MultipleQuoteGenericForm(props) {
                         quoteType: "multiple"
                     }
                     response = await quoteEditingService.addQuote(updatedQuoteData)
-                } else if (searchParams.get("quote")) {
+                } else if (props.type === "editQuote") {
                     const updatedQuoteData = {
                         ...quoteData,
                         quotes: multipleQuotes,
                         tags: tags
                     }
-                    //abc
                     response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
                 }
                 if (response.message) {
@@ -105,6 +104,10 @@ export default function MultipleQuoteGenericForm(props) {
 
     const handleSubmitQuote = async (e) => {
         e.preventDefault()
+        setCdBtn(true)
+        setTimeout(() => {
+            setCdBtn(false)
+        }, 1000)
         try {
             let paragraph
             let buttons = [{
@@ -171,7 +174,6 @@ export default function MultipleQuoteGenericForm(props) {
     const handleRawChatLog = (e) => {
         const value = e.target.value
         setRawChatLog(value)
-        console.log(rawChatLog)
     }
 
     const convertRawChatLog = () => {
@@ -275,7 +277,7 @@ export default function MultipleQuoteGenericForm(props) {
                                 <TagSelectorComponent tags={tags} setTags={setTags} />
                             </FormGroup>
                         </Row>
-                        <Button type="submit">{props.texts.submitButton}</Button>
+                        <Button type="submit" disabled={cdBtn}>{props.texts.submitButton}</Button>
                     </Form>
                 </Col>
             </Row >
