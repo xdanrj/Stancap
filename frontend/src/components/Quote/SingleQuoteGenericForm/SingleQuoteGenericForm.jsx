@@ -31,7 +31,7 @@ export default function SingleQuoteGenericForm(props) {
         context: '',
         tags: [],
     })
-    const [selectedSource, setSelectedSource] = useState(quoteData.source)
+    const [selectedSource, setSelectedSource] = useState({})
 
     useEffect(() => {
         async function getQuoteToEdit() {
@@ -55,11 +55,10 @@ export default function SingleQuoteGenericForm(props) {
         getQuoteToEdit()
     }, [])
 
-    const handleSourceSelect = (eventKey) => {
-        if (eventKey) {
-            setSelectedSource(eventKey)
-            const foundSource = SourceNames.find(obj => obj.value === selectedSource)
-        }
+    const handleSourceSelect = (eventKey) => {        
+            const foundSource = SourceNames.find(obj => obj.value === eventKey)
+            setSelectedSource(foundSource)
+            console.log(foundSource)        
     }
 
     const finalSubmitQuote = async () => {
@@ -74,7 +73,7 @@ export default function SingleQuoteGenericForm(props) {
                     uploadDate: dayjs(),
                     uploadByUser: localStorage.getItem("userId"),
                     quoteType: "single",
-                    source: selectedSource
+                    source: selectedSource.value
                 }
                 response = await quoteEditingService.addQuote(updatedQuoteData)
                 console.log(response)
@@ -205,7 +204,7 @@ export default function SingleQuoteGenericForm(props) {
                         <Col>
 
                             <FormGroup>
-                                <DropdownButton drop="down" align="end" title={selectedSource || "Source"}
+                                <DropdownButton drop="down" align="end" title={selectedSource.name || "Source"}
                                     onSelect={handleSourceSelect}>
                                     {SourceNames.map((item) => (
                                         <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>

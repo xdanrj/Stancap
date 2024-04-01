@@ -80,7 +80,7 @@ export default class quoteEditingServices {
             console.log(response.data)
             return response.data
         } catch (error) {
-            return false
+            return error.response.data
         }
     }
 }

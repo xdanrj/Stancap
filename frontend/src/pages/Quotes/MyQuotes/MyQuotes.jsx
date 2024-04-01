@@ -56,11 +56,11 @@ export default function MyQuotes() {
             console.log("userId: ", userId)
             const response = await quoteService.deleteQuote(quoteId, userId)
             console.log(response)
-            if (response) {
-                setDeletedQuotes(deletedQuotes => [...deletedQuotes, response])
+            if ("selectedQuote" in response) {
+                setDeletedQuotes(deletedQuotes => [...deletedQuotes, response.selectedQuote])
                 useAlert("Quote excluída com sucesso", 500)
             } else {
-                useAlert("Erro ao tentar excluir quote", 1000)
+                useAlert(response.message, 1000)
             }
         } catch (error) {
             useAlert(error)

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button, ButtonGroup, ButtonToolbar } from "react-bootstrap"
 import { MDBIcon } from "mdb-react-ui-kit"
+import { MainDiv } from "./PageSelectorStyles"
 
 export default function PageSelector({ searchParams, quotesQtd }) {
     const [itemsQtd, setItemsQtd] = useState([])
@@ -27,8 +28,6 @@ export default function PageSelector({ searchParams, quotesQtd }) {
             setItemsQtd(tempItemsQtd)
         }
 
-
-
     }, [actualPage, quotesQtd, searchParams])
 
     const handlePageClick = (pageNum) => {
@@ -37,7 +36,7 @@ export default function PageSelector({ searchParams, quotesQtd }) {
     }
 
     return (
-        <>
+        <MainDiv>
             {actualPage >= 4 && (
                 <Button onClick={() => handlePageClick(1)}><MDBIcon fas icon="angle-double-left" /> </Button>
             )}
@@ -51,6 +50,6 @@ export default function PageSelector({ searchParams, quotesQtd }) {
                 ))}
             </ButtonGroup>
             <Button onClick={() => handlePageClick(totalPages)}><MDBIcon fas icon="angle-double-right" /> </Button>
-        </>
+            </MainDiv>
     )
 }

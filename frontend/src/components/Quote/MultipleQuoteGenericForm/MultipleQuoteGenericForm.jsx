@@ -57,6 +57,7 @@ export default function MultipleQuoteGenericForm(props) {
     }, [])
 
     const handleSourceSelect = (eventKey) => {
+        console.log(eventKey)
         if (eventKey) {
             setQuoteData((prevData) => ({
                 ...prevData,

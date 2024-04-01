@@ -108,10 +108,9 @@ export const quotesRoutes = (app) => {
       let selectedQuote = findingQuote[0]
 
       if (selectedQuote.uploadByUser === userId) {
-        const response = await Quotes.deleteMany(quoteId)
-        console.log("response.deletedCount: ", response.deletedCount)
+        const response = await Quotes.deleteMany(quoteId)        
         if (response.deletedCount > 0) {
-          res.status(200).send(selectedQuote)
+          res.status(200).send({selectedQuote})
         }
       } else {
         res.status(400).send({message: "Você não tem permissão para excluir essa quote"})
