@@ -24,6 +24,7 @@ export default function MultipleQuoteGenericForm(props) {
     const [searchParams, setSearchParams] = useSearchParams()
     const [multipleQuotes, setMultipleQuotes] = useState([])
     const [tags, setTags] = useState([])
+    const [selectedSource, setSelectedSource] = useState({})
     const [quoteData, setQuoteData] = useState({
         quotes: [],
         date: '',
@@ -56,15 +57,11 @@ export default function MultipleQuoteGenericForm(props) {
         getQuoteToEdit()
     }, [])
 
-    const handleSourceSelect = (eventKey) => {
-        console.log(eventKey)
-        if (eventKey) {
-            setQuoteData((prevData) => ({
-                ...prevData,
-                source: eventKey
-            }))
-        }
-    }
+    const handleSourceSelect = (eventKey) => {        
+        const foundSource = SourceNames.find(obj => obj.value === eventKey)
+        setSelectedSource(foundSource)
+        console.log(foundSource)        
+}
 
     const finalSubmitQuote = async () => {
         let response
@@ -75,6 +72,7 @@ export default function MultipleQuoteGenericForm(props) {
                         ...quoteData,
                         quotes: multipleQuotes,
                         tags: tags,
+                        source: selectedSource.value,
                         uploadDate: dayjs().format(),
                         uploadByUser: localStorage.getItem("userId"),
                         quoteType: "multiple"
@@ -84,7 +82,9 @@ export default function MultipleQuoteGenericForm(props) {
                     const updatedQuoteData = {
                         ...quoteData,
                         quotes: multipleQuotes,
-                        tags: tags
+                        tags: tags,
+                        source: selectedSource.value,
+                        lastEditDate: dayjs()  
                     }
                     response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
                 }
@@ -261,7 +261,7 @@ export default function MultipleQuoteGenericForm(props) {
 
                         <Row>
                             <FormGroup>
-                                <DropdownButton drop="down" align="end" title={quoteData.source ? quoteData.source : "Source"} onSelect={handleSourceSelect}>
+                                <DropdownButton drop="down" align="end" title={selectedSource.name || "Source"} onSelect={handleSourceSelect}>
                                     {SourceNames.map((item) => (
                                         <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
                                     ))}
