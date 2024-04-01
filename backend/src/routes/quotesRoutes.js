@@ -100,7 +100,6 @@ export const quotesRoutes = (app) => {
     }
   })
 
-  //OLD: app.delete("/delete_quote/:quoteId/:userId"
   app.delete("/delete_quote", reqLimit(25), requireUserToken, async (req, res) => {
     try {
       const quoteId = { _id: req.query.quoteId }
@@ -115,7 +114,7 @@ export const quotesRoutes = (app) => {
           res.status(200).send(selectedQuote)
         }
       } else {
-        res.status(400).send(false)
+        res.status(400).send({message: "Você não tem permissão para excluir essa quote"})
       }
     } catch (error) {
       console.log(error)

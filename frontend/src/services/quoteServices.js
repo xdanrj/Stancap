@@ -71,23 +71,16 @@ export default class quoteEditingServices {
         } catch (error) {
             return error.response.data
         }
-        
-        if (response.data) {
-            return true
-        } else {
-            return false
-        }
     }
 
     async deleteQuote(quoteId, userId) {
-        const params = { quoteId, userId }
-        const response = await this.axios.delete('/delete_quote', { params })
-        console.log(response.data)
-        if (response.status === 200) {
+        try {
+            const params = { quoteId, userId }
+            const response = await this.axios.delete('/delete_quote', { params })
+            console.log(response.data)
             return response.data
-        } else {
+        } catch (error) {
             return false
         }
     }
-
 }
