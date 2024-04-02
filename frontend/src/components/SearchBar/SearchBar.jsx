@@ -15,7 +15,7 @@ export function SearchBar({ fetchAllQuotes }) {
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
     const [selectedSearchType, setSelectedSearchType] = useState()
-    const [selectedQuoteType, setSelectedQuoteType] = useState(searchParams.get("quoteType") ? searchParams.get("quoteType") : "single")
+    const [selectedQuoteType, setSelectedQuoteType] = useState(searchParams.get("quoteType") || null)
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
     const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
@@ -44,7 +44,7 @@ export function SearchBar({ fetchAllQuotes }) {
 
         if (Object.keys(queryString).length > 0) {
             async function settingQuery() {
-                const foundType = searchTypes.find((type) => type.value === Object.keys(queryString)[0])              
+                const foundType = searchTypes.find((type) => type.value === Object.keys(queryString)[0])
                 setSelectedSearchType(foundType)
                 setSearchQuery((prevSearchQuery) => ({
                     ...prevSearchQuery,
@@ -59,7 +59,7 @@ export function SearchBar({ fetchAllQuotes }) {
     }, [])
     // OLD:  }, [location.search])
 
-    useEffect(() => {       
+    useEffect(() => {
         for (const key of searchParams.keys()) {
             searchParams.delete(key)
         }
@@ -74,8 +74,7 @@ export function SearchBar({ fetchAllQuotes }) {
 
     const handleSourceSelect = async (eventKey) => {
         setSelectedSearchType({ label: "Source", value: "source" })
-
-        await setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })
+        setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })
 
         navigate({ search: searchParams.toString() })
     }
@@ -115,6 +114,11 @@ export function SearchBar({ fetchAllQuotes }) {
         navigate({ search: searchParams.toString() })
     }
 
+    const handleClearSearch = () => {
+        const clearedSearchParams = new URLSearchParams()
+        navigate({ search: clearedSearchParams.toString() })
+    }
+
     return (
         <>
             {!(selectedSearchType?.value === "source") && (
@@ -126,7 +130,7 @@ export function SearchBar({ fetchAllQuotes }) {
                                     <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
                                 ))}
                                 <ToggleButtonGroup type="radio" name="quoteType" value={selectedQuoteType}
-                                 onChange={(value)=> handleQuoteTypeSelect(value)}>
+                                    onChange={(value) => handleQuoteTypeSelect(value)}>
                                     <ToggleButton id="single" value={"single"} size="sm">Citação</ToggleButton>
                                     <ToggleButton id="multiple" value={"multiple"} size="sm">Diálogo</ToggleButton>
                                 </ToggleButtonGroup>
@@ -139,13 +143,19 @@ export function SearchBar({ fetchAllQuotes }) {
                                     value={searchQuery?.query[selectedSearchType?.value] || ""}
                                 />
 
-                                <Button variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
-                                    <MDBIcon icon="search" />
+                                <Button variant="dark" onClick={() => handleClearSearch()}>
+                                    <MDBIcon fas icon="times" />
                                 </Button>
+
                             </>
-                            <Button onClick={() => handleSortChange()}><i className=
+                            <Button variant="dark" onClick={() => handleSortChange()}><i className=
                                 {searchParams.get("sort") === "ascending" ? "bi bi-sort-down-alt" : "bi bi-sort-up-alt"}>
-                            </i></Button>
+                            </i>
+                            </Button>
+
+                            <Button onClick={() => checkAttributes() ? handleSearchClick() : null}>
+                                <MDBIcon icon="search" />
+                            </Button>
                         </InputGroup>
                     </Col>
                 </Row>

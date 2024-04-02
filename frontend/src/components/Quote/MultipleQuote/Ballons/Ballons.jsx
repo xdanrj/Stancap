@@ -4,22 +4,22 @@ import { Ballon, ParagraphAuthor, Paragraph } from "./BallonsStyles";
 import { ClickableText } from "../../../../CommonStyles/CommonStyles";
 import _ from "lodash";
 import { MdbIcon } from "./BallonsStyles";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 
 export default function Ballons({ data, multipleQuotes }) {
+    const navigate = useNavigate()
+    const [searchParams, setSearchParams] = useSearchParams()
     const [authorsColors, setAuthorsColors] = useState([])
     const colorPallet = ["#25d356", "#fc9775", "#ffbc38", "#e26ab6", "#ffd279", "#d88deb", "#7f66ff", "#a5b335"]
-    //"#a791ff"
+    
     useEffect(() => {
         const loadAuthorsColors = async () => {
-
             let uniqueAuthors = await multipleQuotes.map((mainObj) => {
                 return mainObj.quotes
-
             })
             
             uniqueAuthors = _.uniqBy(_.flattenDeep(uniqueAuthors), "author").map((obj) => obj.author)
-
             let actualColor
             let remainColors = [...colorPallet]
             const uniqueAuthorsColors = uniqueAuthors.map((authorName, index) => {
@@ -46,6 +46,11 @@ export default function Ballons({ data, multipleQuotes }) {
     const handleReadMore = () => {
         setIsExpanded(!isExpanded)
     }
+    const handleAuthorClick = (author) => {
+        console.log(author)
+        searchParams.set("author", author)     
+        navigate({ search: searchParams.toString() })
+    }
     return data.quotes.map((quote, index) => {
         let readMoreLimit = index < 3
         let isSameAuthor = quote.author === previousAuthor
@@ -63,7 +68,7 @@ export default function Ballons({ data, multipleQuotes }) {
                         <Ballon
                             key={index}
                             ballonside={actualSide}>
-                            <ParagraphAuthor authorcolor={authorsColors.find(obj => obj.author === quote.author)?.color}>
+                            <ParagraphAuthor onClick={()=>handleAuthorClick(quote.author)} authorcolor={authorsColors.find(obj => obj.author === quote.author)?.color}>
                                 {quote.author}
                             </ParagraphAuthor>
                             <Paragraph>
