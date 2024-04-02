@@ -7,9 +7,7 @@ export default function EditQuote() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [quoteType, setQuoteType] = useState("")
     const [quoteId, setQuoteId] = useState("")
-    // const { id } = useParams()
-    // const quoteId = { _id: id }
-    // const { quotetype } = useParams()
+   
     useEffect(() => {
         setQuoteType(searchParams.get("type"))
         setQuoteId(searchParams.get("quote"))

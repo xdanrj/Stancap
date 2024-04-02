@@ -11,7 +11,6 @@ import { useModalBox } from "../../Modal/ModalContext";
 import { useAlertMsg } from "../../Alert/AlertContext";
 import dayjs from "dayjs"
 import { useSearchParams } from "react-router-dom";
-import CdButton from "../../CdButton/CdButton";
 
 import quoteEditingServices from "../../../services/quoteServices"
 const quoteEditingService = new quoteEditingServices()
@@ -32,7 +31,6 @@ export default function SingleQuoteGenericForm(props) {
         context: '',
         tags: [],
     })
-
 
     useEffect(() => {
         async function getQuoteToEdit() {
@@ -61,7 +59,7 @@ export default function SingleQuoteGenericForm(props) {
         setSelectedSource(foundSource)
         console.log(foundSource)
     }
-
+    
     const finalSubmitQuote = async () => {
         try {
             console.log("entrou no finalsubmitquote")
@@ -74,9 +72,9 @@ export default function SingleQuoteGenericForm(props) {
                     source: selectedSource.value,
                     uploadDate: dayjs(),
                     uploadByUser: localStorage.getItem("userId"),
-                    quoteType: "single",
-
+                    quoteType: "single"
                 }
+                
                 response = await quoteEditingService.addQuote(updatedQuoteData)
                 console.log(response)
             } else if (props.type === "editQuote") {
@@ -87,6 +85,8 @@ export default function SingleQuoteGenericForm(props) {
                     source: selectedSource.value,
                     lastEditDate: dayjs()
                 }
+                console.log(updatedQuoteData)
+                console.log(Object.fromEntries(searchParams))
                 response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
                 console.log(response)
             }

@@ -34,7 +34,7 @@ export const userRoutes = (app) => {
   }
 
   // rota que retorna todos os usernames existentes
-  app.get("/all_users", reqLimit(5, 10), async (req, res) => {
+  app.get("/all_users", async (req, res) => {
     try {
       const response = await User.find().lean()
       const finalResponse = response.map((user) => user.username)
@@ -48,7 +48,7 @@ export const userRoutes = (app) => {
   })
 
   //rota que retorna apenas o username usando _id como filtro
-  app.post("/search_user", reqLimit(200), async (req, res) => {
+  app.post("/search_user", async (req, res) => {
     try {
       const foundUser = await selectUser(req.body)
       res.status(200).json(foundUser.username)

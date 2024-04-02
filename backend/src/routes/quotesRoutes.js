@@ -7,6 +7,8 @@ export const quotesRoutes = (app) => {
   //resultados perPage para todas as rotas com limite de resultado. padrao: 5
   const perPage = 5
   async function functionEditQuote(selectedQuote, newBody) {
+    console.log("NEWBODY")
+    console.log(newBody)
     // const entries = Object.entries(body)
     // const data = Object.fromEntries(entries.slice(1))
     // const firstPropriety = entries[0]
@@ -88,9 +90,7 @@ export const quotesRoutes = (app) => {
     try {
       const selectedQuote = await selectQuote(req.query)
       if (selectedQuote) {
-        const response = await functionEditQuote(selectedQuote, req.body)
-        console.log("RESPONSE DO EDIT")
-        console.log(response)
+        const response = await functionEditQuote(selectedQuote, req.body)        
         response ? res.status(200).send(true) : res.status(400).send({message: "Erro ao editar quote"})
       } else {
         res.status(400).send(false)

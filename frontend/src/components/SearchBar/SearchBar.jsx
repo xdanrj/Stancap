@@ -60,6 +60,7 @@ export function SearchBar({ fetchAllQuotes }) {
     // OLD:  }, [location.search])
 
     useEffect(() => {
+        console.log("useeffect acionado")
         for (const key of searchParams.keys()) {
             searchParams.delete(key)
         }
@@ -74,7 +75,7 @@ export function SearchBar({ fetchAllQuotes }) {
 
     const handleSourceSelect = async (eventKey) => {
         setSelectedSearchType({ label: "Source", value: "source" })
-        setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })
+        await setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })
 
         navigate({ search: searchParams.toString() })
     }

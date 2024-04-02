@@ -18,6 +18,7 @@ export default class userServices {
     async getUsername(userId) {
         console.log(userId)
         const response = await this.axios.post('/search_user', {_id: userId})
+        console.log(response.data)
         if (response.data) {
             return response.data
         } else {
