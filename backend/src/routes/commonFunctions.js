@@ -10,11 +10,11 @@ export const QuotesProperties =
   { label: "Upload por", value: "uploadByUsername" },
   { label: "Contexto", value: "context" }]
 
-  export function getPropertyLabel(rawValue){
-    let response
-    const findLabel = QuotesProperties.find((prop) => prop.value === rawValue)
-    findLabel ? response = findLabel.label : response = `Propriedade "${rawValue}"`
-    return response
+export function getPropertyLabel(rawValue) {
+  let response
+  const findLabel = QuotesProperties.find((prop) => prop.value === rawValue)
+  findLabel ? response = findLabel.label : response = `Propriedade "${rawValue}"`
+  return response
 }
 // Função que seleciona o usuário através de qualquer propriedade. Usa sempre o primeiro objeto da requisição ( {propriedade: valorDaPropriedade} ). Serve para selecionar o usuário caso a rota não explicite a propriedade selecionada.
 export async function selectUser(searchquery) {
@@ -48,37 +48,37 @@ export async function userExists(proprietyTarget) {
 
 export async function selectQuote(searchquery, sort, skipItems = null, limit = null) {
   const searchQueryKeys = Object.keys(searchquery)
-  let property = _.without(searchQueryKeys, "sort", "page")[0]
+  let property = _.without(searchQueryKeys, "sort", "page", "type")[0]
   let quotesQtd
   let foundQuote
   let finalQuery
+  quotesQtd = await Quotes.find(searchquery).countDocuments()
 
   if (searchQueryKeys.includes("uploadByUsername")) {
     const foundUser = await User.find({ username: searchquery.uploadByUsername })
     const userId = _.pick(foundUser[0], "_id")
     const userIdStr = userId._id.toString()
-    searchquery = { uploadByUser: userIdStr }
-  }
 
-  quotesQtd = await Quotes.find(searchquery).countDocuments()
+    quotesQtd = await Quotes.find(searchquery).countDocuments()
+    searchquery = { uploadByUser: userIdStr }    
+  }
 
   if (searchQueryKeys.includes("tags")) {
     let tagsToSearch = searchquery.tags.split(",")
     tagsToSearch = tagsToSearch.map(tag => tag.trim())
-
     delete searchquery.tags
-    finalQuery = { tags: { $in: tagsToSearch }, ...searchquery }
 
+    finalQuery = { tags: { $in: tagsToSearch }, ...searchquery }
     quotesQtd = await Quotes.find(finalQuery).countDocuments()
     foundQuote = await Quotes.find(finalQuery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
-
-  } else {
-    if (limit !== null && skipItems !== null) {
-      foundQuote = await Quotes.find(searchquery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
-    } else {
-      foundQuote = await Quotes.find(searchquery)
-    }
   }
+
+  if (limit !== null && skipItems !== null) {
+    foundQuote = await Quotes.find(searchquery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
+  } else {
+    foundQuote = await Quotes.find(searchquery)
+  }
+
   if (foundQuote.length > 0) {
     return { foundQuote, quotesQtd }
   } else {

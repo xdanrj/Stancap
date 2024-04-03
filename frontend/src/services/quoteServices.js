@@ -67,7 +67,7 @@ export default class quoteEditingServices {
         try {
             console.log(params)
             console.log(updatedBody)
-            const response = await this.axios.patch(`/edit_quote/${params}`, updatedBody)
+            const response = await this.axios.patch(`/edit_quote`, updatedBody, {params: params})
             console.log(response)
             return true
         } catch (error) {

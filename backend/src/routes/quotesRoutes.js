@@ -88,6 +88,8 @@ export const quotesRoutes = (app) => {
 
   app.patch("/edit_quote", reqLimit(40), requireUserToken, async (req, res) => {
     try {
+      console.log("req.query: ", req.query)
+      console.log("rqbody: ", req.body)
       const selectedQuote = await selectQuote(req.query)
       if (selectedQuote) {
         const response = await functionEditQuote(selectedQuote, req.body)        
