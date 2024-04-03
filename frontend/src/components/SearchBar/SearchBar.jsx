@@ -75,7 +75,7 @@ export function SearchBar({ fetchAllQuotes }) {
 
     const handleSourceSelect = async (eventKey) => {
         setSelectedSearchType({ label: "Source", value: "source" })
-        await setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })
+        setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })
 
         navigate({ search: searchParams.toString() })
     }
@@ -117,6 +117,7 @@ export function SearchBar({ fetchAllQuotes }) {
 
     const handleClearSearch = () => {
         const clearedSearchParams = new URLSearchParams()
+        setSelectedQuoteType(null)
         navigate({ search: clearedSearchParams.toString() })
     }
 
@@ -186,11 +187,3 @@ export function SearchBar({ fetchAllQuotes }) {
         </>
     )
 }
-/*
-fazendo:
-filtros sempre disponiveis: 
--crescente, decrescente:
--data
--tds os outros filtros
-
-*/
