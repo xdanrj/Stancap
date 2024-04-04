@@ -123,7 +123,7 @@ export function SearchBar({ fetchAllQuotes }) {
 
     return (
         <>
-        <div style={{"margin-bottom": "-2rem"}}>
+        <div style={{"marginBottom": "-2rem"}}>
             {!(selectedSearchType?.value === "source") && (
                 <Row className="justify-content-center">
                     <Col xs={12} md={8} lg={5}>
@@ -173,6 +173,11 @@ export function SearchBar({ fetchAllQuotes }) {
                                 {searchTypes.map((item, index) => (
                                     <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
                                 ))}
+                                <ToggleButtonGroup type="radio" name="quoteType" value={selectedQuoteType}
+                                    onChange={(value) => handleQuoteTypeSelect(value)}>
+                                    <ToggleButton id="single" value={"single"} size="sm">Citação</ToggleButton>
+                                    <ToggleButton id="multiple" value={"multiple"} size="sm">Diálogo</ToggleButton>
+                                </ToggleButtonGroup>
                             </DropdownButton>
 
                             <DropdownButton variant="dark" menuVariant="dark" title="Nome" onSelect={handleSourceSelect}>
@@ -180,8 +185,10 @@ export function SearchBar({ fetchAllQuotes }) {
                                     <DropdownItem eventKey={item.value} key={item.value}>{item.name}</DropdownItem>
                                 ))
                                 }
+                                
                             </DropdownButton>
                             <Button onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
+                       
                         </InputGroup>
                     </Col>
                 </Row>
