@@ -9,6 +9,7 @@ import { SourceNames } from "../Quote/SourceCommonFunctions";
 import { useSearchParams } from "react-router-dom";
 import _ from "lodash";
 import { QuotesProperties } from "../../Formatting/QuotesProperties";
+import SearchPath from "./SearchPath/SearchPath";
 
 export function SearchBar({ fetchAllQuotes }) {
     const location = useLocation()
@@ -57,7 +58,6 @@ export function SearchBar({ fetchAllQuotes }) {
             fetchAllQuotes ? fetchAllQuotes() : null
         }
     }, [])
-    // OLD:  }, [location.search])
 
     useEffect(() => {
         console.log("useeffect acionado")
@@ -123,6 +123,7 @@ export function SearchBar({ fetchAllQuotes }) {
 
     return (
         <>
+        <div style={{"margin-bottom": "-2rem"}}>
             {!(selectedSearchType?.value === "source") && (
                 <Row className="justify-content-center">
                     <Col xs={12} md={8} lg={5}>
@@ -163,6 +164,7 @@ export function SearchBar({ fetchAllQuotes }) {
                 </Row>
             )}
             {selectedSearchType?.value === "source" && (
+                <>
                 <Row className="justify-content-center">
                     <Col md={8} lg={5}>
                         <InputGroup className="d-flex justify-content-center">
@@ -183,7 +185,11 @@ export function SearchBar({ fetchAllQuotes }) {
                         </InputGroup>
                     </Col>
                 </Row>
-            )}
+                </>
+            )}            
+        </div>
+        
+        <SearchPath searchParams={searchParams}/>
         </>
     )
 }
