@@ -14,6 +14,13 @@ export const SourceNames = [
   { name: "Stancap Nobreza", value: "StancapNobreza" }
 ]
 
+export function getSourceLabel(rawValue) {
+  let response
+  const findLabel = SourceNames.find((source) => source.value === rawValue)
+  findLabel ? response = findLabel.label : response = `Source "${rawValue}"`
+  return response
+}
+
 export function sourceLogoSelector(source) {
   const foundItem = SourceNames.find(item => item.value === source)
 

@@ -7,11 +7,9 @@ export default function InfoIcon({ handleQuoteInfoClick, data }) {
 
     const handleMouseEnter = () => {
         setHovered(true)
-        console.log(hovered)
     }
     const handleMouseLeave = () => {
         setHovered(false)
-        console.log(hovered)
     }
     const InfoIconStyle = {
         opacity: hovered ? 1 : opacityValue,

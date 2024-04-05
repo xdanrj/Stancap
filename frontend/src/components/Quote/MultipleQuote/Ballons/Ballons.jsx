@@ -67,8 +67,8 @@ export default function Ballons({ data, multipleQuotes }) {
                     <div key={index}>
                         <Ballon
                             key={index}
-                            ballonside={actualSide}>
-                            <ParagraphAuthor onClick={()=>handleAuthorClick(quote.author)} authorcolor={authorsColors.find(obj => obj.author === quote.author)?.color}>
+                            $ballonside={actualSide}>
+                            <ParagraphAuthor onClick={()=>handleAuthorClick(quote.author)} $authorcolor={authorsColors.find(obj => obj.author === quote.author)?.color}>
                                 {quote.author}
                             </ParagraphAuthor>
                             <Paragraph>

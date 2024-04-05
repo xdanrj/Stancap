@@ -79,10 +79,11 @@ export function SearchBar({ fetchAllQuotes }) {
     }
 
     const handleSourceSelect = async (eventKey) => {
+        console.log("source selecionada")
+        console.log(eventKey)
         setSelectedSearchType({ label: "Source", value: "source" })
-        setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })
-
-        
+        setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })        
+        navigate({ search: searchParams.toString() })
     }
 
     const handleQuoteTypeSelect = (value) => {
@@ -193,7 +194,7 @@ export function SearchBar({ fetchAllQuotes }) {
                                 
                             </DropdownButton>
                             <Button onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
-                       
+
                         </InputGroup>
                     </Col>
                 </Row>

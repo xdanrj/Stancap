@@ -41,7 +41,6 @@ export default function MultipleQuoteGenericForm(props) {
             if (searchParams.get("_id")) {
                 const response = await quoteEditingService.searchQuotes({ _id: searchParams.get("_id") })
                 const data = response.foundQuote[0]
-                console.log(data)
                 setMultipleQuotes(data.quotes)
                 setTags(data.tags)
 

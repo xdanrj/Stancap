@@ -16,6 +16,7 @@ export function getPropertyLabel(rawValue) {
   findLabel ? response = findLabel.label : response = `Propriedade "${rawValue}"`
   return response
 }
+
 // Função que seleciona o usuário através de qualquer propriedade. Usa sempre o primeiro objeto da requisição ( {propriedade: valorDaPropriedade} ). Serve para selecionar o usuário caso a rota não explicite a propriedade selecionada.
 export async function selectUser(searchquery) {
   let property = Object.keys(searchquery)[0]
