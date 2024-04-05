@@ -67,7 +67,12 @@ export function SearchBar({ fetchAllQuotes }) {
         for (const [key, value] of Object.entries(searchQuery.query)) {
             searchParams.set(key, value)
         }
+        
     }, [searchQuery])
+
+    useEffect(() => {
+        navigate({ search: searchParams.toString() })
+    }, [searchParams])
 
     const handleTypeSelect = (eventKey) => {
         setSelectedSearchType(searchTypes.find((type) => type.value === eventKey))
@@ -77,7 +82,7 @@ export function SearchBar({ fetchAllQuotes }) {
         setSelectedSearchType({ label: "Source", value: "source" })
         setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })
 
-        navigate({ search: searchParams.toString() })
+        
     }
 
     const handleQuoteTypeSelect = (value) => {

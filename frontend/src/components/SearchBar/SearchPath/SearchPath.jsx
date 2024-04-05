@@ -1,29 +1,36 @@
 import { React, useState, useEffect } from "react";
 import { Breadcrumb, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"
 
 export default function SearchPath({ searchParams }) {
-    let queryParams = {}
+    const navigate = useNavigate()
+    let queryParams = []
     for (const [key, value] of searchParams.entries()) {
-        queryParams[key] = value
+        queryParams.push({ "key": key, "value": value})
     }
-    delete queryParams.page
-    queryParams.quoteType === "single" ? queryParams.quoteType = "Citação" : queryParams.quoteType = "Diálogo"
-    console.log(queryParams)
-    //let itemsArray = Object.values(queryParams)
-    console.log(itemsArray)
-
-    const handleRemoveQuery = (queryKey) => {
-        searchParams.delete(queryKey)
-    }   
+    queryParams = queryParams.filter(obj => !(obj.key === "page"))
     
+    queryParams.forEach(obj => {
+        if (obj.key === 'quoteType') {
+            obj.value = (obj.value === 'single') ? 'Citação' : 'Diálogo'
+        }
+        if(obj.key === 'sort'){
+            obj.value = (obj.value === 'ascending') ? 'Ordem crescente' : 'Ordem decrescente'
+        }
+    })
+    console.log(queryParams)
+    const handlePathClick = (queryKey) => {
+        searchParams.delete(queryKey)
+        navigate({ search: searchParams.toString() })
+    }   
 
     return (
         <div className="d-flex justify-content-center">
             <Breadcrumb>
                 {
-                    itemsArray.map((item, index) => (
-                        <Breadcrumb.Item>
-                            {item}
+                    queryParams.map((item, index) => (
+                        <Breadcrumb.Item onClick={()=>handlePathClick(item.key)}>
+                            {item.value}
                         </Breadcrumb.Item>
                     ))
 
