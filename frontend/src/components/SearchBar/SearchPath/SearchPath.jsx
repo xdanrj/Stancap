@@ -6,22 +6,24 @@ import { getSourceLabel } from "../../Quote/SourceCommonFunctions";
 export default function SearchPath({ searchParams }) {
     const navigate = useNavigate()
     let queryParams = []
-    for (const [key, value] of searchParams.entries()) {
-        queryParams.push({ "key": key, "value": value })
-    }
-    queryParams = queryParams.filter(obj => !(obj.key === "page"))
 
-    queryParams.forEach(obj => {
-        if (obj.key === 'quoteType') {
-            obj.value = (obj.value === 'single') ? 'Citação' : 'Diálogo'
+    useEffect(() => {
+        for (const [key, value] of searchParams.entries()) {
+            if (key !== "page") {
+                let modifiedValue = value
+                if (key === 'quoteType') {
+                    modifiedValue = (value === 'single') ? 'Citação' : 'Diálogo'
+                }
+                if (key === 'sort') {
+                    modifiedValue = (value === 'ascending') ? 'Ordem crescente' : 'Ordem decrescente'
+                }
+                if (key === "source") {
+                    modifiedValue = getSourceLabel(value)
+                }
+                queryParams.push({ "key": key, "value": modifiedValue })
+            }
         }
-        if (obj.key === 'sort') {
-            obj.value = (obj.value === 'ascending') ? 'Ordem crescente' : 'Ordem decrescente'
-        }
-        if (obj.key === "source") {
-            obj.value = getSourceLabel(obj.value)
-        }
-    })
+    }, [searchParams])
     console.log(queryParams)
 
 
