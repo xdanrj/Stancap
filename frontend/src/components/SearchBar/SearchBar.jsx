@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { SourceNames } from "../Quote/SourceCommonFunctions";
 import { useSearchParams } from "react-router-dom";
 import _ from "lodash";
-import { QuotesProperties } from "../../Formatting/QuotesProperties";
+import { QuotesProperties, getPropertyLabel } from "../../Formatting/QuotesProperties";
 import SearchPath from "./SearchPath/SearchPath";
 
 export function SearchBar({ fetchAllQuotes }) {
@@ -19,6 +19,7 @@ export function SearchBar({ fetchAllQuotes }) {
     const [selectedQuoteType, setSelectedQuoteType] = useState(searchParams.get("quoteType") || null)
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
+    const [inputString, setInputString] = useState()
     //const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
     const [searchTypes, setSearchTypes] = useState(QuotesProperties)
 
@@ -52,18 +53,14 @@ export function SearchBar({ fetchAllQuotes }) {
         }
     }, [])
 
-
-    useEffect(() => {
-        navigate({ search: searchParams.toString() })
-    }, [searchParams])
-
     const handleTypeSelect = (eventKey) => {
-        setSelectedSearchType(searchTypes.find((type) => type.value === eventKey))
+        console.log(eventKey)
+        setSelectedSearchType(eventKey)
     }
 
     const handleSourceSelect = async (eventKey) => {
         console.log(eventKey)
-        setSelectedSearchType({ label: "Source", value: "source" })
+        setSelectedSearchType("source")
         //setSearchQuery({ "query": { "source": eventKey }, "label": "Source" })
         searchParams.set("source", eventKey)
         navigate({ search: searchParams.toString() })
@@ -76,19 +73,17 @@ export function SearchBar({ fetchAllQuotes }) {
     }
 
     const handleSearchChange = (e) => {
-        // setSearchQuery((prevSearchQuery) => ({
-        //     ...prevSearchQuery,
-        //     query: { [selectedSearchType?.value]: e.target.value },
-        //     label: selectedSearchType?.label
-        // }))
-        searchParams.set()
+        console.log(selectedSearchType)
+        console.log(e.target.value)
+        setInputString(e.target.value)
+        // history.pushState()
     }
 
     const checkAttributes = () => {
         if (!selectedSearchType) {
             setTypeColor(true)
             setTimeout(() => { setTypeColor(false) }, 500)
-        } else if (!searchQuery.query[selectedSearchType.value]) {
+        } else if (!inputString) {
             setInputColor(true)
             setTimeout(() => { setInputColor(false) }, 500)
         } else {
@@ -96,7 +91,12 @@ export function SearchBar({ fetchAllQuotes }) {
         }
     }
     const handleSearchClick = async () => {
-        navigate({ search: searchParams.toString() })
+        console.log(selectedSearchType)
+        console.log(inputString)
+        console.log(typeof(selectedSearchType))
+        console.log(typeof(inputString))
+        setSearchParams({[selectedSearchType]: inputString})
+        //navigate({ search: searchParams.toString() })
     }
 
     const handleSortChange = () => {
@@ -114,11 +114,11 @@ export function SearchBar({ fetchAllQuotes }) {
     return (
         <>
             <div style={{ "marginBottom": "-2rem" }}>
-                {!(selectedSearchType?.value === "source") && (
+                {!(selectedSearchType === "source") && (
                     <Row className="justify-content-center">
                         <Col xs={12} md={8} lg={5}>
                             <InputGroup >
-                                <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedSearchType ? selectedSearchType.label : "Tipo"} onSelect={handleTypeSelect}>
+                                <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
                                     {searchTypes.map((item, index) => (
                                         <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
                                     ))}
@@ -132,8 +132,8 @@ export function SearchBar({ fetchAllQuotes }) {
                                 <>
                                     <Form.Control
                                         className={inputColor ? "bg-danger" : "bg-light"}
-                                        placeholder={selectedSearchType?.value === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleSearchChange}
-                                        value={searchQuery?.query[selectedSearchType?.value] || ""}
+                                        placeholder={selectedSearchType === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleSearchChange}
+                                        value={inputString || ""}
                                     />
 
                                     <Button variant="dark" onClick={() => handleClearSearch()}>
@@ -153,12 +153,12 @@ export function SearchBar({ fetchAllQuotes }) {
                         </Col>
                     </Row>
                 )}
-                {selectedSearchType?.value === "source" && (
+                {selectedSearchType === "source" && (
                     <>
                         <Row className="justify-content-center">
                             <Col md={8} lg={5}>
                                 <InputGroup className="d-flex justify-content-center">
-                                    <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={selectedSearchType ? selectedSearchType.label : "Tipo"} onSelect={handleTypeSelect}>
+                                    <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
 
                                         {searchTypes.map((item) => (
                                             <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>

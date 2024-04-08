@@ -13,7 +13,7 @@ export const QuotesProperties =
 export function getPropertyLabel(rawValue) {
   let response
   const findLabel = QuotesProperties.find((prop) => prop.value === rawValue)
-  findLabel ? response = findLabel.label : response = `Propriedade "${rawValue}"`
+  findLabel ? response = findLabel.label : response = null
   return response
 }
 
@@ -61,7 +61,7 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
     const userIdStr = userId._id.toString()
 
     quotesQtd = await Quotes.find(searchquery).countDocuments()
-    searchquery = { uploadByUser: userIdStr }    
+    searchquery = { uploadByUser: userIdStr }
   }
 
   if (searchQueryKeys.includes("tags")) {
@@ -83,7 +83,11 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   if (foundQuote.length > 0) {
     return { foundQuote, quotesQtd }
   } else {
-    return { message: `${getPropertyLabel(property)} não encontrado(a)!` }
+    let message = getPropertyLabel(property) ?
+      `${getPropertyLabel(property)} não encontrado(a).` :
+      `Propriedade "${property}" não encontrado(a).`
+
+    return { message: message }
   }
 }
 
