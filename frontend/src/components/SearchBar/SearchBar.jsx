@@ -15,13 +15,15 @@ export function SearchBar({ fetchAllQuotes }) {
     const location = useLocation()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
+    // pureSearchParams é o searchParams sem as keys "page" e "sort"
+    const [pureSearchParams, setPureSearchParams] = useState()
     const [selectedSearchType, setSelectedSearchType] = useState()
     const [selectedQuoteType, setSelectedQuoteType] = useState(searchParams.get("quoteType") || null)
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
     const [inputString, setInputString] = useState()
     const [searchTypes, setSearchTypes] = useState(QuotesProperties)
-
+console.log(searchParams)
     useEffect(() => {
         if (location.pathname === "/my_quotes") {
             _.remove(searchTypes, function (obj) {
@@ -44,13 +46,20 @@ export function SearchBar({ fetchAllQuotes }) {
         }
         console.log(propertyQuery)
         if (propertyQuery.length > 0) {
-                //                                                          Object.keys(propertyQuery)[0]
-                const foundType = searchTypes.find((type) => type.value === propertyQuery)
-                setSelectedSearchType(foundType)                
+            //                                                          Object.keys(propertyQuery)[0]
+            const foundType = searchTypes.find((type) => type.value === propertyQuery)
+            setSelectedSearchType(foundType)
         } else {
             fetchAllQuotes ? fetchAllQuotes() : null
         }
     }, [])
+
+    useEffect(() => {
+        const paramsCopy = new URLSearchParams(searchParams.toString())
+        paramsCopy.delete('page')
+        paramsCopy.delete('sort')
+        setPureSearchParams(paramsCopy)
+    }, [searchParams])
 
     const handleTypeSelect = (eventKey) => {
         console.log(eventKey)
@@ -59,7 +68,7 @@ export function SearchBar({ fetchAllQuotes }) {
 
     const handleSourceSelect = async (eventKey) => {
         setSelectedSearchType("source")
-        searchParams.set("source", eventKey)        
+        searchParams.set("source", eventKey)
         navigate({ search: searchParams.toString() })
     }
 
@@ -104,7 +113,7 @@ export function SearchBar({ fetchAllQuotes }) {
             return true
         }
     }
-    
+
 
     return (
         <>
@@ -113,7 +122,7 @@ export function SearchBar({ fetchAllQuotes }) {
                     <Row className="justify-content-center">
                         <Col xs={12} md={8} lg={5}>
                             <InputGroup >
-                                <DropdownButton variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
+                                <DropdownButton variant={typeColor ? "danger" : "outline-primary"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
                                     {searchTypes.map((item, index) => (
                                         <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
                                     ))}
@@ -127,16 +136,19 @@ export function SearchBar({ fetchAllQuotes }) {
                                 <>
                                     <Form.Control
                                         className={inputColor ? "bg-danger" : "bg-light"}
+
                                         placeholder={selectedSearchType === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleSearchChange}
                                         value={inputString || ""}
                                     />
-
-                                    <Button variant="dark" onClick={() => handleClearSearch()}>
-                                        <MDBIcon fas icon="times" />
-                                    </Button>
+                                    {(pureSearchParams?.size || inputString?.length > 0) && (
+                                    <Button variant="outline-primary" onClick={() => handleClearSearch()}>
+                                    <MDBIcon fas icon="times" />
+                                </Button>
+                                    )}
+                                    
 
                                 </>
-                                <Button variant="dark" onClick={() => handleSortChange()}><i className=
+                                <Button variant="outline-primary" onClick={() => handleSortChange()}><i className=
                                     {searchParams.get("sort") === "ascending" ? "bi bi-sort-down-alt" : "bi bi-sort-up-alt"}>
                                 </i>
                                 </Button>
@@ -170,8 +182,10 @@ export function SearchBar({ fetchAllQuotes }) {
                                             <DropdownItem eventKey={item.value} key={item.value}>{item.name}</DropdownItem>
                                         ))
                                         }
-
                                     </DropdownButton>
+                                    <Button variant="link" onClick={() => handleClearSearch()}>
+                                        <MDBIcon fas icon="times" />
+                                    </Button>
                                     <Button onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
 
                                 </InputGroup>

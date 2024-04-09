@@ -52,17 +52,17 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   let property = _.without(searchQueryKeys, "sort", "page", "type")[0]
   let quotesQtd
   let foundQuote
-  let finalQuery
+  let tagsQuery
   quotesQtd = await Quotes.find(searchquery).countDocuments()
 
   if (searchQueryKeys.includes("uploadByUsername")) {
     const foundUser = await User.find({ username: searchquery.uploadByUsername })
     const userId = _.pick(foundUser[0], "_id")
     const userIdStr = userId._id.toString()
+    delete searchquery.uploadByUsername
 
     quotesQtd = await Quotes.find(searchquery).countDocuments()
-    // TODO: mudar o nome do arg "searchquery" da funcao so pra nao conflitar com esse searchquery aqui
-    searchquery = { uploadByUser: userIdStr }
+    foundQuote = { uploadByUser: userIdStr, searchquery}
   }
 
   if (searchQueryKeys.includes("tags")) {
@@ -70,9 +70,9 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
     tagsToSearch = tagsToSearch.map(tag => tag.trim())
     delete searchquery.tags
 
-    finalQuery = { tags: { $in: tagsToSearch }, ...searchquery }
-    quotesQtd = await Quotes.find(finalQuery).countDocuments()
-    foundQuote = await Quotes.find(finalQuery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
+    tagsQuery = { tags: { $in: tagsToSearch }, ...searchquery }
+    quotesQtd = await Quotes.find(tagsQuery).countDocuments()
+    foundQuote = await Quotes.find(tagsQuery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
   }
 
   if (limit !== null && skipItems !== null) {
