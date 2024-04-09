@@ -61,6 +61,7 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
     const userIdStr = userId._id.toString()
 
     quotesQtd = await Quotes.find(searchquery).countDocuments()
+    // TODO: mudar o nome do arg "searchquery" da funcao so pra nao conflitar com esse searchquery aqui
     searchquery = { uploadByUser: userIdStr }
   }
 

@@ -58,15 +58,14 @@ export function SearchBar({ fetchAllQuotes }) {
     }
 
     const handleSourceSelect = async (eventKey) => {
-        console.log(eventKey)
         setSelectedSearchType("source")
-        searchParams.set("source", eventKey)
+        searchParams.set("source", eventKey)        
         navigate({ search: searchParams.toString() })
     }
 
     const handleQuoteTypeSelect = (value) => {
         setSelectedQuoteType(value)
-        searchParams.append("quoteType", value)
+        searchParams.set("quoteType", value)
         navigate({ search: searchParams.toString() })
     }
 
@@ -74,6 +73,24 @@ export function SearchBar({ fetchAllQuotes }) {
         console.log(selectedSearchType)
         console.log(e.target.value)
         setInputString(e.target.value)
+    }
+
+    const handleSearchClick = async () => {
+        searchParams.set(selectedSearchType, inputString)
+        navigate({ search: searchParams.toString() })
+    }
+
+    const handleSortChange = () => {
+        searchParams.set("sort", searchParams.get("sort") === "ascending" ? "descending" : "ascending")
+        searchParams.set("page", 1)
+        navigate({ search: searchParams.toString() })
+    }
+
+    const handleClearSearch = () => {
+        const clearedSearchParams = new URLSearchParams()
+        setSelectedQuoteType(null)
+        setInputString("")
+        navigate({ search: clearedSearchParams.toString() })
     }
 
     const checkAttributes = () => {
@@ -87,21 +104,7 @@ export function SearchBar({ fetchAllQuotes }) {
             return true
         }
     }
-    const handleSearchClick = async () => {
-        setSearchParams({[selectedSearchType]: inputString})
-    }
-
-    const handleSortChange = () => {
-        searchParams.set("sort", searchParams.get("sort") === "ascending" ? "descending" : "ascending")
-        searchParams.set("page", 1)
-        navigate({ search: searchParams.toString() })
-    }
-
-    const handleClearSearch = () => {
-        const clearedSearchParams = new URLSearchParams()
-        setSelectedQuoteType(null)
-        navigate({ search: clearedSearchParams.toString() })
-    }
+    
 
     return (
         <>

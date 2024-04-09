@@ -33,8 +33,8 @@ export function QuotesPageFirstVisitModal(props) {
                 </Modal.Header>
 
                 <ModalBody>
-                    <p>Não leve nada daqui a sério. Todas as frases são para fins unicamente cômicos</p>
-                    <p>Clique em qualquer ícone de source ou no autor da quote para fazer uma pesquisa específica</p>
+                    <p>Não leve nada daqui a sério. Todas as frases e elementos do site são para fins unicamente cômicos</p>
+                    <p>Clique em qualquer ícone de source ou nome para fazer uma pesquisa específica</p>
 
                     <div className="d-flex justify-content-evenly">
                         <Row>
