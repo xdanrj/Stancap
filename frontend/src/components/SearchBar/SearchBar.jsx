@@ -114,12 +114,13 @@ export function SearchBar({ fetchAllQuotes }) {
         }
     }
 
-
+//todo: fazer com q a searchbar seja da mesma largura do que as quotes e talvez descolar os botoes do input
     return (
         <>
             <div style={{ "marginBottom": "-2rem" }}>
                 {!(selectedSearchType === "source") && (
                     <Row className="justify-content-center">
+                        
                         <Col xs={12} md={8} lg={5}>
                             <InputGroup>
                                 <DropdownButton size="lg" variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
