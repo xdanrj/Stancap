@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import { FormControl as originalFormControl, FloatingLabel as originalFloatingLabel, Form as originalForm, ButtonGroup as originalButtonGroup, ToggleButton as originalToggleButton} from 'react-bootstrap';
-import { device } from './device';
+import { sizes } from './screenSizes';
 
 // esse GlobalStyles é inútil, creio eu \/
 export const GlobalStyles = createGlobalStyle`

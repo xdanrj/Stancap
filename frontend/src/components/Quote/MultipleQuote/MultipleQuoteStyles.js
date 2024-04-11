@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { MDBIcon as originalMDBIcon } from 'mdb-react-ui-kit';
-import { device } from '../../../CommonStyles/device';
+import { sizes } from '../../../CommonStyles/screenSizes';
 
 export const QuoteHeader = styled.div.attrs(() => ({
     className: "position-relative"

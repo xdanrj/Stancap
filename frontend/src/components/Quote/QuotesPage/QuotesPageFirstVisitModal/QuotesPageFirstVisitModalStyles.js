@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components'
-import { device } from '../../../../CommonStyles/device';
+import { sizes } from '../../../../CommonStyles/screenSizes';
 
 export const LogoDemo = styled.img.attrs(() => ({
     className: "rounded-6"

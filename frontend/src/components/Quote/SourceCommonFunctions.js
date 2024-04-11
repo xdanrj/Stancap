@@ -17,7 +17,7 @@ export const SourceNames = [
 export function getSourceLabel(rawValue) {
   let response
   const findLabel = SourceNames.find((source) => source.value === rawValue)
-  findLabel ? response = findLabel.name : response = `Source "${rawValue}"`
+  findLabel ? response = findLabel.name : response = null
   return response
 }
 

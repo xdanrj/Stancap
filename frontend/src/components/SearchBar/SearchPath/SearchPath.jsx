@@ -1,16 +1,17 @@
-import { React, useState, useEffect } from "react";
-import { Breadcrumb, Row, Col } from "react-bootstrap";
+import React, { useState, useEffect } from "react"
+import { Breadcrumb } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
-import { getSourceLabel } from "../../Quote/SourceCommonFunctions";
+import { getSourceLabel } from "../../Quote/SourceCommonFunctions"
 
 export default function SearchPath({ searchParams }) {
     const navigate = useNavigate()
-    let queryParams = []
+    const [queryParams, setQueryParams] = useState([])
 
     useEffect(() => {
+        const updatedQueryParams = []
         for (const [key, value] of searchParams.entries()) {
             if (key !== "page") {
-                let modifiedValue = value
+                let modifiedValue
                 if (key === 'quoteType') {
                     modifiedValue = (value === 'single') ? 'Citação' : 'Diálogo'
                 }
@@ -20,12 +21,11 @@ export default function SearchPath({ searchParams }) {
                 if (key === "source") {
                     modifiedValue = getSourceLabel(value)
                 }
-                queryParams.push({ "key": key, "value": modifiedValue })
+                updatedQueryParams.push({ "key": key, "value": modifiedValue })
             }
         }
+        setQueryParams(updatedQueryParams)
     }, [searchParams])
-    console.log(queryParams)
-
 
     const handlePathClick = (queryKey) => {
         searchParams.delete(queryKey)
@@ -35,13 +35,11 @@ export default function SearchPath({ searchParams }) {
     return (
         <div className="d-flex justify-content-center mb-4">
             <Breadcrumb>
-                {
-                    queryParams.map((item, index) => (
-                        <Breadcrumb.Item key={index} onClick={() => handlePathClick(item.key)}>
-                            {item.value}
-                        </Breadcrumb.Item>
-                    ))
-                }
+                {queryParams.map((item, index) => (
+                    <Breadcrumb.Item key={index} onClick={() => handlePathClick(item.key)}>
+                        {item.value}
+                    </Breadcrumb.Item>
+                ))}
             </Breadcrumb>
         </div>
     )

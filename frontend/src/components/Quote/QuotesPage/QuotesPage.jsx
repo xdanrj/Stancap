@@ -3,7 +3,7 @@ import { useParams, useLocation, useSearchParams } from "react-router-dom"
 import quoteEditingServices from "../../../services/quoteServices"
 import SingleQuote from "../SingleQuote/SingleQuote"
 import MultipleQuote from "../MultipleQuote/MultipleQuote"
-import { size } from "../../../CommonStyles/device"
+import { sizes } from "../../../CommonStyles/screenSizes"
 import { SearchBar } from "../../SearchBar/SearchBar"
 import { useAlertMsg } from "../../Alert/AlertContext"
 import { Col, Row, Container } from "react-bootstrap"
@@ -82,27 +82,6 @@ export default function QuotesPage() {
     }
   }, [quotesResponse])
 
-  /* function getCurrentScreenSize() {
-     const screenWidth = window.innerWidth
-     if (screenWidth >= parseInt(size.desktop)) {
-       return "desktop"
-     } else if (screenWidth >= parseInt(size.laptopL)) {
-       return "laptopL"
-     } else if (screenWidth >= parseInt(size.laptop)) {
-       return "laptop"
-     } else if (screenWidth >= parseInt(size.tablet)) {
-       return "tablet"
-     } else if (screenWidth >= parseInt(size.mobileL)) {
-       return "mobileL"
-     } else if (screenWidth >= parseInt(size.mobileM)) {
-       return "mobileM"
-     } else {
-       return "mobileS"
-     }
-   }
-   const currentSize = getCurrentScreenSize()
-   log("Tamanho atual da tela:", currentSize)
- */
   return (
     <>
 

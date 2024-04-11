@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { device } from '../../../CommonStyles/device';
+import { sizes } from '../../../CommonStyles/screenSizes';
 
 export const Paragraph = styled.p.attrs(() => ({
     className: "mb-0 mt-2 font-italic"

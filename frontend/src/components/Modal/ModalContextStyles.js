@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { device } from '../../CommonStyles/device';
+import { sizes } from '../../CommonStyles/screenSizes';
 import { Button as originalButton, ModalBody as originalModalBody, ModalTitle as originalModalTitle } from "react-bootstrap"
 
 export const ModalTitle = styled(originalModalTitle).attrs(() => ({

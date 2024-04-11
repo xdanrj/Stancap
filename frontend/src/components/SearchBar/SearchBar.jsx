@@ -5,11 +5,12 @@ import { MDBIcon } from "mdb-react-ui-kit";
 import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
-import { SourceNames } from "../Quote/SourceCommonFunctions";
+import { SourceNames, getSourceLabel } from "../Quote/SourceCommonFunctions";
 import { useSearchParams } from "react-router-dom";
 import _ from "lodash";
 import { QuotesProperties, getPropertyLabel } from "../../Formatting/QuotesProperties";
 import SearchPath from "./SearchPath/SearchPath";
+import { sizes } from "../../CommonStyles/screenSizes";
 
 export function SearchBar({ fetchAllQuotes }) {
     const location = useLocation()
@@ -114,26 +115,29 @@ export function SearchBar({ fetchAllQuotes }) {
         }
     }
 
-//todo: fazer com q a searchbar seja da mesma largura do que as quotes e talvez descolar os botoes do input
+    const buttonSize = sizes.isMobile ? "sm" : "lg"
+
+    //todo: fazer com q a searchbar seja da mesma largura do que as quotes e talvez descolar os botoes do input
     return (
         <>
             <div style={{ "marginBottom": "-2rem" }}>
+
                 {!(selectedSearchType === "source") && (
                     <Row className="justify-content-center">
-                        
-                        <Col xs={12} md={8} lg={5}>
+
+                        <Col xs={12} sm={10} md={8} lg={5}>
                             <InputGroup>
-                                <DropdownButton size="lg" variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
+                                <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
                                     {searchTypes.map((item, index) => (
                                         <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
                                     ))}
                                     <ToggleButtonGroup type="radio" name="quoteType" value={selectedQuoteType}
                                         onChange={(value) => handleQuoteTypeSelect(value)}>
 
-                                        <ToggleButton size="lg" as="Button" variant="outline-light"
+                                        <ToggleButton size={buttonSize} as="Button" variant="outline-light"
                                             id="single" value={"single"} >Citação</ToggleButton>
 
-                                        <ToggleButton size="lg" as="Button" variant="outline-light"
+                                        <ToggleButton size={buttonSize} as="Button" variant="outline-light"
                                             id="multiple" value={"multiple"}>Diálogo</ToggleButton>
                                     </ToggleButtonGroup>
                                 </DropdownButton>
@@ -146,19 +150,19 @@ export function SearchBar({ fetchAllQuotes }) {
                                         value={inputString || ""}
                                     />
                                     {(pureSearchParams?.size || inputString?.length > 0) && (
-                                        <Button size="lg" variant="outline-light" onClick={() => handleClearSearch()}>
+                                        <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
                                             <MDBIcon fas icon="times" />
                                         </Button>
                                     )}
 
 
                                 </>
-                                <Button size="lg" variant="outline-light" onClick={() => handleSortChange()}><i className=
+                                <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className=
                                     {searchParams.get("sort") === "ascending" ? "bi bi-sort-down-alt" : "bi bi-sort-up-alt"}>
                                 </i>
                                 </Button>
 
-                                <Button size="lg" variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
+                                <Button size={buttonSize} variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
                                     <MDBIcon icon="search" />
                                 </Button>
                             </InputGroup>
@@ -170,32 +174,34 @@ export function SearchBar({ fetchAllQuotes }) {
                         <Row className="justify-content-center">
                             <Col md={8} lg={5}>
                                 <InputGroup className="d-flex justify-content-center">
-                                    <DropdownButton size="lg" variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
+                                    <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
 
                                         {searchTypes.map((item) => (
                                             <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
                                         ))}
                                         <ToggleButtonGroup type="radio" name="quoteType" value={selectedQuoteType}
-                                        onChange={(value) => handleQuoteTypeSelect(value)}>
+                                            onChange={(value) => handleQuoteTypeSelect(value)}>
 
-                                        <ToggleButton size="lg" as="Button" variant="outline-light"
-                                            id="single" value={"single"} >Citação</ToggleButton>
+                                            <ToggleButton size={buttonSize} as="Button" variant="outline-light"
+                                                id="single" value={"single"} >Citação</ToggleButton>
 
-                                        <ToggleButton size="lg" as="Button" variant="outline-light"
-                                            id="multiple" value={"multiple"} >Diálogo</ToggleButton>
-                                    </ToggleButtonGroup>
+                                            <ToggleButton size={buttonSize} as="Button" variant="outline-light"
+                                                id="multiple" value={"multiple"} >Diálogo</ToggleButton>
+                                        </ToggleButtonGroup>
                                     </DropdownButton>
 
-                                    <DropdownButton size="lg" variant="dark" menuVariant="dark" title="Nome" onSelect={handleSourceSelect}>
+                                    <DropdownButton size={buttonSize} variant="dark" menuVariant="dark"
+                                        title={getSourceLabel(searchParams.get("source")) || "Nome"}
+                                        onSelect={handleSourceSelect}>
                                         {SourceNames.map((item, index) => (
                                             <DropdownItem eventKey={item.value} key={item.value}>{item.name}</DropdownItem>
                                         ))
                                         }
                                     </DropdownButton>
-                                    <Button size="lg" variant="outline-light" onClick={() => handleClearSearch()}>
+                                    <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
                                         <MDBIcon fas icon="times" />
                                     </Button>
-                                    <Button size="lg" variant="outline-light" onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
+                                    <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
 
                                 </InputGroup>
                             </Col>
