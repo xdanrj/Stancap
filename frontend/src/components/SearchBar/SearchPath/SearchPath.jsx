@@ -33,7 +33,7 @@ export default function SearchPath({ searchParams }) {
     }
 
     return (
-        <div className="d-flex justify-content-center mb-4">
+        <div className="d-flex justify-content-center mx-auto mb-4">
             <Breadcrumb>
                 {queryParams.map((item, index) => (
                     <Breadcrumb.Item key={index} onClick={() => handlePathClick(item.key)}>
