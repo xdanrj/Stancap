@@ -52,32 +52,36 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   let property = _.without(searchQueryKeys, "sort", "page", "type")[0]
   let quotesQtd
   let foundQuote
+  let uploadByUsernameQuery
   let tagsQuery
   quotesQtd = await Quotes.find(searchquery).countDocuments()
 
   if (searchQueryKeys.includes("uploadByUsername")) {
-    const foundUser = await User.find({ username: searchquery.uploadByUsername })
-    const userId = _.pick(foundUser[0], "_id")
-    const userIdStr = userId._id.toString()
-    delete searchquery.uploadByUsername
+    let foundUser = await User.find({ username: searchquery.uploadByUsername })
+    foundUser = foundUser[0]
+    if (foundUser) {
+      const userId = _.pick(foundUser, "_id")
+      const userIdStr = userId._id.toString()
+      delete searchquery.uploadByUsername
 
-    console.log("ssssssssssssss")
-    console.log(searchquery)
-    let uploadByUsernameQuery = { uploadByUser: userIdStr, searchquery }
-    quotesQtd = await Quotes.find({ uploadByUsernameQuery, searchquery }).countDocuments()
+      uploadByUsernameQuery = { uploadByUser: userIdStr }
+      searchquery = { ...searchquery, ...uploadByUsernameQuery }
+      quotesQtd = await Quotes.find({ uploadByUsernameQuery, searchquery }).countDocuments()
+
+    } else {
+      property = "uploadByUsername"
+    }
   }
 
   if (searchQueryKeys.includes("tags")) {
     let tagsToSearch = searchquery.tags.split(",")
     tagsToSearch = tagsToSearch.map(tag => tag.trim())
-    console.log("tagsToSearch:", tagsToSearch)
     delete searchquery.tags
 
-    tagsQuery = { tags: { $in: tagsToSearch }, ...searchquery }
+    tagsQuery = { tags: { $in: tagsToSearch } }
     quotesQtd = await Quotes.find(tagsQuery).countDocuments()
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    console.log(foundQuote)
-    console.log("quotesqtd:", quotesQtd)
+    searchquery = { ...searchquery, ...tagsQuery }
+
   }
 
   if (limit !== null && skipItems !== null) {
