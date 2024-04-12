@@ -2,12 +2,6 @@ import styled from 'styled-components'
 import { sizes } from '../../../CommonStyles/screenSizes'
 import { MDBIcon as originalMDBIcon } from 'mdb-react-ui-kit'
 
-export const MyQuotesDiv = styled.div.attrs((props) => ({
-    className: ``
-}))`
-    margin-top: 5rem;
-`;
-
 export const MinimalQuoteContainer = styled.div.attrs(() => ({
     className: "pt-4 px-4 mb-5"
 }))`

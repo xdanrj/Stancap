@@ -6,7 +6,6 @@ import quoteEditingServices from "../../../services/quoteServices"
 import { useNavigate } from "react-router-dom";
 import QuoteInfo from "../../../components/Quote/QuoteInfo/QuoteInfo";
 import { useAlertMsg } from "../../../components/Alert/AlertContext"
-import { MyQuotesDiv } from "./MyQuotesStyles";
 import { useSearchParams } from "react-router-dom";
 import { SearchBar } from "../../../components/SearchBar/SearchBar";
 import PageSelector from "../../../components/PageSelector/PageSelector";
@@ -20,7 +19,8 @@ export default function MyQuotes() {
     const [userId, setUserId] = useState([localStorage.getItem("userId")][0])
     const [deletedQuotes, setDeletedQuotes] = useState([])
     const [quotesQtd, setQuotesQtd] = useState(0)
-    const [searchQuery, setSearchQuery] = useState({ "query": {}, "label": "" })
+    const [showQuoteInfo, setShowQuoteInfo] = useState(false)
+    const [quoteInfoData, setQuoteInfoData] = useState("")
 
     useEffect(() => {
         Object.fromEntries(searchParams)
@@ -80,12 +80,16 @@ export default function MyQuotes() {
             console.log(error)
         }
     }
+    const handleQuoteInfoClick = (data) => {
+        setQuoteInfoData(data)
+        setShowQuoteInfo(true)
+    }
 
     return (
         <>
-            <MyQuotesDiv>
+            <div style={{marginTop: "5rem"}}>
                 <Row className="justify-content-center">
-                    <SearchBar searchParams={searchParams} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+                    <SearchBar />
                     <Col xs={12} sm={8} md={6} lg={5}>
                         {
                             quotesResponse.length > 0 ? (
@@ -101,7 +105,7 @@ export default function MyQuotes() {
                                                     </>
                                                     :
                                                     <>
-                                                        <MdbIcon icon="info-circle" />
+                                                        <MdbIcon icon="info-circle" onClick={()=> handleQuoteInfoClick(data)}/>
                                                         <MdbIcon icon="trash-alt" onClick={() => handleDeleteQuote(data._id)} />
                                                         <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id, data.quoteType)} />
                                                     </>
@@ -114,10 +118,11 @@ export default function MyQuotes() {
                                 <h4>Você ainda não criou nenhuma quote</h4>
                             )
                         }
+                         {<QuoteInfo quoteData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo} />}
                         <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
                     </Col>
                 </Row >
-            </MyQuotesDiv>
+            </div>
         </>
     )
 }
