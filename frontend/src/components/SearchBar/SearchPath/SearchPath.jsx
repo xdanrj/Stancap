@@ -31,14 +31,17 @@ export default function SearchPath({ searchParams }) {
         searchParams.delete(queryKey)
         navigate({ search: searchParams.toString() })
     }
-
+console.log(queryParams)
+//todo: value de: uploadbyusername e tags tao dando undefined
     return (
-        <div className="d-flex justify-content-center mx-auto mb-4">
+        <div className="d-flex justify-content-center mx-auto mb-4 text-center">
             <Breadcrumb>
                 {queryParams.map((item, index) => (
-                    <Breadcrumb.Item key={index} onClick={() => handlePathClick(item.key)}>
+                    item.value && (
+                        <Breadcrumb.Item key={index} onClick={() => handlePathClick(item.key)} className="justify-content-center mx-auto">
                         {item.value}
                     </Breadcrumb.Item>
+                    )                    
                 ))}
             </Breadcrumb>
         </div>
