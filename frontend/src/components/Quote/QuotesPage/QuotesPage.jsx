@@ -32,7 +32,6 @@ export default function QuotesPage() {
       searchParams.set("page", "1")
       navigate({ search: searchParams.toString() })
     }
-    console.log(location.search)
     navigate({ search: searchParams.toString() })
     fetchQuotesBySearch()
   }, [location.search])
@@ -47,6 +46,7 @@ export default function QuotesPage() {
     const response = await quoteService.searchQuotes(Object.fromEntries(searchParams))
     
     if(response.foundQuote){
+      console.log(response.foundQuote)
       setQuotesQtd(response.quotesQtd)
       setQuotesResponse(response.foundQuote)
     } else {
@@ -80,6 +80,7 @@ export default function QuotesPage() {
         setMultipleQuotesArray(currentMultipleQuotesArray)
       }
     }
+    console.log(quotesResponse)
   }, [quotesResponse])
 
   return (

@@ -50,6 +50,7 @@ export async function userExists(proprietyTarget) {
 export async function selectQuote(searchquery, sort, skipItems = null, limit = null) {
   const searchQueryKeys = Object.keys(searchquery)
   let property = _.without(searchQueryKeys, "sort", "page", "type")[0]
+  console.log("Property inicial:", property)
   let quotesQtd
   let foundQuote
   let uploadByUsernameQuery

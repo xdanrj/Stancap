@@ -15,14 +15,17 @@ export default function SearchPath({ searchParams }) {
                 if (key === 'quoteType') {
                     modifiedValue = (value === 'single') ? 'Citação' : 'Diálogo'
                 }
-                if (key === 'sort') {
+                else if (key === 'sort') {
                     modifiedValue = (value === 'ascending') ? 'Ordem crescente' : 'Ordem decrescente'
                 }
-                if (key === "source") {
+                else if (key === "source") {
                     modifiedValue = getSourceLabel(value)
+                } else {
+                    modifiedValue = value
                 }
                 updatedQueryParams.push({ "key": key, "value": modifiedValue })
             }
+            console.log(key, value)
         }
         setQueryParams(updatedQueryParams)
     }, [searchParams])
@@ -31,7 +34,10 @@ export default function SearchPath({ searchParams }) {
         searchParams.delete(queryKey)
         navigate({ search: searchParams.toString() })
     }
-console.log(queryParams)
+    useEffect(() => {
+        console.log(queryParams)
+    }, [queryParams])
+
 //todo: value de: uploadbyusername e tags tao dando undefined
     return (
         <div className="d-flex justify-content-center mx-auto mb-4 text-center">
