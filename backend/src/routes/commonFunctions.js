@@ -49,13 +49,14 @@ export async function userExists(proprietyTarget) {
 
 export async function selectQuote(searchquery, sort, skipItems = null, limit = null) {
   const searchQueryKeys = Object.keys(searchquery)
-  let property = _.without(searchQueryKeys, "sort", "page", "type")[0]
-  console.log("Property inicial:", property)
+  let propertiesQuery = _.without(searchQueryKeys, "sort", "page", "type")[0]
   let quotesQtd
   let foundQuote
-  let uploadByUsernameQuery
-  let tagsQuery
+  let queriesToDo = []
+  const successQueries = []
+  const failedQueries = []
   quotesQtd = await Quotes.find(searchquery).countDocuments()
+  //todo: fazer o biruleibe da roletagem de missingfields com queriestodo no final
 
   if (searchQueryKeys.includes("uploadByUsername")) {
     let foundUser = await User.find({ username: searchquery.uploadByUsername })
@@ -65,13 +66,14 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
       const userIdStr = userId._id.toString()
       delete searchquery.uploadByUsername
 
-      uploadByUsernameQuery = { uploadByUser: userIdStr }
-      searchquery = { ...searchquery, ...uploadByUsernameQuery }
-      quotesQtd = await Quotes.find({ uploadByUsernameQuery, searchquery }).countDocuments()
-
-    } else {
-      property = "uploadByUsername"
+      //searchquery = { ...searchquery, ...uploadByUsernameQuery }
+      let uploadByUsernameQuery = { uploadByUser: userIdStr, prop: "uploadByUsername", ...searchquery }
+      queriesToDo.push(uploadByUsernameQuery)
+      //quotesQtd = await Quotes.find({ uploadByUsernameQuery }).countDocuments()
     }
+    //  else {
+    //   property = "uploadByUsername"
+    // }
   }
 
   if (searchQueryKeys.includes("tags")) {
@@ -79,26 +81,40 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
     tagsToSearch = tagsToSearch.map(tag => tag.trim())
     delete searchquery.tags
 
-    tagsQuery = { tags: { $in: tagsToSearch } }
-    quotesQtd = await Quotes.find(tagsQuery).countDocuments()
-    searchquery = { ...searchquery, ...tagsQuery }
+    let tagsQuery = { tags: { $in: tagsToSearch }, prop: "tags", ...searchquery }
+    queriesToDo.push(tagsQuery)
+    // quotesQtd = await Quotes.find(tagsQuery).countDocuments()
+    // searchquery = { ...searchquery, ...tagsQuery }
 
   }
 
   if (limit !== null && skipItems !== null) {
-    foundQuote = await Quotes.find(searchquery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
-  } else {
-    foundQuote = await Quotes.find(searchquery)
-  }
+    //foundQuote = await Quotes.find(searchquery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
 
+   console.log("query: ", query)
+    for (const query in queriesToDo) {
+      const result = await Quotes.find(query).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
+      if (result.length > 0) {
+        successQueries.push(foundQuote)
+      } else {
+        failedQueries.push(query.prop)
+      }
+    }
+    //let missingQueries = queriesToDo.filter(query => !(query in doingQuery[0]))
+
+    foundQuote = successQueries
+  } else {
+    foundQuote = successQueries
+  }
   if (foundQuote.length > 0) {
     return { foundQuote, quotesQtd }
   } else {
-    let message = getPropertyLabel(property) ?
-      `${getPropertyLabel(property)} não encontrado(a).` :
-      `Propriedade "${property}" não encontrado(a).`
-
-    return { message: message }
+    // let message = getPropertyLabel(property) ?
+    //   `${getPropertyLabel(property)} não encontrado(a).` :
+    //   `Propriedade "${property}" não encontrado(a).`
+    console.log("failedqrs:", failedQueries)
+    let finalFailedQueries = failedQueries.map((q) => getPropertyLabel(q) || q).join(" • ")
+    return { message: `${finalFailedQueries} não encontrado(s)` }
   }
 }
 
