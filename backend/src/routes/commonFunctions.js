@@ -57,7 +57,7 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   const failedQueries = []
   quotesQtd = await Quotes.find(searchquery).countDocuments()
   //todo: fazer o biruleibe da roletagem de missingfields com queriestodo no final
-
+console.log("searchquery:", searchquery)
   if (searchQueryKeys.includes("uploadByUsername")) {
     let foundUser = await User.find({ username: searchquery.uploadByUsername })
     foundUser = foundUser[0]
@@ -66,14 +66,9 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
       const userIdStr = userId._id.toString()
       delete searchquery.uploadByUsername
 
-      //searchquery = { ...searchquery, ...uploadByUsernameQuery }
       let uploadByUsernameQuery = { uploadByUser: userIdStr, prop: "uploadByUsername", ...searchquery }
       queriesToDo.push(uploadByUsernameQuery)
-      //quotesQtd = await Quotes.find({ uploadByUsernameQuery }).countDocuments()
     }
-    //  else {
-    //   property = "uploadByUsername"
-    // }
   }
 
   if (searchQueryKeys.includes("tags")) {
@@ -83,15 +78,10 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
 
     let tagsQuery = { tags: { $in: tagsToSearch }, prop: "tags", ...searchquery }
     queriesToDo.push(tagsQuery)
-    // quotesQtd = await Quotes.find(tagsQuery).countDocuments()
-    // searchquery = { ...searchquery, ...tagsQuery }
-
   }
+  console.log("queriesToDo:", queriesToDo)
 
   if (limit !== null && skipItems !== null) {
-    //foundQuote = await Quotes.find(searchquery).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
-
-   console.log("query: ", query)
     for (const query in queriesToDo) {
       const result = await Quotes.find(query).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
       if (result.length > 0) {
@@ -100,18 +90,14 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
         failedQueries.push(query.prop)
       }
     }
-    //let missingQueries = queriesToDo.filter(query => !(query in doingQuery[0]))
-
     foundQuote = successQueries
   } else {
     foundQuote = successQueries
   }
+  console.log("successQueries:", successQueries)
   if (foundQuote.length > 0) {
     return { foundQuote, quotesQtd }
   } else {
-    // let message = getPropertyLabel(property) ?
-    //   `${getPropertyLabel(property)} não encontrado(a).` :
-    //   `Propriedade "${property}" não encontrado(a).`
     console.log("failedqrs:", failedQueries)
     let finalFailedQueries = failedQueries.map((q) => getPropertyLabel(q) || q).join(" • ")
     return { message: `${finalFailedQueries} não encontrado(s)` }
