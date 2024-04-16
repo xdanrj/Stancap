@@ -57,7 +57,7 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
   const failedQueries = []
   quotesQtd = await Quotes.find(searchquery).countDocuments()
   //todo: fazer o biruleibe da roletagem de missingfields com queriestodo no final
-console.log("searchquery:", searchquery)
+  console.log("searchquery:", searchquery)
   if (searchQueryKeys.includes("uploadByUsername")) {
     let foundUser = await User.find({ username: searchquery.uploadByUsername })
     foundUser = foundUser[0]
@@ -65,36 +65,34 @@ console.log("searchquery:", searchquery)
       const userId = _.pick(foundUser, "_id")
       const userIdStr = userId._id.toString()
       delete searchquery.uploadByUsername
-
-      let uploadByUsernameQuery = { uploadByUser: userIdStr, prop: "uploadByUsername", ...searchquery }
+      let uploadByUsernameQuery = { uploadByUser: userIdStr }
       queriesToDo.push(uploadByUsernameQuery)
+    } else {
+      //todo: fazer um obj sem value pra key ser pega
+      queriesToDo.push({"uploadByUsername": undefined})
     }
   }
-
   if (searchQueryKeys.includes("tags")) {
     let tagsToSearch = searchquery.tags.split(",")
     tagsToSearch = tagsToSearch.map(tag => tag.trim())
     delete searchquery.tags
-
-    let tagsQuery = { tags: { $in: tagsToSearch }, prop: "tags", ...searchquery }
+    let tagsQuery = { tags: { $in: tagsToSearch } }
     queriesToDo.push(tagsQuery)
   }
   console.log("queriesToDo:", queriesToDo)
 
-  if (limit !== null && skipItems !== null) {
-    for (const query in queriesToDo) {
-      const result = await Quotes.find(query).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
-      if (result.length > 0) {
-        successQueries.push(foundQuote)
-      } else {
-        failedQueries.push(query.prop)
-      }
+  for (const query of queriesToDo) {
+    const result = await Quotes.find(query).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
+    if (result.length > 0) {
+      successQueries.push(...result)
+    } else {
+      failedQueries.push(Object.keys(query))
     }
-    foundQuote = successQueries
-  } else {
-    foundQuote = successQueries
   }
-  console.log("successQueries:", successQueries)
+  foundQuote = successQueries
+
+  console.log("FFFFFFFFFFFFFFF")
+  console.log(successQueries)
   if (foundQuote.length > 0) {
     return { foundQuote, quotesQtd }
   } else {
