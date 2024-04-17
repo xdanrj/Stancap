@@ -46,7 +46,6 @@ export async function userExists(proprietyTarget) {
   }
 }
 
-
 export async function selectQuote(searchquery, sort, skipItems = null, limit = null) {
   const searchQueryKeys = Object.keys(searchquery)
   let propertiesQuery = _.without(searchQueryKeys, "sort", "page", "type")[0]
@@ -68,7 +67,7 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
       let uploadByUsernameQuery = { uploadByUser: userIdStr }
       queriesToDo.push(uploadByUsernameQuery)
     } else {
-      //todo: fazer um obj sem value pra key ser pega
+      //um obj sem value pra key ser pega
       queriesToDo.push({"uploadByUsername": undefined})
     }
   }
