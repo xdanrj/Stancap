@@ -18,16 +18,16 @@ export function getPropertyLabel(rawValue) {
 }
 
 // Função que seleciona o usuário através de qualquer propriedade. Usa sempre o primeiro objeto da requisição ( {propriedade: valorDaPropriedade} ). Serve para selecionar o usuário caso a rota não explicite a propriedade selecionada.
-export async function selectUser(searchquery) {
-  let property = Object.keys(searchquery)[0]
-  let target = searchquery[property]
+export async function selectUser(searchQuery) {
+  let property = Object.keys(searchQuery)[0]
+  let target = searchQuery[property]
   let query = { [property]: target }
 
   if (property !== "_id") {
     return false
   }
 
-  let foundUser = await User.find(searchquery).lean()
+  let foundUser = await User.find(searchQuery).lean()
   if (foundUser) {
     return _.pick(foundUser[0], "username")
   } else {
@@ -50,63 +50,67 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   console.log("qqqqqqqqqqqqqqqqq")
   console.log(searchQueryArg)
   const searchQueryKeys = Object.keys(searchQueryArg)
+  const searchQuery = searchQueryArg
+  console.log("searchQuery:", searchQuery)
   //let propertiesQuery = _.without(searchQueryKeys, "type")[0]
   let quotesQtd
   let foundQuote
-  let queriesToDo = []
+  let queriesToDo = {}
   const successQueries = []
   const failedQueries = []
-  quotesQtd = await Quotes.find(searchquery).countDocuments()
-  //todo: fazer o biruleibe da roletagem de missingfields com queriestodo no final
-  console.log("searchquery:", searchquery)
+  quotesQtd = await Quotes.find(searchQuery).countDocuments()
+  console.log("searchQuery:", searchQuery)
+
+  console.log("searchQuery: ", searchQuery)
   if (searchQueryKeys.includes("uploadByUsername")) {
-    let foundUser = await User.find({ username: searchquery.uploadByUsername })
+    let foundUser = await User.find({ username: searchQuery.uploadByUsername })
     foundUser = foundUser[0]
     if (foundUser) {
       const userId = _.pick(foundUser, "_id")
       const userIdStr = userId._id.toString()
-      delete searchquery.uploadByUsername
+      delete searchQuery.uploadByUsername
       let uploadByUsernameQuery = { uploadByUser: userIdStr }
-      queriesToDo.push(uploadByUsernameQuery)
+      queriesToDo = {...queriesToDo, ...uploadByUsernameQuery}
     } else {
-      //um obj sem value pra key ser pega
-      queriesToDo.push({ "uploadByUsername": undefined })
+      queriesToDo = {...queriesToDo, ...{"uploadByUsername": null} }
     }
   }
+
   if (searchQueryKeys.includes("tags")) {
-    let tagsToSearch = searchquery.tags.split(",")
+    let tagsToSearch = searchQuery.tags.split(",")
     tagsToSearch = tagsToSearch.map(tag => tag.trim())
-    delete searchquery.tags
+    delete searchQuery.tags
     let tagsQuery = { tags: { $in: tagsToSearch } }
-    queriesToDo.push(tagsQuery)
+    queriesToDo = {...queriesToDo, ...tagsQuery}
   }
+
+  queriesToDo = {...queriesToDo, ...searchQuery}
   console.log("queriesToDo:", queriesToDo)
 
-  for (const query of queriesToDo) {
-    const result = await Quotes.find(query).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
-    if (result.length > 0) {
-      successQueries.push(...result)
-    } else {
-      failedQueries.push(Object.keys(query))
-    }
+  const result = await Quotes.find(queriesToDo).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
+  if (result.length > 0) {
+    successQueries.push(...result)
+  } else {
+    failedQueries.push(Object.keys(query))
   }
-  //foundQuote = successQueries
-
-  Quotes.find(queriesToDo).exec()
+  console.log("ususususususu")
+  console.log(successQueries)
+  let response
+  response = Quotes.find(queriesToDo).exec()
     .then(docs => {
       if (docs.length === 0) {
         console.log("Nenhuma quote encontrada")
       } else {
         docs.forEach(doc => {
-          const propsNotFound = Object.entries(queriesToDo).filter(([key, value]) => doc[key] !== value)
+          const propsNotFound = Object.entries(doc).filter(([key, value]) => doc[key] !== value)
           if (propsNotFound.length > 0) {
             let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
             console.log(txt)
-            return {message: txt}
-          } else {            
+            return { message: txt }
+          } else {
             let txt = `Para o documento com _id ${doc._id}, todas as propriedades correspondem.`
             console.log(txt)
-            return {foundQuote: docs, message: txt}
+            return { foundQuote: docs, message: txt }
           }
         })
       }
@@ -114,6 +118,8 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
     .catch(err => {
       console.log("err:", err)
     })
+
+  return response
 
   // if (foundQuote.length > 0) {
   //   return { foundQuote, quotesQtd }
