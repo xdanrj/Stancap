@@ -46,9 +46,11 @@ export async function userExists(proprietyTarget) {
   }
 }
 
-export async function selectQuote(searchquery, sort, skipItems = null, limit = null) {
-  const searchQueryKeys = Object.keys(searchquery)
-  let propertiesQuery = _.without(searchQueryKeys, "sort", "page", "type")[0]
+export async function selectQuote(searchQueryArg, sort, skipItems = null, limit = null) {
+  console.log("qqqqqqqqqqqqqqqqq")
+  console.log(searchQueryArg)
+  const searchQueryKeys = Object.keys(searchQueryArg)
+  //let propertiesQuery = _.without(searchQueryKeys, "type")[0]
   let quotesQtd
   let foundQuote
   let queriesToDo = []
@@ -68,7 +70,7 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
       queriesToDo.push(uploadByUsernameQuery)
     } else {
       //um obj sem value pra key ser pega
-      queriesToDo.push({"uploadByUsername": undefined})
+      queriesToDo.push({ "uploadByUsername": undefined })
     }
   }
   if (searchQueryKeys.includes("tags")) {
@@ -88,17 +90,38 @@ export async function selectQuote(searchquery, sort, skipItems = null, limit = n
       failedQueries.push(Object.keys(query))
     }
   }
-  foundQuote = successQueries
+  //foundQuote = successQueries
 
-  console.log("FFFFFFFFFFFFFFF")
-  console.log(successQueries)
-  if (foundQuote.length > 0) {
-    return { foundQuote, quotesQtd }
-  } else {
-    console.log("failedqrs:", failedQueries)
-    let finalFailedQueries = failedQueries.map((q) => getPropertyLabel(q) || q).join(" • ")
-    return { message: `${finalFailedQueries} não encontrado(s)` }
-  }
+  Quotes.find(queriesToDo).exec()
+    .then(docs => {
+      if (docs.length === 0) {
+        console.log("Nenhuma quote encontrada")
+      } else {
+        docs.forEach(doc => {
+          const propsNotFound = Object.entries(queriesToDo).filter(([key, value]) => doc[key] !== value)
+          if (propsNotFound.length > 0) {
+            let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
+            console.log(txt)
+            return {message: txt}
+          } else {            
+            let txt = `Para o documento com _id ${doc._id}, todas as propriedades correspondem.`
+            console.log(txt)
+            return {foundQuote: docs, message: txt}
+          }
+        })
+      }
+    })
+    .catch(err => {
+      console.log("err:", err)
+    })
+
+  // if (foundQuote.length > 0) {
+  //   return { foundQuote, quotesQtd }
+  // } else {
+  //   console.log("failedqrs:", failedQueries)
+  //   let finalFailedQueries = failedQueries.map((q) => getPropertyLabel(q) || q).join(" • ")
+  //   return { message: `${finalFailedQueries} não encontrado(s)` }
+  // }
 }
 
 // Essa função permite selecionar qualquer quote usando qualquer propriedade como filtro. Recebe como parâmetro um único OBJETO (propriedade: valorPropriedade)
