@@ -63,6 +63,7 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
 
   console.log("searchQuery: ", searchQuery)
   if (searchQueryKeys.includes("uploadByUsername")) {
+    console.log("entrou no if upuser")
     let foundUser = await User.find({ username: searchQuery.uploadByUsername })
     foundUser = foundUser[0]
     if (foundUser) {
@@ -70,9 +71,9 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
       const userIdStr = userId._id.toString()
       delete searchQuery.uploadByUsername
       let uploadByUsernameQuery = { uploadByUser: userIdStr }
-      queriesToDo = {...queriesToDo, ...uploadByUsernameQuery}
+      queriesToDo = { ...queriesToDo, ...uploadByUsernameQuery }
     } else {
-      queriesToDo = {...queriesToDo, ...{"uploadByUsername": null} }
+      queriesToDo = { ...queriesToDo, ...{ "uploadByUsername": null } }
     }
   }
 
@@ -81,45 +82,48 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
     tagsToSearch = tagsToSearch.map(tag => tag.trim())
     delete searchQuery.tags
     let tagsQuery = { tags: { $in: tagsToSearch } }
-    queriesToDo = {...queriesToDo, ...tagsQuery}
+    queriesToDo = { ...queriesToDo, ...tagsQuery }
   }
 
-  queriesToDo = {...queriesToDo, ...searchQuery}
-  console.log("queriesToDo:", queriesToDo)
+  queriesToDo = { ...queriesToDo, ...searchQuery }
+  //console.log("queriesToDo:", queriesToDo)
 
-  const result = await Quotes.find(queriesToDo).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
-  if (result.length > 0) {
-    successQueries.push(...result)
-  } else {
-    failedQueries.push(Object.keys(query))
+  for (const [key, value] of Object.entries(queriesToDo)) {
+    console.log("JJJJJJJKKKKKKKKKKKK")
+    console.log({ [key]: value })
+    const result = await Quotes.find({ [key]: value }).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
+    if (result.length > 0) {
+      successQueries.push(...result)
+    } else {
+      failedQueries.push({ [key]: value })
+    }
   }
-  console.log("ususususususu")
+
+  console.log("successQueries")
   console.log(successQueries)
-  let response
-  response = Quotes.find(queriesToDo).exec()
-    .then(docs => {
-      if (docs.length === 0) {
-        console.log("Nenhuma quote encontrada")
-      } else {
-        docs.forEach(doc => {
-          const propsNotFound = Object.entries(doc).filter(([key, value]) => doc[key] !== value)
-          if (propsNotFound.length > 0) {
-            let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
-            console.log(txt)
-            return { message: txt }
-          } else {
-            let txt = `Para o documento com _id ${doc._id}, todas as propriedades correspondem.`
-            console.log(txt)
-            return { foundQuote: docs, message: txt }
-          }
-        })
-      }
-    })
-    .catch(err => {
-      console.log("err:", err)
-    })
+  console.log("failedQueries")
+  console.log(failedQueries)
+  let propsNotFound = []
+  failedQueries.forEach((failedQuery) => {
+    propsNotFound.push(Object.entries(failedQuery).filter(([key, value]) => successQueries[key] !== value))
+  })
 
-  return response
+  
+  console.log("propsNotFound")
+  console.log(propsNotFound)
+  
+  // if (propsNotFound.length > 0) {
+  //   let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
+  //   console.log(txt)
+  //   return { message: txt }
+  // } else {
+  //   let txt = `Para o documento com _id ${doc._id}, todas as propriedades correspondem.`
+  //   console.log(txt)
+  //   return { foundQuote: docs, message: txt }
+  // }
+
+
+  // return response
 
   // if (foundQuote.length > 0) {
   //   return { foundQuote, quotesQtd }
