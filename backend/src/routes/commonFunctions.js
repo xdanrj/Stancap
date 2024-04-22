@@ -56,8 +56,8 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   let quotesQtd
   let foundQuote
   let queriesToDo = {}
-  const successQueries = []
-  const failedQueries = []
+  let successQueries = []
+  let failedQueries = []
   quotesQtd = await Quotes.find(searchQuery).countDocuments()
   console.log("searchQuery:", searchQuery)
 
@@ -86,11 +86,8 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   }
 
   queriesToDo = { ...queriesToDo, ...searchQuery }
-  //console.log("queriesToDo:", queriesToDo)
 
   for (const [key, value] of Object.entries(queriesToDo)) {
-    console.log("JJJJJJJKKKKKKKKKKKK")
-    console.log({ [key]: value })
     const result = await Quotes.find({ [key]: value }).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
     if (result.length > 0) {
       successQueries.push(...result)
@@ -98,13 +95,14 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
       failedQueries.push({ [key]: value })
     }
   }
+  console.log("failed pré assign: ", failedQueries)
+  failedQueries = Object.assign({}, ...failedQueries)
+  console.log("successQueries: ", successQueries)
+  console.log("failedQueries: ", failedQueries)
+  console.log("failedQueries KEYS: ", _.keys(failedQueries))
 
-  console.log("successQueries")
-  console.log(successQueries)
-  console.log("failedQueries")
-  console.log(failedQueries)
   let propsNotFound = []
-  failedQueries.forEach((failedQuery) => {
+  _.keys(failedQueries).forEach((failedQuery) => {
     propsNotFound.push(Object.entries(failedQuery).filter(([key, value]) => successQueries[key] !== value))
   })
 
