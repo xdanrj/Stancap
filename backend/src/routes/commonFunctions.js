@@ -54,7 +54,7 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   console.log("searchQuery:", searchQuery)
   //let propertiesQuery = _.without(searchQueryKeys, "type")[0]
   let quotesQtd
-  let foundQuote
+  let foundQuotes
   let queriesToDo = {}
   let successQueries = []
   let failedQueries = []
@@ -86,64 +86,31 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   }
   queriesToDo = { ...queriesToDo, ...searchQuery }
 
-  let toFilterResults = []
-  for (const [key, value] of Object.entries(queriesToDo)) {
-    toFilterResults.push(await Quotes.find
-      ({ [key]: value })
-      .sort({ uploadDate: sort })
-      .skip(skipItems)
-      .limit(limit))
-  }
 
-  //pega primeiro e unico resultado da primeira query apenas
-  const refRes = toFilterResults[0]
-  console.log("toFilterResults: ", toFilterResults)
-  console.log("refRes: ", refRes)
-  if (refRes) {
+  successQueries.push(...await Quotes.find
+    (queriesToDo)
+    .sort({ uploadDate: sort })
+    .skip(skipItems)
+    .limit(limit))
+    console.log("cc", successQueries.length > 0)
+  if (successQueries.length > 0) {
     for (const [key, value] of Object.entries(queriesToDo)) {
-      console.log(`[key: value]: `, { [key]: value })
-      
-
-      
-
-
-
-
-
-
-
-
-      if (filteredResult.length > 0) {
-        successQueries.push(...filteredResult)
-      } else {
-        failedQueries.push({ [key]: value })
+      for (const succeedQuery of successQueries) {
+        if (succeedQuery[key] !== value) {
+          console.log("succeedQuery: ", succeedQuery)
+          console.log("succeedQuery[key]: ", succeedQuery[key])
+          console.log("value: ", value)
+          failedQueries.push({ [key]: value })
+        }
       }
     }
-  } else {
-    failedQueries.push(...Object.entries(queriesToDo).map(([key, value]) => ({ [key]: value })))
   }
+
   console.log("failed pré assign: ", failedQueries)
   failedQueries = Object.assign({}, ...failedQueries)
   console.log("successQueries: ", successQueries)
   console.log("failedQueries: ", failedQueries)
   console.log("failedQueries KEYS: ", _.keys(failedQueries))
-
-  // _.keys(failedQueries).forEach((failedQuery) => {
-  // console.log("FQ: ", failedQuery)
-  // })
-
-  for (let failedQuery in failedQueries) {
-
-
-    //  console.log("value (usando in): ", failedQueries[failedQuery])
-  }
-
-  // let propsNotFound = []
-  // _.keys(failedQueries).forEach((failedQuery) => {
-  //   propsNotFound.push(Object.entries(failedQuery).filter(([key, value]) => successQueries[key] !== value))
-  // })
-
-
   console.log("propsNotFound: ", propsNotFound)
 
   // if (propsNotFound.length > 0) {
@@ -153,14 +120,14 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   // } else {
   //   let txt = `Para o documento com _id ${doc._id}, todas as propriedades correspondem.`
   //   console.log(txt)
-  //   return { foundQuote: docs, message: txt }
+  //   return { foundQuotes: docs, message: txt }
   // }
 
 
   // return response
 
-  // if (foundQuote.length > 0) {
-  //   return { foundQuote, quotesQtd }
+  // if (foundQuotes.length > 0) {
+  //   return { foundQuotes, quotesQtd }
   // } else {
   //   console.log("failedqrs:", failedQueries)
   //   let finalFailedQueries = failedQueries.map((q) => getPropertyLabel(q) || q).join(" • ")
