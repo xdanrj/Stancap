@@ -86,29 +86,51 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   }
 
   queriesToDo = { ...queriesToDo, ...searchQuery }
+  console.log("VVV: ", {[Object.keys(queriesToDo)[0]]: queriesToDo[Object.keys(queriesToDo)[0]] })
 
+  const initialResult = await Quotes.findOne({ [Object.keys(queriesToDo)[0]]: queriesToDo[Object.keys(queriesToDo)[0]] })
+  .sort({ uploadDate: sort })
+  .skip(skipItems)
+  .limit(limit)
+  console.log("initial: ", initialResult)
+if (initialResult.length > 0) {
   for (const [key, value] of Object.entries(queriesToDo)) {
-    const result = await Quotes.find({ [key]: value }).sort({ uploadDate: sort }).skip(skipItems).limit(limit)
-    if (result.length > 0) {
-      successQueries.push(...result)
+    console.log(`[key: value]: `, { [key]: value })
+
+    const filteredResult = initialResult.filter(item => item[key] === value)
+
+    if (filteredResult.length > 0) {
+      successQueries.push(...filteredResult)
     } else {
       failedQueries.push({ [key]: value })
     }
   }
+} else {
+  failedQueries.push(...Object.entries(queriesToDo).map(([key, value]) => ({ [key]: value })))
+}
   console.log("failed pré assign: ", failedQueries)
   failedQueries = Object.assign({}, ...failedQueries)
   console.log("successQueries: ", successQueries)
   console.log("failedQueries: ", failedQueries)
   console.log("failedQueries KEYS: ", _.keys(failedQueries))
 
-  let propsNotFound = []
-  _.keys(failedQueries).forEach((failedQuery) => {
-    propsNotFound.push(Object.entries(failedQuery).filter(([key, value]) => successQueries[key] !== value))
-  })
+  // _.keys(failedQueries).forEach((failedQuery) => {
+  // console.log("FQ: ", failedQuery)
+  // })
+
+  for(let failedQuery in failedQueries){
+
+
+    //  console.log("value (usando in): ", failedQueries[failedQuery])
+  }
+
+  // let propsNotFound = []
+  // _.keys(failedQueries).forEach((failedQuery) => {
+  //   propsNotFound.push(Object.entries(failedQuery).filter(([key, value]) => successQueries[key] !== value))
+  // })
 
   
-  console.log("propsNotFound")
-  console.log(propsNotFound)
+  console.log("propsNotFound: ", propsNotFound)
   
   // if (propsNotFound.length > 0) {
   //   let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
