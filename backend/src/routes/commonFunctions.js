@@ -88,6 +88,17 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
 
   let quotesCount = {}
   let findingQuotes = []
+  let finalResponse = []
+
+  const fullQueryTry = await Quotes.find
+      (queriesToDo)
+      .sort({ uploadDate: sort })
+      .skip(skipItems)
+      .limit(limit).lean()
+
+  if(fullQueryTry.length > 0) {
+    finalResponse = fullQueryTry
+  } else {
   //faz uma busca pra cada query
   for (const [key, value] of Object.entries(queriesToDo)) {
     const quotes = await Quotes.find
@@ -111,21 +122,23 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
       mostQueryRes = { [key]: value }
     }
   }
+  console.log("quotesCount: ", quotesCount)
   console.log("mostQueryRes: ", mostQueryRes)
   const mQrKey = Object.keys(mostQueryRes)[0]
-  console.log("teste: ", JSON.parse(mQrKey))
   mostQueryRes = JSON.parse(mQrKey)
   console.log("FINAL MQR: ", mostQueryRes)
 
   console.log("findingQuotes: ", findingQuotes)
   if (findingQuotes.length > 0) {
     for (const obj of findingQuotes) {
-      console.log("objSeco: ", obj)
+      // console.log("objSeco: ", obj)
       for (const key in mostQueryRes) {
         console.log("key de mostQueryRes: ", key)
         console.log("obj[key] de findingQuotes: ", obj[key])
-        if (obj[key] !== mostQueryRes[key]) {
+        if (obj[key] === mostQueryRes[key]) {
           console.log("key: ", key)
+          successQueries.push(obj)
+        } else {
           failedQueries.push(key)
         }
       }
@@ -135,6 +148,10 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   console.log("failedQueries: ", failedQueries)
   console.log("successQueries: ", successQueries)
 
+
+
+
+}
   // if (propsNotFound.length > 0) {
   //   let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
   //   console.log(txt)
@@ -144,7 +161,6 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   //   console.log(txt)
   //   return { foundQuotes: docs, message: txt }
   // }
-
 
   // return response
 
