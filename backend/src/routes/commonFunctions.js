@@ -86,32 +86,54 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   }
   queriesToDo = { ...queriesToDo, ...searchQuery }
 
+  let quotesCount = {}
+  let findingQuotes = []
+  //faz uma busca pra cada query
+  for (const [key, value] of Object.entries(queriesToDo)) {
+    const quotes = await Quotes.find
+      ({ [key]: value })
+      .sort({ uploadDate: sort })
+      .skip(skipItems)
+      .limit(limit).lean()
 
-  successQueries.push(...await Quotes.find
-    (queriesToDo)
-    .sort({ uploadDate: sort })
-    .skip(skipItems)
-    .limit(limit))
-    console.log("cc", successQueries.length > 0)
-  if (successQueries.length > 0) {
-    for (const [key, value] of Object.entries(queriesToDo)) {
-      for (const succeedQuery of successQueries) {
-        if (succeedQuery[key] !== value) {
-          console.log("succeedQuery: ", succeedQuery)
-          console.log("succeedQuery[key]: ", succeedQuery[key])
-          console.log("value: ", value)
-          failedQueries.push({ [key]: value })
+    findingQuotes.push(...quotes)
+    // contabiliza a query com mais resultados
+    const keyValuePair = `{"${key}":"${value}"}`
+    quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + quotes.length
+  }
+
+  let mostQueryRes = null
+  let maxQuotes = -1
+  //define qual query teve mais resultados
+  for (const [key, value] of Object.entries(quotesCount)) {
+    if (value > maxQuotes) {
+      maxQuotes = value
+      mostQueryRes = { [key]: value }
+    }
+  }
+  console.log("mostQueryRes: ", mostQueryRes)
+  const mQrKey = Object.keys(mostQueryRes)[0]
+  console.log("teste: ", JSON.parse(mQrKey))
+  mostQueryRes = JSON.parse(mQrKey)
+  console.log("FINAL MQR: ", mostQueryRes)
+
+  console.log("findingQuotes: ", findingQuotes)
+  if (findingQuotes.length > 0) {
+    for (const obj of findingQuotes) {
+      console.log("objSeco: ", obj)
+      for (const key in mostQueryRes) {
+        console.log("key de mostQueryRes: ", key)
+        console.log("obj[key] de findingQuotes: ", obj[key])
+        if (obj[key] !== mostQueryRes[key]) {
+          console.log("key: ", key)
+          failedQueries.push(key)
         }
       }
     }
   }
 
-  console.log("failed pré assign: ", failedQueries)
-  failedQueries = Object.assign({}, ...failedQueries)
-  console.log("successQueries: ", successQueries)
   console.log("failedQueries: ", failedQueries)
-  console.log("failedQueries KEYS: ", _.keys(failedQueries))
-  console.log("propsNotFound: ", propsNotFound)
+  console.log("successQueries: ", successQueries)
 
   // if (propsNotFound.length > 0) {
   //   let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
