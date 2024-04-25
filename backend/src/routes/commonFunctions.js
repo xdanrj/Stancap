@@ -139,23 +139,23 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
     console.log("doneQueries: ", doneQueries)
 
 
-     //console.log("findingQuotes: ", findingQuotes)
+    //console.log("findingQuotes: ", findingQuotes)
     //todo: falta retornar a funcao e um looping que nao repita as keys failed
     if (findingQuotes.length > 0) {
       for (const key in doneQueries) {
         let keyAdded = false
         for (const obj of findingQuotes) {
-            console.log("key in doneQueries: ", key)
-            if (obj[key] !== mostQueryRes[key]) {
-                if (!keyAdded) {
-                    failedQueries.push(key)
-                    keyAdded = true
-                }
-            } else {
-              successQueries.push(obj)
+          console.log("key in doneQueries: ", key)
+          if (obj[key] !== mostQueryRes[key]) {
+            if (!keyAdded) {
+              failedQueries.push(key)
+              keyAdded = true
             }
+          } else {
+            successQueries.push(obj)
+          }
         }
-    }
+      }
     }
     quotesQtd = successQueries.length()
     // descartar provavelmente: backup dos loops:
@@ -176,13 +176,13 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   let message = null
   let frmtFailedQueries = failedQueries.map((k) => getPropertyLabel(k) || k).join(" • ")
 
-  if(failedQueries.length > 0 && successQueries.length > 0) {
+  if (failedQueries.length > 0 && successQueries.length > 0) {
     message = `Resultados de apenas ${getPropertyLabel(_.keys(mostQueryRes))}.
     ${frmtFailedQueries} não encontrado(s)`
   } else if (successQueries.length === 0) {
     message = `${frmtFailedQueries} não encontrado(s)`
-  } 
-  return {response: successQueries, message: message, quotesQtd: quotesQtd}
+  }
+  return { response: successQueries, message: message, quotesQtd: quotesQtd }
 
   // if (propsNotFound.length > 0) {
   //   let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
