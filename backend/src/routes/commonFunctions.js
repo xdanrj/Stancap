@@ -96,7 +96,10 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
       .skip(skipItems)
       .limit(limit).lean()
 
+      console.log("fullquerytry: ", fullQueryTry)
+
   if(fullQueryTry.length > 0) {
+    console.log("caiu no fullquerytry")
     finalResponse = fullQueryTry
   } else {
   //faz uma busca pra cada query
@@ -123,7 +126,11 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
     }
   }
   console.log("quotesCount: ", quotesCount)
-  console.log("mostQueryRes: ", mostQueryRes)
+
+  const qtsCntKeys = _.keys(quotesCount)
+  const qtsKeys = qtsCntKeys.map(str => JSON.parse(str))
+  console.log("qtsCntKeys: ", qtsCntKeys)
+  console.log("qtsKeys: ", qtsKeys)
   const mQrKey = Object.keys(mostQueryRes)[0]
   mostQueryRes = JSON.parse(mQrKey)
   console.log("FINAL MQR: ", mostQueryRes)
@@ -144,13 +151,8 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
       }
     }
   }
-
   console.log("failedQueries: ", failedQueries)
   console.log("successQueries: ", successQueries)
-
-
-
-
 }
   // if (propsNotFound.length > 0) {
   //   let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
