@@ -58,7 +58,7 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   let queriesToDo = {}
   let successQueries = []
   let failedQueries = []
-  quotesQtd = await Quotes.find(searchQuery).countDocuments()
+  //quotesQtd = await Quotes.find(searchQuery).countDocuments()
   console.log("searchQuery:", searchQuery)
 
   console.log("searchQuery: ", searchQuery)
@@ -88,72 +88,102 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
 
   let quotesCount = {}
   let findingQuotes = []
-  let finalResponse = []
 
   const fullQueryTry = await Quotes.find
-      (queriesToDo)
-      .sort({ uploadDate: sort })
-      .skip(skipItems)
-      .limit(limit).lean()
+    (queriesToDo)
+    .sort({ uploadDate: sort })
+    .skip(skipItems)
+    .limit(limit).lean()
 
-      console.log("fullquerytry: ", fullQueryTry)
+  console.log("fullquerytry: ", fullQueryTry)
 
-  if(fullQueryTry.length > 0) {
+  if (fullQueryTry.length > 0) {
     console.log("caiu no fullquerytry")
-    finalResponse = fullQueryTry
+    successQueries = fullQueryTry
   } else {
-  //faz uma busca pra cada query
-  for (const [key, value] of Object.entries(queriesToDo)) {
-    const quotes = await Quotes.find
-      ({ [key]: value })
-      .sort({ uploadDate: sort })
-      .skip(skipItems)
-      .limit(limit).lean()
+    //faz uma busca pra cada query
+    for (const [key, value] of Object.entries(queriesToDo)) {
+      const quotes = await Quotes.find
+        ({ [key]: value })
+        .sort({ uploadDate: sort })
+        .skip(skipItems)
+        .limit(limit).lean()
 
-    findingQuotes.push(...quotes)
-    // contabiliza a query com mais resultados
-    const keyValuePair = `{"${key}":"${value}"}`
-    quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + quotes.length
-  }
-
-  let mostQueryRes = null
-  let maxQuotes = -1
-  //define qual query teve mais resultados
-  for (const [key, value] of Object.entries(quotesCount)) {
-    if (value > maxQuotes) {
-      maxQuotes = value
-      mostQueryRes = { [key]: value }
+      findingQuotes.push(...quotes)
+      // contabiliza a query com mais resultados
+      const keyValuePair = `{"${key}":"${value}"}`
+      quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + quotes.length
     }
-  }
-  console.log("quotesCount: ", quotesCount)
 
-  const qtsCntKeys = _.keys(quotesCount)
-  const qtsKeys = qtsCntKeys.map(str => JSON.parse(str))
-  console.log("qtsCntKeys: ", qtsCntKeys)
-  console.log("qtsKeys: ", qtsKeys)
-  const mQrKey = Object.keys(mostQueryRes)[0]
-  mostQueryRes = JSON.parse(mQrKey)
-  console.log("FINAL MQR: ", mostQueryRes)
-
-  console.log("findingQuotes: ", findingQuotes)
-  if (findingQuotes.length > 0) {
-    for (const obj of findingQuotes) {
-      // console.log("objSeco: ", obj)
-      for (const key in mostQueryRes) {
-        console.log("key de mostQueryRes: ", key)
-        console.log("obj[key] de findingQuotes: ", obj[key])
-        if (obj[key] === mostQueryRes[key]) {
-          console.log("key: ", key)
-          successQueries.push(obj)
-        } else {
-          failedQueries.push(key)
-        }
+    let mostQueryRes = null
+    let maxQuotes = -1
+    //define qual query teve mais resultados
+    for (const [key, value] of Object.entries(quotesCount)) {
+      if (value > maxQuotes) {
+        maxQuotes = value
+        mostQueryRes = { [key]: value }
       }
     }
+    console.log("quotesCount: ", quotesCount)
+
+    const qtsCntKeys = _.keys(quotesCount)
+    let doneQueries = qtsCntKeys.map(str => JSON.parse(str))
+    //doneQueries = Object.assign({}, doneQueries)
+    doneQueries = _.merge({}, ...doneQueries)
+    const mQrKey = Object.keys(mostQueryRes)[0]
+    mostQueryRes = JSON.parse(mQrKey)
+
+    //delete doneQueries[_.keys(mostQueryRes)]
+    console.log("mostQueryRes: ", mostQueryRes)
+    console.log("qtsCntKeys: ", qtsCntKeys)
+    console.log("doneQueries: ", doneQueries)
+
+
+     //console.log("findingQuotes: ", findingQuotes)
+    //todo: falta retornar a funcao e um looping que nao repita as keys failed
+    if (findingQuotes.length > 0) {
+      for (const key in doneQueries) {
+        let keyAdded = false
+        for (const obj of findingQuotes) {
+            console.log("key in doneQueries: ", key)
+            if (obj[key] !== mostQueryRes[key]) {
+                if (!keyAdded) {
+                    failedQueries.push(key)
+                    keyAdded = true
+                }
+            } else {
+              successQueries.push(obj)
+            }
+        }
+    }
+    }
+    quotesQtd = successQueries.length()
+    // descartar provavelmente: backup dos loops:
+    // for (const obj of findingQuotes) {
+    //   for (const key in doneQueries) {
+    //     console.log("key in doneQueries: ", key)
+    //     if (obj[key] === mostQueryRes[key]) {
+    //       successQueries.push(obj)
+    //     } else {
+    //       failedQueries.push(key)
+    //     }
+    //   }
+    // }
+    console.log("failedQueries: ", failedQueries)
+    console.log("successQueries: ", successQueries)
   }
-  console.log("failedQueries: ", failedQueries)
-  console.log("successQueries: ", successQueries)
-}
+
+  let message = null
+  let frmtFailedQueries = failedQueries.map((k) => getPropertyLabel(k) || k).join(" • ")
+
+  if(failedQueries.length > 0 && successQueries.length > 0) {
+    message = `Resultados de apenas ${getPropertyLabel(_.keys(mostQueryRes))}.
+    ${frmtFailedQueries} não encontrado(s)`
+  } else if (successQueries.length === 0) {
+    message = `${frmtFailedQueries} não encontrado(s)`
+  } 
+  return {response: successQueries, message: message, quotesQtd: quotesQtd}
+
   // if (propsNotFound.length > 0) {
   //   let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
   //   console.log(txt)

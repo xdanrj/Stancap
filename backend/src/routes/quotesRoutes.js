@@ -42,8 +42,8 @@ export const quotesRoutes = (app) => {
   //busca especifica SEM limite
   app.post("/search_all_quotes", reqLimit(200), async (req, res) => {
     try {
-      const foundQuote = await selectQuote(req.body)
-      res.status(200).json(foundQuote)
+      const response = await selectQuote(req.body)
+      res.status(200).json(response)
     } catch (error) {
       res.status(400).json({ message: error })
     }
