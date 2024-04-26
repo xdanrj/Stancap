@@ -75,11 +75,9 @@ export const quotesRoutes = (app) => {
       const response = await selectQuote(searchquery, sort, skipItems, perPage)
       console.log("ppp")
       console.log(response)
-        res.status(200).json(response)
-      
-      
+      res.status(200).json(response)
     } catch (error) {
-      console.log(error)
+      console.log("errorota:", error)
       res.status(400).json({ message: error })
     }
   })
@@ -90,8 +88,8 @@ export const quotesRoutes = (app) => {
       console.log("rqbody: ", req.body)
       const selectedQuote = await selectQuote(req.query)
       if (selectedQuote) {
-        const response = await functionEditQuote(selectedQuote, req.body)        
-        response ? res.status(200).send(true) : res.status(400).send({message: "Erro ao editar quote"})
+        const response = await functionEditQuote(selectedQuote, req.body)
+        response ? res.status(200).send(true) : res.status(400).send({ message: "Erro ao editar quote" })
       } else {
         res.status(400).send(false)
       }
@@ -108,12 +106,12 @@ export const quotesRoutes = (app) => {
       let selectedQuote = findingQuote[0]
 
       if (selectedQuote.uploadByUser === userId) {
-        const response = await Quotes.deleteMany(quoteId)        
+        const response = await Quotes.deleteMany(quoteId)
         if (response.deletedCount > 0) {
-          res.status(200).send({selectedQuote})
+          res.status(200).send({ selectedQuote })
         }
       } else {
-        res.status(400).send({message: "Você não tem permissão para excluir essa quote"})
+        res.status(400).send({ message: "Você não tem permissão para excluir essa quote" })
       }
     } catch (error) {
       console.log(error)

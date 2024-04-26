@@ -36,6 +36,7 @@ export default class quoteEditingServices {
         }
     }
 
+    //todo: talvez motivo do alert estar duplicado a cada busca: getquotes e searchquotes estao sendo executados juntos
     async getQuotes(params) {
         const response = await this.axios.get(`/get_quotes`, { params })
         console.log(response)
@@ -49,6 +50,7 @@ export default class quoteEditingServices {
 
     async searchQuotes(params) {
         const response = await this.axios.get(`/search_quotes`, { params })
+        console.log(response)
         if (response) {
             return response.data
         }
