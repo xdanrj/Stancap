@@ -52,13 +52,9 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   const searchQueryKeys = Object.keys(searchQueryArg)
   const searchQuery = searchQueryArg
   console.log("searchQuery:", searchQuery)
-  //let propertiesQuery = _.without(searchQueryKeys, "type")[0]
   let quotesQtd
-  let foundQuotes
   let queriesToDo = {}
-  let successQueries = []
-  let failedQueries = []
-  //quotesQtd = await Quotes.find(searchQuery).countDocuments()
+ 
   console.log("searchQuery:", searchQuery)
 
   console.log("searchQuery: ", searchQuery)
@@ -88,6 +84,9 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
 
   let quotesCount = {}
   let findingQuotes = []
+  let successQueries = []
+  let failedQueries = []
+  let mostQueryRes = null
 
   const fullQueryTry = await Quotes.find
     (queriesToDo)
@@ -97,11 +96,12 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
 
   console.log("fullquerytry: ", fullQueryTry)
 
+
+
   if (fullQueryTry.length > 0) {
     console.log("caiu no fullquerytry")
     successQueries = fullQueryTry
   } else {
-    //faz uma busca pra cada query
     for (const [key, value] of Object.entries(queriesToDo)) {
       const quotes = await Quotes.find
         ({ [key]: value })
@@ -115,7 +115,7 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
       quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + quotes.length
     }
 
-    let mostQueryRes = null
+    
     let maxQuotes = -1
     //define qual query teve mais resultados
     for (const [key, value] of Object.entries(quotesCount)) {
@@ -128,24 +128,18 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
 
     const qtsCntKeys = _.keys(quotesCount)
     let doneQueries = qtsCntKeys.map(str => JSON.parse(str))
-    //doneQueries = Object.assign({}, doneQueries)
     doneQueries = _.merge({}, ...doneQueries)
     const mQrKey = Object.keys(mostQueryRes)[0]
     mostQueryRes = JSON.parse(mQrKey)
 
-    //delete doneQueries[_.keys(mostQueryRes)]
     console.log("mostQueryRes: ", mostQueryRes)
     console.log("qtsCntKeys: ", qtsCntKeys)
     console.log("doneQueries: ", doneQueries)
 
-
-    //console.log("findingQuotes: ", findingQuotes)
-    //todo: falta retornar a funcao e um looping que nao repita as keys failed
     if (findingQuotes.length > 0) {
       for (const key in doneQueries) {
         let keyAdded = false
         for (const obj of findingQuotes) {
-          console.log("key in doneQueries: ", key)
           if (obj[key] !== mostQueryRes[key]) {
             if (!keyAdded) {
               failedQueries.push(key)
@@ -157,32 +151,22 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
         }
       }
     }
-    quotesQtd = successQueries.length()
-    // descartar provavelmente: backup dos loops:
-    // for (const obj of findingQuotes) {
-    //   for (const key in doneQueries) {
-    //     console.log("key in doneQueries: ", key)
-    //     if (obj[key] === mostQueryRes[key]) {
-    //       successQueries.push(obj)
-    //     } else {
-    //       failedQueries.push(key)
-    //     }
-    //   }
-    // }
-    console.log("failedQueries: ", failedQueries)
-    console.log("successQueries: ", successQueries)
+    // console.log("failedQueries: ", failedQueries)
+    // console.log("successQueries: ", successQueries)
   }
 
   let message = null
   let frmtFailedQueries = failedQueries.map((k) => getPropertyLabel(k) || k).join(" • ")
+  quotesQtd = successQueries.length
+  console.log("QUOTESQTD: ", quotesQtd)
 
   if (failedQueries.length > 0 && successQueries.length > 0) {
-    message = `Resultados de apenas ${getPropertyLabel(_.keys(mostQueryRes))}.
+    message = `Resultados de apenas ${getPropertyLabel(..._.keys(mostQueryRes))}.
     ${frmtFailedQueries} não encontrado(s)`
   } else if (successQueries.length === 0) {
     message = `${frmtFailedQueries} não encontrado(s)`
   }
-  return { response: successQueries, message: message, quotesQtd: quotesQtd }
+  return { quotes: successQueries, message: message, quotesQtd: quotesQtd }
 
   // if (propsNotFound.length > 0) {
   //   let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
