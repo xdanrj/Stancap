@@ -156,7 +156,7 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   }
 
   let message = null
-  let frmtFailedQueries = failedQueries.map((k) => getPropertyLabel(k) || k).join(" • ")
+  let frmtFailedQueries = failedQueries.map((k) => getPropertyLabel(k) || k).join(" + ")
   quotesQtd = successQueries.length
   console.log("QUOTESQTD: ", quotesQtd)
 
@@ -168,22 +168,6 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   }
   return { quotes: successQueries, message: message, quotesQtd: quotesQtd }
 
-  // if (propsNotFound.length > 0) {
-  //   let txt = `Para o documento com _id ${doc._id}, as seguintes propriedades não correspondem: ${propsNotFound.join(" • ")}`
-  //   console.log(txt)
-  //   return { message: txt }
-  // } else {
-  //   let txt = `Para o documento com _id ${doc._id}, todas as propriedades correspondem.`
-  //   console.log(txt)
-  //   return { foundQuotes: docs, message: txt }
-  // }
-
-  // return response
-
-  // if (foundQuotes.length > 0) {
-  //   return { foundQuotes, quotesQtd }
-  // } else {
-  //   console.log("failedqrs:", failedQueries)
   //   let finalFailedQueries = failedQueries.map((q) => getPropertyLabel(q) || q).join(" • ")
   //   return { message: `${finalFailedQueries} não encontrado(s)` }
   // }

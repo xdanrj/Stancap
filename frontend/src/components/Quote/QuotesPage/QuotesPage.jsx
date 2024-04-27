@@ -43,15 +43,11 @@ export default function QuotesPage() {
   }
 
   async function fetchQuotesBySearch() {
-    const response = await quoteService.searchQuotes(Object.fromEntries(searchParams))
-    //todo: refazer condicoes de mostrar alert
-    if(response.foundQuote){
-      console.log(response.foundQuote)
-      setQuotesQtd(response.quotesQtd)
-      setQuotesResponse(response.foundQuote)
-    } else {
-      useAlert(response.message, 1000)
-    }
+    const { quotes, message, quotesQtd } = await quoteService.searchQuotes(Object.fromEntries(searchParams))
+    //todo: refazer condicoes de mostrar alert    
+    setQuotesResponse(quotes)
+    setQuotesQtd(quotesQtd)
+    message && useAlert(message)
   }
 
   useEffect(() => {

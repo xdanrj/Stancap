@@ -49,11 +49,14 @@ export default class quoteEditingServices {
     }
 
     async searchQuotes(params) {
-        const response = await this.axios.get(`/search_quotes`, { params })
-        console.log(response)
-        if (response) {
+        try {
+            const response = await this.axios.get(`/search_quotes`, { params })
+            console.log(response)
             return response.data
+        } catch (error) {
+            return error.response.data
         }
+
     }
 
     async addQuote(data) {
@@ -69,7 +72,7 @@ export default class quoteEditingServices {
         try {
             console.log(params)
             console.log(updatedBody)
-            const response = await this.axios.patch(`/edit_quote`, updatedBody, {params: params})
+            const response = await this.axios.patch(`/edit_quote`, updatedBody, { params: params })
             console.log(response)
             return true
         } catch (error) {
