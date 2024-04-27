@@ -56,7 +56,6 @@ export default class quoteEditingServices {
         } catch (error) {
             return error.response.data
         }
-
     }
 
     async addQuote(data) {

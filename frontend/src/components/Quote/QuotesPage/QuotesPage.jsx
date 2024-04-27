@@ -43,8 +43,7 @@ export default function QuotesPage() {
   }
 
   async function fetchQuotesBySearch() {
-    const { quotes, message, quotesQtd } = await quoteService.searchQuotes(Object.fromEntries(searchParams))
-    //todo: refazer condicoes de mostrar alert    
+    const { quotes, message, quotesQtd } = await quoteService.searchQuotes(Object.fromEntries(searchParams))   
     setQuotesResponse(quotes)
     setQuotesQtd(quotesQtd)
     message && useAlert(message)
