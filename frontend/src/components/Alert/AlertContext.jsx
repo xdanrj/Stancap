@@ -1,7 +1,8 @@
 import React, { useContext, createContext } from "react"
 import { ToastContainer, toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
+import parse from 'html-react-parser';
 
 const AlertContext = createContext()
 
@@ -20,8 +21,8 @@ export function AlertProvider({ children }) {
             </div>
         ))
         //todo: fazer com que msg seja um html normal pra funfar no toast
-        console.log(msg)
-        toast(msg, { autoClose: duration })
+        console.log(d(renderToString(msg)))
+        toast(renderToString(msg), { autoClose: duration })
     }
 
     return (

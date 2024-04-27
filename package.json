@@ -7,14 +7,15 @@
     "dev": "vite --host",
     "host": "vite --host",
     "db": "nodemon app.js",
-    "all": "concurrently \"npm run backend\"  \"npm run frontend\"",    
-    "backend": "cd backend && npm run db",    
+    "all": "concurrently \"npm run backend\"  \"npm run frontend\"",
+    "backend": "cd backend && npm run db",
     "frontend": "cd frontend && npm run dev",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "html-react-parser": "^5.1.10"
   }
 }
