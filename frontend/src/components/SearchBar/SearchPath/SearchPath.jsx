@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Breadcrumb } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { getSourceLabel } from "../../Quote/SourceCommonFunctions"
+import { getPropertyLabel } from "../../../Formatting/QuotesProperties"
 
 export default function SearchPath({ searchParams }) {
     const navigate = useNavigate()
@@ -16,7 +17,7 @@ export default function SearchPath({ searchParams }) {
                     modifiedValue = (value === 'single') ? 'Citação' : 'Diálogo'
                 }
                 else if (key === 'sort') {
-                    modifiedValue = (value === 'ascending') ? 'Ordem crescente' : 'Ordem decrescente'
+                    modifiedValue = (value === 'ascending') ? 'crescente' : 'decrescente'
                 }
                 else if (key === "source") {
                     modifiedValue = getSourceLabel(value)
@@ -45,7 +46,7 @@ export default function SearchPath({ searchParams }) {
                 {queryParams.map((item, index) => (
                     item.value && (
                         <Breadcrumb.Item key={index} onClick={() => handlePathClick(item.key)} className="justify-content-center mx-auto">
-                        {item.value}
+                        {`${getPropertyLabel(item.key)}: ${item.value}` }
                     </Breadcrumb.Item>
                     )                    
                 ))}

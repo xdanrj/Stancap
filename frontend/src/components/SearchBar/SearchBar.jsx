@@ -46,12 +46,15 @@ export function SearchBar({ fetchAllQuotes }) {
             }
         }
         console.log(propertyQuery)
-        if (propertyQuery.length > 0) {
-            //                                                          Object.keys(propertyQuery)[0]
+        console.log(_.keys(propertyQuery).length)
+        if (_.keys(propertyQuery).length > 0) {
+            console.log("entrou if")
+            //talvez inutil: Object.keys(propertyQuery)[0]
             const foundType = searchTypes.find((type) => type.value === propertyQuery)
             setSelectedSearchType(foundType)
         } else {
-            fetchAllQuotes ? fetchAllQuotes() : null
+            console.log("entrou else")
+            fetchAllQuotes()
         }
     }, [])
 
