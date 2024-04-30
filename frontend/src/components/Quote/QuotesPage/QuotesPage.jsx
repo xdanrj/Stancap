@@ -27,23 +27,16 @@ export default function QuotesPage() {
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
 
-  useEffect(() => {
-    if (!searchParams.has("page")) {
-      searchParams.set("page", "1")
-      navigate({ search: searchParams.toString() })
-    }
-    navigate({ search: searchParams.toString() })
-    fetchQuotesBySearch()
-  }, [location.search])
 
-  async function fetchAllQuotes() {
-    const response = await quoteService.getQuotes(Object.fromEntries(searchParams))
-    setQuotesQtd(response.quotesQtd)
-    setQuotesResponse(response.response)
+
+  async function getNoQueryQuotes() {
+    const { quotes, quotesQtd } = await quoteService.getNoQueryQuotes(Object.fromEntries(searchParams))
+    setQuotesQtd(quotesQtd)
+    setQuotesResponse(quotes)
   }
 
-  async function fetchQuotesBySearch() {
-    const { quotes, message, quotesQtd } = await quoteService.searchQuotes(Object.fromEntries(searchParams))   
+  async function getQueryQuotes() {
+    const { quotes, message, quotesQtd } = await quoteService.getQueryQuotes(Object.fromEntries(searchParams))
     setQuotesResponse(quotes)
     setQuotesQtd(quotesQtd)
     message && useAlert(message)
@@ -80,11 +73,10 @@ export default function QuotesPage() {
 
   return (
     <>
-
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
       <QuotesPageDiv>
-        <SearchBar fetchQuotesBySearch={fetchQuotesBySearch} fetchAllQuotes={fetchAllQuotes} searchParams={searchParams} />
+        <SearchBar getQueryQuotes={getQueryQuotes} getNoQueryQuotes={getNoQueryQuotes} searchParams={searchParams} />
 
         <Row className="justify-content-center">
           <Col xs={12} sm={9} md={7} lg={6} xl={5} >

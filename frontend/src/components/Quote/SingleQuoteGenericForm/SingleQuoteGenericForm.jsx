@@ -36,7 +36,7 @@ export default function SingleQuoteGenericForm(props) {
         async function getQuoteToEdit() {
             console.log(searchParams.get("_id"))
             if (searchParams.get("_id")) {
-                const response = await quoteEditingService.searchQuotes({ _id: searchParams.get("_id") })
+                const response = await quoteEditingService.getQueryQuotes({ _id: searchParams.get("_id") })
                 const data = response.foundQuote[0]
                 console.log(data)
                 console.log(data.date)

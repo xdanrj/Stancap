@@ -12,7 +12,7 @@ import { QuotesProperties, getPropertyLabel } from "../../Formatting/QuotesPrope
 import SearchPath from "./SearchPath/SearchPath";
 import { sizes } from "../../CommonStyles/screenSizes";
 
-export function SearchBar({ fetchAllQuotes }) {
+export function SearchBar({ getQueryQuotes, getNoQueryQuotes }) {
     const location = useLocation()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
@@ -25,6 +25,17 @@ export function SearchBar({ fetchAllQuotes }) {
     const [inputString, setInputString] = useState()
     const [searchTypes, setSearchTypes] = useState(QuotesProperties)
     console.log(searchParams)
+    
+    useEffect(() => {
+        console.log(location.search)
+        if (!searchParams.has("page")) {
+          searchParams.set("page", "1")
+          //navigate({ search: searchParams.toString() })
+        }
+        navigate({ search: searchParams.toString() })
+        //getQueryQuotes()
+      }, [location.search])
+    
     useEffect(() => {
         if (location.pathname === "/my_quotes") {
             _.remove(searchTypes, function (obj) {
@@ -38,7 +49,6 @@ export function SearchBar({ fetchAllQuotes }) {
             }
             setSearchTypes(searchTypes)
         }
-
         let propertyQuery = {}
         for (let [key, value] of searchParams) {
             if (!(key === "page" || key === "sort" || key === "quoteType")) {
@@ -49,12 +59,12 @@ export function SearchBar({ fetchAllQuotes }) {
         console.log(_.keys(propertyQuery).length)
         if (_.keys(propertyQuery).length > 0) {
             console.log("entrou if")
-            //talvez inutil: Object.keys(propertyQuery)[0]
             const foundType = searchTypes.find((type) => type.value === propertyQuery)
             setSelectedSearchType(foundType)
+            getQueryQuotes()
         } else {
             console.log("entrou else")
-            fetchAllQuotes()
+            getNoQueryQuotes()
         }
     }, [])
 

@@ -28,13 +28,13 @@ export default function MyQuotes() {
             searchParams.set("page", "1")
             navigate({ search: searchParams.toString() })
         }
-        fetchQuotesBySearch()
+        getQueryQuotes()
     }, [location.search])
 
-    async function fetchQuotesBySearch() {
+    async function getQueryQuotes() {
         const searchParamsQuery = Object.fromEntries(searchParams)
         const queryWithUserId = { ...searchParamsQuery, "uploadByUser": userId }
-        const response = await quoteService.searchQuotes(queryWithUserId)
+        const response = await quoteService.getQueryQuotes(queryWithUserId)
         setQuotesQtd(response.quotesQtd)
         response.foundQuote ? setQuotesResponse(response.foundQuote) : useAlert(response.message, 1000)
     }

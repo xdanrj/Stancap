@@ -50,16 +50,17 @@ export const quotesRoutes = (app) => {
   })
 
   //todas as quotes COM limite de 5 por page
+  // usar apenas uma rota pra com query/ sem query
   app.get(`/get_quotes`, reqLimit(200), async (req, res) => {
     try {
       const sort = req.query.sort === "ascending" ? 1 : -1
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
       const quotesQtd = await Quotes.countDocuments()
-      const response = await Quotes.find().sort({ uploadDate: sort }).skip(skipItems).limit(perPage)
-      res.status(200).json({ response, quotesQtd })
+      const quotes = await Quotes.find().sort({ uploadDate: sort }).skip(skipItems).limit(perPage)
+      res.status(200).json({ quotes, quotesQtd })
     } catch (error) {
-      console.log(error)
+      console.log("ERROROTA: ", error)
       res.status(400).json({ message: error })
     }
   })
@@ -77,7 +78,7 @@ export const quotesRoutes = (app) => {
       console.log(response)
       res.status(200).json(response)
     } catch (error) {
-      console.log("errorota:", error)
+      console.log("ERROROTA: ", error)
       res.status(400).json({ message: error })
     }
   })

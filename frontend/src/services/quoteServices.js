@@ -5,17 +5,6 @@ export default class quoteEditingServices {
         this.axios = axiosInstance
     }
 
-    //service/route sem utilidade ate entao \/
-    async quotesQuantity() {
-        try {
-            const response = await this.axios.get('/quotes_quantity')
-            console.log(response)
-            return response.data
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     async getAllQuotes() {
         try {
             const response = await this.axios.get('/all_quotes')
@@ -36,19 +25,20 @@ export default class quoteEditingServices {
         }
     }
 
-    //todo: talvez motivo do alert estar duplicado a cada busca: getquotes e searchquotes estao sendo executados juntos
-    async getQuotes(params) {
-        const response = await this.axios.get(`/get_quotes`, { params })
-        console.log(response)
-        if (response.data) {
-            return response.data
-        } else {
+    //todo: talvez motivo do alert estar duplicado a cada busca: getNoQueryQuotes e getQueryQuotes estao sendo executados juntos
+    async getNoQueryQuotes(params) {
+        try {
+            console.log(params)
+            const response = await this.axios.get(`/get_quotes`, { params })
             console.log(response)
-            return false
+            return response.data
+        } catch (error) {
+            console.log(response)
+            return error.response.data
         }
     }
 
-    async searchQuotes(params) {
+    async getQueryQuotes(params) {
         try {
             const response = await this.axios.get(`/search_quotes`, { params })
             console.log(response)
