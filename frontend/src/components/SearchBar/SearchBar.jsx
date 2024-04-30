@@ -24,13 +24,12 @@ export function SearchBar({getQuotes}) {
     const [inputColor, setInputColor] = useState(false)
     const [inputString, setInputString] = useState()
     const [searchTypes, setSearchTypes] = useState(QuotesProperties)
-    console.log(searchParams)
     
     useEffect(() => {
         console.log(location.search)
         if (!searchParams.has("page")) {
           searchParams.set("page", "1")
-          //navigate({ search: searchParams.toString() })
+          navigate({ search: searchParams.toString() })
         }
         navigate({ search: searchParams.toString() })
         getQuotes()
@@ -74,7 +73,8 @@ export function SearchBar({getQuotes}) {
         setSelectedSearchType(eventKey)
     }
 
-    const handleSourceSelect = async (eventKey) => {
+    const handleSourceSelect = async (eventKey) => {    
+        searchParams.set("page", "1")
         setSelectedSearchType("source")
         searchParams.set("source", eventKey)
         navigate({ search: searchParams.toString() })
@@ -93,13 +93,15 @@ export function SearchBar({getQuotes}) {
     }
 
     const handleSearchClick = async () => {
+        searchParams.set("page", "1")
         searchParams.set(selectedSearchType, inputString)
+        
         navigate({ search: searchParams.toString() })
     }
 
     const handleSortChange = () => {
         searchParams.set("sort", searchParams.get("sort") === "ascending" ? "descending" : "ascending")
-        searchParams.set("page", 1)
+        searchParams.set("page", "1")
         navigate({ search: searchParams.toString() })
     }
 
