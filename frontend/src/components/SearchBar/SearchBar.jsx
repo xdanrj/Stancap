@@ -12,7 +12,7 @@ import { QuotesProperties, getPropertyLabel } from "../../Formatting/QuotesPrope
 import SearchPath from "./SearchPath/SearchPath";
 import { sizes } from "../../CommonStyles/screenSizes";
 
-export function SearchBar({getQuotes}) {
+export function SearchBar({ getQuotes }) {
     const location = useLocation()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
@@ -24,22 +24,22 @@ export function SearchBar({getQuotes}) {
     const [inputColor, setInputColor] = useState(false)
     const [inputString, setInputString] = useState()
     const [searchTypes, setSearchTypes] = useState(QuotesProperties)
-    
+
     useEffect(() => {
         console.log(location.search)
         if (!searchParams.has("page")) {
-          searchParams.set("page", "1")
-          navigate({ search: searchParams.toString() })
+            searchParams.set("page", "1")
+            navigate({ search: searchParams.toString() })
         }
         navigate({ search: searchParams.toString() })
         getQuotes()
-      }, [location.search])
-    
+    }, [location.search])
+
     useEffect(() => {
+        _.remove(searchTypes, obj => obj.value === "sort")
         if (location.pathname === "/my_quotes") {
-            _.remove(searchTypes, function (obj) {
-                return obj.value === "uploadByUsername"
-            })
+            _.remove(searchTypes, obj => obj.value === "uploadByUsername"
+            )
             setSearchTypes(searchTypes)
         }
         if (location.pathname === "/quotes") {
@@ -55,10 +55,10 @@ export function SearchBar({getQuotes}) {
             }
         }
         console.log(propertyQuery)
-            const foundType = searchTypes.find((type) => type.value === propertyQuery)
-            setSelectedSearchType(foundType)
-            getQuotes()
-        
+        const foundType = searchTypes.find((type) => type.value === propertyQuery)
+        setSelectedSearchType(foundType)
+        getQuotes()
+
     }, [])
 
     useEffect(() => {
@@ -73,7 +73,7 @@ export function SearchBar({getQuotes}) {
         setSelectedSearchType(eventKey)
     }
 
-    const handleSourceSelect = async (eventKey) => {    
+    const handleSourceSelect = async (eventKey) => {
         searchParams.set("page", "1")
         setSelectedSearchType("source")
         searchParams.set("source", eventKey)
@@ -95,7 +95,7 @@ export function SearchBar({getQuotes}) {
     const handleSearchClick = async () => {
         searchParams.set("page", "1")
         searchParams.set(selectedSearchType, inputString)
-        
+
         navigate({ search: searchParams.toString() })
     }
 

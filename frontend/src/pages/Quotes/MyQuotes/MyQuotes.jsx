@@ -22,19 +22,10 @@ export default function MyQuotes() {
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
     const [quoteInfoData, setQuoteInfoData] = useState("")
 
-    useEffect(() => {
-        Object.fromEntries(searchParams)
-        if (!searchParams.has("page")) {
-            searchParams.set("page", "1")
-            navigate({ search: searchParams.toString() })
-        }
-        getQueryQuotes()
-    }, [location.search])
-
-    async function getQueryQuotes() {
+    async function getQuotes() {
         const searchParamsQuery = Object.fromEntries(searchParams)
         const queryWithUserId = { ...searchParamsQuery, "uploadByUser": userId }
-        const response = await quoteService.getQueryQuotes(queryWithUserId)
+        const response = await quoteService.getQuotes(queryWithUserId)
         setQuotesQtd(response.quotesQtd)
         response.foundQuote ? setQuotesResponse(response.foundQuote) : useAlert(response.message, 1000)
     }
@@ -89,7 +80,7 @@ export default function MyQuotes() {
         <>
             <div style={{marginTop: "5rem"}}>
                 <Row className="justify-content-center">
-                    <SearchBar />
+                    <SearchBar getQuotes={getQuotes} />
                     <Col xs={12} sm={8} md={6} lg={5}>
                         {
                             quotesResponse.length > 0 ? (
