@@ -27,16 +27,8 @@ export default function QuotesPage() {
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
 
-
-
-  async function getNoQueryQuotes() {
-    const { quotes, quotesQtd } = await quoteService.getNoQueryQuotes(Object.fromEntries(searchParams))
-    setQuotesQtd(quotesQtd)
-    setQuotesResponse(quotes)
-  }
-
-  async function getQueryQuotes() {
-    const { quotes, message, quotesQtd } = await quoteService.getQueryQuotes(Object.fromEntries(searchParams))
+  async function getQuotes() {
+    const { quotes, message, quotesQtd } = await quoteService.getQuotes(Object.fromEntries(searchParams))
     setQuotesResponse(quotes)
     setQuotesQtd(quotesQtd)
     message && useAlert(message)
@@ -76,7 +68,7 @@ export default function QuotesPage() {
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
       <QuotesPageDiv>
-        <SearchBar getQueryQuotes={getQueryQuotes} getNoQueryQuotes={getNoQueryQuotes} searchParams={searchParams} />
+        <SearchBar getQuotes={getQuotes} />
 
         <Row className="justify-content-center">
           <Col xs={12} sm={9} md={7} lg={6} xl={5} >

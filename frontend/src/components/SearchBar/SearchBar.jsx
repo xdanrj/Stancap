@@ -12,7 +12,7 @@ import { QuotesProperties, getPropertyLabel } from "../../Formatting/QuotesPrope
 import SearchPath from "./SearchPath/SearchPath";
 import { sizes } from "../../CommonStyles/screenSizes";
 
-export function SearchBar({ getQueryQuotes, getNoQueryQuotes }) {
+export function SearchBar({getQuotes}) {
     const location = useLocation()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
@@ -33,7 +33,7 @@ export function SearchBar({ getQueryQuotes, getNoQueryQuotes }) {
           //navigate({ search: searchParams.toString() })
         }
         navigate({ search: searchParams.toString() })
-        //getQueryQuotes()
+        getQuotes()
       }, [location.search])
     
     useEffect(() => {
@@ -56,16 +56,10 @@ export function SearchBar({ getQueryQuotes, getNoQueryQuotes }) {
             }
         }
         console.log(propertyQuery)
-        console.log(_.keys(propertyQuery).length)
-        if (_.keys(propertyQuery).length > 0) {
-            console.log("entrou if")
             const foundType = searchTypes.find((type) => type.value === propertyQuery)
             setSelectedSearchType(foundType)
-            getQueryQuotes()
-        } else {
-            console.log("entrou else")
-            getNoQueryQuotes()
-        }
+            getQuotes()
+        
     }, [])
 
     useEffect(() => {

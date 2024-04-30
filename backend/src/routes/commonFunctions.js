@@ -47,15 +47,13 @@ export async function userExists(proprietyTarget) {
 }
 
 export async function selectQuote(searchQueryArg, sort, skipItems = null, limit = null) {
-  console.log("qqqqqqqqqqqqqqqqq")
-  console.log(searchQueryArg)
+  console.log("searchQueryArg: ", searchQueryArg)
+  console.log("skipItems: ", skipItems)
   const searchQueryKeys = Object.keys(searchQueryArg)
   const searchQuery = searchQueryArg
   console.log("searchQuery:", searchQuery)
   let quotesQtd
   let queriesToDo = {}
- 
-  console.log("searchQuery:", searchQuery)
 
   console.log("searchQuery: ", searchQuery)
   if (searchQueryKeys.includes("uploadByUsername")) {
@@ -95,8 +93,6 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
     .limit(limit).lean()
 
   console.log("fullquerytry: ", fullQueryTry)
-
-
 
   if (fullQueryTry.length > 0) {
     console.log("caiu no fullquerytry")
