@@ -15,7 +15,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "concurrently": "^8.2.2",
-    "html-react-parser": "^5.1.10"
+    "concurrently": "^8.2.2"
   }
 }

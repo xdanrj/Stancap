@@ -23,11 +23,15 @@ export default function MyQuotes() {
     const [quoteInfoData, setQuoteInfoData] = useState("")
 
     async function getQuotes() {
-        const searchParamsQuery = Object.fromEntries(searchParams)
-        const queryWithUserId = { ...searchParamsQuery, "uploadByUser": userId }
-        const response = await quoteService.getQuotes(queryWithUserId)
-        setQuotesQtd(response.quotesQtd)
-        response.foundQuote ? setQuotesResponse(response.foundQuote) : useAlert(response.message, 1000)
+        try {
+            const searchParamsQuery = Object.fromEntries(searchParams)
+            const queryWithUserId = { ...searchParamsQuery, "uploadByUser": userId }
+            const { quotes, quotesQtd, message } = await quoteService.getQuotes(queryWithUserId)            
+            setQuotesQtd(quotesQtd)
+            setQuotesResponse(quotes)
+        } catch (error) {
+            message && useAlert(message)
+        }
     }
 
     const handleEditQuote = async (quoteId, quoteType) => {
@@ -78,7 +82,7 @@ export default function MyQuotes() {
 
     return (
         <>
-            <div style={{marginTop: "5rem"}}>
+            <div style={{ marginTop: "5rem" }}>
                 <Row className="justify-content-center">
                     <SearchBar getQuotes={getQuotes} />
                     <Col xs={12} sm={8} md={6} lg={5}>
@@ -96,7 +100,7 @@ export default function MyQuotes() {
                                                     </>
                                                     :
                                                     <>
-                                                        <MdbIcon icon="info-circle" onClick={()=> handleQuoteInfoClick(data)}/>
+                                                        <MdbIcon icon="info-circle" onClick={() => handleQuoteInfoClick(data)} />
                                                         <MdbIcon icon="trash-alt" onClick={() => handleDeleteQuote(data._id)} />
                                                         <MdbIcon icon="pencil-alt" onClick={() => handleEditQuote(data._id, data.quoteType)} />
                                                     </>
@@ -109,7 +113,7 @@ export default function MyQuotes() {
                                 <h4>Você ainda não criou nenhuma quote</h4>
                             )
                         }
-                         {<QuoteInfo quoteData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo} />}
+                        {<QuoteInfo quoteData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo} />}
                         <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
                     </Col>
                 </Row >

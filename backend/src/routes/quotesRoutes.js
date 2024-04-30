@@ -61,31 +61,14 @@ export const quotesRoutes = (app) => {
       const page = req.query.page ? parseInt(req.query.page) : 1
       const skipItems = (page - 1) * perPage
       const response = await selectQuote(searchquery, sort, skipItems, perPage)
-      console.log("ppp")
-       console.log(response)
+      // console.log("ppp")
+      //  console.log(response)
       res.status(200).json(response)
     } catch (error) {
       console.log("ERROROTA: ", error)
       res.status(400).json({ message: error })
     }
   })
-
-  //busca especifíca COM limite de 5 por page
-  // app.get("/search_quotes", reqLimit(200), async (req, res) => {
-  //   try {
-  //     const searchquery = _.omit(req.query, ['page', 'sort'])
-  //     const sort = req.query.sort === "ascending" ? 1 : -1
-  //     const page = req.query.page ? parseInt(req.query.page) : 1
-  //     const skipItems = (page - 1) * perPage
-  //     const response = await selectQuote(searchquery, sort, skipItems, perPage)
-  //     console.log("ppp")
-  //     console.log(response)
-  //     res.status(200).json(response)
-  //   } catch (error) {
-  //     console.log("ERROROTA: ", error)
-  //     res.status(400).json({ message: error })
-  //   }
-  // })
 
   app.patch("/edit_quote", reqLimit(40), requireUserToken, async (req, res) => {
     try {

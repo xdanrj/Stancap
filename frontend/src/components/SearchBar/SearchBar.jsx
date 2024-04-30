@@ -58,7 +58,6 @@ export function SearchBar({ getQuotes }) {
         const foundType = searchTypes.find((type) => type.value === propertyQuery)
         setSelectedSearchType(foundType)
         getQuotes()
-
     }, [])
 
     useEffect(() => {
