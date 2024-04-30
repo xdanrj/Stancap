@@ -7,6 +7,14 @@ import { getPropertyLabel } from "../../../Formatting/QuotesProperties"
 export default function SearchPath({ searchParams }) {
     const navigate = useNavigate()
     const [queryParams, setQueryParams] = useState([])
+    const [frmtQueryParams, setfrmtQueryParams] = useState()
+
+    const fnFormat = queryParams.map(item => {
+        return {
+            key: getPropertyLabel(item.key) || item.key, 
+            value: item.value
+        }
+    })
 
     useEffect(() => {
         const updatedQueryParams = []
@@ -36,17 +44,17 @@ export default function SearchPath({ searchParams }) {
         navigate({ search: searchParams.toString() })
     }
     useEffect(() => {
-        console.log(queryParams)
+        console.log(queryParams)        
     }, [queryParams])
 
 //todo: value de: uploadbyusername e tags tao dando undefined
     return (
         <div className="d-flex justify-content-center mx-auto mb-4 text-center">
             <Breadcrumb>
-                {queryParams.map((item, index) => (
+                {frmtQueryParams.map((item, index) => (
                     item.value && (
                         <Breadcrumb.Item key={index} onClick={() => handlePathClick(item.key)} className="justify-content-center mx-auto">
-                        {`${getPropertyLabel(item.key)}: ${item.value}` }
+                        {`${item.key}: ${item.value}` }
                     </Breadcrumb.Item>
                     )                    
                 ))}

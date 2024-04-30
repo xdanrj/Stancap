@@ -10,8 +10,6 @@ export const QuotesProperties =
 
 export function getPropertyLabel(rawValue) {
     console.log("raw: ", rawValue)
-    let response
     const findLabel = QuotesProperties.find((prop) => prop.value === rawValue)
-    findLabel ? response = findLabel.label : response = null
-    return response
+    return findLabel?.label
 }
