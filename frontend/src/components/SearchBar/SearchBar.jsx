@@ -23,7 +23,7 @@ export function SearchBar({ getQuotes }) {
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
     const [inputString, setInputString] = useState()
-    const [searchTypes, setSearchTypes] = useState(QuotesLabels)
+    const [searchTypes, setSearchTypes] = useState([...QuotesLabels])
 
     useEffect(() => {
         console.log(location.search)

@@ -11,5 +11,6 @@ export let QuotesLabels =
 export function getPropertyLabel(rawValue) {
     console.log(rawValue)
     let findLabel = QuotesLabels.find((prop) => prop.value === rawValue)
-    return findLabel?.label 
+    console.log(QuotesLabels)
+    return findLabel?.label
 }   
