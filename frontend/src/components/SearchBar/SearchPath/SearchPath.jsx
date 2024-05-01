@@ -2,22 +2,22 @@ import React, { useState, useEffect } from "react"
 import { Breadcrumb } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { getSourceLabel } from "../../Quote/SourceCommonFunctions"
-import { getPropertyLabel } from "../../../Formatting/QuotesProperties"
+import { getPropertyLabel } from "../../../Formatting/QuotesLabels"
 
 export default function SearchPath({ searchParams }) {
     const navigate = useNavigate()
     const [queryParams, setQueryParams] = useState([])
-    const [frmtQueryParams, setfrmtQueryParams] = useState()
+    //const [frmtQueryParams, setfrmtQueryParams] = useState()
 
-    const fnFormat = queryParams.map(item => {
-        return {
-            key: getPropertyLabel(item.key) || item.key, 
-            value: item.value
-        }
-    })
+    // const fnFormat = queryParams.map(item => {
+    //     return {
+    //         key: getPropertyLabel(item.key) || item.key, 
+    //         value: item.value
+    //     }
+    // })
 
     useEffect(() => {
-        const updatedQueryParams = []
+        let updatedQueryParams = []
         for (const [key, value] of searchParams.entries()) {
             if (key !== "page") {
                 let modifiedValue
@@ -36,6 +36,15 @@ export default function SearchPath({ searchParams }) {
             }
             console.log(key, value)
         }
+        
+        updatedQueryParams = updatedQueryParams.map(item => {
+            console.log(item.key)
+            return {
+                
+                key: getPropertyLabel(item.key) || "item.key", 
+                value: item.value
+            }
+        })
         setQueryParams(updatedQueryParams)
     }, [searchParams])
 
@@ -43,15 +52,12 @@ export default function SearchPath({ searchParams }) {
         searchParams.delete(queryKey)
         navigate({ search: searchParams.toString() })
     }
-    useEffect(() => {
-        console.log(queryParams)        
-    }, [queryParams])
 
 //todo: value de: uploadbyusername e tags tao dando undefined
     return (
         <div className="d-flex justify-content-center mx-auto mb-4 text-center">
             <Breadcrumb>
-                {frmtQueryParams.map((item, index) => (
+                {queryParams.map((item, index) => (
                     item.value && (
                         <Breadcrumb.Item key={index} onClick={() => handlePathClick(item.key)} className="justify-content-center mx-auto">
                         {`${item.key}: ${item.value}` }

@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { SourceNames, getSourceLabel } from "../Quote/SourceCommonFunctions";
 import { useSearchParams } from "react-router-dom";
 import _ from "lodash";
-import { QuotesProperties, getPropertyLabel } from "../../Formatting/QuotesProperties";
+import { QuotesLabels, getPropertyLabel } from "../../Formatting/QuotesLabels";
 import SearchPath from "./SearchPath/SearchPath";
 import { sizes } from "../../CommonStyles/screenSizes";
 
@@ -23,7 +23,7 @@ export function SearchBar({ getQuotes }) {
     const [typeColor, setTypeColor] = useState(false)
     const [inputColor, setInputColor] = useState(false)
     const [inputString, setInputString] = useState()
-    const [searchTypes, setSearchTypes] = useState(QuotesProperties)
+    const [searchTypes, setSearchTypes] = useState(QuotesLabels)
 
     useEffect(() => {
         console.log(location.search)
