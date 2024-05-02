@@ -27,23 +27,20 @@ export default function QuotesPage() {
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
 
+  //todo: 1a pesquisa (query vazia) nao sendo feita
   async function getQuotes() {
+    console.log(Object.fromEntries(searchParams))
     const { quotes, message, quotesQtd } = await quoteService.getQuotes(Object.fromEntries(searchParams))
     console.log(quotes)
-    
-    if(quotes.length > 0) {
-      setQuotesResponse(quotes)
-      setQuotesQtd(quotesQtd)
-    }
-    
-    message && useAlert(message)
+    console.log(quotes.length)
+    return { quotes, message, quotesQtd }
   }
 
   useEffect(() => {
     const currentSingleQuotesArray = []
     const currentMultipleQuotesArray = []
 
-    // TRATAMENTOS/ FORMATAÇÃO PRÉ DIVISÃO DE TIPOS DE QUOTE:
+    // FORMATAÇÃO PRÉ DIVISÃO DE TIPOS DE QUOTE:
     if (quotesResponse) {
       const setUploadersNames = async () => {
         quotesResponse.map(async (data) => {
@@ -73,7 +70,7 @@ export default function QuotesPage() {
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
       <QuotesPageDiv>
-        <SearchBar getQuotes={getQuotes} />
+        <SearchBar getQuotes={getQuotes} setQuotesResponse={setQuotesResponse}/>
 
         <Row className="justify-content-center">
           <Col xs={12} sm={9} md={7} lg={6} xl={5} >
@@ -86,4 +83,3 @@ export default function QuotesPage() {
     </>
   )
 }
-

@@ -12,7 +12,7 @@ import { QuotesLabels, getPropertyLabel } from "../../Formatting/QuotesLabels";
 import SearchPath from "./SearchPath/SearchPath";
 import { sizes } from "../../CommonStyles/screenSizes";
 
-export function SearchBar({ getQuotes }) {
+export function SearchBar({ getQuotes, setQuotesResponse }) {
     const location = useLocation()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
@@ -91,11 +91,27 @@ export function SearchBar({ getQuotes }) {
         setInputString(e.target.value)
     }
 
+    // const handleSearchClick = async () => {
+    //     searchParams.set("page", "1")
+    //     searchParams.set(selectedSearchType, inputString)
+
+    //     navigate({ search: searchParams.toString() })
+    // }
+
     const handleSearchClick = async () => {
+        console.log("clicou")
         searchParams.set("page", "1")
         searchParams.set(selectedSearchType, inputString)
 
-        navigate({ search: searchParams.toString() })
+        const { quotes, message } = await getQuotes()
+        console.log(quotes)
+        console.log(quotes.length)
+        if(quotes.length > 0) {
+            console.log("quotes é maior q 0")
+            setQuotesResponse(quotes)
+            navigate({ search: searchParams.toString() }) // Atualize os parâmetros de pesquisa apenas se a consulta for bem-sucedida
+        }
+        message && useAlert(message)
     }
 
     const handleSortChange = () => {
@@ -128,7 +144,6 @@ export function SearchBar({ getQuotes }) {
     return (
         <>
             <div style={{ "marginBottom": "-2rem" }}>
-
                 {!(selectedSearchType === "source") && (
                     <Row className="justify-content-center">
                         <Col xs={12} sm={10} md={8} lg={5}>
@@ -208,15 +223,13 @@ export function SearchBar({ getQuotes }) {
                                         <MDBIcon fas icon="times" />
                                     </Button>
                                     <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
-
                                 </InputGroup>
                             </Col>
                         </Row>
                     </>
                 )}
             </div>
-
-            <SearchPath searchParams={searchParams} />
+            <SearchPath searchParams={searchParams} setQuotesResponse={setQuotesResponse}/>
         </>
     )
 }

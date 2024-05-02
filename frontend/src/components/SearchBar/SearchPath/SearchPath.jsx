@@ -4,17 +4,9 @@ import { useNavigate } from "react-router-dom"
 import { getSourceLabel } from "../../Quote/SourceCommonFunctions"
 import { getPropertyLabel } from "../../../Formatting/QuotesLabels"
 
-export default function SearchPath({ searchParams }) {
+export default function SearchPath({ searchParams, setQuotesResponse }) {
     const navigate = useNavigate()
     const [queryParams, setQueryParams] = useState([])
-    //const [frmtQueryParams, setfrmtQueryParams] = useState()
-
-    // const fnFormat = queryParams.map(item => {
-    //     return {
-    //         key: getPropertyLabel(item.key) || item.key, 
-    //         value: item.value
-    //     }
-    // })
 
     useEffect(() => {
         let updatedQueryParams = []
@@ -39,14 +31,13 @@ export default function SearchPath({ searchParams }) {
         
         updatedQueryParams = updatedQueryParams.map(item => {
             console.log(item.key)
-            return {
-                
+            return {                
                 key: getPropertyLabel(item.key) || "item.key", 
                 value: item.value
             }
         })
         setQueryParams(updatedQueryParams)
-    }, [searchParams])
+    }, [setQuotesResponse])
 
     const handlePathClick = (queryKey) => {
         searchParams.delete(queryKey)
