@@ -48,11 +48,8 @@ export async function userExists(proprietyTarget) {
 }
 
 export async function selectQuote(searchQueryArg, sort, skipItems = null, limit = null) {
-  console.log("searchQueryArg: ", searchQueryArg)
-  console.log("skipItems: ", skipItems)
   const searchQueryKeys = Object.keys(searchQueryArg)
   const searchQuery = searchQueryArg
-  console.log("searchQuery:", searchQuery)
   let quotesQtd
   let queriesToDo = {}
 
@@ -96,8 +93,8 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   console.log("fullquerytry: ", fullQueryTry)
 
   if (fullQueryTry.length > 0) {
-    console.log("caiu no fullquerytry")
     successQueries = fullQueryTry
+    quotesQtd = await Quotes.countDocuments(queriesToDo)
   } else {
     for (const [key, value] of Object.entries(queriesToDo)) {
       const quotes = await Quotes.find
@@ -111,7 +108,6 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
       const keyValuePair = `{"${key}":"${value}"}`
       quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + quotes.length
     }
-
     
     let maxQuotes = -1
     //define qual query teve mais resultados
@@ -150,12 +146,12 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
     }
     // console.log("failedQueries: ", failedQueries)
     // console.log("successQueries: ", successQueries)
+    //todo: falta o quotesqtd caso nao for uma fullquerytry
   }
 
   let message = null
   let frmtFailedQueries = failedQueries.map((k) => getPropertyLabel(k) || k).join(" + ")
-  quotesQtd = successQueries.length
-  console.log("QUOTESQTD: ", quotesQtd)
+  console.log("qq: ", quotesQtd)
 
   if (failedQueries.length > 0 && successQueries.length > 0) {
     message = `Resultados de apenas ${getPropertyLabel(..._.keys(mostQueryRes))}.

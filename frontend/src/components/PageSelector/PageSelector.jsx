@@ -11,6 +11,7 @@ export default function PageSelector({ searchParams, quotesQtd }) {
 
     let actualPage = searchParams.get("page")
     useEffect(() => {
+        console.log(quotesQtd)
         if (quotesQtd) {
             let totalPagesCalc = Math.ceil((quotesQtd / 5))
            
