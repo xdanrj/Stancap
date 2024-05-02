@@ -122,7 +122,6 @@ export function SearchBar({ getQuotes }) {
             return true
         }
     }
-
     const buttonSize = sizes.isMobile ? "sm" : "lg"
 
     //todo: fazer com q a searchbar seja da mesma largura do que as quotes e talvez descolar os botoes do input
@@ -132,7 +131,6 @@ export function SearchBar({ getQuotes }) {
 
                 {!(selectedSearchType === "source") && (
                     <Row className="justify-content-center">
-
                         <Col xs={12} sm={10} md={8} lg={5}>
                             <InputGroup>
                                 <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>

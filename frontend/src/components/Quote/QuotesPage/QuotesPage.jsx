@@ -29,8 +29,13 @@ export default function QuotesPage() {
 
   async function getQuotes() {
     const { quotes, message, quotesQtd } = await quoteService.getQuotes(Object.fromEntries(searchParams))
-    setQuotesResponse(quotes)
-    setQuotesQtd(quotesQtd)
+    console.log(quotes)
+    
+    if(quotes.length > 0) {
+      setQuotesResponse(quotes)
+      setQuotesQtd(quotesQtd)
+    }
+    
     message && useAlert(message)
   }
 
