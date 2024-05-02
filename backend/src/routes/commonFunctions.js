@@ -3,13 +3,16 @@ import { Quotes } from "../models/Quotes.js"
 import mongoose from "mongoose"
 import _ from "lodash"
 
-export const QuotesLabels =
-  [{ label: "Autor", value: "author" },
-  { label: "Tags", value: "tags" },
-  { label: "Source", value: "source" },
-  { label: "Upload por", value: "uploadByUsername" },
-  { label: "Contexto", value: "context" },
-  { label: "Ordem", value: "sort"}]
+  export let QuotesLabels =
+    [
+    { label: "Autor", value: "author" },
+    { label: "Tags", value: "tags" },
+    { label: "Source", value: "source" },
+    { label: "Upload por", value: "uploadByUsername" },
+    { label: "Contexto", value: "context" },
+    { label: "Ordem", value: "sort"},
+    { label: "Tipo", value: "quoteType"}
+]
 
 export function getPropertyLabel(rawValue) {
   let response
@@ -90,7 +93,7 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
     .skip(skipItems)
     .limit(limit).lean()
 
-  console.log("fullquerytry: ", fullQueryTry)
+  //console.log("fullquerytry: ", fullQueryTry)
 
   if (fullQueryTry.length > 0) {
     successQueries = fullQueryTry
@@ -124,6 +127,7 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
     doneQueries = _.merge({}, ...doneQueries)
     const mQrKey = Object.keys(mostQueryRes)[0]
     mostQueryRes = JSON.parse(mQrKey)
+    quotesQtd = await Quotes.countDocuments(mostQueryRes)
 
     console.log("mostQueryRes: ", mostQueryRes)
     console.log("qtsCntKeys: ", qtsCntKeys)

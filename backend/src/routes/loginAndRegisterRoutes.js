@@ -136,7 +136,7 @@ export const loginAndRegisterRoutes = (app) => {
         const payload = {
             userId: userId
         }
-        const userToken = jwt.sign(payload, secretKey, { expiresIn: '168h' })
+        const userToken = jwt.sign(payload, secretKey, { expiresIn: '700h' })
         return userToken
     }
 

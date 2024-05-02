@@ -90,8 +90,14 @@ export const quotesRoutes = (app) => {
     try {
       const quoteId = { _id: req.query.quoteId }
       const userId = req.query.userId
-      let findingQuote = (await selectQuote(quoteId)).foundQuote
-      let selectedQuote = findingQuote[0]
+      //console.log(await selectQuote(quoteId))
+      //let findingQuote = (await selectQuote(quoteId)).foundQuote
+      //let selectedQuote = findingQuote[0]
+      let selectedQuote = await selectQuote(quoteId)
+      selectedQuote = selectedQuote.quotes[0]
+      console.log("SS:")
+      console.log( selectedQuote)
+      
 
       if (selectedQuote.uploadByUser === userId) {
         const response = await Quotes.deleteMany(quoteId)
