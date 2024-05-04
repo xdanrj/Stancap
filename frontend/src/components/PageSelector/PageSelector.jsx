@@ -4,6 +4,7 @@ import { Button, ButtonGroup, ButtonToolbar } from "react-bootstrap"
 import { MDBIcon } from "mdb-react-ui-kit"
 import { MainDiv } from "./PageSelectorStyles"
 
+//talvez tirar searchparams de prop e chamar searchparams normalmente aqui, assim como é em outro comps.
 export default function PageSelector({ searchParams, quotesQtd }) {
     const [itemsQtd, setItemsQtd] = useState([])
     const [totalPages, setTotalPages] = useState()

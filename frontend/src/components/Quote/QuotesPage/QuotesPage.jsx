@@ -32,14 +32,13 @@ export default function QuotesPage() {
     console.log(Object.fromEntries(searchParams))
     const { quotes, message, quotesQtd } = await quoteService.getQuotes(Object.fromEntries(searchParams))
     console.log(quotes)
-    console.log(quotes.length)
+    console.log(quotesQtd)
     return { quotes, message, quotesQtd }
   }
 
   useEffect(() => {
     const currentSingleQuotesArray = []
     const currentMultipleQuotesArray = []
-
     // FORMATAÇÃO PRÉ DIVISÃO DE TIPOS DE QUOTE:
     if (quotesResponse) {
       const setUploadersNames = async () => {
@@ -70,7 +69,7 @@ export default function QuotesPage() {
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
       <QuotesPageDiv>
-        <SearchBar getQuotes={getQuotes} setQuotesResponse={setQuotesResponse}/>
+        <SearchBar getQuotes={getQuotes} setQuotesResponse={setQuotesResponse} setQuotesQtd={setQuotesQtd}/>
 
         <Row className="justify-content-center">
           <Col xs={12} sm={9} md={7} lg={6} xl={5} >
@@ -79,7 +78,7 @@ export default function QuotesPage() {
           </Col>
         </Row>
       </QuotesPageDiv>
-      <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
+      <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} />
     </>
   )
 }

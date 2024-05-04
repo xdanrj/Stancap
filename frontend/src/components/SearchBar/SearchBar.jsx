@@ -12,7 +12,7 @@ import { QuotesLabels, getPropertyLabel } from "../../Formatting/QuotesLabels";
 import SearchPath from "./SearchPath/SearchPath";
 import { sizes } from "../../CommonStyles/screenSizes";
 
-export function SearchBar({ getQuotes, setQuotesResponse }) {
+export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
     const location = useLocation()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
@@ -24,6 +24,7 @@ export function SearchBar({ getQuotes, setQuotesResponse }) {
     const [inputColor, setInputColor] = useState(false)
     const [inputString, setInputString] = useState()
     const [searchTypes, setSearchTypes] = useState([...QuotesLabels])
+    const useAlert = useAlertMsg()
 
     useEffect(() => {
         console.log(location.search)
@@ -31,8 +32,8 @@ export function SearchBar({ getQuotes, setQuotesResponse }) {
             searchParams.set("page", "1")
             navigate({ search: searchParams.toString() })
         }
-        navigate({ search: searchParams.toString() })
-        getQuotes()
+        //navigate({ search: searchParams.toString() })
+        handleGetQuotes()
     }, [location.search])
 
     useEffect(() => {
@@ -57,7 +58,6 @@ export function SearchBar({ getQuotes, setQuotesResponse }) {
         console.log(propertyQuery)
         const foundType = searchTypes.find((type) => type.value === propertyQuery)
         setSelectedSearchType(foundType)
-        getQuotes()
     }, [])
 
     useEffect(() => {
@@ -66,6 +66,18 @@ export function SearchBar({ getQuotes, setQuotesResponse }) {
         paramsCopy.delete('sort')
         setPureSearchParams(paramsCopy)
     }, [searchParams])
+
+    async function handleGetQuotes() {
+        const { quotes, message, quotesQtd } = await getQuotes()
+        console.log(quotesQtd)
+        if (quotes.length > 0) {
+            console.log("quotes é maior q 0")
+            setQuotesResponse(quotes)
+            setQuotesQtd(quotesQtd)
+            navigate({ search: searchParams.toString() })
+        }
+        message && useAlert(message)
+    }
 
     const handleTypeSelect = (eventKey) => {
         console.log(eventKey)
@@ -102,16 +114,16 @@ export function SearchBar({ getQuotes, setQuotesResponse }) {
         console.log("clicou")
         searchParams.set("page", "1")
         searchParams.set(selectedSearchType, inputString)
-
-        const { quotes, message } = await getQuotes()
-        console.log(quotes)
-        console.log(quotes.length)
-        if(quotes.length > 0) {
-            console.log("quotes é maior q 0")
-            setQuotesResponse(quotes)
-            navigate({ search: searchParams.toString() }) // Atualize os parâmetros de pesquisa apenas se a consulta for bem-sucedida
-        }
-        message && useAlert(message)
+        handleGetQuotes()
+        // const { quotes, message, quotesQtd } = await getQuotes()
+        // console.log(quotes)
+        // if(quotes.length > 0) {
+        //     console.log("quotes é maior q 0")
+        //     setQuotesResponse(quotes)
+        //     setQuotesQtd(quotesQtd)
+        //     navigate({ search: searchParams.toString() }) 
+        // }
+        // message && useAlert(message)
     }
 
     const handleSortChange = () => {
@@ -176,7 +188,6 @@ export function SearchBar({ getQuotes, setQuotesResponse }) {
                                         </Button>
                                     )}
 
-
                                 </>
                                 <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className=
                                     {searchParams.get("sort") === "ascending" ? "bi bi-sort-down-alt" : "bi bi-sort-up-alt"}>
@@ -229,7 +240,7 @@ export function SearchBar({ getQuotes, setQuotesResponse }) {
                     </>
                 )}
             </div>
-            <SearchPath searchParams={searchParams} setQuotesResponse={setQuotesResponse}/>
+            <SearchPath searchParams={searchParams} setQuotesResponse={setQuotesResponse} />
         </>
     )
 }
