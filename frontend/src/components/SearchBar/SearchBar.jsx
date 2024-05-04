@@ -69,7 +69,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
 
     async function handleGetQuotes() {
         const { quotes, message, quotesQtd } = await getQuotes()
-        console.log(quotesQtd)
+        console.log(quotes.length)
         if (quotes.length > 0) {
             console.log("quotes é maior q 0")
             setQuotesResponse(quotes)
@@ -102,13 +102,6 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
         console.log(e.target.value)
         setInputString(e.target.value)
     }
-
-    // const handleSearchClick = async () => {
-    //     searchParams.set("page", "1")
-    //     searchParams.set(selectedSearchType, inputString)
-
-    //     navigate({ search: searchParams.toString() })
-    // }
 
     const handleSearchClick = async () => {
         console.log("clicou")
@@ -240,7 +233,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
                     </>
                 )}
             </div>
-            <SearchPath searchParams={searchParams} setQuotesResponse={setQuotesResponse} />
+            <SearchPath searchParams={searchParams} pureSearchParams={pureSearchParams} />
         </>
     )
 }

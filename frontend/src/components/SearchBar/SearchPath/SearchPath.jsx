@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { Breadcrumb } from "react-bootstrap"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import { getSourceLabel } from "../../Quote/SourceCommonFunctions"
 import { getPropertyLabel } from "../../../Formatting/QuotesLabels"
 
-export default function SearchPath({ searchParams, setQuotesResponse }) {
+export default function SearchPath({ searchParams, pureSearchParams }) {
+    const location = useLocation()
     const navigate = useNavigate()
     const [queryParams, setQueryParams] = useState([])
 
@@ -37,7 +38,7 @@ export default function SearchPath({ searchParams, setQuotesResponse }) {
             }
         })
         setQueryParams(updatedQueryParams)
-    }, [setQuotesResponse])
+    }, [location.search])
 
     const handlePathClick = (queryKey) => {
         searchParams.delete(queryKey)
