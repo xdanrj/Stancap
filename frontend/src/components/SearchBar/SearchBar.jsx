@@ -108,15 +108,6 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
         searchParams.set("page", "1")
         searchParams.set(selectedSearchType, inputString)
         handleGetQuotes()
-        // const { quotes, message, quotesQtd } = await getQuotes()
-        // console.log(quotes)
-        // if(quotes.length > 0) {
-        //     console.log("quotes é maior q 0")
-        //     setQuotesResponse(quotes)
-        //     setQuotesQtd(quotesQtd)
-        //     navigate({ search: searchParams.toString() }) 
-        // }
-        // message && useAlert(message)
     }
 
     const handleSortChange = () => {

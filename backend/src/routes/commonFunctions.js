@@ -147,14 +147,19 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
           }
         }
       }
+    } else {
+      console.log("kkk: ", _.keys(doneQueries)[0])
+      failedQueries.push(_.keys(doneQueries)[0])
     }
-    // console.log("failedQueries: ", failedQueries)
+    console.log("tt:", findingQuotes.length)
+     console.log("failedQueries: ", failedQueries)
     // console.log("successQueries: ", successQueries)
     //todo: falta o quotesqtd caso nao for uma fullquerytry
   }
 
   let message = null
   let frmtFailedQueries = failedQueries.map((k) => getPropertyLabel(k) || k).join(" + ")
+  console.log("uu: ", failedQueries)
   console.log("qq: ", quotesQtd)
 
   if (failedQueries.length > 0 && successQueries.length > 0) {
@@ -164,10 +169,6 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
     message = `${frmtFailedQueries} não encontrado(s)`
   }
   return { quotes: successQueries, message: message, quotesQtd: quotesQtd }
-
-  //   let finalFailedQueries = failedQueries.map((q) => getPropertyLabel(q) || q).join(" • ")
-  //   return { message: `${finalFailedQueries} não encontrado(s)` }
-  // }
 }
 
 // Essa função permite selecionar qualquer quote usando qualquer propriedade como filtro. Recebe como parâmetro um único OBJETO (propriedade: valorPropriedade)
