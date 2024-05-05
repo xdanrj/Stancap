@@ -3,16 +3,16 @@ import { Quotes } from "../models/Quotes.js"
 import mongoose from "mongoose"
 import _ from "lodash"
 
-  export let QuotesLabels =
-    [
+export let QuotesLabels =
+  [
     { label: "Autor", value: "author" },
     { label: "Tags", value: "tags" },
     { label: "Source", value: "source" },
     { label: "Upload por", value: "uploadByUsername" },
     { label: "Contexto", value: "context" },
-    { label: "Ordem", value: "sort"},
-    { label: "Tipo", value: "quoteType"}
-]
+    { label: "Ordem", value: "sort" },
+    { label: "Tipo", value: "quoteType" }
+  ]
 
 export function getPropertyLabel(rawValue) {
   let response
@@ -80,6 +80,7 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
     queriesToDo = { ...queriesToDo, ...tagsQuery }
   }
   queriesToDo = { ...queriesToDo, ...searchQuery }
+  console.log("oo: ", queriesToDo)
 
   let quotesCount = {}
   let findingQuotes = []
@@ -95,23 +96,48 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
 
   //console.log("fullquerytry: ", fullQueryTry)
 
+  const failedTags = []
   if (fullQueryTry.length > 0) {
     successQueries = fullQueryTry
     quotesQtd = await Quotes.countDocuments(queriesToDo)
   } else {
     for (const [key, value] of Object.entries(queriesToDo)) {
-      const quotes = await Quotes.find
-        ({ [key]: value })
-        .sort({ uploadDate: sort })
-        .skip(skipItems)
-        .limit(limit).lean()
-
-      findingQuotes.push(...quotes)
-      // contabiliza a query com mais resultados
-      const keyValuePair = `{"${key}":"${value}"}`
-      quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + quotes.length
+      console.log("entrou loop 1")
+      if (value["$in"]) {
+        console.log("entrou valueIN")
+        const tagsArr = value["$in"];
+        for (const tag of tagsArr) {
+          
+          const quotes = await Quotes.find({ [key]: tag })
+            .sort({ uploadDate: sort })
+            .skip(skipItems)
+            .limit(limit)
+            .lean()
+            console.log("cd")
+            console.log(`${tag}:`, quotes)
+            if(quotes){
+              findingQuotes.push(...quotes)
+            } else {
+              failedTags.push(tag)
+            }          
+        }
+        // contabiliza a query com mais resultados
+        const keyValuePair = `{"${key}":{"$in":${JSON.stringify(tagsArr)}}}`;
+        quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + tagsArr.length;
+      } else {
+        const quotes = await Quotes.find({ [key]: value })
+          .sort({ uploadDate: sort })
+          .skip(skipItems)
+          .limit(limit)
+          .lean();
+        findingQuotes.push(...quotes);
+        // contabiliza a query com mais resultados
+        const keyValuePair = `{"${key}":"${value}"}`;
+        quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + quotes.length;
+      }
     }
     
+
     let maxQuotes = -1
     //define qual query teve mais resultados
     for (const [key, value] of Object.entries(quotesCount)) {
@@ -152,21 +178,25 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
       failedQueries.push(_.keys(doneQueries)[0])
     }
     console.log("tt:", findingQuotes.length)
-     console.log("failedQueries: ", failedQueries)
+    console.log("failedQueries: ", failedQueries)
     // console.log("successQueries: ", successQueries)
-    //todo: falta o quotesqtd caso nao for uma fullquerytry
   }
 
   let message = null
   let frmtFailedQueries = failedQueries.map((k) => getPropertyLabel(k) || k).join(" + ")
+  let frmtFailedTags = failedTags.join(" , ")
   console.log("uu: ", failedQueries)
   console.log("qq: ", quotesQtd)
-
-  if (failedQueries.length > 0 && successQueries.length > 0) {
+  console.log("ff: ", failedTags)
+  if(failedTags.length > 0) {
+    message = `Tag(s): ${frmtFailedQueries} não encontrada(s). Apague-a(s) da pesquisa.`
+  }
+  else if (failedQueries.length > 0 && successQueries.length > 0) {
     message = `Resultados de apenas ${getPropertyLabel(..._.keys(mostQueryRes))}.
     ${frmtFailedQueries} não encontrado(s)`
   } else if (successQueries.length === 0) {
-    message = `${frmtFailedQueries} não encontrado(s)`
+    message = `${frmtFailedQueries} não encontrado(s).
+    Reduza o escopo da pesquisa.`
   }
   return { quotes: successQueries, message: message, quotesQtd: quotesQtd }
 }
