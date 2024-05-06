@@ -106,40 +106,21 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
       console.log("key: ", key)
       console.log("value: ", value)
 
-      /*if (value["$in"]) {
-        console.log("entrou valueIN")
-        const tagsArr = value["$in"]
-        console.log("tagsArr: ", tagsArr)
-        for (const tag of tagsArr) {          
-          const quotes = await Quotes.find({ [key]: tag })
-            .sort({ uploadDate: sort })
-            .skip(skipItems)
-            .limit(limit)
-            .lean()
-            console.log("cd")
-            console.log(`${tag}:`, quotes)
-            if(quotes){
-              findingQuotes.push(...quotes)
-            } else {
-              failedTags.push(tag)
-            }          
-        }
-        // contabiliza a query com mais resultados
-        const keyValuePair = `{"${key}":{"$in":${JSON.stringify(tagsArr)}}}`;
-        quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + tagsArr.length;
-      } else {*/
-        const quotes = await Quotes.find({ [key]: value })
-          .sort({ uploadDate: sort })
-          .skip(skipItems)
-          .limit(limit)
-          .lean();
-        findingQuotes.push(...quotes);
-        // contabiliza a query com mais resultados
-        const keyValuePair = `{"${key}":"${value}"}`;
-        quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + quotes.length;
-      //}
+      if (value["$in"]) {
+        const keyValuePair = `{"${key}":{"$in":${JSON.stringify(tagsArr)}}}`
+      } else {
+        const keyValuePair = `{"${key}":"${value}"}`
+      }
+      const quotes = await Quotes.find({ [key]: value })
+        .sort({ uploadDate: sort })
+        .skip(skipItems)
+        .limit(limit)
+        .lean()
+      findingQuotes.push(...quotes)
+      // contabiliza a query com mais resultados        
+      quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + quotes.length
     }
-    
+
 
     let maxQuotes = -1
     //define qual query teve mais resultados
@@ -191,7 +172,7 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   console.log("failedQueries: ", failedQueries)
   console.log("quotesQtd: ", quotesQtd)
   console.log("failedTags: ", failedTags)
-  if(failedTags.length > 0) {
+  if (failedTags.length > 0) {
     message = `Tag(s): ${frmtFailedTags} não encontrada(s). Apague-a(s) da pesquisa.`
   }
   else if (failedQueries.length > 0 && successQueries.length > 0) {
