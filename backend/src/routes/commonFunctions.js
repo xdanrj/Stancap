@@ -103,11 +103,14 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   } else {
     for (const [key, value] of Object.entries(queriesToDo)) {
       console.log("entrou loop 1")
-      if (value["$in"]) {
+      console.log("key: ", key)
+      console.log("value: ", value)
+
+      /*if (value["$in"]) {
         console.log("entrou valueIN")
-        const tagsArr = value["$in"];
-        for (const tag of tagsArr) {
-          
+        const tagsArr = value["$in"]
+        console.log("tagsArr: ", tagsArr)
+        for (const tag of tagsArr) {          
           const quotes = await Quotes.find({ [key]: tag })
             .sort({ uploadDate: sort })
             .skip(skipItems)
@@ -124,7 +127,7 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
         // contabiliza a query com mais resultados
         const keyValuePair = `{"${key}":{"$in":${JSON.stringify(tagsArr)}}}`;
         quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + tagsArr.length;
-      } else {
+      } else {*/
         const quotes = await Quotes.find({ [key]: value })
           .sort({ uploadDate: sort })
           .skip(skipItems)
@@ -134,7 +137,7 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
         // contabiliza a query com mais resultados
         const keyValuePair = `{"${key}":"${value}"}`;
         quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + quotes.length;
-      }
+      //}
     }
     
 
@@ -174,10 +177,10 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
         }
       }
     } else {
-      console.log("kkk: ", _.keys(doneQueries)[0])
+      //console.log("kkk: ", _.keys(doneQueries)[0])
       failedQueries.push(_.keys(doneQueries)[0])
     }
-    console.log("tt:", findingQuotes.length)
+    console.log("findingQuotes.length:", findingQuotes.length)
     console.log("failedQueries: ", failedQueries)
     // console.log("successQueries: ", successQueries)
   }
@@ -185,11 +188,11 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
   let message = null
   let frmtFailedQueries = failedQueries.map((k) => getPropertyLabel(k) || k).join(" + ")
   let frmtFailedTags = failedTags.join(" , ")
-  console.log("uu: ", failedQueries)
-  console.log("qq: ", quotesQtd)
-  console.log("ff: ", failedTags)
+  console.log("failedQueries: ", failedQueries)
+  console.log("quotesQtd: ", quotesQtd)
+  console.log("failedTags: ", failedTags)
   if(failedTags.length > 0) {
-    message = `Tag(s): ${frmtFailedQueries} não encontrada(s). Apague-a(s) da pesquisa.`
+    message = `Tag(s): ${frmtFailedTags} não encontrada(s). Apague-a(s) da pesquisa.`
   }
   else if (failedQueries.length > 0 && successQueries.length > 0) {
     message = `Resultados de apenas ${getPropertyLabel(..._.keys(mostQueryRes))}.
