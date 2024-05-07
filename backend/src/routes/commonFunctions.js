@@ -105,11 +105,11 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
       console.log("entrou loop 1")
       console.log("key: ", key)
       console.log("value: ", value)
-
+      let keyValuePair
       if (value["$in"]) {
-        const keyValuePair = `{"${key}":{"$in":${JSON.stringify(tagsArr)}}}`
+        keyValuePair = `{"${key}":{"$in":${JSON.stringify(tagsArr)}}}`
       } else {
-        const keyValuePair = `{"${key}":"${value}"}`
+        keyValuePair = `{"${key}":"${value}"}`
       }
       const quotes = await Quotes.find({ [key]: value })
         .sort({ uploadDate: sort })
@@ -120,7 +120,6 @@ export async function selectQuote(searchQueryArg, sort, skipItems = null, limit 
       // contabiliza a query com mais resultados        
       quotesCount[keyValuePair] = (quotesCount[keyValuePair] || 0) + quotes.length
     }
-
 
     let maxQuotes = -1
     //define qual query teve mais resultados
