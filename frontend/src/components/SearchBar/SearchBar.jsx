@@ -68,7 +68,8 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
     }, [searchParams])
 
     async function handleGetQuotes() {
-        const { quotes, message, quotesQtd } = await getQuotes()
+        console.log(Object.fromEntries(searchParams))
+        const { quotes, message, quotesQtd } = await getQuotes(Object.fromEntries(searchParams))
         console.log(quotes.length)
         if (quotes.length > 0) {
             console.log("quotes é maior q 0")
@@ -105,9 +106,11 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
 
     const handleSearchClick = async () => {
         console.log("clicou")
-        searchParams.set("page", "1")
-        searchParams.set(selectedSearchType, inputString)
-        handleGetQuotes()
+        if (checkAttributes()) {
+            searchParams.set("page", "1")
+            searchParams.set(selectedSearchType, inputString)
+            handleGetQuotes()
+        }
     }
 
     const handleSortChange = () => {
@@ -134,8 +137,8 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
             return true
         }
     }
-    const buttonSize = sizes.isMobile ? "sm" : "lg"
 
+    const buttonSize = sizes.isMobile ? "sm" : "lg"
     //todo: fazer com q a searchbar seja da mesma largura do que as quotes e talvez descolar os botoes do input
     return (
         <>
@@ -165,6 +168,13 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
 
                                         placeholder={selectedSearchType === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleSearchChange}
                                         value={inputString || ""}
+                                        onKeyDown={(e) => {
+                                            console.log(e.key)
+                                            if (e.key === "Enter") {
+                                                if (checkAttributes())
+                                                    handleSearchClick()
+                                            }
+                                        }}
                                     />
                                     {(pureSearchParams?.size || inputString?.length > 0) && (
                                         <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
@@ -178,7 +188,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
                                 </i>
                                 </Button>
 
-                                <Button size={buttonSize} variant="dark" onClick={() => checkAttributes() ? handleSearchClick() : null}>
+                                <Button size={buttonSize} variant="dark" onClick={() => handleSearchClick()} >
                                     <MDBIcon icon="search" />
                                 </Button>
                             </InputGroup>

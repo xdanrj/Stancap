@@ -26,11 +26,11 @@ export default function QuotesPage() {
   const [quotesQtd, setQuotesQtd] = useState(0)
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
-
-  //todo: 1a pesquisa (query vazia) nao sendo feita
-  async function getQuotes() {
-    console.log(Object.fromEntries(searchParams))
-    const { quotes, message, quotesQtd } = await quoteService.getQuotes(Object.fromEntries(searchParams))
+ 
+  //todo: pesquisa nao sendo feita apos uma pesquisa fracassada por que a pesquisa esta usando searchparams, (que nao atualiza caso a pesquisa fracasse) como query
+  async function getQuotes(queryObj) {
+    console.log(queryObj)
+    const { quotes, message, quotesQtd } = await quoteService.getQuotes(queryObj)
     console.log(quotes)
     console.log(quotesQtd)
     return { quotes, message, quotesQtd }
