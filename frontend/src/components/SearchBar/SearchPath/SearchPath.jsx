@@ -45,7 +45,6 @@ export default function SearchPath({ searchParams, pureSearchParams }) {
         navigate({ search: searchParams.toString() })
     }
 
-//todo: value de: uploadbyusername e tags tao dando undefined
     return (
         <div className="d-flex justify-content-center mx-auto mb-4 text-center">
             <Breadcrumb>

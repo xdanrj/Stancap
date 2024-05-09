@@ -11,7 +11,6 @@ import { useModalBox } from "../../Modal/ModalContext";
 import { useAlertMsg } from "../../Alert/AlertContext";
 import dayjs from "dayjs"
 import { useSearchParams } from "react-router-dom";
-
 import quoteEditingServices from "../../../services/quoteServices"
 const quoteEditingService = new quoteEditingServices()
 
@@ -74,7 +73,6 @@ export default function SingleQuoteGenericForm(props) {
                     uploadByUser: localStorage.getItem("userId"),
                     quoteType: "single"
                 }
-                
                 response = await quoteEditingService.addQuote(updatedQuoteData)
                 console.log(response)
             } else if (props.type === "editQuote") {
@@ -137,7 +135,6 @@ export default function SingleQuoteGenericForm(props) {
                     finalSubmitQuote()
                 }
             }
-
         } catch (error) {
             useAlert(error)
         }

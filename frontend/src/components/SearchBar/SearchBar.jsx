@@ -139,7 +139,6 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
     }
 
     const buttonSize = sizes.isMobile ? "sm" : "lg"
-    //todo: fazer com q a searchbar seja da mesma largura do que as quotes e talvez descolar os botoes do input
     return (
         <>
             <div style={{ "marginBottom": "-2rem" }}>
