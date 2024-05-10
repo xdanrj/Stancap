@@ -6,27 +6,6 @@ import _ from "lodash"
 export const quotesRoutes = (app) => {
   //resultados perPage para todas as rotas com limite de resultado. padrao: 5
   const perPage = 5
-  async function functionEditQuote(selectedQuote, newBody) {
-    console.log("NEWBODY")
-    console.log(newBody)
-    // const entries = Object.entries(body)
-    // const data = Object.fromEntries(entries.slice(1))
-    // const firstPropriety = entries[0]
-    // const query = { [firstPropriety[0]]: firstPropriety[1] }
-
-    if (selectedQuote.length > 1) {
-      Quotes.updateMany(
-        query,
-        { ...newBody }
-      )
-    } else if (selectedQuote.length == 1) {
-      await Quotes.updateOne(
-        query,
-        { ...data }
-      )
-    }
-    return true
-  }
 
   // toda rota/ serviço que nao tiver "all" no nome retornará até 5 itens
   //todas as quotes SEM limite
@@ -74,9 +53,14 @@ export const quotesRoutes = (app) => {
     try {
       console.log("req.query: ", req.query)
       console.log("rqbody: ", req.body)
-      const selectedQuote = await selectQuote(req.query)
-      if (selectedQuote) {
-        const response = await functionEditQuote(selectedQuote, req.body)
+      const {quotes, message} = await selectQuote(req.query)
+      if (quotes) {
+        const response = await Quotes.updateOne(
+          quotes[0],
+          { ...req.body }
+        )
+        console.log("rr")
+        console.log(response)
         response ? res.status(200).send(true) : res.status(400).send({ message: "Erro ao editar quote" })
       } else {
         res.status(400).send(false)

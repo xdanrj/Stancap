@@ -33,21 +33,23 @@ export default function SingleQuoteGenericForm(props) {
 
     useEffect(() => {
         async function getQuoteToEdit() {
-            console.log(searchParams.get("_id"))
             if (searchParams.get("_id")) {
-                const response = await quoteEditingService.getQueryQuotes({ _id: searchParams.get("_id") })
-                const data = response.foundQuote[0]
-                console.log(data)
-                console.log(data.date)
-                setQuoteData((prevData) => ({
-                    ...prevData,
-                    quotes: data.quotes[0].quote,
-                    author: data.author,
-                    date: data.date,
-                    source: data.source,
-                    context: data.context,
-                    tags: data.tags
-                }))
+                const { quotes, message } = await quoteEditingService.getQuotes({ _id: searchParams.get("_id") })
+                console.log(quotes)
+                console.log(message)
+                if (quotes && quotes.length > 0) {
+                    const data = quotes[0]
+                    setQuoteData((prevData) => ({
+                        ...prevData,
+                        quotes: data.quotes[0].quote,
+                        author: data.author,
+                        date: data.date,
+                        source: data.source,
+                        context: data.context,
+                        tags: data.tags
+                    }))
+                }
+                message && useAlert(message)
             }
         }
         getQuoteToEdit()
@@ -58,7 +60,7 @@ export default function SingleQuoteGenericForm(props) {
         setSelectedSource(foundSource)
         console.log(foundSource)
     }
-    
+
     const finalSubmitQuote = async () => {
         try {
             console.log("entrou no finalsubmitquote")
@@ -216,10 +218,10 @@ export default function SingleQuoteGenericForm(props) {
                                         <FloatingLabel label="Outro">
                                             <Form.Control name="otherSourceName" placeholder="Outro" onChange={handleGenericChange} value={
                                                 SourceNames.some(item =>
-                                                item.value === quoteData.source || item.value === selectedSource.value
-                                            )
-                                                ? ""
-                                                : selectedSource.value}>
+                                                    item.value === quoteData.source || item.value === selectedSource.value
+                                                )
+                                                    ? ""
+                                                    : selectedSource.value}>
                                             </Form.Control>
                                         </FloatingLabel>
                                     </div>
