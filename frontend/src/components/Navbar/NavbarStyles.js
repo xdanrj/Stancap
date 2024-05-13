@@ -72,7 +72,6 @@ export const NavbarIconText = styled.p.attrs(() => ({
     className: ''
 }))`
     font-size: "0.7rem";
-    margin: "0";
 `;
 
 
