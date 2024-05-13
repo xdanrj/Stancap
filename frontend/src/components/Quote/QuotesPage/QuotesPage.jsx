@@ -27,7 +27,6 @@ export default function QuotesPage() {
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
  
-  //todo: pesquisa nao sendo feita apos uma pesquisa fracassada por que a pesquisa esta usando searchparams, (que nao atualiza caso a pesquisa fracasse) como query
   async function getQuotes(queryObj) {
     console.log(queryObj)
     const { quotes, message, quotesQtd } = await quoteService.getQuotes(queryObj)

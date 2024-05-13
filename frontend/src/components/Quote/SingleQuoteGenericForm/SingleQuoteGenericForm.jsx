@@ -142,13 +142,27 @@ export default function SingleQuoteGenericForm(props) {
         }
     }
 
+
+    // SourceNames.some(item =>
+    //     item.value === quoteData.source || item.value === selectedSource.value
+    // )
+    //     ? ""
+    //     : selectedSource.value
     const handleGenericChange = (e) => {
         const { name, value } = e.target
         console.log(name)
         if (name === "otherSourceName") {
+            let newValue
+            if(SourceNames.some(item =>
+                item.value === quoteData.source || item.value === selectedSource.value
+            )){
+                newValue = ""
+            } else {
+                newValue = value
+            }
             setSelectedSource((prevData) => ({
                 ...prevData,
-                value: value
+                value: newValue
             }))
         }
         if (name === "quotes") {
@@ -215,13 +229,8 @@ export default function SingleQuoteGenericForm(props) {
                                     ))}
                                     <Dropdown.Divider />
                                     <div className="px-1 pb-2">
-                                        <FloatingLabel label="Outro">
-                                            <Form.Control name="otherSourceName" placeholder="Outro" onChange={handleGenericChange} value={
-                                                SourceNames.some(item =>
-                                                    item.value === quoteData.source || item.value === selectedSource.value
-                                                )
-                                                    ? ""
-                                                    : selectedSource.value}>
+                                        <FloatingLabel label="Digite outra source...">
+                                            <Form.Control name="otherSourceName" placeholder="Digite outra source..." onChange={handleGenericChange} value={selectedSource.value}>
                                             </Form.Control>
                                         </FloatingLabel>
                                     </div>
