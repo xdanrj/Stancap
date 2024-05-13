@@ -12,10 +12,10 @@ export default class userServices {
     async logout() {
         localStorage.removeItem("userToken")  
         localStorage.removeItem("userId")      
-        localStorage.removeItem("userName")
+        localStorage.removeItem("username")
     }
 
-    async getUsername(userId) {
+    async getusername(userId) {
         console.log(userId)
         const response = await this.axios.post('/search_user', {_id: userId})
         console.log(response.data)

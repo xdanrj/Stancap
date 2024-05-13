@@ -27,6 +27,7 @@ export default function MyQuotes() {
             const searchParamsQuery = Object.fromEntries(searchParams)
             const queryWithUserId = { ...searchParamsQuery, "uploadByUser": userId }
             const { quotes, quotesQtd, message } = await quoteService.getQuotes(queryWithUserId)            
+            localStorage.setItem("userQuotesQtd", quotesQtd)
             setQuotesQtd(quotesQtd)
             setQuotesResponse(quotes)
         } catch (error) {
