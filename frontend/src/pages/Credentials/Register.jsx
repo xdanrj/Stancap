@@ -71,11 +71,14 @@ function RegisterForm() {
                     email: email,
                     username: registerData.username,
                     password: registerData.password})
-                    if(response){
-                        
+                    if(response === true){
+                        alert('Usuário cadastrado com sucesso')
+                        navigate('/quotes')
+                    } else {
+                        console.log(response)
+                        alert(response)
                     }
-                alert('Usuário cadastrado com sucesso')
-                navigate('/quotes')
+                
             }
         } catch (error) {
             console.log(error)

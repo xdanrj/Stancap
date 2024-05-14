@@ -17,16 +17,6 @@ export default class quoteEditingServices {
         }
     }
 
-    // async getQueryQuotes(params) {
-    //     try {
-    //         const response = await this.axios.get(`/search_quotes`, { params })
-    //         console.log(response)
-    //         return response.data
-    //     } catch (error) {
-    //         return error.response.data
-    //     }
-    // }
-
     async addQuote(data) {
         try {
             const response = await this.axios.post('/add_quote', data)

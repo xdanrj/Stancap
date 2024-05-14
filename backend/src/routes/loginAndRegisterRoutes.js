@@ -126,6 +126,7 @@ export const loginAndRegisterRoutes = (app) => {
                     response: savedUser
                 })
             } else if (selectedUser) {
+                //redundancia pois email ja foi verificado em rota anterior
                 res.status(409).json({ message: "E-mail já cadastrado" });
             }
         } catch (error) { res.status(400).json({ message: error }) }
