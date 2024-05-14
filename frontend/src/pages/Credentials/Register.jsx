@@ -41,7 +41,9 @@ function RegisterForm() {
     const handleSubmitCheckCode = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginAndRegisterService.checkCode({ email, code })
+            const response = await loginAndRegisterService.checkCode({
+                email: email, code: code
+            })
             if (response === true) {
                 alert('Código verificado com sucesso')
                 setCheckCodeForm(false)
@@ -58,12 +60,20 @@ function RegisterForm() {
         try {
             const passwordResult = passwordValidation(registerData.password)
             const usernameResult = await usernameValidation(registerData.username)
-
+            console.log(registerData)
             if (!passwordResult.response || !usernameResult.response) {
                 const errorMessage = passwordResult.response ? usernameResult.message : passwordResult.message
                 console.log(errorMessage)
                 useAlert(errorMessage)
             } else {
+                //todo:
+                const response = await loginAndRegisterService.register({
+                    email: email,
+                    username: registerData.username,
+                    password: registerData.password})
+                    if(response){
+                        
+                    }
                 alert('Usuário cadastrado com sucesso')
                 navigate('/quotes')
             }
@@ -86,81 +96,86 @@ function RegisterForm() {
         })
         console.log("registerData: ", registerData)
     }
-    
+
     return (
         <>
-        <Row className="justify-content-center">           
-            <Col xs={8} sm={5} md={4} lg={3} >
-                {sendCodeForm && (
-                    <>
-                    <h2 className="mb-4">Criação de conta</h2>
-                    <h5>Use um e-mail válido</h5>
-                        <Form onSubmit={handleSubmitSendCode}>
-                            <FloatingLabel label="E-mail">
-                                <Form.Control
-                                    className="mb-3"
-                                    name="email"
-                                    type="email"
-                                    onChange={handleEmailChange}
-                                    placeholder="E-mail" />
-                            </FloatingLabel>
-                            <Button type="submit">Enviar código de verificação</Button>
-                        </Form>
-                    </>
-                )}
+            <Row className="justify-content-center">
+                <Col xs={8} sm={6} md={4} lg={3} >
+                    {sendCodeForm && (
+                        <>
+                            <h2 className="mb-4">Criação de conta</h2>
+                            <h5>Use um e-mail válido</h5>
+                            <Form onSubmit={handleSubmitSendCode}>
+                                <FloatingLabel label="E-mail">
+                                    <Form.Control
+                                        className="mb-3"
+                                        name="email"
+                                        type="email"
+                                        onChange={handleEmailChange}
+                                        placeholder="E-mail" />
+                                </FloatingLabel>
+                                <Button type="submit">Enviar código de verificação</Button>
+                            </Form>
+                        </>
+                    )}
 
-                {checkCodeForm && (
-                    <>
-                        <Form onSubmit={handleSubmitCheckCode}>
-                            <FloatingLabel label="Código">
-                                <Form.Control
-                                    className="mb-3"
-                                    name="code"
-                                    type="text"
-                                    onChange={handleCodeChange}
-                                    placeholder=""
-                                />
-                            </FloatingLabel>
-                            <Button type="submit">Verificar</Button>
-                        </Form>
-                    </>
-                )}
+                    {checkCodeForm && (
+                        <>
+                            <h2 className="mb-4">Verifique seu e-mail</h2>
+                            <Form onSubmit={handleSubmitCheckCode}>
+                                <FloatingLabel label="Código">
+                                    <Form.Control
+                                        className="mb-3"
+                                        name="code"
+                                        type="text"
+                                        onChange={handleCodeChange}
+                                        placeholder=""
+                                    />
+                                </FloatingLabel>
+                                <Button type="submit">Verificar</Button>
+                            </Form>
+                        </>
+                    )}
 
-                {registerForm && (
-                    <>                      
-                        <Form onSubmit={handleSubmitRegister}>
-                            <FloatingLabel label="E-mail">
-                                <Form.Control style={{ color: 'grey' }}
-                                    className="mb-3"
-                                    name="email"
-                                    type="email"
-                                    value={email.email}
-                                    disabled
-                                />
-                            </FloatingLabel>
-                            <FloatingLabel label="Username">
-                                <Form.Control
-                                    className="mb-3"
-                                    name="username"
-                                    type="text"
-                                    onChange={handleRegisterChange}
-                                    placeholder=""
-                                />
-                            </FloatingLabel>
-                            <FloatingLabel label="Senha">
-                                <Form.Control
-                                    className="mb-3"
-                                    name="password"
-                                    type="password"
-                                    onChange={handleRegisterChange}
-                                    placeholder=""
-                                />
-                            </FloatingLabel>
-                            <Button type="submit">Registrar</Button>
-                        </Form>
-                    </>
-                )}
-            </Col>
+                    {registerForm && (
+
+                        <>
+
+                            <h5 className="mb-3">Você logará com seu e-mail</h5>
+                            <Form onSubmit={handleSubmitRegister}>
+                                <FloatingLabel label="E-mail" className="mb-8">
+                                    <Form.Control style={{ color: 'grey' }}
+                                        className="mb-3"
+                                        name="email"
+                                        type="email"
+                                        value={email.email}
+                                        disabled
+                                    />
+                                </FloatingLabel>
+                                <h2 className="mb-3">Finalizando cadastro</h2>
+                                <FloatingLabel label="Username">
+                                    <Form.Control
+                                        className="mb-3"
+                                        name="username"
+                                        type="text"
+                                        onChange={handleRegisterChange}
+                                        placeholder=""
+                                    />
+                                </FloatingLabel>
+                                <FloatingLabel label="Senha">
+                                    <Form.Control
+                                        className="mb-3"
+                                        name="password"
+                                        type="password"
+                                        onChange={handleRegisterChange}
+                                        placeholder=""
+                                    />
+                                </FloatingLabel>
+                                <Button type="submit">Registrar</Button>
+                            </Form>
+                        </>
+                    )}
+                </Col>
             </Row>
         </>
 

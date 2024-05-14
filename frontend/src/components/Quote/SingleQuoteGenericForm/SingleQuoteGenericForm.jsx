@@ -190,7 +190,6 @@ export default function SingleQuoteGenericForm(props) {
                                 </FloatingLabel>
                             </FormGroup>
 
-
                             <Col>
                                 <FormGroup>
                                     <FloatingLabel label="Autor">

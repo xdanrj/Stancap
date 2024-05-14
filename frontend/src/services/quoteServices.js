@@ -4,26 +4,6 @@ export default class quoteEditingServices {
     constructor() {
         this.axios = axiosInstance
     }
-    //descartar
-    // async getAllQuotes() {
-    //     try {
-    //         const response = await this.axios.get('/all_quotes')
-    //         if (response.status === 200) {
-    //             return response.data
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    // async searchAllQuotes(data) {
-    //     const response = await this.axios.post('/search_all_quotes', data)
-    //     if (response.data) {
-    //         return response.data
-    //     } else {
-    //         return false
-    //     }
-    // }
 
     async getQuotes(params) {
         try {

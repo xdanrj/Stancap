@@ -19,12 +19,8 @@ export default class loginAndRegisterServices {
         }
     }
 
-    async checkCode(dados) {
-        const emailAndCode = {
-            ...dados.email,
-            ...dados.code
-        }
-        const response = await this.axios.post('/check_code', emailAndCode)
+    async checkCode(dados) {       
+        const response = await this.axios.post('/check_code', dados)
         if (response.data.response) {
             return true
         }
@@ -35,8 +31,7 @@ export default class loginAndRegisterServices {
 
     async register(dados) {
         const response = await this.axios.post('/register', dados)
-
-        if (response.data.response) {
+        if (response.status === 200) {
             return true
         }
         else {
@@ -63,11 +58,6 @@ export default class loginAndRegisterServices {
         const userToken = localStorage.getItem("userToken")
         if(!userToken) {
             return false
-        }
-        try {
-            
-        } catch (error) {
-            
         }
     }
 

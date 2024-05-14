@@ -24,7 +24,7 @@ export default function NavbarComponent() {
 
   return (
     <>
-      <MDBNavbar fixed='top' dark bgColor='dark' className='align-items-center' style={{ "height": isInMyQuotes ? "4.7rem" : "3.6rem", "backgroundColor": "red" }}>
+      <MDBNavbar as='header' fixed='top' dark bgColor='dark' className='align-items-center' style={{ "height": isInMyQuotes ? "4.7rem" : "3.6rem", "backgroundColor": "red" }}>
         <MDBContainer fluid style={{ "marginTop": "-0.8rem", }}>
           <MDBNavbarNav className='d-flex flex-row ms-auto justify-content-center' >
             <MDBNavbarItem>

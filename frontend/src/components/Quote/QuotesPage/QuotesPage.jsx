@@ -8,7 +8,6 @@ import { SearchBar } from "../../SearchBar/SearchBar"
 import { useAlertMsg } from "../../Alert/AlertContext"
 import { Col, Row, Container } from "react-bootstrap"
 import userServices from "../../../services/userServices"
-import { QuotesPageDiv } from "./QuotesPageStyles"
 import { useModalBox } from "../../Modal/ModalContext"
 import { QuotesPageFirstVisitModal } from "./QuotesPageFirstVisitModal/QuotesPageFirstVisitModal"
 import PageSelector from "../../PageSelector/PageSelector"
@@ -67,7 +66,6 @@ export default function QuotesPage() {
     <>
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
-      <QuotesPageDiv>
         <SearchBar getQuotes={getQuotes} setQuotesResponse={setQuotesResponse} setQuotesQtd={setQuotesQtd}/>
 
         <Row className="justify-content-center">
@@ -76,7 +74,6 @@ export default function QuotesPage() {
             <MultipleQuote multipleQuotes={multipleQuotesArray} />
           </Col>
         </Row>
-      </QuotesPageDiv>
       <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} />
     </>
   )

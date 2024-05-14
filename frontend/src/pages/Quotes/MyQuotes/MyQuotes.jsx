@@ -83,7 +83,6 @@ export default function MyQuotes() {
 
     return (
         <>
-            <div style={{ marginTop: "5rem" }}>
                 <Row className="justify-content-center">
                     <SearchBar getQuotes={getQuotes} />
                     <Col xs={12} sm={8} md={6} lg={5}>
@@ -118,7 +117,6 @@ export default function MyQuotes() {
                         <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
                     </Col>
                 </Row >
-            </div>
         </>
     )
 }

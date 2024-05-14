@@ -77,14 +77,13 @@ export const loginAndRegisterRoutes = (app) => {
 
     app.post("/check_code", reqLimit(5, 10), async (req, res) => {
         try {
-            let email = req.body.email
-            let otpCode = req.body.code
+            const {email, code} = req.body
 
             const exist = await userExists({ email: email })
             if (!exist) {
                 const verification_check = await client.verify.v2.services(verifySid)
                     .verificationChecks
-                    .create({ to: email, code: otpCode })
+                    .create({ to: email, code: code })
                 const verificationCheckStatus = verification_check.status
                 //caso o codigo verificado por email seja aprovado, cria o User por enquanto apenas com o email:
                 if (verificationCheckStatus == "approved") {
