@@ -42,8 +42,7 @@ function RegisterForm() {
         e.preventDefault();
         try {
             const response = await loginAndRegisterService.checkCode({
-                email: email, code: code
-            })
+email, code})
             if (response === true) {
                 alert('Código verificado com sucesso')
                 setCheckCodeForm(false)
@@ -66,11 +65,11 @@ function RegisterForm() {
                 console.log(errorMessage)
                 useAlert(errorMessage)
             } else {
-                //todo:
                 const response = await loginAndRegisterService.register({
-                    email: email,
+                    email,
                     username: registerData.username,
                     password: registerData.password})
+                    //todo: parei aqui. falta testar
                     if(response === true){
                         alert('Usuário cadastrado com sucesso')
                         navigate('/quotes')
@@ -86,10 +85,13 @@ function RegisterForm() {
         }
     }
     const handleEmailChange = (e) => {
+        //todo: 
+        //old: 
         setEmail({ ...email, [e.target.name]: e.target.value })
     }
     const handleCodeChange = (e) => {
-        setCode({ ...code, [e.target.name]: e.target.value.trim() })
+        //old: "" "" /\
+        setCode({ ...code, e.target.value.trim() })
         console.log(code)
     }
     const handleRegisterChange = (e) => {
@@ -117,7 +119,7 @@ function RegisterForm() {
                                         onChange={handleEmailChange}
                                         placeholder="E-mail" />
                                 </FloatingLabel>
-                                <Button type="submit">Enviar código de verificação</Button>
+                                <Button type="submit">Enviar código</Button>
                             </Form>
                         </>
                     )}
@@ -125,25 +127,26 @@ function RegisterForm() {
                     {checkCodeForm && (
                         <>
                             <h2 className="mb-4">Verifique seu e-mail</h2>
-                            <Form onSubmit={handleSubmitCheckCode}>
-                                <FloatingLabel label="Código">
+                            <Form onSubmit={handleSubmitCheckCode} 
+                            >
+                                <div className="d-flex justify-content-center  align-items-center">
+                                <FloatingLabel label="Código" className="w-50"  >
                                     <Form.Control
-                                        className="mb-3"
+                                        className=" mb-3"
                                         name="code"
                                         type="text"
                                         onChange={handleCodeChange}
                                         placeholder=""
                                     />
                                 </FloatingLabel>
-                                <Button type="submit">Verificar</Button>
+                                </div>
+                                <Button className="" type="submit">Verificar</Button>                                
                             </Form>
                         </>
                     )}
 
                     {registerForm && (
-
                         <>
-
                             <h5 className="mb-3">Você logará com seu e-mail</h5>
                             <Form onSubmit={handleSubmitRegister}>
                                 <FloatingLabel label="E-mail" className="mb-8">

@@ -20,8 +20,7 @@ export const loginAndRegisterRoutes = (app) => {
 
     app.post("/login", reqLimit(20, 10), async (req, res) => {
         try {
-            const email = req.body.email
-            const password = req.body.password
+            const {email, password} = req.body
             const user = await userExists({ email: email })
             console.log(user)
             if (user) {
@@ -44,7 +43,7 @@ export const loginAndRegisterRoutes = (app) => {
     })
     app.post("/send_code", reqLimit(5, 10), async (req, res) => {
         try {
-            const email = req.body.email
+            const {email} = req.body
             //verifica se o email ja existe no DB
             let exist = await userExists({ email: email })
 
@@ -77,7 +76,10 @@ export const loginAndRegisterRoutes = (app) => {
 
     app.post("/check_code", reqLimit(5, 10), async (req, res) => {
         try {
+            console.log("REQBODY...: ", req.body)
             const {email, code} = req.body
+            console.log("email: ", email)
+            console.log("code: ", code)
 
             const exist = await userExists({ email: email })
             if (!exist) {
@@ -101,12 +103,12 @@ export const loginAndRegisterRoutes = (app) => {
     })
 
     app.post("/register", reqLimit(5, 10), async (req, res) => {
-        try {
-            // na rota anterior o email verificado sera guardado no localstorage (??nao sei, hein?? ignorar isso aqui talvez?)
-            const email = req.body.email
-            const username = req.body.username
+        try {            
+            console.log("REQBODY: ", req.body)
+            const {email, username} = req.body
             let password
             const selectedUser = await userExists({ email: email })
+            console.log("selectedUser: ", selectedUser)
             try {
                 password = await bcrypt.hash(req.body.password, 10)
             } catch (error) {
@@ -120,6 +122,7 @@ export const loginAndRegisterRoutes = (app) => {
                     password: password
                 })
                 const savedUser = await newUser.save()
+                console.log("savedUser: ", savedUser)
 
                 res.status(200).json({
                     message: "Usuário cadastrado com sucesso",
