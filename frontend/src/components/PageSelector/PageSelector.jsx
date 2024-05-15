@@ -15,9 +15,9 @@ export default function PageSelector({ searchParams, quotesQtd }) {
         console.log(quotesQtd)
         if (quotesQtd) {
             let totalPagesCalc = Math.ceil((quotesQtd / 5))
-           
+
             setTotalPages(totalPagesCalc)
-           
+
             let tempItemsQtd = []
             let initialIndex = 1
             if (actualPage >= 4) {
@@ -31,7 +31,7 @@ export default function PageSelector({ searchParams, quotesQtd }) {
         }
 
     }, [actualPage, quotesQtd, searchParams])
-
+    console.log(totalPages)
     const handlePageClick = (pageNum) => {
         searchParams.set("page", pageNum)
         navigate({ search: searchParams.toString() })
@@ -50,8 +50,10 @@ export default function PageSelector({ searchParams, quotesQtd }) {
                     </Button>
 
                 ))}
+                {totalPages > 1 && (
+                    <Button onClick={() => handlePageClick(totalPages)}><MDBIcon fas icon="angle-double-right" /> </Button>
+                )}
             </ButtonGroup>
-            <Button onClick={() => handlePageClick(totalPages)}><MDBIcon fas icon="angle-double-right" /> </Button>
-            </MainDiv>
+        </MainDiv>
     )
 }

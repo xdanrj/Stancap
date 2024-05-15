@@ -39,12 +39,8 @@ export default function QuotesPage() {
     const currentMultipleQuotesArray = []
     // FORMATAÇÃO PRÉ DIVISÃO DE TIPOS DE QUOTE:
     if (quotesResponse) {
-      const setUploadersNames = async () => {
-        quotesResponse.map(async (data) => {
-          data.uploadByUser = await userService.getUsername(data.uploadByUser)
-        })
-      }
-      setUploadersNames()
+      // descartar essa funcao e fazer formatacao apenas em QuoteInfo
+      
 
       if (Array.isArray(quotesResponse)) {
         quotesResponse.forEach((data) => {
@@ -66,7 +62,7 @@ export default function QuotesPage() {
     <>
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
-        <SearchBar getQuotes={getQuotes} setQuotesResponse={setQuotesResponse} setQuotesQtd={setQuotesQtd}/>
+        <SearchBar getQuotes={getQuotes} setQuotesResponse={setQuotesResponse} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd}/>
 
         <Row className="justify-content-center">
           <Col xs={12} sm={9} md={7} lg={6} xl={5} >

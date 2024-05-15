@@ -2,20 +2,29 @@ import React, { useEffect, useState } from "react"
 import { NormalDate, NormalDateAndHour } from "../../../Formatting/DateFormatting";
 import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph } from "./QuoteInfoStyles";
 import quoteEditingServices from "../../../services/quoteServices";
+import userServices from "../../../services/userServices";
 import _ from "lodash";
+import { SourceNames } from "../SourceCommonFunctions";
 
-export default function QuoteInfo(props) {
-    const handleClose = () => props.setShow(false)
+export default function QuoteInfo({ show, setShow, quoteData }) {
+    const handleClose = () => setShow(false)
     const quoteService = new quoteEditingServices()
-    const [quoteData, setQuoteData] = useState(props.quoteData)
+    const userService = new userServices()
+    const [data, setData] = useState({})
     useEffect(() => {
-        console.log(props.quoteData)
-        setQuoteData(props.quoteData)
-    }, [props.quoteData])
+        console.log(quoteData)
+        async function formatData() {
+            const updatedData = { ...quoteData }
+            updatedData.uploadByUser = await userService.getUsername(quoteData.uploadByUser)
+            updatedData.source = SourceNames.find(obj => obj.value === quoteData.source).name
+            setData(updatedData)
+        }
+        formatData()
+    }, [quoteData])
 
     return (
         <>
-            <Modal show={props.show} onHide={handleClose} centered>
+            <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
                     <ModalTitle>Detalhes da Quote</ModalTitle>
                 </Modal.Header>
@@ -23,22 +32,22 @@ export default function QuoteInfo(props) {
                 <ModalBody>
 
                     <TextTitle>Source</TextTitle>
-                    <TextParagraph>{quoteData.source ||
+                    <TextParagraph>{data.source ||
                         "Source não especificada"}
                     </TextParagraph>
 
                     <TextTitle>Data de upload</TextTitle>
-                    <TextParagraph>{quoteData.uploadDate ?
-                        NormalDateAndHour(quoteData.uploadDate) :
+                    <TextParagraph>{data.uploadDate ?
+                        NormalDateAndHour(data.uploadDate) :
                         "Data não especificada"}
                     </TextParagraph>
 
                     {
-                        quoteData.lastEditDate && (
+                        data.lastEditDate && (
                             <>
                                 <TextTitle>Última edição</TextTitle>
-                                <TextParagraph>{quoteData.lastEditDate ?
-                                    NormalDateAndHour(quoteData.lastEditDate) :
+                                <TextParagraph>{data.lastEditDate ?
+                                    NormalDateAndHour(data.lastEditDate) :
                                     "Data não especificada"}
                                 </TextParagraph>
                             </>
@@ -47,23 +56,23 @@ export default function QuoteInfo(props) {
 
                     <TextTitle>Upload por</TextTitle>
                     <TextParagraph>{
-                        quoteData.uploadByUser ||
+                        data.uploadByUser ||
                         "Usuário não especificado (isso não deveria acontecer, contate o dev)"}
                     </TextParagraph>
 
                     <TextTitle>Contexto</TextTitle>
                     <TextParagraph>{
-                        quoteData.context ||
+                        data.context ||
                         "Contexto não especificado"}
                     </TextParagraph>
                     <TextTitle>Tags</TextTitle>
-                    <TextParagraph>{quoteData.tags ? quoteData.tags.join(" • ") : "Nenhuma tag adicionada (isso não deveria acontecer, contate o dev"}</TextParagraph>
+                    <TextParagraph>{data.tags ? data.tags.join(" • ") : "Nenhuma tag adicionada (isso não deveria acontecer, contate o dev"}</TextParagraph>
 
-                    {quoteData.quoteType === "multiple" && (
+                    {data.quoteType === "multiple" && (
                         <>
                             <TextTitle>Data</TextTitle>
                             <TextParagraph>{
-                                quoteData.date || "Data não especificada"}</TextParagraph>
+                                data.date || "Data não especificada"}</TextParagraph>
                         </>
                     )}
                 </ModalBody>

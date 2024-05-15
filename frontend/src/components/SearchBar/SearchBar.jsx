@@ -12,7 +12,7 @@ import { QuotesLabels, getPropertyLabel } from "../../Formatting/QuotesLabels";
 import SearchPath from "./SearchPath/SearchPath";
 import { sizes } from "../../CommonStyles/screenSizes";
 
-export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
+export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQtd }) {
     const location = useLocation()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
@@ -32,7 +32,6 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
             searchParams.set("page", "1")
             navigate({ search: searchParams.toString() })
         }
-        //navigate({ search: searchParams.toString() })
         handleGetQuotes()
     }, [location.search])
 
@@ -141,99 +140,103 @@ export function SearchBar({ getQuotes, setQuotesResponse, setQuotesQtd }) {
     const buttonSize = sizes.isMobile ? "sm" : "lg"
     return (
         <>
-            <div style={{ "marginBottom": "-2rem" }}>
-                {!(selectedSearchType === "source") && (
-                    <Row className="justify-content-center">
-                        <Col xs={12} sm={10} md={8} lg={5}>
-                            <InputGroup>
-                                <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
-                                    {searchTypes.map((item, index) => (
-                                        <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
-                                    ))}
-                                    <ToggleButtonGroup type="radio" name="quoteType" value={selectedQuoteType}
-                                        onChange={(value) => handleQuoteTypeSelect(value)}>
+            {quotesQtd > 5 && (
+                <>
+                    <div style={{ "marginBottom": "-2rem" }}>
+                        {!(selectedSearchType === "source") && (
+                            <Row className="justify-content-center">
+                                <Col xs={12} sm={10} md={8} lg={5}>
+                                    <InputGroup>
+                                        <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
+                                            {searchTypes.map((item, index) => (
+                                                <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
+                                            ))}
+                                            <ToggleButtonGroup type="radio" name="quoteType" value={selectedQuoteType}
+                                                onChange={(value) => handleQuoteTypeSelect(value)}>
 
-                                        <ToggleButton size={buttonSize} as="Button" variant="outline-light"
-                                            id="single" value={"single"} >Citação</ToggleButton>
+                                                <ToggleButton size={buttonSize} as="Button" variant="outline-light"
+                                                    id="single" value={"single"} >Citação</ToggleButton>
 
-                                        <ToggleButton size={buttonSize} as="Button" variant="outline-light"
-                                            id="multiple" value={"multiple"}>Diálogo</ToggleButton>
-                                    </ToggleButtonGroup>
-                                </DropdownButton>
+                                                <ToggleButton size={buttonSize} as="Button" variant="outline-light"
+                                                    id="multiple" value={"multiple"}>Diálogo</ToggleButton>
+                                            </ToggleButtonGroup>
+                                        </DropdownButton>
 
-                                <>
-                                    <Form.Control
-                                        className={inputColor ? "bg-danger" : "bg-light"}
+                                        <>
+                                            <Form.Control
+                                                className={inputColor ? "bg-danger" : "bg-light"}
 
-                                        placeholder={selectedSearchType === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleSearchChange}
-                                        value={inputString || ""}
-                                        onKeyDown={(e) => {
-                                            console.log(e.key)
-                                            if (e.key === "Enter") {
-                                                if (checkAttributes())
-                                                    handleSearchClick()
-                                            }
-                                        }}
-                                    />
-                                    {(pureSearchParams?.size || inputString?.length > 0) && (
-                                        <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
-                                            <MDBIcon fas icon="times" />
+                                                placeholder={selectedSearchType === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleSearchChange}
+                                                value={inputString || ""}
+                                                onKeyDown={(e) => {
+                                                    console.log(e.key)
+                                                    if (e.key === "Enter") {
+                                                        if (checkAttributes())
+                                                            handleSearchClick()
+                                                    }
+                                                }}
+                                            />
+                                            {(pureSearchParams?.size || inputString?.length > 0) && (
+                                                <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
+                                                    <MDBIcon fas icon="times" />
+                                                </Button>
+                                            )}
+
+                                        </>
+                                        <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className=
+                                            {searchParams.get("sort") === "ascending" ? "bi bi-sort-down-alt" : "bi bi-sort-up-alt"}>
+                                        </i>
                                         </Button>
-                                    )}
 
-                                </>
-                                <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className=
-                                    {searchParams.get("sort") === "ascending" ? "bi bi-sort-down-alt" : "bi bi-sort-up-alt"}>
-                                </i>
-                                </Button>
+                                        <Button size={buttonSize} variant="dark" onClick={() => handleSearchClick()} >
+                                            <MDBIcon icon="search" />
+                                        </Button>
+                                    </InputGroup>
+                                </Col>
+                            </Row>
+                        )}
+                        {selectedSearchType === "source" && (
+                            <>
+                                <Row className="justify-content-center">
+                                    <Col md={8} lg={5}>
+                                        <InputGroup className="d-flex justify-content-center">
+                                            <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
 
-                                <Button size={buttonSize} variant="dark" onClick={() => handleSearchClick()} >
-                                    <MDBIcon icon="search" />
-                                </Button>
-                            </InputGroup>
-                        </Col>
-                    </Row>
-                )}
-                {selectedSearchType === "source" && (
-                    <>
-                        <Row className="justify-content-center">
-                            <Col md={8} lg={5}>
-                                <InputGroup className="d-flex justify-content-center">
-                                    <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
+                                                {searchTypes.map((item) => (
+                                                    <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
+                                                ))}
+                                                <ToggleButtonGroup type="radio" name="quoteType" value={selectedQuoteType}
+                                                    onChange={(value) => handleQuoteTypeSelect(value)}>
 
-                                        {searchTypes.map((item) => (
-                                            <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
-                                        ))}
-                                        <ToggleButtonGroup type="radio" name="quoteType" value={selectedQuoteType}
-                                            onChange={(value) => handleQuoteTypeSelect(value)}>
+                                                    <ToggleButton size={buttonSize} as="Button" variant="outline-light"
+                                                        id="single" value={"single"} >Citação</ToggleButton>
 
-                                            <ToggleButton size={buttonSize} as="Button" variant="outline-light"
-                                                id="single" value={"single"} >Citação</ToggleButton>
+                                                    <ToggleButton size={buttonSize} as="Button" variant="outline-light"
+                                                        id="multiple" value={"multiple"} >Diálogo</ToggleButton>
+                                                </ToggleButtonGroup>
+                                            </DropdownButton>
 
-                                            <ToggleButton size={buttonSize} as="Button" variant="outline-light"
-                                                id="multiple" value={"multiple"} >Diálogo</ToggleButton>
-                                        </ToggleButtonGroup>
-                                    </DropdownButton>
-
-                                    <DropdownButton size={buttonSize} variant="dark" menuVariant="dark"
-                                        title={getSourceLabel(searchParams.get("source")) || "Nome"}
-                                        onSelect={handleSourceSelect}>
-                                        {SourceNames.map((item, index) => (
-                                            <DropdownItem eventKey={item.value} key={item.value}>{item.name}</DropdownItem>
-                                        ))
-                                        }
-                                    </DropdownButton>
-                                    <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
-                                        <MDBIcon fas icon="times" />
-                                    </Button>
-                                    <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
-                                </InputGroup>
-                            </Col>
-                        </Row>
-                    </>
-                )}
-            </div>
-            <SearchPath searchParams={searchParams} pureSearchParams={pureSearchParams} />
+                                            <DropdownButton size={buttonSize} variant="dark" menuVariant="dark"
+                                                title={getSourceLabel(searchParams.get("source")) || "Nome"}
+                                                onSelect={handleSourceSelect}>
+                                                {SourceNames.map((item, index) => (
+                                                    <DropdownItem eventKey={item.value} key={item.value}>{item.name}</DropdownItem>
+                                                ))
+                                                }
+                                            </DropdownButton>
+                                            <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
+                                                <MDBIcon fas icon="times" />
+                                            </Button>
+                                            <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
+                                        </InputGroup>
+                                    </Col>
+                                </Row>
+                            </>
+                        )}
+                    </div>
+                    <SearchPath searchParams={searchParams} pureSearchParams={pureSearchParams} />
+                </>
+            )}
         </>
     )
 }

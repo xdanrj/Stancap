@@ -26,7 +26,7 @@ function RegisterForm() {
     const handleSubmitSendCode = async (e) => {
         e.preventDefault()
         try {
-            const response = await loginAndRegisterService.sendCode(email)
+            const response = await loginAndRegisterService.sendCode({email})
             if (response === true) {
                 alert('Código enviado com sucesso')
                 setSendCodeForm(false)
@@ -42,7 +42,8 @@ function RegisterForm() {
         e.preventDefault();
         try {
             const response = await loginAndRegisterService.checkCode({
-email, code})
+                email, code
+            })
             if (response === true) {
                 alert('Código verificado com sucesso')
                 setCheckCodeForm(false)
@@ -68,16 +69,17 @@ email, code})
                 const response = await loginAndRegisterService.register({
                     email,
                     username: registerData.username,
-                    password: registerData.password})
-                    //todo: parei aqui. falta testar
-                    if(response === true){
-                        alert('Usuário cadastrado com sucesso')
-                        navigate('/quotes')
-                    } else {
-                        console.log(response)
-                        alert(response)
-                    }
-                
+                    password: registerData.password
+                })
+                //todo: parei aqui. falta testar
+                if (response === true) {
+                    alert('Usuário cadastrado com sucesso')
+                    navigate('/quotes')
+                } else {
+                    console.log(response)
+                    alert(response)
+                }
+
             }
         } catch (error) {
             console.log(error)
@@ -87,16 +89,17 @@ email, code})
     const handleEmailChange = (e) => {
         //todo: 
         //old: 
-        setEmail({ ...email, [e.target.name]: e.target.value })
+        setEmail(e.target.value)
     }
     const handleCodeChange = (e) => {
         //old: "" "" /\
-        setCode({ ...code, e.target.value.trim() })
+        setCode(e.target.value.trim())
         console.log(code)
     }
     const handleRegisterChange = (e) => {
         setRegisterData({
-            ...registerData, [e.target.name]: e.target.value,
+            ...registerData,
+            [e.target.name]: e.target.value,
             email: email.email
         })
         console.log("registerData: ", registerData)
@@ -127,20 +130,20 @@ email, code})
                     {checkCodeForm && (
                         <>
                             <h2 className="mb-4">Verifique seu e-mail</h2>
-                            <Form onSubmit={handleSubmitCheckCode} 
+                            <Form onSubmit={handleSubmitCheckCode}
                             >
                                 <div className="d-flex justify-content-center  align-items-center">
-                                <FloatingLabel label="Código" className="w-50"  >
-                                    <Form.Control
-                                        className=" mb-3"
-                                        name="code"
-                                        type="text"
-                                        onChange={handleCodeChange}
-                                        placeholder=""
-                                    />
-                                </FloatingLabel>
+                                    <FloatingLabel label="Código" className="w-50"  >
+                                        <Form.Control
+                                            className=" mb-3"
+                                            name="code"
+                                            type="text"
+                                            onChange={handleCodeChange}
+                                            placeholder=""
+                                        />
+                                    </FloatingLabel>
                                 </div>
-                                <Button className="" type="submit">Verificar</Button>                                
+                                <Button className="" type="submit">Verificar</Button>
                             </Form>
                         </>
                     )}
@@ -154,7 +157,7 @@ email, code})
                                         className="mb-3"
                                         name="email"
                                         type="email"
-                                        value={email.email}
+                                        value={email}
                                         disabled
                                     />
                                 </FloatingLabel>
