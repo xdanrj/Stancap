@@ -18,7 +18,6 @@ export default function SingleQuoteGenericForm(props) {
     const useModal = useModalBox()
     const useAlert = useAlertMsg()
     const [cdBtn, setCdBtn] = useState(false)
-    const [quotes, setQuotes] = useState([])
     const [tags, setTags] = useState([])
     const [selectedSource, setSelectedSource] = useState({})
     const [searchParams, setSearchParams] = useSearchParams()
@@ -69,7 +68,6 @@ export default function SingleQuoteGenericForm(props) {
             if (props.type === "addQuote") {
                 const updatedQuoteData = {
                     ...quoteData,
-                    quotes: quotes,
                     tags: tags,
                     source: selectedSource.value,
                     uploadDate: dayjs(),
@@ -81,7 +79,6 @@ export default function SingleQuoteGenericForm(props) {
             } else if (props.type === "editQuote") {
                 const updatedQuoteData = {
                     ...quoteData,
-                    quotes: quotes,
                     tags: tags,
                     source: selectedSource.value,
                     lastEditDate: dayjs()
@@ -168,9 +165,9 @@ export default function SingleQuoteGenericForm(props) {
         }
         //todo: nao usar o state "quotes", só o "quoteData"
         if (name === "quotes") {
-            setQuotes((prevQuoteData) => ({
-                ...prevQuoteData,
-                ["quote"]: value
+            setQuoteData((prevData) => ({
+                ...prevData,
+                quotes: [{["quote"]: value}]
             }))
         }
         setQuoteData((prevData) => ({
