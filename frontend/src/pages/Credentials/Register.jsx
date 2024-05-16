@@ -71,7 +71,6 @@ function RegisterForm() {
                     username: registerData.username,
                     password: registerData.password
                 })
-                //todo: parei aqui. falta testar
                 if (response === true) {
                     alert('Usuário cadastrado com sucesso')
                     navigate('/quotes')
@@ -87,8 +86,6 @@ function RegisterForm() {
         }
     }
     const handleEmailChange = (e) => {
-        //todo: 
-        //old: 
         setEmail(e.target.value)
     }
     const handleCodeChange = (e) => {

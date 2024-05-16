@@ -139,8 +139,6 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
 
     const buttonSize = sizes.isMobile ? "sm" : "lg"
     return (
-        <>
-            {quotesQtd > 5 && (
                 <>
                     <div style={{ "marginBottom": "-2rem" }}>
                         {!(selectedSearchType === "source") && (
@@ -236,7 +234,5 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                     </div>
                     <SearchPath searchParams={searchParams} pureSearchParams={pureSearchParams} />
                 </>
-            )}
-        </>
     )
 }
