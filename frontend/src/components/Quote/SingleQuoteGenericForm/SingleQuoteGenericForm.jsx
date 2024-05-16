@@ -41,7 +41,7 @@ export default function SingleQuoteGenericForm(props) {
                     console.log(data)
                     setQuoteData((prevData) => ({
                         ...prevData,
-                        quotes: data?.quotes[0]?.quote,
+                        quotes: data.quotes,
                         author: data.author,
                         date: data.date,
                         source: data.source,
@@ -140,12 +140,6 @@ export default function SingleQuoteGenericForm(props) {
         }
     }
 
-
-    // SourceNames.some(item =>
-    //     item.value === quoteData.source || item.value === selectedSource.value
-    // )
-    //     ? ""
-    //     : selectedSource.value
     const handleGenericChange = (e) => {
         const { name, value } = e.target
         console.log(name)
@@ -163,19 +157,21 @@ export default function SingleQuoteGenericForm(props) {
                 value: newValue
             }))
         }
-        //todo: nao usar o state "quotes", só o "quoteData"
-        if (name === "quotes") {
+        if (name == "quotes") {
             setQuoteData((prevData) => ({
                 ...prevData,
-                quotes: [{["quote"]: value}]
+                quotes: [{"quote": value}]
+            }))
+        } else {
+            setQuoteData((prevData) => ({
+                ...prevData,
+                [name]: value
             }))
         }
-        setQuoteData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }))
+        
+        console.log(quoteData)
     }
-
+console.log(quoteData)
     return (
         <>
             <Row className="justify-content-center">
@@ -184,7 +180,7 @@ export default function SingleQuoteGenericForm(props) {
                         <Row>
                             <FormGroup>
                                 <FloatingLabel label="Quote">
-                                    <FormControl required name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes}>
+                                    <FormControl required name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes[0]?.quote}>
                                     </FormControl>
                                 </FloatingLabel>
                             </FormGroup>

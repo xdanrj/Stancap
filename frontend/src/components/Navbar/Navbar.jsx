@@ -66,7 +66,7 @@ export default function NavbarComponent() {
                   <MDBNavbarItem>
                     <MDBNavbarLink active onClick={() => useModal({
                       title: `Usuário ${username}`,
-                      paragraph: `Você tem ${userQuotesQtd} quotes.`,
+                      paragraph: `Você tem ${userQuotesQtd} quote(s).`,
                       buttons: [{ text: "Deslogar", action: [logoff, "handleClose()"] }]
                     })} className='text-secondary' style={{"marginTop": "0.1rem", "fontSize": "0.85rem"}}>Logado como <span className='text-primary'>{username}</span></MDBNavbarLink>
                   </MDBNavbarItem>               
