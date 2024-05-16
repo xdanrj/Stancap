@@ -39,9 +39,10 @@ export default function SingleQuoteGenericForm(props) {
                 console.log(message)
                 if (quotes && quotes.length > 0) {
                     const data = quotes[0]
+                    console.log(data)
                     setQuoteData((prevData) => ({
                         ...prevData,
-                        quotes: data.quotes[0].quote,
+                        quotes: data?.quotes[0]?.quote,
                         author: data.author,
                         date: data.date,
                         source: data.source,
@@ -165,6 +166,7 @@ export default function SingleQuoteGenericForm(props) {
                 value: newValue
             }))
         }
+        //todo: nao usar o state "quotes", só o "quoteData"
         if (name === "quotes") {
             setQuotes((prevQuoteData) => ({
                 ...prevQuoteData,

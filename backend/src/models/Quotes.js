@@ -23,6 +23,7 @@ const QuoteSchema = new mongoose.Schema(
         source: { type: String },
         date: { type: String },
         uploadDate: { type: String },
+        lastEditDate: { type: String},
         uploadByUser: { type: String },
         quoteType: { type: String }
     }, {collation: { locale: 'pt', strength: 2 }}

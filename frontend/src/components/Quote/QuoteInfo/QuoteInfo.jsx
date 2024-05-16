@@ -16,7 +16,7 @@ export default function QuoteInfo({ show, setShow, quoteData }) {
         async function formatData() {
             const updatedData = { ...quoteData }
             updatedData.uploadByUser = await userService.getUsername(quoteData.uploadByUser)
-            updatedData.source = SourceNames.find(obj => obj.value === quoteData.source).name
+            updatedData.source = SourceNames.find(obj => obj.value === quoteData.source)?.name
             setData(updatedData)
         }
         formatData()

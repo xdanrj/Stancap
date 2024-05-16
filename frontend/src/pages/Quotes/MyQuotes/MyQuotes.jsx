@@ -92,7 +92,7 @@ export default function MyQuotes() {
                                     <div key={data._id}>
                                         <MinimalQuoteContainer>
                                             <InternalContainer>
-                                                <Paragraph>{data.quotes[0].quote && data.quotes[0].quote} </Paragraph>
+                                                <Paragraph>{data.quotes[0]?.quote && data.quotes[0].quote} </Paragraph>
                                                 <ParagraphAuthor>—{data.quoteType === "single" ? data.author : data.quotes[0].author}</ParagraphAuthor>
                                                 {deletedQuotes.find((obj) => obj._id === data._id) ?
                                                     <>
