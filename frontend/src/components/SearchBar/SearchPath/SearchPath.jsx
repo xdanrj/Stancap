@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { Breadcrumb } from "react-bootstrap"
 import { useNavigate, useLocation } from "react-router-dom"
-import { getSourceLabel } from "../../Quote/SourceCommonFunctions"
+import Sources from "../../Quote/Sources"
 import { getPropertyLabel } from "../../../Formatting/QuotesLabels"
 
 export default function SearchPath({ searchParams, pureSearchParams }) {
+    const Source = new Sources()
     const location = useLocation()
     const navigate = useNavigate()
     const [queryParams, setQueryParams] = useState([])
@@ -21,7 +22,7 @@ export default function SearchPath({ searchParams, pureSearchParams }) {
                     modifiedValue = (value === 'ascending') ? 'crescente' : 'decrescente'
                 }
                 else if (key === "source") {
-                    modifiedValue = getSourceLabel(value)
+                    modifiedValue = Source.getLabel(value)
                 } else {
                     modifiedValue = value
                 }

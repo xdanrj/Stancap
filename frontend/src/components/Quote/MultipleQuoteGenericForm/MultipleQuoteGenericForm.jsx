@@ -7,7 +7,8 @@ import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import MultipleQuoteInputs from "./MultipleQuoteInputs/MultipleQuoteInputs";
 import { MDBIcon } from "mdb-react-ui-kit";
 import dayjs from "dayjs";
-import { SourceNames } from "../SourceCommonFunctions";
+import Sources from "../Sources";
+//import { SourceNames } from "../SourceCommonFunctions";
 import { useAlertMsg } from "../../Alert/AlertContext";
 import { useModalBox } from "../../Modal/ModalContext";
 import { isValidDate } from "../../../Formatting/DateFormatting";
@@ -56,7 +57,8 @@ export default function MultipleQuoteGenericForm(props) {
         getQuoteToEdit()
     }, [])
 
-    const handleSourceSelect = (eventKey) => {        
+    const handleSourceSelect = (eventKey) => {    
+        //todo: 1    
         const foundSource = SourceNames.find(obj => obj.value === eventKey)
         setSelectedSource(foundSource)
         console.log(foundSource)        
