@@ -15,8 +15,8 @@ export default function QuoteInfo({ show, setShow, quoteData }) {
         console.log(quoteData)
         async function formatData() {
             const updatedData = { ...quoteData }
-            updatedData.uploadByUser = await userService.getUsername(quoteData.uploadByUser)
-            updatedData.source = SourceNames.find(obj => obj.value === quoteData.source)?.name
+            // updatedData.uploadByUser = await userService.getUsername(quoteData.uploadByUser)
+            // updatedData.source = SourceNames.find(obj => obj.value === quoteData.source)?.name
             setData(updatedData)
         }
         formatData()
@@ -37,8 +37,8 @@ export default function QuoteInfo({ show, setShow, quoteData }) {
                     </TextParagraph>
 
                     <TextTitle>Data de upload</TextTitle>
-                    <TextParagraph>{data.uploadDate ?
-                        NormalDateAndHour(data.uploadDate) :
+                    <TextParagraph>{
+                        NormalDateAndHour(data.uploadDate) ||
                         "Data não especificada"}
                     </TextParagraph>
 
@@ -46,8 +46,8 @@ export default function QuoteInfo({ show, setShow, quoteData }) {
                         data.lastEditDate && (
                             <>
                                 <TextTitle>Última edição</TextTitle>
-                                <TextParagraph>{data.lastEditDate ?
-                                    NormalDateAndHour(data.lastEditDate) :
+                                <TextParagraph>{
+                                    NormalDateAndHour(data.lastEditDate) ||
                                     "Data não especificada"}
                                 </TextParagraph>
                             </>
@@ -66,7 +66,7 @@ export default function QuoteInfo({ show, setShow, quoteData }) {
                         "Contexto não especificado"}
                     </TextParagraph>
                     <TextTitle>Tags</TextTitle>
-                    <TextParagraph>{data.tags ? data.tags.join(" • ") : "Nenhuma tag adicionada (isso não deveria acontecer, contate o dev"}</TextParagraph>
+                    <TextParagraph>{data.tags?.join(" • ") || "Nenhuma tag adicionada (isso não deveria acontecer, contate o dev"}</TextParagraph>
 
                     {data.quoteType === "multiple" && (
                         <>

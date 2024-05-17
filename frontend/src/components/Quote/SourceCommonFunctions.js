@@ -1,33 +1,25 @@
+export default class Sources {
+  constructor() {
+    this.sources = [
+      { name: "Anarco Feudalismo", value: "AnarcoFeudalismo" },
+      { name: "Anarco Primitivismo", value: "AnarcoPrimitivismo" },
+      { name: "AnProm", value: "AnProm" },
+      { name: "Corujas Neto Lovers", value: "CorujasNetoLovers" },
+      { name: "Ditadura Cultural", value: "DitaduraCultural" },
+      { name: "Freudcap", value: "Freudcap" },
+      { name: "Relatórios do Dmitri", value: "RelatoriosDoDmitri" },
+      { name: "Stancap", value: "Stancap" },
+      { name: "Stancap Nobreza", value: "StancapNobreza" }
+    ]
+  }
 
-import { useEffect } from "react"
-import { useFetcher } from "react-router-dom"
+  getLabel(rawValue) {
+    const findLabel = this.sources.find(source => source.value === rawValue)
+    return findLabel ? findLabel.name : null
+  }
 
-export const SourceNames = [
-  { name: "Anarco Feudalismo", value: "AnarcoFeudalismo" },
-  { name: "Anarco Primitivismo", value: "AnarcoPrimitivismo" },
-  { name: "AnProm", value: "AnProm" },
-  { name: "Corujas Neto Lovers", value: "CorujasNetoLovers" },
-  { name: "Ditadura Cultural", value: "DitaduraCultural" },
-  { name: "Freudcap", value: "Freudcap" },
-  { name: "Relatórios do Dmitri", value: "RelatoriosDoDmitri" },
-  { name: "Stancap", value: "Stancap" },
-  { name: "Stancap Nobreza", value: "StancapNobreza" }
-]
-
-export function getSourceLabel(rawValue) {
-  let response
-  const findLabel = SourceNames.find((source) => source.value === rawValue)
-  findLabel ? response = findLabel.name : response = null
-  return response
-}
-
-export function sourceLogoSelector(source) {
-  const foundItem = SourceNames.find(item => item.value === source)
-
-  if (foundItem) {
-    const finalReturn = { "path": `/images/${source}.png`, "source": source }
-    return finalReturn
-  } else {
-    return null
+  logoSelector(source) {
+    const foundItem = this.sources.find(item => item.value === source)
+    return foundItem ? { path: `/images/${source}.png`, source: source } : null
   }
 }

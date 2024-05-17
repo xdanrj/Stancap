@@ -5,7 +5,8 @@ import { MDBIcon } from "mdb-react-ui-kit";
 import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
-import { SourceNames, getSourceLabel } from "../Quote/SourceCommonFunctions";
+// import { SourceNames, getSourceLabel } from "../Quote/SourceCommonFunctions";
+import SourceNames from "../Quote/SourceCommonFunctions";
 import { useSearchParams } from "react-router-dom";
 import _ from "lodash";
 import { QuotesLabels, getPropertyLabel } from "../../Formatting/QuotesLabels";
@@ -13,6 +14,7 @@ import SearchPath from "./SearchPath/SearchPath";
 import { sizes } from "../../CommonStyles/screenSizes";
 
 export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQtd }) {
+    const sourceName = new SourceNames()
     const location = useLocation()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
@@ -217,7 +219,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                                             <DropdownButton size={buttonSize} variant="dark" menuVariant="dark"
                                                 title={getSourceLabel(searchParams.get("source")) || "Nome"}
                                                 onSelect={handleSourceSelect}>
-                                                {SourceNames.map((item, index) => (
+                                                {sourceName.sources.map((item, index) => (
                                                     <DropdownItem eventKey={item.value} key={item.value}>{item.name}</DropdownItem>
                                                 ))
                                                 }
