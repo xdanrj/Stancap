@@ -6,7 +6,7 @@ import { Form, Col, Row, Dropdown, DropdownButton } from "react-bootstrap";
 import { FloatingLabel, FormGroup, CenteredFormGroup, FormControl } from "../../../CommonStyles/CommonStyles";
 import TagSelectorComponent from "../TagsSelector/TagsSelectorComponent";
 import { isValidDate } from "../../../Formatting/DateFormatting";
-import { SourceNames } from "../SourceCommonFunctions";
+import Sources from "../Sources";
 import { useModalBox } from "../../Modal/ModalContext";
 import { useAlertMsg } from "../../Alert/AlertContext";
 import dayjs from "dayjs"
@@ -15,6 +15,7 @@ import quoteEditingServices from "../../../services/quoteServices"
 const quoteEditingService = new quoteEditingServices()
 
 export default function SingleQuoteGenericForm(props) {
+    const Source = new Sources()
     const useModal = useModalBox()
     const useAlert = useAlertMsg()
     const [cdBtn, setCdBtn] = useState(false)
@@ -56,7 +57,7 @@ export default function SingleQuoteGenericForm(props) {
     }, [])
 
     const handleSourceSelect = (eventKey) => {
-        const foundSource = SourceNames.find(obj => obj.value === eventKey)
+        const foundSource = Source.sources.find(obj => obj.value === eventKey)
         setSelectedSource(foundSource)
         console.log(foundSource)
     }
@@ -145,7 +146,7 @@ export default function SingleQuoteGenericForm(props) {
         console.log(name)
         if (name === "otherSourceName") {
             let newValue
-            if(SourceNames.some(item =>
+            if(Source.sources.some(item =>
                 item.value === quoteData.source || item.value === selectedSource.value
             )){
                 newValue = ""
@@ -218,7 +219,7 @@ console.log(quoteData)
                             <FormGroup>
                                 <DropdownButton drop="down" align="end" title={selectedSource.name || "Source"}
                                     onSelect={handleSourceSelect}>
-                                    {SourceNames.map((item) => (
+                                    {Source.sources.map((item) => (
                                         <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
                                     ))}
                                     <Dropdown.Divider />

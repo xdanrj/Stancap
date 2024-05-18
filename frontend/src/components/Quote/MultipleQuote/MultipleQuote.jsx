@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import quoteEditingServices from "../../../services/quoteServices";
 import { NormalDate } from "../../../Formatting/DateFormatting";
-import { sourceLogoSelector } from "../SourceCommonFunctions";
+import Sources from "../Sources";
 import { QuoteHeader, QuoteContainer, SourceLogo } from "../../../CommonStyles/CommonStyles";
 import Ballons from "./Ballons/Ballons";
 const quoteService = new quoteEditingServices();
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 
 export default function MultipleQuotes({ multipleQuotes }) {
+    const Source = new Sources()
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
     const [quoteInfoData, setQuoteInfoData] = useState("")
     const [imagePaths, setImagePaths] = useState([])
@@ -20,7 +21,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
         let paths = []
         const loadImagePaths = async () => {
             multipleQuotes.map((data) => {
-                paths.push(sourceLogoSelector(data.source))
+                paths.push(Source.logoSelector(data.source))
             })
             setImagePaths(paths)
         }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import quoteEditingServices from "../../../services/quoteServices";
 import { NormalDate } from "../../../Formatting/DateFormatting";
-import { sourceLogoSelector } from "../SourceCommonFunctions";
+import Sources from "../Sources";
 import { QuoteHeader, SourceLogo, QuoteContainer } from "../../../CommonStyles/CommonStyles";
 import { Paragraph, ParagraphAuthor, ParagraphDate } from "./SingleQuoteStyles"
 
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import InfoIcon from "../InfoIcon/InfoIcon";
 
 export default function SingleQuotes({ singleQuotes }) {
+    const Source = new Sources()
     const [showQuoteInfo, setShowQuoteInfo] = useState(false)
     const [quoteInfoData, setQuoteInfoData] = useState("")
     const [imagePaths, setImagePaths] = useState([])
@@ -20,7 +21,7 @@ export default function SingleQuotes({ singleQuotes }) {
         let paths = []
         const loadImagePaths = async () => {
             singleQuotes.map((data) => {
-                paths.push( sourceLogoSelector(data.source))
+                paths.push( Source.logoSelector(data.source))
             })
             setImagePaths(paths)
         }

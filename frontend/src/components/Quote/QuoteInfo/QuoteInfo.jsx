@@ -4,7 +4,6 @@ import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph } from "./QuoteI
 import quoteEditingServices from "../../../services/quoteServices";
 import userServices from "../../../services/userServices";
 import _ from "lodash";
-import { SourceNames } from "../Sources";
 
 export default function QuoteInfo({ show, setShow, quoteData }) {
     const handleClose = () => setShow(false)

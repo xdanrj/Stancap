@@ -8,7 +8,6 @@ import MultipleQuoteInputs from "./MultipleQuoteInputs/MultipleQuoteInputs";
 import { MDBIcon } from "mdb-react-ui-kit";
 import dayjs from "dayjs";
 import Sources from "../Sources";
-//import { SourceNames } from "../SourceCommonFunctions";
 import { useAlertMsg } from "../../Alert/AlertContext";
 import { useModalBox } from "../../Modal/ModalContext";
 import { isValidDate } from "../../../Formatting/DateFormatting";
@@ -19,6 +18,7 @@ import { useSearchParams } from "react-router-dom";
 const quoteEditingService = new quoteEditingServices()
 
 export default function MultipleQuoteGenericForm(props) {
+    const Source = new Sources()
     const useAlert = useAlertMsg()
     const useModal = useModalBox()
     const [cdBtn, setCdBtn] = useState(false)
@@ -59,7 +59,7 @@ export default function MultipleQuoteGenericForm(props) {
 
     const handleSourceSelect = (eventKey) => {    
         //todo: 1    
-        const foundSource = SourceNames.find(obj => obj.value === eventKey)
+        const foundSource = Source.sources.find(obj => obj.value === eventKey)
         setSelectedSource(foundSource)
         console.log(foundSource)        
 }
@@ -263,13 +263,13 @@ export default function MultipleQuoteGenericForm(props) {
                         <Row>
                             <FormGroup>
                                 <DropdownButton drop="down" align="end" title={selectedSource.name || "Source"} onSelect={handleSourceSelect}>
-                                    {SourceNames.map((item) => (
+                                    {Source.sources.map((item) => (
                                         <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
                                     ))}
                                     <Dropdown.Divider />
                                     <div className="px-1 pb-2">
                                         <FloatingLabel label="Outro">
-                                            <Form.Control name="otherSourceName" placeholder="Outro" onChange={handleGenericChange} value={SourceNames.includes(quoteData.source) ? "" : quoteData.source}>
+                                            <Form.Control name="otherSourceName" placeholder="Outro" onChange={handleGenericChange} value={Source.sources.includes(quoteData.source) ? "" : quoteData.source}>
                                             </Form.Control>
                                         </FloatingLabel>
                                     </div>

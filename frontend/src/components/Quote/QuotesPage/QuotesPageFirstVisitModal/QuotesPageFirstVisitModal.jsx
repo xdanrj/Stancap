@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect } from "react"
 import { Modal, Form, Button, Row, Col } from "react-bootstrap"
 import { ButtonContainer, ModalTitle, ModalBody } from "../../../Modal/ModalContextStyles"
-import { SourceNames } from "../../SourceCommonFunctions"
+import Sources from "../../Sources"
 import { LogoDemo, ParagraphAuthorDemo, ParagraphDateDemo } from "./QuotesPageFirstVisitModalStyles"
 import _ from "lodash"
 
 export function QuotesPageFirstVisitModal(props) {
+    const Source = new Sources()
     const [show, setShow] = useState(true)
     const [logoIndex, setLogoIndex] = useState(0)
     const handleClose = () => {
@@ -16,7 +17,7 @@ export function QuotesPageFirstVisitModal(props) {
     useEffect(() => {
         if (show) {
             const logoInterval = setInterval(() => {
-                setLogoIndex((prevIndex) => (prevIndex + 1) % SourceNames.length)
+                setLogoIndex((prevIndex) => (prevIndex + 1) % Source.sources.length)
             }, 1500)
             return () => clearInterval(logoInterval)
             const authorInterval = setInterval(() => {
@@ -39,7 +40,7 @@ export function QuotesPageFirstVisitModal(props) {
                     <div className="d-flex justify-content-evenly">
                         <Row>
                             <Col>
-                                <LogoDemo src={`/images/${SourceNames[logoIndex].value}.png`} />
+                                <LogoDemo src={`/images/${Source.sources[logoIndex].value}.png`} />
                             </Col>
                         </Row>
 

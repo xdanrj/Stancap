@@ -5,7 +5,6 @@ import { MDBIcon } from "mdb-react-ui-kit";
 import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
-// import { SourceNames, getSourceLabel } from "../Quote/SourceCommonFunctions";
 import { useSearchParams } from "react-router-dom";
 import _ from "lodash";
 import { QuotesLabels, getPropertyLabel } from "../../Formatting/QuotesLabels";
