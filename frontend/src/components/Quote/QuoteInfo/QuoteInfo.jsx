@@ -17,8 +17,7 @@ export default function QuoteInfo({ show, setShow, rawData }) {
         async function formatData() {
             const updatedData = { ...rawData }
             updatedData.uploadByUser = await userService.getUsername(rawData.uploadByUser)
-            updatedData.source = Source.getLabel(rawData.source)
-            //rawData.source      .name (?)
+            updatedData.source = Source.getLabel(rawData.source)            
             console.log(updatedData)
             setData(updatedData)
         }
