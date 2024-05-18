@@ -39,9 +39,6 @@ export default function QuotesPage() {
     const currentMultipleQuotesArray = []
     // FORMATAÇÃO PRÉ DIVISÃO DE TIPOS DE QUOTE:
     if (quotesResponse) {
-      // descartar essa funcao e fazer formatacao apenas em QuoteInfo
-      
-
       if (Array.isArray(quotesResponse)) {
         quotesResponse.forEach((data) => {
           if (data.quotes.length === 1) {

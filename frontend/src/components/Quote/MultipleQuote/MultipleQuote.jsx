@@ -53,7 +53,7 @@ export default function MultipleQuotes({ multipleQuotes }) {
                     </div>
                 )
             })}
-            {<QuoteInfo quoteData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo} />}
+            {<QuoteInfo rawData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo} />}
         </>
     )
 }

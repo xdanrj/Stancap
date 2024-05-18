@@ -4,22 +4,26 @@ import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph } from "./QuoteI
 import quoteEditingServices from "../../../services/quoteServices";
 import userServices from "../../../services/userServices";
 import _ from "lodash";
+import Sources from "../Sources";
 
-export default function QuoteInfo({ show, setShow, quoteData }) {
+export default function QuoteInfo({ show, setShow, rawData }) {
     const handleClose = () => setShow(false)
+    const Source = new Sources()
     const quoteService = new quoteEditingServices()
     const userService = new userServices()
     const [data, setData] = useState({})
     useEffect(() => {
-        console.log(quoteData)
+        console.log(rawData)
         async function formatData() {
-            const updatedData = { ...quoteData }
-            // updatedData.uploadByUser = await userService.getUsername(quoteData.uploadByUser)
-            // updatedData.source = SourceNames.find(obj => obj.value === quoteData.source)?.name
+            const updatedData = { ...rawData }
+            updatedData.uploadByUser = await userService.getUsername(rawData.uploadByUser)
+            updatedData.source = Source.getLabel(rawData.source)
+            //rawData.source      .name (?)
+            console.log(updatedData)
             setData(updatedData)
         }
         formatData()
-    }, [quoteData])
+    }, [rawData])
 
     return (
         <>

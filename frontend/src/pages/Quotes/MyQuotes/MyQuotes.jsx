@@ -113,7 +113,7 @@ export default function MyQuotes() {
                                 <h4>Você ainda não criou nenhuma quote</h4>
                             )
                         }
-                        {<QuoteInfo quoteData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo} />}
+                        {<QuoteInfo rawData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo} />}
                         <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
                     </Col>
                 </Row >
