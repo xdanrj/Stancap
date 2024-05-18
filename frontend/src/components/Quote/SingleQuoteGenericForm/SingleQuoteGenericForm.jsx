@@ -57,9 +57,8 @@ export default function SingleQuoteGenericForm(props) {
     }, [])
 
     const handleSourceSelect = (eventKey) => {
-        const foundSource = Source.sources.find(obj => obj.value === eventKey)
+        const foundSource = Source.getSource(eventKey)
         setSelectedSource(foundSource)
-        console.log(foundSource)
     }
 
     const finalSubmitQuote = async () => {

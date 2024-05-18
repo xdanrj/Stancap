@@ -18,10 +18,8 @@ export default class Sources {
     return findLabel ? findLabel.name : null
   }
 
-  //todo: 2 (replicar a funcionalidade de todo1 aqui)
-  //SourceNames.find(obj => obj.value === eventKey)
-  getSource(){
-    this.sources.find()
+  getSource(value){
+    return this.sources.find(obj => obj.value === value)
   }
 
   logoSelector(source) {

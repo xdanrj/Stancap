@@ -57,11 +57,9 @@ export default function MultipleQuoteGenericForm(props) {
         getQuoteToEdit()
     }, [])
 
-    const handleSourceSelect = (eventKey) => {    
-        //todo: 1    
-        const foundSource = Source.sources.find(obj => obj.value === eventKey)
-        setSelectedSource(foundSource)
-        console.log(foundSource)        
+    const handleSourceSelect = (eventKey) => {
+        const foundSource = Source.getSource(eventKey)
+        setSelectedSource(foundSource)  
 }
 
     const finalSubmitQuote = async () => {
