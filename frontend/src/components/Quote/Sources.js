@@ -14,7 +14,7 @@ export default class Sources {
   }
 
   getLabel(rawValue) {
-    const findLabel = this.sources.find(source => source.value.toLowerCase() === rawValue.toLowerCase())
+    const findLabel = this.sources.find(source => source.value === rawValue)
     return findLabel ? findLabel.name : null
   }
 

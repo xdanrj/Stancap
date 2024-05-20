@@ -17,12 +17,13 @@ import { useSearchParams } from "react-router-dom";
 
 const quoteEditingService = new quoteEditingServices()
 
-//todo: fazer o mesmo q fiz em singleForm: descartar state selectedsource
+//todo: fazer getlabel no dropdown de Source
 export default function MultipleQuoteGenericForm(props) {
     const Source = new Sources()
     const useAlert = useAlertMsg()
     const useModal = useModalBox()
     const [cdBtn, setCdBtn] = useState(false)
+    const [tags, setTags] = useState([])
     const [searchParams, setSearchParams] = useSearchParams()
     const [multipleQuotes, setMultipleQuotes] = useState([])
     const [quoteData, setQuoteData] = useState({
@@ -39,10 +40,10 @@ export default function MultipleQuoteGenericForm(props) {
     useEffect(() => {
         async function getQuoteToEdit() {
             if (searchParams.get("_id")) {
-                const response = await quoteEditingService.getQuotes({ _id: searchParams.get("_id") })
+                const {quotes, message} = await quoteEditingService.getQuotes({ _id: searchParams.get("_id") })
 
                 if (quotes && quotes.length > 0) {
-                const data = response.foundQuote[0]
+                    const data = quotes[0]
                 setMultipleQuotes(data.quotes)
 
                 setQuoteData((prevData) => ({
