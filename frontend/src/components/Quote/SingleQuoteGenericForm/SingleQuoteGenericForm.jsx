@@ -14,14 +14,12 @@ import { useSearchParams } from "react-router-dom";
 import quoteEditingServices from "../../../services/quoteServices"
 const quoteEditingService = new quoteEditingServices()
 
-//todo: nao usar mais state selectedsource e setar a source selecionada direto na quoteData
 export default function SingleQuoteGenericForm(props) {
     const Source = new Sources()
     const useModal = useModalBox()
     const useAlert = useAlertMsg()
     const [cdBtn, setCdBtn] = useState(false)
     const [tags, setTags] = useState([])
-    //const [selectedSource, setSelectedSource] = useState({})
     const [searchParams, setSearchParams] = useSearchParams()
     const [quoteData, setQuoteData] = useState({
         quotes: [],
@@ -59,7 +57,6 @@ export default function SingleQuoteGenericForm(props) {
 
     const handleSourceSelect = (eventKey) => {
         const foundSource = Source.getSource(eventKey)
-        //setSelectedSource(foundSource)
         setQuoteData((prevData) => ({
             ...prevData,
             source: foundSource.value

@@ -17,6 +17,7 @@ import { useSearchParams } from "react-router-dom";
 
 const quoteEditingService = new quoteEditingServices()
 
+//todo: fazer o mesmo q fiz em singleForm: descartar state selectedsource
 export default function MultipleQuoteGenericForm(props) {
     const Source = new Sources()
     const useAlert = useAlertMsg()
@@ -24,8 +25,6 @@ export default function MultipleQuoteGenericForm(props) {
     const [cdBtn, setCdBtn] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
     const [multipleQuotes, setMultipleQuotes] = useState([])
-    const [tags, setTags] = useState([])
-    const [selectedSource, setSelectedSource] = useState({})
     const [quoteData, setQuoteData] = useState({
         quotes: [],
         date: '',
@@ -40,10 +39,11 @@ export default function MultipleQuoteGenericForm(props) {
     useEffect(() => {
         async function getQuoteToEdit() {
             if (searchParams.get("_id")) {
-                const response = await quoteEditingService.getQueryQuotes({ _id: searchParams.get("_id") })
+                const response = await quoteEditingService.getQuotes({ _id: searchParams.get("_id") })
+
+                if (quotes && quotes.length > 0) {
                 const data = response.foundQuote[0]
                 setMultipleQuotes(data.quotes)
-                setTags(data.tags)
 
                 setQuoteData((prevData) => ({
                     ...prevData,
@@ -53,14 +53,19 @@ export default function MultipleQuoteGenericForm(props) {
                     tags: data.tags
                 }))
             }
+            message && useAlert(message)
+            }
         }
         getQuoteToEdit()
     }, [])
 
     const handleSourceSelect = (eventKey) => {
         const foundSource = Source.getSource(eventKey)
-        setSelectedSource(foundSource)  
-}
+        setQuoteData((prevData) => ({
+            ...prevData,
+            source: foundSource.value
+        }))
+    }
 
     const finalSubmitQuote = async () => {
         let response
@@ -71,7 +76,6 @@ export default function MultipleQuoteGenericForm(props) {
                         ...quoteData,
                         quotes: multipleQuotes,
                         tags: tags,
-                        source: selectedSource.value,
                         uploadDate: dayjs().format(),
                         uploadByUser: localStorage.getItem("userId"),
                         quoteType: "multiple"
@@ -82,7 +86,6 @@ export default function MultipleQuoteGenericForm(props) {
                         ...quoteData,
                         quotes: multipleQuotes,
                         tags: tags,
-                        source: selectedSource.value,
                         lastEditDate: dayjs()  
                     }
                     response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
@@ -260,21 +263,21 @@ export default function MultipleQuoteGenericForm(props) {
 
                         <Row>
                             <FormGroup>
-                                <DropdownButton drop="down" align="end" title={selectedSource.name || "Source"} onSelect={handleSourceSelect}>
+                                <DropdownButton drop="down" align="end" title={quoteData.source || "Source"} onSelect={handleSourceSelect}>
                                     {Source.sources.map((item) => (
                                         <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
                                     ))}
                                     <Dropdown.Divider />
                                     <div className="px-1 pb-2">
                                         <FloatingLabel label="Outro">
-                                            <Form.Control name="otherSourceName" placeholder="Outro" onChange={handleGenericChange} value={Source.sources.includes(quoteData.source) ? "" : quoteData.source}>
+                                            <Form.Control name="otherSourceName" placeholder="Digite outra source..." onChange={handleGenericChange} value={Source.getSource(quoteData.source) ? "" : quoteData.source}>
                                             </Form.Control>
                                         </FloatingLabel>
                                     </div>
                                 </DropdownButton>
                             </FormGroup>
                             <FormGroup>
-                                <TagSelectorComponent tags={tags} setTags={setTags} />
+                                <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
                             </FormGroup>
                         </Row>
                         <Button type="submit" disabled={cdBtn}>{props.texts.submitButton}</Button>
