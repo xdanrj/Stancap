@@ -19,7 +19,7 @@ export default class Sources {
   }
 
   getSource(value){
-    return this.sources.find(obj => obj.value.toLowerCase() === value.toLowerCase())
+    return this.sources.find(obj => obj.value === value)
   }
 
   logoSelector(source) {

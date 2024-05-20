@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom"
 import Sources from "../../Quote/Sources"
 import { getPropertyLabel } from "../../../Formatting/QuotesLabels"
 
-export default function SearchPath({ searchParams, pureSearchParams }) {
+export default function SearchPath({ searchParams }) {
     const Source = new Sources()
     const location = useLocation()
     const navigate = useNavigate()
