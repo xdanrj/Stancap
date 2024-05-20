@@ -14,16 +14,18 @@ export default class Sources {
   }
 
   getLabel(rawValue) {
-    const findLabel = this.sources.find(source => source.value === rawValue)
+    const findLabel = this.sources.find(source => source.value.toLowerCase() === rawValue.toLowerCase())
     return findLabel ? findLabel.name : null
   }
 
   getSource(value){
-    return this.sources.find(obj => obj.value === value)
+    return this.sources.find(obj => obj.value.toLowerCase() === value.toLowerCase())
   }
 
   logoSelector(source) {
-    const foundItem = this.sources.find(item => item.value === source)
-    return foundItem ? { path: `/images/${source}.png`, source: source } : null
+    console.log(source)
+    const foundItem = this.sources.find(item => item.value.toLowerCase() === source.toLowerCase())
+    console.log(foundItem)
+    return foundItem ? { path: `/images/${foundItem.value}.png`, source: foundItem.value } : null
   }
 }

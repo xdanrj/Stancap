@@ -14,13 +14,14 @@ import { useSearchParams } from "react-router-dom";
 import quoteEditingServices from "../../../services/quoteServices"
 const quoteEditingService = new quoteEditingServices()
 
+//todo: nao usar mais state selectedsource e setar a source selecionada direto na quoteData
 export default function SingleQuoteGenericForm(props) {
     const Source = new Sources()
     const useModal = useModalBox()
     const useAlert = useAlertMsg()
     const [cdBtn, setCdBtn] = useState(false)
     const [tags, setTags] = useState([])
-    const [selectedSource, setSelectedSource] = useState({})
+    //const [selectedSource, setSelectedSource] = useState({})
     const [searchParams, setSearchParams] = useSearchParams()
     const [quoteData, setQuoteData] = useState({
         quotes: [],
@@ -58,7 +59,11 @@ export default function SingleQuoteGenericForm(props) {
 
     const handleSourceSelect = (eventKey) => {
         const foundSource = Source.getSource(eventKey)
-        setSelectedSource(foundSource)
+        //setSelectedSource(foundSource)
+        setQuoteData((prevData) => ({
+            ...prevData,
+            source: foundSource.value
+        }))
     }
 
     const finalSubmitQuote = async () => {
@@ -69,7 +74,6 @@ export default function SingleQuoteGenericForm(props) {
                 const updatedQuoteData = {
                     ...quoteData,
                     tags: tags,
-                    source: selectedSource.value,
                     uploadDate: dayjs(),
                     uploadByUser: localStorage.getItem("userId"),
                     quoteType: "single"
@@ -80,7 +84,6 @@ export default function SingleQuoteGenericForm(props) {
                 const updatedQuoteData = {
                     ...quoteData,
                     tags: tags,
-                    source: selectedSource.value,
                     lastEditDate: dayjs()
                 }
                 console.log(updatedQuoteData)
@@ -143,18 +146,10 @@ export default function SingleQuoteGenericForm(props) {
     const handleGenericChange = (e) => {
         const { name, value } = e.target
         console.log(name)
-        if (name === "otherSourceName") {
-            let newValue
-            if(Source.sources.some(item =>
-                item.value === quoteData.source || item.value === selectedSource.value
-            )){
-                newValue = ""
-            } else {
-                newValue = value
-            }
-            setSelectedSource((prevData) => ({
+        if (name === "otherSourceName") {           
+            setQuoteData((prevData) => ({
                 ...prevData,
-                value: newValue
+                source: value
             }))
         }
         if (name == "quotes") {
@@ -216,7 +211,7 @@ console.log(quoteData)
                         <Col>
 
                             <FormGroup>
-                                <DropdownButton drop="down" align="end" title={selectedSource.name || "Source"}
+                                <DropdownButton drop="down" align="end" title={Source.getLabel(quoteData.source) || "Source"}
                                     onSelect={handleSourceSelect}>
                                     {Source.sources.map((item) => (
                                         <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
@@ -224,7 +219,8 @@ console.log(quoteData)
                                     <Dropdown.Divider />
                                     <div className="px-1 pb-2">
                                         <FloatingLabel label="Digite outra source...">
-                                            <Form.Control name="otherSourceName" placeholder="Digite outra source..." onChange={handleGenericChange} value={selectedSource.value}>
+                                            <Form.Control name="otherSourceName" placeholder="Digite outra source..." onChange={handleGenericChange} value={
+                                                Source.getSource(quoteData.source) ? "" : quoteData.source}>
                                             </Form.Control>
                                         </FloatingLabel>
                                     </div>
