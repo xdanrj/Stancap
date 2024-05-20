@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
-import { Form, Button, DropdownButton, DropdownItem, Row, Col, Container, ButtonGroup, ToggleButtonGroup, ToggleButton } from "react-bootstrap";
-import { InputGroup } from "./SearchBarStyles";
+import { InputGroup, Form, Button, DropdownButton, DropdownItem, Row, Col, Container, ButtonGroup, ToggleButtonGroup, ToggleButton } from "react-bootstrap";
+import { CustomInputGroup } from "./SearchBarStyles";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { useAlertMsg } from "../Alert/AlertContext";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import { QuotesLabels, getPropertyLabel } from "../../Formatting/QuotesLabels";
 import SearchPath from "./SearchPath/SearchPath";
 import { sizes } from "../../CommonStyles/screenSizes";
 import Sources from "../Quote/Sources";
+import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 
 export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQtd }) {
     const Source = new Sources()
@@ -82,6 +83,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
 
     const handleTypeSelect = (eventKey) => {
         console.log(eventKey)
+        setInputString("")
         setSelectedSearchType(eventKey)
     }
 
@@ -98,7 +100,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
         navigate({ search: searchParams.toString() })
     }
 
-    const handleSearchChange = (e) => {
+    const handleInputStringChange = (e) => {
         console.log(selectedSearchType)
         console.log(e.target.value)
         setInputString(e.target.value)
@@ -145,7 +147,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                         {!(selectedSearchType === "source") && (
                             <Row className="justify-content-center">
                                 <Col xs={12} sm={10} md={8} lg={5}>
-                                    <InputGroup>
+                                    <CustomInputGroup>
                                         <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
                                             {searchTypes.map((item, index) => (
                                                 <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
@@ -165,7 +167,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                                             <Form.Control
                                                 className={inputColor ? "bg-danger" : "bg-light"}
 
-                                                placeholder={selectedSearchType === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleSearchChange}
+                                                placeholder={selectedSearchType === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleInputStringChange}
                                                 value={inputString || ""}
                                                 onKeyDown={(e) => {
                                                     console.log(e.key)
@@ -190,7 +192,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                                         <Button size={buttonSize} variant="dark" onClick={() => handleSearchClick()} >
                                             <MDBIcon icon="search" />
                                         </Button>
-                                    </InputGroup>
+                                    </CustomInputGroup>
                                 </Col>
                             </Row>
                         )}
@@ -198,7 +200,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                             <>
                                 <Row className="justify-content-center">
                                     <Col md={8} lg={5}>
-                                        <InputGroup className="d-flex justify-content-center">
+                                        <CustomInputGroup className="d-flex justify-content-center">
                                             <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
 
                                                 {searchTypes.map((item) => (
@@ -222,12 +224,24 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                                                     <DropdownItem eventKey={item.value} key={item.value}>{item.name}</DropdownItem>
                                                 ))
                                                 }
+                                                <InputGroup>
+                                                <FloatingLabel label="Digite outra source..." className="">
+                                                <Form.Control name="otherSourceName" placeholder="Digite outra source..." onChange={handleInputStringChange} className="w-50">
+                                                </Form.Control>       
+                                                </FloatingLabel>
+                                                
+                                                <Button size={buttonSize} variant="dark" onClick={() => handleSearchClick()} className="w-25">
+                                            <MDBIcon icon="search" />                                            
+                                        </Button>
+                                        </InputGroup>
+                                                                                    
                                             </DropdownButton>
                                             <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
                                                 <MDBIcon fas icon="times" />
                                             </Button>
                                             <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
-                                        </InputGroup>
+                                            
+                                        </CustomInputGroup>
                                     </Col>
                                 </Row>
                             </>

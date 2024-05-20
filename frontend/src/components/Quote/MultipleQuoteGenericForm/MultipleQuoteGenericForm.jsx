@@ -264,7 +264,7 @@ export default function MultipleQuoteGenericForm(props) {
 
                         <Row>
                             <FormGroup>
-                                <DropdownButton drop="down" align="end" title={quoteData.source || "Source"} onSelect={handleSourceSelect}>
+                                <DropdownButton drop="down" align="end" title={Source.getLabel(quoteData.source) || "Source"} onSelect={handleSourceSelect}>
                                     {Source.sources.map((item) => (
                                         <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
                                     ))}
