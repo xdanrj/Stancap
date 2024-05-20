@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { NormalDate, NormalDateAndHour } from "../../../Formatting/DateFormatting";
-import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph } from "./QuoteInfoStyles";
+import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph, ClickabeTextParagraph } from "./QuoteInfoStyles";
 import quoteEditingServices from "../../../services/quoteServices";
 import userServices from "../../../services/userServices";
 import _ from "lodash";
@@ -32,11 +32,10 @@ export default function QuoteInfo({ show, setShow, rawData }) {
                 </Modal.Header>
 
                 <ModalBody>
-
                     <TextTitle>Source</TextTitle>
-                    <TextParagraph>{data.source ||
+                    <ClickabeTextParagraph>{data.source ||
                         "Source não especificada"}
-                    </TextParagraph>
+                    </ClickabeTextParagraph>
 
                     <TextTitle>Data de upload</TextTitle>
                     <TextParagraph>{

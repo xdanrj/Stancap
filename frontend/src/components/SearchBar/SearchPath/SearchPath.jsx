@@ -31,18 +31,19 @@ export default function SearchPath({ searchParams }) {
             console.log(key, value)
         }
         
-        updatedQueryParams = updatedQueryParams.map(item => {
-            console.log(item.key)
-            return {                
-                key: getPropertyLabel(item.key) || "item.key", 
-                value: item.value
-            }
-        })
+        // updatedQueryParams = updatedQueryParams.map(item => {
+        //     console.log(item.key)
+        //     return {                
+        //         key: getPropertyLabel(item.key) || "item.key", 
+        //         value: item.value
+        //     }
+        // })
         setQueryParams(updatedQueryParams)
     }, [location.search])
 
     const handlePathClick = (queryKey) => {
-        searchParams.delete(queryKey)
+      console.log(queryKey.toLowerCase())
+        searchParams.delete(queryKey.toLowerCase())
         navigate({ search: searchParams.toString() })
     }
 
@@ -52,7 +53,7 @@ export default function SearchPath({ searchParams }) {
                 {queryParams.map((item, index) => (
                     item.value && (
                         <Breadcrumb.Item key={index} onClick={() => handlePathClick(item.key)} className="justify-content-center mx-auto">
-                        {`${item.key}: ${item.value}` }
+                        {`${getPropertyLabel(item.key)}: ${item.value}` }
                     </Breadcrumb.Item>
                     )                    
                 ))}
