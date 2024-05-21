@@ -137,7 +137,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
       <div style={{ "marginBottom": "-2rem" }}>
         {!(selectedSearchType === "source") && (
           <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={5}>
+            <Col xs={12} sm={10} md={8} lg={7}>
               <CustomInputGroup>
                 <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
                   {searchTypes.map((item, index) => (
@@ -167,7 +167,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                       }
                     }}
                   />
-                  {( inputString?.length > 0) && (
+                  {(inputString?.length > 0) && (
                     <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
                       <MDBIcon fas icon="times" />
                     </Button>
@@ -189,7 +189,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
         {selectedSearchType === "source" && (
           <>
             <Row className="justify-content-center">
-              <Col md={8} lg={5}>
+              <Col md={8} lg={7}>
                 <CustomInputGroup className="d-flex justify-content-center">
                   <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
 

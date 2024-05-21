@@ -17,7 +17,6 @@ import { useSearchParams } from "react-router-dom";
 
 const quoteEditingService = new quoteEditingServices()
 
-//todo: fazer getlabel no dropdown de Source
 export default function MultipleQuoteGenericForm(props) {
     const Source = new Sources()
     const useAlert = useAlertMsg()
