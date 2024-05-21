@@ -74,11 +74,24 @@ export default function QuoteInfo({ show, setShow, rawData }) {
             navigate(`?context=${rawData.context}`)
             handleClose()
           }}>{
-            data.context ||
-            "Contexto não especificado"}
+              data.context ||
+              "Contexto não especificado"}
           </ClickabeTextParagraph>
+
           <TextTitle>Tags</TextTitle>
-          <TextParagraph>{data.tags?.join(" • ") || "Nenhuma tag adicionada (isso não deveria acontecer, contate o dev"}</TextParagraph>
+          {data.tags && data.tags.length > 0 ? (
+            data.tags.map((tag, index) => (
+              <ClickabeTextParagraph key={index} onClick={() => {
+                navigate(`?tags=${tag}`)
+                handleClose()
+              }}>
+                {tag}
+                {index < data.tags.length - 1 && ' • '}
+              </ClickabeTextParagraph>
+            ))
+          ) : (
+            <TextParagraph>Nenhuma tag adicionada (isso não deveria acontecer, contate o dev)</TextParagraph>
+          )}
 
           {data.quoteType === "multiple" && (
             <>
