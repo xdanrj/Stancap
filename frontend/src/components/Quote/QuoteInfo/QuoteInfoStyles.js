@@ -45,8 +45,10 @@ export const TextParagraph = styled.p.attrs(() => ({
 `
 
 export const ClickabeTextParagraph = styled.p.attrs(() => ({
-  className: `${({ $onMouseEnter })=>  ($onMouseEnter ? "text-primary" : "text-secondary")}`,
-  onMouseEnter:
+  className: "d-inline"
 }))`
   font-size: 0.9em;
+  &:hover {
+    color: #0275d8
+  }
 `

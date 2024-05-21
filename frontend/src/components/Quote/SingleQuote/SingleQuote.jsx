@@ -41,7 +41,7 @@ export default function SingleQuotes({ singleQuotes }) {
                             <QuoteHeader>
                                 {
                                     imagePaths[index] ? (
-                                        <SourceLogo src={imagePaths[index].path} onClick={() => navigate(`/quotes?source=${imagePaths[index].source}`)} />
+                                        <SourceLogo src={imagePaths[index].path} onClick={() => navigate(`?source=${imagePaths[index].source}`)} />
                                     ) : (<></>)
                                 }
                                 <InfoIcon handleQuoteInfoClick={handleQuoteInfoClick} data={data} />
