@@ -57,6 +57,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
     console.log(propertyQuery)
     const foundType = searchTypes.find((type) => type.value === propertyQuery)
     setSelectedSearchType(foundType)
+    console.log(selectedSearchType)
   }, [])
 
   async function handleGetQuotes() {
