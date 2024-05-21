@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react"
-import CdButton from "./CdButton/CdButton"
-import { Form, FormGroup } from "react-bootstrap"
+import { Form, FormGroup, Col, Row } from "react-bootstrap"
 
 export default function Testes() {
-    const handleClick = () => {
-        console.log("ACAO")
-    }
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        console.log("entrou SUBMIT")
-    }
-    return (
-        <>
-            <Form onSubmit={handleSubmit}>
-                <FormGroup>
-                <CdButton onClick={handleClick}>
-                    texto botao
-                </CdButton>
-                </FormGroup>
-            </Form>
-        </>
-    )
+
+  return (
+    <>
+      <div className="d-flex flex-wrap">
+        <div className="bg-primary w-25">AAA</div>
+        <div className="bg-danger w-25">BBB</div>
+        <div className="bg-warning w-25">CCC</div>
+        <div className="bg-success w-25">DDD</div>
+      </div>
+    </>
+  )
 }
