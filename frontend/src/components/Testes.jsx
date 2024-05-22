@@ -3,14 +3,23 @@ import { Form, FormGroup, Col, Row } from "react-bootstrap"
 
 export default function Testes() {
 
+  //todo: lembrar que todo intervalo de tamanho de tela tem que ser definido se não o vão entre xs e lg vai ser ignorado.
   return (
     <>
-      <div className="d-flex flex-wrap">
-        <div className="bg-primary w-25">AAA</div>
-        <div className="bg-danger w-25">BBB</div>
-        <div className="bg-warning w-25">CCC</div>
-        <div className="bg-success w-25">DDD</div>
-      </div>
-    </>
+    <Row className="bg-secondary">
+      <Col lg={3} md={3} sm={3} xs={6} className="bg-primary">
+        AAA
+      </Col>
+      <Col lg={3} md={3} sm={3} xs={6} className="bg-warning">
+        BBB
+      </Col>
+      <Col lg={3} md={3} sm={3} xs={6} className="bg-success">
+        CCC
+      </Col>
+      <Col lg={3} md={3} sm={3} xs={6} className="bg-danger">
+        DDD
+      </Col>
+    </Row>
+  </>
   )
 }
