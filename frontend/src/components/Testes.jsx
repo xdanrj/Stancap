@@ -3,7 +3,7 @@ import { Form, FormGroup, Col, Row } from "react-bootstrap"
 
 export default function Testes() {
 
-  //todo: lembrar que todo intervalo de tamanho de tela tem que ser definido se não o vão entre xs e lg vai ser ignorado.
+  // lembrar que todo intervalo de tamanho de tela tem que ser definido se não o vão entre xs e lg vai ser ignorado.
   return (
     <>
     <Row className="bg-secondary">

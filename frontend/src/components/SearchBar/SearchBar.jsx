@@ -132,17 +132,15 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
     }
   }
 
-//todo: usar o layout de botoes em cima, search no meio e botoes do lado da search
-
   const buttonSize = sizes.isMobile ? "sm" : "lg"
   return (
     <>
       <div style={{ "marginBottom": "-2rem" }}>
         {!(selectedSearchType === "source") && (
           <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={7}>
+            <Col xs={12} sm={9} md={7} lg={6} xl={5}>
               <CustomInputGroup>
-                <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
+                <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "outline-light"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
                   {searchTypes.map((item, index) => (
                     <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
                   ))}
@@ -182,7 +180,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                 </i>
                 </Button>
 
-                <Button size={buttonSize} variant="dark" onClick={() => handleSearchClick()} >
+                <Button size={buttonSize} variant="outline-light" onClick={() => handleSearchClick()} >
                   <MDBIcon icon="search" />
                 </Button>
               </CustomInputGroup>
@@ -192,10 +190,10 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
         {selectedSearchType === "source" && (
           <>
             <div className="justify-content-center">
-              <CustomInputGroup className="d-flex flex-wrap justify-content-center">
-                <Row>
-                  <Col xs={12} sm={12} md={6} lg={6}>
-                    <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "dark"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
+              <CustomInputGroup className="d-flex justify-content-center">
+                <Row >
+                  <Col xs={12}>
+                    <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "outline-light"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
 
                       {searchTypes.map((item) => (
                         <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
@@ -211,7 +209,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                       </ToggleButtonGroup>
                     </DropdownButton>
 
-                    <DropdownButton size={buttonSize} variant="dark" menuVariant="dark"
+                    <DropdownButton size={buttonSize} variant="outline-light" menuVariant="dark"
                       title={Source.getLabel(searchParams.get("source")) || "Nome"}
                       onSelect={handleSourceSelect}>
                       {Source.sources.map((item, index) => (
@@ -221,7 +219,8 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                     </DropdownButton>
                   </Col>
 
-                  <Col xs={12} sm={12} md={6} lg={6}>
+                  <Col xs={8} className="mx-auto" >
+                    <InputGroup className="">
                     <Form.Control
                       className={`${inputColor ? "bg-danger" : "bg-light"}`}
                       placeholder={selectedSearchType === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleInputStringChange}
@@ -238,9 +237,10 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                       <MDBIcon fas icon="times" />
                     </Button>
                     <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
-                    <Button size={buttonSize} variant="dark" onClick={() => handleSearchClick()} >
+                    <Button size={buttonSize} variant="outline-light" onClick={() => handleSearchClick()} >
                       <MDBIcon icon="search" />
                     </Button>
+                    </InputGroup>
                   </Col>
                 </Row>
               </CustomInputGroup>

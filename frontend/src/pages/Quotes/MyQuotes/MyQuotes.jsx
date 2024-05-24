@@ -85,7 +85,7 @@ export default function MyQuotes() {
         <>
                 <Row className="justify-content-center">
                     <SearchBar getQuotes={getQuotes} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
-                    <Col xs={12} sm={8} md={6} lg={5}>
+                    <Col xs={12} sm={9} md={7} lg={6} xl={5}>
                         {
                             quotesResponse.length > 0 ? (
                                 quotesResponse.map((data) => (
