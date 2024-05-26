@@ -55,18 +55,7 @@ export default function MultipleQuoteInputs(props) {
                 {props.multipleQuotes[0] && props.multipleQuotes.map((_, index) => (
                     <div key={index} className="">
                         <Row>
-                            <Col>
-                                <FormGroup>
-                                    <FloatingLabel label="Quote">
-                                        <Form.Control
-                                            name="quote"
-                                            placeholder="Quote"
-                                            value={props.multipleQuotes[index].quote}
-                                            onChange={(e) => props.onChange(e, index)}
-                                        />
-                                    </FloatingLabel>
-                                </FormGroup>
-                            </Col>
+                          
                             <Col>
                                 <FormGroup>
                                     <FloatingLabel label="Autor">
@@ -79,6 +68,20 @@ export default function MultipleQuoteInputs(props) {
                                     </FloatingLabel>
                                 </FormGroup>
                             </Col>
+
+                            <Col>
+                                <FormGroup>
+                                    <FloatingLabel label="Quote">
+                                        <Form.Control
+                                            name="quote"
+                                            placeholder="Quote"
+                                            value={props.multipleQuotes[index].quote}
+                                            onChange={(e) => props.onChange(e, index)}
+                                        />
+                                    </FloatingLabel>
+                                </FormGroup>
+                            </Col>
+
                         </Row>
 
                         {iconVisible[index] && (

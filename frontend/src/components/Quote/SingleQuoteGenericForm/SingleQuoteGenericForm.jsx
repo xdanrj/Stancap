@@ -167,7 +167,7 @@ console.log(quoteData)
     return (
         <>
             <Row className="justify-content-center">
-                <Col xs={12} sm={8} md={6} lg={5} xl={4}>
+                <Col xs={12} sm={6} md={5} lg={4} xl={3}>
                     <Form onSubmit={handleSubmitQuote}>
                         <Row>
                             <FormGroup>

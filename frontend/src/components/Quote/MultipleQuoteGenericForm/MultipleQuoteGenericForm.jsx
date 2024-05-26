@@ -232,7 +232,7 @@ export default function MultipleQuoteGenericForm(props) {
         <>
             <FastQuotesFillModal show={showFastQuotesFillModal} setShow={setShowFastQuotesFillModal} convertRawChatLog={convertRawChatLog} handleRawChatLog={handleRawChatLog} />
             <Row className="justify-content-center">
-                <Col xs={12} sm={8} md={8} lg={5} xl={4}>
+                <Col xs={12} sm={7} md={5} lg={4} xl={4}>
                     <Form onSubmit={handleSubmitQuote}>
                         <div className="mb-4">
                             <Button onClick={() => setShowFastQuotesFillModal(true)} > <MDBIcon fas icon="paste" /></Button>
