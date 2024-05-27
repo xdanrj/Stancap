@@ -18,7 +18,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
   const location = useLocation()
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
-  const [pureSearchParams, setPureSearchParams] = useState()
+  const [pureSearchParams, setPureSearchParams] = useState({})
   const [selectedSearchType, setSelectedSearchType] = useState()
   const [selectedQuoteType, setSelectedQuoteType] = useState(searchParams.get("quoteType") || null)
   const [typeColor, setTypeColor] = useState(false)
@@ -29,7 +29,9 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
   const useAlert = useAlertMsg()
 
   useEffect(() => {
-    const copySearchParams = searchParams.entries
+    const copySearchParams = Object.fromEntries(searchParams.entries())
+    delete copySearchParams.page
+    setPureSearchParams(copySearchParams)
     console.log(copySearchParams)
   }, [searchParams])
 
@@ -175,7 +177,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                       }
                     }}
                   />
-                  {(inputString?.length > 0) && (
+                  {(Object.keys(pureSearchParams)?.length > 0) && (
                     <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
                       <MDBIcon fas icon="times" />
                     </Button>
@@ -228,25 +230,27 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
 
                   <Col xs={8} className="mx-auto" >
                     <InputGroup className="">
-                    <Form.Control
-                      className={`${inputColor ? "bg-danger" : "bg-light"}`}
-                      placeholder={selectedSearchType === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleInputStringChange}
-                      value={inputString || ""}
-                      onKeyDown={(e) => {
-                        console.log(e.key)
-                        if (e.key === "Enter") {
-                          if (checkAttributes())
-                            handleSearchClick()
-                        }
-                      }}
-                    />
-                    <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
-                      <MDBIcon fas icon="times" />
-                    </Button>
-                    <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
-                    <Button size={buttonSize} variant="outline-light" onClick={() => handleSearchClick()} >
-                      <MDBIcon icon="search" />
-                    </Button>
+                      <Form.Control
+                        className={`${inputColor ? "bg-danger" : "bg-light"}`}
+                        placeholder={selectedSearchType === "tags" ? "Separe as tags por vírgula" : "Pesquise..."} onChange={handleInputStringChange}
+                        value={inputString || ""}
+                        onKeyDown={(e) => {
+                          console.log(e.key)
+                          if (e.key === "Enter") {
+                            if (checkAttributes())
+                              handleSearchClick()
+                          }
+                        }}
+                      />
+                      {(Object.keys(pureSearchParams)?.length > 0) && (
+                        <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
+                          <MDBIcon fas icon="times" />
+                        </Button>
+                      )}
+                      <Button size={buttonSize} variant="outline-light" onClick={() => handleSortChange()}><i className="bi bi-sort-down-alt"></i></Button>
+                      <Button size={buttonSize} variant="outline-light" onClick={() => handleSearchClick()} >
+                        <MDBIcon icon="search" />
+                      </Button>
                     </InputGroup>
                   </Col>
                 </Row>
