@@ -18,13 +18,20 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
   const location = useLocation()
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
+  const [pureSearchParams, setPureSearchParams] = useState()
   const [selectedSearchType, setSelectedSearchType] = useState()
   const [selectedQuoteType, setSelectedQuoteType] = useState(searchParams.get("quoteType") || null)
   const [typeColor, setTypeColor] = useState(false)
   const [inputColor, setInputColor] = useState(false)
   const [inputString, setInputString] = useState()
   const [searchTypes, setSearchTypes] = useState([...QuotesLabels])
+
   const useAlert = useAlertMsg()
+
+  useEffect(() => {
+    const copySearchParams = searchParams.entries
+    console.log(copySearchParams)
+  }, [searchParams])
 
   useEffect(() => {
     console.log(location.search)
