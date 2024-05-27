@@ -7,13 +7,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import _ from "lodash";
-import { QuotesLabels, getPropertyLabel } from "../../Formatting/QuotesLabels";
+import { QuotesProps } from "../../Formatting/QuotesProps";
 import SearchPath from "./SearchPath/SearchPath";
 import { sizes } from "../../CommonStyles/screenSizes";
 import Sources from "../Quote/Sources";
 import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 
 export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQtd }) {
+  const QuoteProp = new QuotesProps()
   const Source = new Sources()
   const location = useLocation()
   const navigate = useNavigate()
@@ -24,16 +25,9 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
   const [typeColor, setTypeColor] = useState(false)
   const [inputColor, setInputColor] = useState(false)
   const [inputString, setInputString] = useState()
-  const [searchTypes, setSearchTypes] = useState([...QuotesLabels])
+  const [searchTypes, setSearchTypes] = useState([...QuoteProp.quotesProps])
 
   const useAlert = useAlertMsg()
-
-  useEffect(() => {
-    const copySearchParams = Object.fromEntries(searchParams.entries())
-    delete copySearchParams.page
-    setPureSearchParams(copySearchParams)
-    console.log(copySearchParams)
-  }, [searchParams])
 
   useEffect(() => {
     console.log(location.search)
@@ -42,6 +36,13 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
       navigate({ search: searchParams.toString() })
     }
     handleGetQuotes()
+
+    const copySearchParams = Object.fromEntries(searchParams.entries())
+    delete copySearchParams.page
+    setPureSearchParams(copySearchParams)
+    console.log(copySearchParams)
+
+    //setSelectedSearchType()
   }, [location.search])
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
     }
     console.log(propertyQuery)
     const foundType = searchTypes.find((type) => type.value === propertyQuery)
+    console.log(foundType)
     setSelectedSearchType(foundType)
     console.log(selectedSearchType)
   }, [])
@@ -149,7 +151,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
           <Row className="justify-content-center">
             <Col xs={12} sm={9} md={7} lg={6} xl={5}>
               <CustomInputGroup>
-                <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "outline-light"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
+                <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "outline-light"} menuVariant="dark" title={QuoteProp.getLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
                   {searchTypes.map((item, index) => (
                     <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
                   ))}
@@ -177,7 +179,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                       }
                     }}
                   />
-                  {(Object.keys(pureSearchParams)?.length > 0) && (
+                  {(Object.keys(pureSearchParams)?.length > 0 || inputString?.length > 0) && (
                     <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
                       <MDBIcon fas icon="times" />
                     </Button>
@@ -202,7 +204,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
               <CustomInputGroup className="d-flex justify-content-center">
                 <Row >
                   <Col xs={12}>
-                    <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "outline-light"} menuVariant="dark" title={getPropertyLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
+                    <DropdownButton size={buttonSize} variant={typeColor ? "danger" : "outline-light"} menuVariant="dark" title={QuoteProp.getLabel(selectedSearchType) || "Tipo"} onSelect={handleTypeSelect}>
 
                       {searchTypes.map((item) => (
                         <DropdownItem eventKey={item.value} key={item.value}>{item.label}</DropdownItem>
@@ -242,7 +244,7 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
                           }
                         }}
                       />
-                      {(Object.keys(pureSearchParams)?.length > 0) && (
+                      {(Object.keys(pureSearchParams)?.length > 0 || inputString?.length > 0) && (
                         <Button size={buttonSize} variant="outline-light" onClick={() => handleClearSearch()}>
                           <MDBIcon fas icon="times" />
                         </Button>

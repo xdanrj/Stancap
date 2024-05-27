@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react"
 import { Breadcrumb } from "react-bootstrap"
 import { useNavigate, useLocation } from "react-router-dom"
 import Sources from "../../Quote/Sources"
-import { getPropertyLabel } from "../../../Formatting/QuotesLabels"
+import { QuotesProps } from "../../../Formatting/QuotesProps"
 
 export default function SearchPath({ searchParams }) {
+  const QuoteProp = new QuotesProps()
     const Source = new Sources()
     const location = useLocation()
     const navigate = useNavigate()
@@ -30,14 +31,7 @@ export default function SearchPath({ searchParams }) {
             }
             console.log(key, value)
         }
-        
-        // updatedQueryParams = updatedQueryParams.map(item => {
-        //     console.log(item.key)
-        //     return {                
-        //         key: getPropertyLabel(item.key) || "item.key", 
-        //         value: item.value
-        //     }
-        // })
+       
         setQueryParams(updatedQueryParams)
     }, [location.search])
 
@@ -53,7 +47,7 @@ export default function SearchPath({ searchParams }) {
                 {queryParams.map((item, index) => (
                     item.value && (
                         <Breadcrumb.Item key={index} onClick={() => handlePathClick(item.key)} className="justify-content-center mx-auto">
-                        {`${getPropertyLabel(item.key)}: ${item.value}` }
+                        {`${QuoteProp.getLabel(item.key)}: ${item.value}` }
                     </Breadcrumb.Item>
                     )                    
                 ))}
