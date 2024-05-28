@@ -5,7 +5,6 @@ import { connectDB } from "./src/infra/db.js";
 import { quotesRoutes } from "./src/routes/quotesRoutes.js";
 import {userRoutes} from "./src/routes/userRoutes.js";
 import { loginAndRegisterRoutes } from "./src/routes/loginAndRegisterRoutes.js";
-
 import dotenv from "dotenv"
 dotenv.config()
 const PORT = process.env.PORT || 3000;
