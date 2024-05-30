@@ -95,6 +95,7 @@ export default function SingleQuoteGenericForm(props) {
                 window.location.reload()
             }
         } catch (error) {
+            useAlert(error)
             alert(error)
         }
     }
