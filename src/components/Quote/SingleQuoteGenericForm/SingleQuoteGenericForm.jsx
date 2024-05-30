@@ -120,8 +120,7 @@ export default function SingleQuoteGenericForm(props) {
                 paragraph = "Você se esqueceu da data. Não se lembra nem do ano?"
             }
             else if (!(quoteData.author)) {
-                paragraph = "Você se esqueceu do autor."
-                buttons = [{ text: "Vou inserir", action: ["handleClose()"] }, { text: "Não lembro o autor" }]
+                paragraph = "Você se esqueceu do autor."    
             }
 
             if (paragraph) {
