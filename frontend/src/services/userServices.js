@@ -1,4 +1,4 @@
-const apiUrl = process.env.API_URL
+
 import axiosInstance from "./axiosConfig"
 
 export default class userServices {

@@ -1,5 +1,5 @@
 import axiosInstance from "./axiosConfig"
-const apiUrl = process.env.API_URL
+
 export default class quoteEditingServices {
     constructor() {
         this.axios = axiosInstance

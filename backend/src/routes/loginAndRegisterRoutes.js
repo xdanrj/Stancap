@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import { reqLimit } from "./middleware.js";
 
 export const loginAndRegisterRoutes = (app) => {
-    const apiUrl = process.env.API_URL
+    
     const secretKey = process.env.SECRET_KEY
 
     //variaveis globais para funcionamento da API Twilio

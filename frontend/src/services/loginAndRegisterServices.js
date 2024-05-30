@@ -1,4 +1,4 @@
-const apiUrl = process.env.API_URL
+
 import axiosInstance from "./axiosConfig"
 import userServices from "./userServices"
 const userService = new userServices()
