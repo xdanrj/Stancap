@@ -65,7 +65,6 @@ export default function SingleQuoteGenericForm(props) {
 
     const finalSubmitQuote = async () => {
         try {
-            console.log("entrou no finalsubmitquote")
             let response
             if (props.type === "addQuote") {
                 const updatedQuoteData = {
@@ -96,7 +95,6 @@ export default function SingleQuoteGenericForm(props) {
             }
         } catch (error) {
             useAlert(error)
-            alert(error)
         }
     }
 
@@ -136,6 +134,7 @@ export default function SingleQuoteGenericForm(props) {
                 }
             }
         } catch (error) {
+            console.log("caiu catch")
             useAlert(error)
         }
     }

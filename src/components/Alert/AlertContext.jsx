@@ -8,14 +8,12 @@ export function AlertProvider({ children }) {
     //todo: fazer um usealert namoralzinho de erro pra caso a api nao responda
     function notify(message = "", duration = 3500) {
         console.log(message)
-        console.log(typeof (message))
-        let msg
-        if (typeof (message) !== "string") {
-            msg = JSON.stringify(message)
-        }
+        if (message instanceof Error) {
+            message = message?.stack
+        } 
         if (message.includes("\n")) {
             let splitMsg = message.split("\n")
-            msg = (
+            message = (
                 <div>
                     {splitMsg.map((line, index) => (
                         <div key={index}>
@@ -26,11 +24,8 @@ export function AlertProvider({ children }) {
                 </div>
             )
         }
-        else {
-            msg = message
-        }
-        // todo: criar finalMsg ao inves de msg (pra fazer o includes no msg)
-        toast(msg, { autoClose: duration })
+        toast(message, { autoClose: duration })
+        
     }
 
 
