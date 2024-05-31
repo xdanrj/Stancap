@@ -16,7 +16,6 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function App() {
   return (
-    <BrowserRouter basename='/stancap'>
     <div>
       <NavbarComponent />
       <Routes>
@@ -55,6 +54,5 @@ export default function App() {
 
       </Routes>
     </div>
-    </BrowserRouter>
   )
 }
