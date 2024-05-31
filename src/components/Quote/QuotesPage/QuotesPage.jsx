@@ -25,7 +25,7 @@ export default function QuotesPage() {
   const [quotesQtd, setQuotesQtd] = useState(0)
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
- 
+
   async function getQuotes(queryObj) {
     console.log(queryObj)
     const { quotes, message, quotesQtd } = await quoteService.getQuotes(queryObj)
@@ -59,14 +59,21 @@ export default function QuotesPage() {
     <>
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
-        <SearchBar getQuotes={getQuotes} setQuotesResponse={setQuotesResponse} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd}/>
+      <SearchBar getQuotes={getQuotes} setQuotesResponse={setQuotesResponse} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
 
-        <Row className="justify-content-center">
-          <Col xs={12} sm={9} md={7} lg={6} xl={5} >
-            <SingleQuote singleQuotes={singleQuotesArray} />
-            <MultipleQuote multipleQuotes={multipleQuotesArray} />
-          </Col>
-        </Row>
+      <Row className="justify-content-center">
+        <Col xs={12} sm={9} md={7} lg={6} xl={5} >
+          <SingleQuote singleQuotes={singleQuotesArray} />
+          <MultipleQuote multipleQuotes={multipleQuotesArray} />
+
+          {quotesResponse.length < 1 && (
+            <>
+              <h2>Nenhuma quote encontrada</h2>
+            </>
+          )}
+
+        </Col>
+      </Row>
       <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} />
     </>
   )

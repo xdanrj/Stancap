@@ -31,7 +31,7 @@ export default function MyQuotes() {
             setQuotesQtd(quotesQtd)
             setQuotesResponse(quotes)
         } catch (error) {
-            message && useAlert(message)
+            error.message && useAlert(error.message)
         }
     }
 
