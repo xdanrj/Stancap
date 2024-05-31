@@ -4,9 +4,8 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: "/Stancap",
   define: {
-    'process.env': process.env,
-    plugins: [react()],
-    base: "/Stancap"
+    'process.env': process.env
   }
 })
