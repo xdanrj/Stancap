@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
 import NavbarComponent from './components/Navbar/Navbar';
 import QuotesPage from './components/Quote/QuotesPage/QuotesPage'
 import Login from './pages/Credentials/Login';
@@ -16,6 +16,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function App() {
   return (
+    <BrowserRouter basename='/stancap'>
     <div>
       <NavbarComponent />
       <Routes>
@@ -25,8 +26,6 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/testes" element={<Testes />} />
         <Route path="/new_password" element={<NewPassword />} />
-
-
 
         <Route path="/add_quote" element={
           <ProtectedRoutes>
@@ -39,7 +38,6 @@ export default function App() {
             <EditQuote />
           </ProtectedRoutes>
         } />
-
 
         <Route path="/my_quotes" element={
           <ProtectedRoutes>
@@ -57,5 +55,6 @@ export default function App() {
 
       </Routes>
     </div>
+    </BrowserRouter>
   )
 }
