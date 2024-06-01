@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import { Routes, Route, Navigate, BrowserRouter, HashRouter } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import NavbarComponent from './components/Navbar/Navbar';
 import QuotesPage from './components/Quote/QuotesPage/QuotesPage'
 import Login from './pages/Credentials/Login';
@@ -11,50 +11,54 @@ import AddQuote from './pages/Quotes/AddQuote/AddQuote';
 import EditQuote from './pages/Quotes/EditQuote';
 import MyQuotes from './pages/Quotes/MyQuotes/MyQuotes';
 import ProtectedRoutes from './pages/Credentials/ProtectedRoutes';
+import { ModalProvider } from './components/Modal/ModalContext';
+import { AlertProvider } from './components/Alert/AlertContext';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function App() {
   return (
-    <HashRouter>
-    <div>
-      <NavbarComponent />
-      <Routes>
-        <Route path="/" element={<Navigate replace to="/quotes" />} />
-        <Route path="/quotes" element={<QuotesPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/testes" element={<Testes />} />
-        <Route path="/new_password" element={<NewPassword />} />
+    <ModalProvider>
+      <AlertProvider>
+        <div>
+          <NavbarComponent />
+          <Routes>
+            <Route path="/" element={<Navigate replace to="/quotes" />} />
+            <Route path="/quotes" element={<QuotesPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/testes" element={<Testes />} />
+            <Route path="/new_password" element={<NewPassword />} />
 
-        <Route path="/add_quote" element={
-          <ProtectedRoutes>
-            <AddQuote />
-          </ProtectedRoutes>
-        } />
+            <Route path="/add_quote" element={
+              <ProtectedRoutes>
+                <AddQuote />
+              </ProtectedRoutes>
+            } />
 
-        <Route path="/edit_quote" element={
-          <ProtectedRoutes>
-            <EditQuote />
-          </ProtectedRoutes>
-        } />
+            <Route path="/edit_quote" element={
+              <ProtectedRoutes>
+                <EditQuote />
+              </ProtectedRoutes>
+            } />
 
-        <Route path="/my_quotes" element={
-          <ProtectedRoutes>
+            <Route path="/my_quotes" element={
+              <ProtectedRoutes>
 
-            <MyQuotes />
+                <MyQuotes />
 
-          </ProtectedRoutes>
-        } />
+              </ProtectedRoutes>
+            } />
 
-        <Route path="/navbar" element={
-          <ProtectedRoutes>
-            <NavbarComponent />
-          </ProtectedRoutes>
-        } />
+            <Route path="/navbar" element={
+              <ProtectedRoutes>
+                <NavbarComponent />
+              </ProtectedRoutes>
+            } />
 
-      </Routes>
-    </div>
-    </HashRouter>
+          </Routes>
+        </div>
+      </AlertProvider>
+    </ModalProvider>
   )
 }
