@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, Navigate, BrowserRouter, HashRouter } from 'react-router-dom';
 import NavbarComponent from './components/Navbar/Navbar';
 import QuotesPage from './components/Quote/QuotesPage/QuotesPage'
 import Login from './pages/Credentials/Login';
@@ -16,6 +16,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function App() {
   return (
+    <HashRouter>
     <div>
       <NavbarComponent />
       <Routes>
@@ -54,5 +55,6 @@ export default function App() {
 
       </Routes>
     </div>
+    </HashRouter>
   )
 }
