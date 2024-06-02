@@ -12,6 +12,7 @@ import {
     MDBNavbarNav as originalMDBNavbarNav,
     MDBInputGroup as originalMDBInputGroup
 } from 'mdb-react-ui-kit';
+import { Link as originalLink } from 'react-router-dom';
 
 export const MDBNavbar = styled(originalMDBNavbar).attrs(() => ({
     className: "text-white"
@@ -38,8 +39,14 @@ export const MDBNavbarItem = styled(originalMDBNavbarItem).attrs(() => ({
 }))`
 `;
 
+//todo
 export const CustomMDBNavbarLink = styled(originalMDBNavbarLink).attrs(() => ({
     className: "text-white mx-2",
+}))`
+`;
+
+export const CustomLink = styled(originalLink).attrs(() => ({
+  className: "text-white mx-2 my-2",
 }))`
 `;
 

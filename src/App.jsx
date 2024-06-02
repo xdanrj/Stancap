@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, HashRouter } from 'react-router-dom';
 import NavbarComponent from './components/Navbar/Navbar';
 import QuotesPage from './components/Quote/QuotesPage/QuotesPage'
 import Login from './pages/Credentials/Login';
@@ -18,12 +18,12 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function App() {
   return (
-    <ModalProvider>
-      <AlertProvider>
-        <div>
+    <div>
+      <ModalProvider>
+        <AlertProvider>
           <NavbarComponent />
           <Routes>
-            <Route path="/" element={<Navigate replace to="/quotes" />} />
+            <Route path="" element={<Navigate replace to="/quotes" />} />
             <Route path="/quotes" element={<QuotesPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -57,8 +57,8 @@ export default function App() {
             } />
 
           </Routes>
-        </div>
-      </AlertProvider>
-    </ModalProvider>
+        </AlertProvider>
+      </ModalProvider>
+    </div>
   )
 }
