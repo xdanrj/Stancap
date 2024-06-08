@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://xdanrj.github.io/stancap/",
   "scripts": {
     "dev": "vite --host",
     "host": "vite --host",
