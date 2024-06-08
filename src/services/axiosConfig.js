@@ -1,7 +1,9 @@
 import axios from "axios"
+import dotenv from "dotenv"
+console.log("uuu: ", process.env.API_URL)
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: process.env.API_URL,
 })
 
 axiosInstance.interceptors.response.use(
