@@ -9,7 +9,8 @@ export default class quoteEditingServices {
         try {
             console.log(params)
             const response = await this.axios.get(`/get_quotes`, { params })
-            console.log(response)
+            console.log(Object.keys(response))
+            console.log(response.data)
             return response.data
         } catch (error) {
             console.log(response)

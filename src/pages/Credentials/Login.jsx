@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { Form, Row, Col, Container } from "react-bootstrap";
+import { Form, Row, Col, Container, FormGroup, InputGroup } from "react-bootstrap";
 import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 import { useAlertMsg } from "../../components/Alert/AlertContext";
+import { MDBIcon } from "mdb-react-ui-kit";
 import loginAndRegisterServices from "../../services/loginAndRegisterServices";
 
 export default function LoginForm() {
@@ -11,6 +12,7 @@ export default function LoginForm() {
   const location = useLocation()
   const navigate = useNavigate()
   const [loginData, setLoginData] = useState([])
+  const [passwordVisible, setPasswordVisible] = useState(false)
   const loginAndRegisterService = new loginAndRegisterServices()
 
   useEffect(() => {
@@ -26,7 +28,11 @@ export default function LoginForm() {
     e.preventDefault()
     try {
       const response = await loginAndRegisterService.login(loginData)
-      if (response === true) {
+      console.log(response)
+      if (response.userToken) {
+        localStorage.setItem("userToken", response.userToken)
+        localStorage.setItem("userId", response.userId)
+        localStorage.setItem("username", response.username)
         console.log("logou")
         alert('Logado com sucesso')
         navigate('/quotes')
@@ -40,6 +46,10 @@ export default function LoginForm() {
   }
   const handleLoginChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value })
+  }
+
+  const changePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible)
   }
 
   return (
@@ -58,14 +68,18 @@ export default function LoginForm() {
               </Form.Control>
             </FloatingLabel>
 
-            <FloatingLabel label="Senha">
-              <Form.Control
-                name="password"
-                type="password"
-                placeholder="Senha"
-                onChange={handleLoginChange}>
-              </Form.Control>
-            </FloatingLabel>
+            <InputGroup>
+              <FloatingLabel label="Senha">
+                <Form.Control
+                  name="password"
+                  type={passwordVisible ? "text" : "password"}
+                  placeholder="Senha"
+                  onChange={handleLoginChange}>
+                </Form.Control>
+
+              </FloatingLabel>
+              <Button onClick={changePasswordVisibility}><MDBIcon far icon={passwordVisible ? "eye-slash" : "eye"} /></Button>
+            </InputGroup>
           </Col>
         </Row>
 

@@ -74,7 +74,6 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
   async function handleGetQuotes() {
     console.log(Object.fromEntries(searchParams))
     const { quotes, message, quotesQtd } = await getQuotes(Object.fromEntries(searchParams))
-    console.log(quotes.length)
     if (quotes.length > 0) {
       console.log("quotes é maior q 0")
       setQuotesResponse(quotes)

@@ -13,6 +13,7 @@ export default class userServices {
         localStorage.removeItem("userToken")  
         localStorage.removeItem("userId")      
         localStorage.removeItem("username")
+        localStorage.removeItem("userQuotesQtd")
     }
 
     async getUsername(userId) {

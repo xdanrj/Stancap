@@ -1,9 +1,9 @@
 import axios from "axios"
-import dotenv from "dotenv"
-console.log("uuu: ", process.env.API_URL)
+
+console.log("apiUrl: ", import.meta.env.VITE_API_URL)
 
 const axiosInstance = axios.create({
-    baseURL: process.env.API_URL,
+    baseURL: import.meta.env.VITE_API_URL || process.env.API_URL,
 })
 
 axiosInstance.interceptors.response.use(
