@@ -12,7 +12,7 @@ import { useModalBox } from "../../Modal/ModalContext"
 import { QuotesPageFirstVisitModal } from "./QuotesPageFirstVisitModal/QuotesPageFirstVisitModal"
 import PageSelector from "../../PageSelector/PageSelector"
 import { useNavigate } from "react-router-dom"
-import Skeleton from "react-loading-skeleton"
+import { QuoteLoading } from "../../LoadingSkeleton/LoadingSkeleton"
 
 export default function QuotesPage() {
   const navigate = useNavigate()
@@ -64,10 +64,16 @@ export default function QuotesPage() {
 
       <Row className="justify-content-center">
         <Col xs={12} sm={9} md={7} lg={6} xl={5} >
-
-          {<SingleQuote singleQuotes={singleQuotesArray} /> || <Skeleton count={1} containerClassName="flex-1" />}
-          {<MultipleQuote multipleQuotes={multipleQuotesArray} />  ||<Skeleton count={1} />}
-
+          {
+            quotesResponse.length < 1 ? (
+              <QuoteLoading />
+            ) : (
+              <>
+                <SingleQuote singleQuotes={singleQuotesArray} />
+                <MultipleQuote multipleQuotes={multipleQuotesArray} />
+              </>
+            )
+          }
         </Col>
       </Row>
       <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} />
