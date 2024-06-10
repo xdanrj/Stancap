@@ -12,6 +12,7 @@ import { useModalBox } from "../../Modal/ModalContext"
 import { QuotesPageFirstVisitModal } from "./QuotesPageFirstVisitModal/QuotesPageFirstVisitModal"
 import PageSelector from "../../PageSelector/PageSelector"
 import { useNavigate } from "react-router-dom"
+import Skeleton from "react-loading-skeleton"
 
 export default function QuotesPage() {
   const navigate = useNavigate()
@@ -63,14 +64,9 @@ export default function QuotesPage() {
 
       <Row className="justify-content-center">
         <Col xs={12} sm={9} md={7} lg={6} xl={5} >
-          <SingleQuote singleQuotes={singleQuotesArray} />
-          <MultipleQuote multipleQuotes={multipleQuotesArray} />
 
-          {quotesResponse.length < 1 && (
-            <>
-              <h2>Nenhuma quote encontrada</h2>
-            </>
-          )}
+          {<SingleQuote singleQuotes={singleQuotesArray} /> || <Skeleton count={1} containerClassName="flex-1" />}
+          {<MultipleQuote multipleQuotes={multipleQuotesArray} />  ||<Skeleton count={1} />}
 
         </Col>
       </Row>
@@ -78,3 +74,9 @@ export default function QuotesPage() {
     </>
   )
 }
+
+// {quotesResponse.length < 1 && (
+//   <>
+//     <h2>Nenhuma quote encontrada</h2>
+//   </>
+// )}

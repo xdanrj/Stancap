@@ -15,7 +15,6 @@ export default function SingleQuotes({ singleQuotes }) {
     const [quoteInfoData, setQuoteInfoData] = useState("")
     const [imagePaths, setImagePaths] = useState([])
     const navigate = useNavigate()
-    const quoteService = new quoteEditingServices()
 
     useEffect(() => {
         let paths = []
