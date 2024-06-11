@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import { Routes, Route, Navigate, HashRouter } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import NavbarComponent from './components/Navbar/Navbar';
 import QuotesPage from './components/Quote/QuotesPage/QuotesPage'
 import Login from './pages/Credentials/Login';

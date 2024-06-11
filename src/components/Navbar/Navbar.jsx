@@ -28,36 +28,29 @@ export default function NavbarComponent() {
         <MDBContainer fluid style={{ "marginTop": "-0.8rem", }}>
           <MDBNavbarNav className='d-flex flex-row ms-auto justify-content-center' >
 
-            <CustomLink to='/quotes'>
-              <MDBNavbarItem>
-                <NavbarIcon fas icon="comments" />
-                <NavbarIconText>Quotes</NavbarIconText>
-              </MDBNavbarItem>
-            </CustomLink>
+            <CustomMDBNavbarLink href='/quotes'>
+              <NavbarIcon fas icon="comments" />
+              <NavbarIconText>Quotes</NavbarIconText>
+            </CustomMDBNavbarLink>
 
             {isAuthenticated ?
               <>
-                <CustomLink to='/add_quote'>
-                  <MDBNavbarItem>
-                    <NavbarIcon fas icon="plus-circle" />
-                    <NavbarIconText >Adicionar</NavbarIconText>
-                  </MDBNavbarItem>
-                </CustomLink>
+                <CustomMDBNavbarLink href='/add_quote'>
+                  <NavbarIcon fas icon="plus-circle" />
+                  <NavbarIconText >Adicionar</NavbarIconText>
+                </CustomMDBNavbarLink>
 
-                <CustomLink to='/my_quotes'>
-                  <MDBNavbarItem>
-                    <NavbarIcon fas icon="address-book" />
-                    <NavbarIconText >Minhas</NavbarIconText>
-                  </MDBNavbarItem>
-                </CustomLink>
+
+                <CustomMDBNavbarLink href='/my_quotes'>
+                  <NavbarIcon fas icon="address-book" />
+                  <NavbarIconText >Minhas</NavbarIconText>
+                </CustomMDBNavbarLink>
               </>
               :
-              <CustomLink to='/login'>
-                <MDBNavbarItem>
-                  <NavbarIcon fas icon="sign-in-alt" />
-                  <NavbarIconText >Login</NavbarIconText>
-                </MDBNavbarItem>
-              </CustomLink>
+              <MDBNavbarItem href='/login'>
+                <NavbarIcon fas icon="sign-in-alt" />
+                <NavbarIconText >Login</NavbarIconText>
+              </MDBNavbarItem>
             }
           </MDBNavbarNav>
 

@@ -85,14 +85,11 @@ export default function LoginForm() {
 
         <div className="d-flex flex-column align-items-center">
           <Button type="submit" size="sm" className="my-2">Logar</Button>
-          <Link to='/new_password'>
-            <Button size="sm" className="mb-2">Esqueci minha senha</Button>
-          </Link>
-          <Link to='/register'>
-            <Button size="sm" className="">Criar conta</Button>
-          </Link>
-        </div>
 
+          <Button href='/new_password' size="sm" className="mb-2">Esqueci minha senha</Button>
+
+          <Button href='/register' size="sm" className="">Criar conta</Button>
+        </div>
       </Form>
     </>
   )
