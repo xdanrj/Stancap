@@ -7,24 +7,28 @@ export function QuoteLoading({
   highlightColor = "#808080"
 }) {
   return (
-    <>
+    <div>
       <SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
-        <Skeleton count={1} height={90}/>
+        {Array.from({ length: count }).map((_, index) => (
+          <Skeleton key={index} height={90} style={{ marginBottom: "2.8rem" }} />
+        ))}
       </SkeletonTheme>
-    </>
+    </div>
   )
 }
 
-export function SmallQuoteLoading({
+export function MinimalQuoteLoading({
   count = 1,
   baseColor = "#4a4a4a",
   highlightColor = "#808080"
 }) {
   return (
-    <>
+    <div>
       <SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
-        <Skeleton count={count} />
+        {Array.from({ length: count }).map((_, index) => (
+          <Skeleton key={index} height={50} style={{ marginBottom: "2.8rem" }} />
+        ))}
       </SkeletonTheme>
-    </>
+    </div>
   )
 }

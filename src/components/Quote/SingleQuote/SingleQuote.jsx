@@ -42,7 +42,7 @@ export default function SingleQuotes({ singleQuotes }) {
                 {
                   imagePaths.length < 1 ? (
                     <>
-                    <div className="bg-primary"></div>
+                      <div className="bg-primary"></div>
                     </>
                   ) : (
                     imagePaths[index] && (

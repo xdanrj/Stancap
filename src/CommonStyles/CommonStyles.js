@@ -71,12 +71,8 @@ export const SourceLogo = styled.img.attrs(() => ({
 }))`
   margin-top: -0.5rem;
   width: 2.4rem;
-  &:hover{
-    width: 2.9rem;
-    transition: 0.2s ease-in-out;
 }
-`;
-//inutil: &:not(:hover):focus{
+`; // não usando: &:hover{width: 2.9rem;transition: 0.2s ease-in-out;
 
 export const ClickableText = styled.p.attrs(() => ({
   className: ""

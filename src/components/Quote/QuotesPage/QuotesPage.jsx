@@ -65,13 +65,13 @@ export default function QuotesPage() {
       <Row className="justify-content-center">
         <Col xs={12} sm={9} md={7} lg={6} xl={5} >
           {
-            quotesResponse.length < 1 ? (
-              <QuoteLoading />
-            ) : (
+            quotesResponse.length > 0 ? (
               <>
                 <SingleQuote singleQuotes={singleQuotesArray} />
                 <MultipleQuote multipleQuotes={multipleQuotesArray} />
               </>
+            ) : (
+              <QuoteLoading count={5} />
             )
           }
         </Col>
