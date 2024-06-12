@@ -23,6 +23,8 @@ export function AlertProvider({ children }) {
                     ))}
                 </div>
             )
+        } else {
+          message = JSON.stringify(message)
         }
         toast(message, { autoClose: duration })
     }

@@ -22,10 +22,10 @@ export default class loginAndRegisterServices {
   async checkCode(dados) {
     const response = await this.axios.post('/check_code', dados)
     if (response.data.response) {
-      return true
+      return { status: true, message: "Código verificado com sucesso" }
     }
     else {
-      return response.data.message
+      return { status: false, message: response.data.message }
     }
   }
 

@@ -17,11 +17,12 @@ function RegisterForm() {
   const [email, setEmail] = useState([])
   const [code, setCode] = useState([])
   const [registerData, setRegisterData] = useState([])
-
   // visibilidade dos Forms
   const [sendCodeForm, setSendCodeForm] = useState(true)
   const [checkCodeForm, setCheckCodeForm] = useState(false)
   const [registerForm, setRegisterForm] = useState(false)
+  const [retryState, setRetryState] = useState(false)
+  //todo fazer cooldown pro retrystate
   console.log(dayjs())
   const handleSubmitSendCode = async (e) => {
     e.preventDefault()
@@ -43,16 +44,17 @@ function RegisterForm() {
     try {
       const response = await loginAndRegisterService.checkCode({
         email, code
-      })
-      if (response === true) {
-        alert('Código verificado com sucesso')
+        })
+      console.log(response)
+      if (response.status) {
+        alert(response.message)
         setCheckCodeForm(false)
         setRegisterForm(true)
       }
       else {
-        useAlert(response)
+        useAlert(response.message)
       }
-    } catch (error) { useAlert(error.response.data.error) }
+    } catch (error) { useAlert(error) }
   }
 
   const handleSubmitRegister = async (e) => {
@@ -132,7 +134,7 @@ function RegisterForm() {
               </Form>
             </>
           )}
-
+//todo: capturar erro do twilio
           {checkCodeForm && (
             <>
               <h2 className="mb-4">Verifique seu e-mail</h2>
@@ -144,11 +146,13 @@ function RegisterForm() {
                       className=" mb-3"
                       name="code"
                       type="text"
+                      required
                       onChange={handleCodeChange}
                       placeholder=""
                     />
                   </FloatingLabel>
                 </div>
+                <Button disabled={retryState} className="mx-2" type="submit">Reenviar</Button>
                 <Button className="" type="submit">Verificar</Button>
               </Form>
             </>
