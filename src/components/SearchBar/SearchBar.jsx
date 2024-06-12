@@ -71,6 +71,7 @@ export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, q
     console.log(selectedSearchType)
   }, [])
 
+  //todo: quando nao ha quotes em myquotes, corrigir o loading eterno
   async function handleGetQuotes() {
     console.log(Object.fromEntries(searchParams))
     const { quotes, message, quotesQtd } = await getQuotes(Object.fromEntries(searchParams))
