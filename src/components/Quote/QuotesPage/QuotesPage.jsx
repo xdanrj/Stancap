@@ -28,13 +28,12 @@ export default function QuotesPage() {
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
 
-  async function getQuotes(queryObj) {
-    console.log(queryObj)
-    const { quotes, message, quotesQtd } = await quoteService.getQuotes(queryObj)
-    console.log(quotes)
-    console.log(quotesQtd)
-    return { quotes, message, quotesQtd }
-  }
+  // async function getQuotes(queryObj) {
+  //   console.log(queryObj)
+  //   const { quotes, message, quotesQtd } = await quoteService.getQuotes(queryObj)
+  //   console.log(quotes)
+  //   return { quotes, message, quotesQtd }
+  // }
 
   useEffect(() => {
     const currentSingleQuotesArray = []
@@ -61,7 +60,7 @@ export default function QuotesPage() {
     <>
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
-      <SearchBar loading={loading} setLoading={setLoading} getQuotes={getQuotes} setQuotesResponse={setQuotesResponse} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
+      <SearchBar loading={loading} setLoading={setLoading} setQuotesResponse={setQuotesResponse} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
       <Row className="justify-content-center">
         <Col xs={12} sm={9} md={7} lg={6} xl={5} >
           {
@@ -71,13 +70,13 @@ export default function QuotesPage() {
               </>
             ) : (
               quotesResponse?.length > 0 && (
+                <>
+                  <SingleQuote singleQuotes={singleQuotesArray} />
+                  <MultipleQuote multipleQuotes={multipleQuotesArray} />
+                </>
+              ) ||
               <>
-                <SingleQuote singleQuotes={singleQuotesArray} />
-                <MultipleQuote multipleQuotes={multipleQuotesArray} />
-              </>
-              ) || 
-              <>
-              <h3>Nenhuma quote encontrada</h3>
+                <h3>Nenhuma quote encontrada</h3>
               </>
             )
           }

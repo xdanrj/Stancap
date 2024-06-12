@@ -12,6 +12,8 @@ import SearchPath from "./SearchPath/SearchPath";
 import { sizes } from "../../CommonStyles/screenSizes";
 import Sources from "../Quote/Sources";
 import { FloatingLabel } from "../../CommonStyles/CommonStyles";
+import quoteEditingServices from "../../services/quoteServices";
+const quoteService = new quoteEditingServices()
 
 export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, quotesQtd, setQuotesQtd }) {
   const QuoteProp = new QuotesProps()
@@ -40,9 +42,6 @@ export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, q
     const copySearchParams = Object.fromEntries(searchParams.entries())
     delete copySearchParams.page
     setPureSearchParams(copySearchParams)
-    console.log(copySearchParams)
-
-    //setSelectedSearchType()
   }, [location.search])
 
   useEffect(() => {
@@ -73,9 +72,7 @@ export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, q
 
   //todo: quando nao ha quotes em myquotes, corrigir o loading eterno
   async function handleGetQuotes() {
-    console.log(Object.fromEntries(searchParams))
-    const { quotes, message, quotesQtd } = await getQuotes(Object.fromEntries(searchParams))
-    console.log("quotes é maior q 0")
+    const { quotes, message, quotesQtd } = await quoteService.getQuotes(Object.fromEntries(searchParams))
     setQuotesResponse(quotes)
     setQuotesQtd(quotesQtd)
     console.log(quotes)

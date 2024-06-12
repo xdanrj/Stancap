@@ -29,7 +29,7 @@ export default function MyQuotes() {
       const searchParamsQuery = Object.fromEntries(searchParams)
       const queryWithUserId = { ...searchParamsQuery, "uploadByUser": userId }
       const { quotes, quotesQtd, message } = await quoteService.getQuotes(queryWithUserId)
-      console.log(message)
+      console.log(quotes)
       localStorage.setItem("userQuotesQtd", quotesQtd)
       setQuotesQtd(quotesQtd)
       setQuotesResponse(quotes)
@@ -88,7 +88,7 @@ export default function MyQuotes() {
     <>
     <h3>{`LOADING: ${loading}`}</h3>
       <Row className="justify-content-center">
-        <SearchBar loading={loading} setLoading={setLoading} getQuotes={getQuotes} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
+        <SearchBar loading={loading} setLoading={setLoading} setQuotesResponse={setQuotesResponse} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
         <Col xs={12} sm={9} md={7} lg={6} xl={5}>
           {
             loading ? (
