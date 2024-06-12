@@ -13,7 +13,7 @@ import { sizes } from "../../CommonStyles/screenSizes";
 import Sources from "../Quote/Sources";
 import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 
-export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQtd }) {
+export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, quotesQtd, setQuotesQtd }) {
   const QuoteProp = new QuotesProps()
   const Source = new Sources()
   const location = useLocation()
@@ -74,12 +74,14 @@ export function SearchBar({ getQuotes, setQuotesResponse, quotesQtd, setQuotesQt
   async function handleGetQuotes() {
     console.log(Object.fromEntries(searchParams))
     const { quotes, message, quotesQtd } = await getQuotes(Object.fromEntries(searchParams))
-    if (quotes.length > 0) {
-      console.log("quotes é maior q 0")
-      setQuotesResponse(quotes)
-      setQuotesQtd(quotesQtd)
-      navigate({ search: searchParams.toString() })
-    }
+    console.log("quotes é maior q 0")
+    setQuotesResponse(quotes)
+    setQuotesQtd(quotesQtd)
+    console.log(quotes)
+    console.log(message)
+    setLoading(false)
+    navigate({ search: searchParams.toString() })
+
     message && useAlert(message)
   }
 

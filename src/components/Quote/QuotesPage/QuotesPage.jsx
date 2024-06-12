@@ -24,6 +24,7 @@ export default function QuotesPage() {
   const [multipleQuotesArray, setMultipleQuotesArray] = useState([])
   const [searchParams, setSearchParams] = useSearchParams()
   const [quotesQtd, setQuotesQtd] = useState(0)
+  const [loading, setLoading] = useState(true)
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
 
@@ -60,18 +61,24 @@ export default function QuotesPage() {
     <>
       {!quotesPageFirstVisitModalVisible && (<QuotesPageFirstVisitModal />)}
 
-      <SearchBar getQuotes={getQuotes} setQuotesResponse={setQuotesResponse} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
-
+      <SearchBar loading={loading} setLoading={setLoading} getQuotes={getQuotes} setQuotesResponse={setQuotesResponse} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
       <Row className="justify-content-center">
         <Col xs={12} sm={9} md={7} lg={6} xl={5} >
           {
-            quotesResponse.length > 0 ? (
+            loading ? (
+              <>
+                <QuoteLoading count={5} />
+              </>
+            ) : (
+              quotesResponse?.length > 0 && (
               <>
                 <SingleQuote singleQuotes={singleQuotesArray} />
                 <MultipleQuote multipleQuotes={multipleQuotesArray} />
               </>
-            ) : (
-              <QuoteLoading count={5} />
+              ) || 
+              <>
+              <h3>Nenhuma quote encontrada</h3>
+              </>
             )
           }
         </Col>

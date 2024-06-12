@@ -22,17 +22,19 @@ export default function MyQuotes() {
   const [quotesQtd, setQuotesQtd] = useState(0)
   const [showQuoteInfo, setShowQuoteInfo] = useState(false)
   const [quoteInfoData, setQuoteInfoData] = useState("")
+  const [loading, setLoading] = useState(true)
 
   async function getQuotes() {
     try {
       const searchParamsQuery = Object.fromEntries(searchParams)
       const queryWithUserId = { ...searchParamsQuery, "uploadByUser": userId }
       const { quotes, quotesQtd, message } = await quoteService.getQuotes(queryWithUserId)
+      console.log(message)
       localStorage.setItem("userQuotesQtd", quotesQtd)
       setQuotesQtd(quotesQtd)
       setQuotesResponse(quotes)
     } catch (error) {
-      error.message && useAlert(error.message)
+      (error.message && useAlert(error.message)) || useAlert(message)
     }
   }
 
@@ -84,12 +86,17 @@ export default function MyQuotes() {
 
   return (
     <>
+    <h3>{`LOADING: ${loading}`}</h3>
       <Row className="justify-content-center">
-        <SearchBar getQuotes={getQuotes} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
+        <SearchBar loading={loading} setLoading={setLoading} getQuotes={getQuotes} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
         <Col xs={12} sm={9} md={7} lg={6} xl={5}>
           {
-            quotesResponse.length > 0 ? (
-              quotesResponse.map((data) => (
+            loading ? (
+              <>
+                <MinimalQuoteLoading count={5} />
+              </>
+            ) : (
+              quotesResponse.length > 0 && ( quotesResponse.map((data) => (
                 <div key={data._id}>
                   <MinimalQuoteContainer>
                     <InternalContainer>
@@ -110,9 +117,10 @@ export default function MyQuotes() {
                   </MinimalQuoteContainer>
                 </div>
               ))
-            ) : (
-              <MinimalQuoteLoading count={5}/>
-            )
+            )) ||
+            <>
+            <h3>Você não criou nenhuma quote</h3>
+            </>
           }
           {<QuoteInfo rawData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo} />}
           <PageSelector searchParams={searchParams} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />

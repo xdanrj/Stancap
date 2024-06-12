@@ -39,7 +39,7 @@ export default function QuoteInfo({ show, setShow, rawData }) {
             navigate(`?source=${rawData.source}`)
             handleClose()
           }}>
-            {data.source || "Source não especificada"}
+            {data.source || "Source não especificada" || "Loading"}
           </ClickabeTextParagraph>
 
           <TextTitle>Data de upload</TextTitle>
