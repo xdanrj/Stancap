@@ -11,7 +11,7 @@ export function AlertProvider({ children }) {
         if (message instanceof Error) {
             message = message?.stack
         } 
-        if (message.includes("\n")) {
+        if (typeof(message) === "string" && message.includes("\n")) {
             let splitMsg = message.split("\n")
             message = (
                 <div>
@@ -25,10 +25,7 @@ export function AlertProvider({ children }) {
             )
         }
         toast(message, { autoClose: duration })
-        
     }
-
-
     return (
         <>
             <AlertContext.Provider value={notify}>

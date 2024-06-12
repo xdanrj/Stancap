@@ -86,7 +86,6 @@ export default function MyQuotes() {
 
   return (
     <>
-    <h3>{`LOADING: ${loading}`}</h3>
       <Row className="justify-content-center">
         <SearchBar loading={loading} setLoading={setLoading} setQuotesResponse={setQuotesResponse} quotesQtd={quotesQtd} setQuotesQtd={setQuotesQtd} />
         <Col xs={12} sm={9} md={7} lg={6} xl={5}>
@@ -96,7 +95,7 @@ export default function MyQuotes() {
                 <MinimalQuoteLoading count={5} />
               </>
             ) : (
-              quotesResponse.length > 0 && ( quotesResponse.map((data) => (
+              quotesResponse?.length > 0 && ( quotesResponse.map((data) => (
                 <div key={data._id}>
                   <MinimalQuoteContainer>
                     <InternalContainer>
