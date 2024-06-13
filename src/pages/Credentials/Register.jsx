@@ -21,9 +21,9 @@ function RegisterForm() {
   const [sendCodeForm, setSendCodeForm] = useState(true)
   const [checkCodeForm, setCheckCodeForm] = useState(false)
   const [registerForm, setRegisterForm] = useState(false)
-  const [retryState, setRetryState] = useState(false)
-  //todo fazer cooldown pro retrystate
-  console.log(dayjs())
+  const [retryState, setRetryState] = useState(60)
+  const [retryHasClicked, setRetryHasClicked] = useState(false)
+
   const handleSubmitSendCode = async (e) => {
     e.preventDefault()
     try {
@@ -32,6 +32,15 @@ function RegisterForm() {
         alert('Código enviado com sucesso')
         setSendCodeForm(false)
         setCheckCodeForm(true)
+        const timer = setInterval(() => {
+          setRetryState(prev => {
+            if (prev <= 1) {
+              clearInterval(timer)
+              return 0
+            }
+            return prev - 1
+          })
+        }, 1000)
       }
       else {
         useAlert(response)
@@ -44,7 +53,7 @@ function RegisterForm() {
     try {
       const response = await loginAndRegisterService.checkCode({
         email, code
-        })
+      })
       console.log(response)
       if (response.status) {
         alert(response.message)
@@ -152,8 +161,10 @@ function RegisterForm() {
                     />
                   </FloatingLabel>
                 </div>
-                <Button disabled={retryState} className="mx-2" type="submit">Reenviar</Button>
-                <Button className="" type="submit">Verificar</Button>
+                <Button className="" type="submit"
+                  disabled={retryHasClicked && retryState > 0}>
+                  Enviar {retryHasClicked && `(${retryState})`}
+                </Button>
               </Form>
             </>
           )}

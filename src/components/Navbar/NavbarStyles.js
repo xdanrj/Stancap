@@ -39,7 +39,6 @@ export const MDBNavbarItem = styled(originalMDBNavbarItem).attrs(() => ({
 }))`
 `;
 
-//todo
 export const CustomMDBNavbarLink = styled(originalMDBNavbarLink).attrs(() => ({
     className: "text-white mx-2",
 }))`
