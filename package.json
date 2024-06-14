@@ -21,6 +21,7 @@
     "concurrently": "^8.2.2",
     "dayjs": "^1.11.10",
     "dotenv": "^16.4.5",
+    "ldrs": "^1.0.2",
     "mdb-react-ui-kit": "^6.2.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",

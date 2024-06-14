@@ -6,13 +6,12 @@ import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 import { passwordValidation, usernameValidation } from "../../Validations/RegisterValidations";
 import loginAndRegisterServices from "../../services/loginAndRegisterServices";
 import { useAlertMsg } from "../../components/Alert/AlertContext";
-import dayjs from "dayjs";
+import 'ldrs/ring'
 const loginAndRegisterService = new loginAndRegisterServices()
 
 function RegisterForm() {
   const navigate = useNavigate()
   const useAlert = useAlertMsg()
-
   // definição dos valores
   const [email, setEmail] = useState([])
   const [code, setCode] = useState([])
@@ -22,48 +21,65 @@ function RegisterForm() {
   const [checkCodeForm, setCheckCodeForm] = useState(false)
   const [registerForm, setRegisterForm] = useState(false)
   const [retryState, setRetryState] = useState(60)
-  const [retryHasClicked, setRetryHasClicked] = useState(false)
+  const [checkHasClicked, setCheckHasClicked] = useState(false)
 
-  const handleSubmitSendCode = async (e) => {
+  const handleSendCode = async (e) => {
     e.preventDefault()
-    try {
-      const response = await loginAndRegisterService.sendCode({ email })
-      if (response === true) {
-        alert('Código enviado com sucesso')
-        setSendCodeForm(false)
-        setCheckCodeForm(true)
-        const timer = setInterval(() => {
-          setRetryState(prev => {
-            if (prev <= 1) {
-              clearInterval(timer)
-              return 0
-            }
-            return prev - 1
-          })
-        }, 1000)
-      }
-      else {
-        useAlert(response)
-      }
-    } catch (error) { alert(error.response.data.error) }
+    if (retryState === 0) {
+      setRetryState(60)
+      const timer = setInterval(() => {
+        setRetryState(prev => {
+          if (prev <= 1) {
+            clearInterval(timer)
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+      try {
+        const response = await loginAndRegisterService.sendCode({ email })
+        if (response === true) {
+          useAlert('Código enviado. Verifique seu e-mail')
+          setSendCodeForm(false)
+          setCheckCodeForm(true)
+        }
+        else {
+          useAlert(response)
+        }
+      } catch (error) { alert(error.response.data.error) }
+    }
   }
 
-  const handleSubmitCheckCode = async (e) => {
+  const handleCheckCode = async (e) => {
     e.preventDefault();
-    try {
-      const response = await loginAndRegisterService.checkCode({
-        email, code
-      })
-      console.log(response)
-      if (response.status) {
-        alert(response.message)
-        setCheckCodeForm(false)
-        setRegisterForm(true)
-      }
-      else {
-        useAlert(response.message)
-      }
-    } catch (error) { useAlert(error) }
+    setCheckHasClicked(true)
+    if (retryState === 0) {
+      setRetryState(60)
+      const timer = setInterval(() => {
+        setRetryState(prev => {
+          if (prev <= 1) {
+            clearInterval(timer)
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+
+      try {
+        const response = await loginAndRegisterService.checkCode({
+          email, code
+        })
+        console.log(response)
+        if (response.status) {
+          alert(response.message)
+          setCheckCodeForm(false)
+          setRegisterForm(true)
+        }
+        else {
+          useAlert(response.message)
+        }
+      } catch (error) { useAlert(error) }
+    }
   }
 
   const handleSubmitRegister = async (e) => {
@@ -109,7 +125,6 @@ function RegisterForm() {
     setEmail(e.target.value)
   }
   const handleCodeChange = (e) => {
-    //old: "" "" /\
     setCode(e.target.value.trim())
     console.log(code)
   }
@@ -130,7 +145,7 @@ function RegisterForm() {
             <>
               <h2 className="mb-4">Criação de conta</h2>
               <h5>Use um e-mail válido</h5>
-              <Form onSubmit={handleSubmitSendCode}>
+              <Form onSubmit={handleSendCode}>
                 <FloatingLabel label="E-mail">
                   <Form.Control
                     className="mb-3"
@@ -143,16 +158,15 @@ function RegisterForm() {
               </Form>
             </>
           )}
-//todo: capturar erro do twilio
           {checkCodeForm && (
             <>
-              <h2 className="mb-4">Verifique seu e-mail</h2>
-              <Form onSubmit={handleSubmitCheckCode}
+              <h2 className="mb-4">Cheque seu e-mail</h2>
+              <Form onSubmit={handleCheckCode}
               >
                 <div className="d-flex justify-content-center  align-items-center">
                   <FloatingLabel label="Código" className="w-50"  >
                     <Form.Control
-                      className=" mb-3"
+                      className="mb-3"
                       name="code"
                       type="text"
                       required
@@ -161,9 +175,16 @@ function RegisterForm() {
                     />
                   </FloatingLabel>
                 </div>
-                <Button className="" type="submit"
-                  disabled={retryHasClicked && retryState > 0}>
-                  Enviar {retryHasClicked && `(${retryState})`}
+
+                {checkHasClicked && (
+                  <Button className="mx-2" onClick={(e) => handleSendCode(e)}
+                    disabled={retryState > 0}
+                  >Reenviar
+                    {checkHasClicked && ` (${retryState})`}
+                  </Button>)}
+
+                <Button className="" type="submit">
+                  Verificar
                 </Button>
               </Form>
             </>
