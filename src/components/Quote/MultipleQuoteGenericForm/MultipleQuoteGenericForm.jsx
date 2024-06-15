@@ -181,17 +181,18 @@ export default function MultipleQuoteGenericForm(props) {
 
     const convertRawChatLog = () => {
         console.log("entrou func")
-        const keyregex = /]\s*([\w\s]+)\s*:/
-        const valueRegex = /:\s*(\w+(?:\s+\w+)*)\s*$/
+        const keyRegex = /]\s*([A-zÀ-ÿ\s]*)\s*:/g
+        const valueRegex = /(?<=:[^:]*:).*/
 
         const lines = rawChatLog.trim().split('\n')
         const objs = []
         const tempMultipleQuotes = []
-
+        console.log(lines)
         lines.forEach((line) => {
-            const keyMatch = keyregex.exec(line)
+            const keyMatch = keyRegex.exec(line)
             const valueMatch = valueRegex.exec(line)
-
+            console.log(keyMatch)
+            console.log(valueMatch)
             if (keyMatch && valueMatch) {
                 const key = keyMatch[1]
                 const value = valueMatch[1]
