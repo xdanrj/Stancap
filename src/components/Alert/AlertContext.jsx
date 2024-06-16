@@ -26,7 +26,8 @@ export function AlertProvider({ children }) {
     } else if (typeof (message) === "string") {
       message = message
     } else {
-      message = JSON.stringify(message)
+      message = message
+      //message = JSON.stringify(message)
     }
     
     toast(message, { autoClose: duration })

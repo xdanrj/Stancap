@@ -5,7 +5,7 @@ import 'ldrs/ring'
 export default function Testes() {
   return (
     <>
-      <l-ring color='white'></l-ring>
+      <l-ring color='white'/>
     </>
   )
 }

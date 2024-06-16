@@ -22,10 +22,10 @@ function RegisterForm() {
   const [registerForm, setRegisterForm] = useState(false)
   const [retryState, setRetryState] = useState(60)
   const [checkHasClicked, setCheckHasClicked] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleSendCode = async (e) => {
     e.preventDefault()
-    if (retryState === 0) {
       setRetryState(60)
       const timer = setInterval(() => {
         setRetryState(prev => {
@@ -37,7 +37,10 @@ function RegisterForm() {
         })
       }, 1000)
       try {
+        console.log("oba")
         const response = await loginAndRegisterService.sendCode({ email })
+        console.log("oba2")
+        setLoading(true)
         if (response === true) {
           useAlert('Código enviado. Verifique seu e-mail')
           setSendCodeForm(false)
@@ -46,8 +49,9 @@ function RegisterForm() {
         else {
           useAlert(response)
         }
+        setLoading(false)
       } catch (error) { alert(error.response.data.error) }
-    }
+    
   }
 
   const handleCheckCode = async (e) => {
@@ -141,23 +145,29 @@ function RegisterForm() {
     <>
       <Row className="justify-content-center">
         <Col xs={8} sm={6} md={4} lg={3} >
-          {sendCodeForm && (
-            <>
-              <h2 className="mb-4">Criação de conta</h2>
-              <h5>Use um e-mail válido</h5>
-              <Form onSubmit={handleSendCode}>
-                <FloatingLabel label="E-mail">
-                  <Form.Control
-                    className="mb-3"
-                    name="email"
-                    type="email"
-                    onChange={handleEmailChange}
-                    placeholder="E-mail" />
-                </FloatingLabel>
-                <Button type="submit">Enviar código</Button>
-              </Form>
-            </>
-          )}
+          {loading ?
+            <l-ring color='white' />
+            : (
+              sendCodeForm && (
+                <>
+                  <h2 className="mb-4">Criação de conta</h2>
+                  <h5>Use um e-mail válido</h5>
+                  <Form onSubmit={handleSendCode}>
+                    <FloatingLabel label="E-mail">
+                      <Form.Control
+                        className="mb-3"
+                        name="email"
+                        type="email"
+                        onChange={handleEmailChange}
+                        placeholder="E-mail" />
+                    </FloatingLabel>
+                    <Button type="submit">Enviar código</Button>
+                  </Form>
+                </>
+              )
+            )
+          }
+
           {checkCodeForm && (
             <>
               <h2 className="mb-4">Cheque seu e-mail</h2>
