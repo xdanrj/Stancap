@@ -6,6 +6,7 @@ import { FloatingLabel } from "../../CommonStyles/CommonStyles"
 import { passwordValidation, usernameValidation } from "../../Validations/RegisterValidations"
 import loginAndRegisterServices from "../../services/loginAndRegisterServices"
 import { useAlertMsg } from "../../components/Alert/AlertContext"
+import { MDBIcon } from "mdb-react-ui-kit"
 import 'ldrs/ring'
 const loginAndRegisterService = new loginAndRegisterServices()
 
@@ -232,10 +233,10 @@ function RegisterForm() {
                       />
                     </FloatingLabel>
 
-                    <InputGroup>
+                    <InputGroup className="mb-3">
                       <FloatingLabel label="Senha">
                         <Form.Control
-                          className="mb-3"
+                          className=""
                           name="password"
                           type={passwordVisible ? "text" : "password"}
                           onChange={handleRegisterChange}
@@ -245,7 +246,6 @@ function RegisterForm() {
                       </FloatingLabel>
                       <Button onClick={changePasswordVisibility}><MDBIcon far icon={passwordVisible ? "eye-slash" : "eye"} /></Button>
                     </InputGroup>
-                    <InputGroup>
                       <FloatingLabel label="Senha (novamente)">
                         <Form.Control
                           className="mb-3"
@@ -256,7 +256,6 @@ function RegisterForm() {
                           required
                         />
                       </FloatingLabel>
-                    </InputGroup>
                     <Button type="submit">Registrar</Button>
                   </Form>
                 </>

@@ -15,223 +15,232 @@ import quoteEditingServices from "../../../services/quoteServices"
 const quoteEditingService = new quoteEditingServices()
 
 export default function SingleQuoteGenericForm(props) {
-    const Source = new Sources()
-    const useModal = useModalBox()
-    const useAlert = useAlertMsg()
-    const [cdBtn, setCdBtn] = useState(false)
-    const [tags, setTags] = useState([])
-    const [searchParams, setSearchParams] = useSearchParams()
-    const [quoteData, setQuoteData] = useState({
-        quotes: [],
-        author: '',
-        date: '',
-        source: '',
-        context: '',
-        tags: [],
-    })
+  const Source = new Sources()
+  const useModal = useModalBox()
+  const useAlert = useAlertMsg()
+  const [loading, setLoading] = useState(false)
+  const [cdBtn, setCdBtn] = useState(false)
+  const [tags, setTags] = useState([])
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [quoteData, setQuoteData] = useState({
+    quotes: [],
+    author: '',
+    date: '',
+    source: '',
+    context: '',
+    tags: [],
+  })
 
-    useEffect(() => {
-        async function getQuoteToEdit() {
-            if (searchParams.get("_id")) {
-                const { quotes, message } = await quoteEditingService.getQuotes({ _id: searchParams.get("_id") })
-                console.log(quotes)
-                console.log(message)
-                if (quotes && quotes.length > 0) {
-                    const data = quotes[0]
-                    console.log(data)
-                    setQuoteData((prevData) => ({
-                        ...prevData,
-                        quotes: data.quotes,
-                        author: data.author,
-                        date: data.date,
-                        source: data.source,
-                        context: data.context,
-                        tags: data.tags
-                    }))
-                }
-                message && useAlert(message)
-            }
-        }
-        getQuoteToEdit()
-    }, [])
-
-    const handleSourceSelect = (eventKey) => {
-        const foundSource = Source.getSource(eventKey)
-        setQuoteData((prevData) => ({
+  useEffect(() => {
+    async function getQuoteToEdit() {
+      if (searchParams.get("_id")) {
+        const { quotes, message } = await quoteEditingService.getQuotes({ _id: searchParams.get("_id") })
+        console.log(quotes)
+        console.log(message)
+        if (quotes && quotes.length > 0) {
+          const data = quotes[0]
+          console.log(data)
+          setQuoteData((prevData) => ({
             ...prevData,
-            source: foundSource.value
-        }))
-    }
-
-    const finalSubmitQuote = async () => {
-        try {
-            let response
-            if (props.type === "addQuote") {
-                const updatedQuoteData = {
-                    ...quoteData,
-                    tags: tags,
-                    uploadDate: dayjs(),
-                    uploadByUser: localStorage.getItem("userId"),
-                    quoteType: "single"
-                }
-                response = await quoteEditingService.addQuote(updatedQuoteData)
-                console.log(response)
-            } else if (props.type === "editQuote") {
-                const updatedQuoteData = {
-                    ...quoteData,
-                    tags: tags,
-                    lastEditDate: dayjs()
-                }
-                console.log(updatedQuoteData)
-                console.log(Object.fromEntries(searchParams))
-                response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
-                console.log(response)
-            }
-            if (response.message) {
-                useAlert(response.message)
-            } else {
-                alert(props.texts.submitSuccess)
-                window.location.reload()
-            }
-        } catch (error) {
-            useAlert(error)
+            quotes: data.quotes,
+            author: data.author,
+            date: data.date,
+            source: data.source,
+            context: data.context,
+            tags: data.tags
+          }))
         }
+        message && useAlert(message)
+      }
     }
+    getQuoteToEdit()
+  }, [])
 
-    const handleSubmitQuote = async (e) => {
-        e.preventDefault()
-        setCdBtn(true)
-        setTimeout(() => {
-            setCdBtn(false)
-        }, 1000)
+  const handleSourceSelect = (eventKey) => {
+    const foundSource = Source.getSource(eventKey)
+    setQuoteData((prevData) => ({
+      ...prevData,
+      source: foundSource.value
+    }))
+  }
 
-        try {
-            let paragraph
-            let buttons = [{
-                text: "Vou inserir", action: ["handleClose()"]
-            },
-            {
-                text: "Deixa assim mesmo", action: [finalSubmitQuote]
-            }]
-
-            if (!(quoteData.date)) {
-                paragraph = "Você se esqueceu da data. Não se lembra nem do ano?"
-            }
-            else if (!(quoteData.author)) {
-                paragraph = "Você se esqueceu do autor."    
-            }
-
-            if (paragraph) {
-                useModal({ title: "Faltam informações", paragraph: paragraph, buttons: buttons })
-            }
-            else {
-                if (tags.length === 0) {
-                    useAlert("Insira pelo menos uma tag.")
-                } else if (!(isValidDate(quoteData.date))) {
-                    useAlert("Insira pelo menos o ano ou mês/ano. Ex.: 2022 ou 05/2020.")
-                } else {
-                    finalSubmitQuote()
-                }
-            }
-        } catch (error) {
-            console.log("caiu catch")
-            useAlert(error)
+  const finalSubmitQuote = async () => {
+    try {
+      setLoading(true)
+      let response
+      if (props.type === "addQuote") {
+        const updatedQuoteData = {
+          ...quoteData,
+          tags: tags,
+          uploadDate: dayjs(),
+          uploadByUser: localStorage.getItem("userId"),
+          quoteType: "single"
         }
+        response = await quoteEditingService.addQuote(updatedQuoteData)
+        console.log(response)
+      } else if (props.type === "editQuote") {
+        const updatedQuoteData = {
+          ...quoteData,
+          tags: tags,
+          lastEditDate: dayjs()
+        }
+        console.log(updatedQuoteData)
+        console.log(Object.fromEntries(searchParams))
+        response = await quoteEditingService.editQuote(Object.fromEntries(searchParams), updatedQuoteData)
+        console.log(response)
+      }
+      if (response.message) {
+        useAlert(response.message)
+      } else {
+        alert(props.texts.submitSuccess)
+        window.location.reload()
+      }
+      setLoading(false)
+    } catch (error) {
+      useAlert(error)
     }
+  }
 
-    const handleGenericChange = (e) => {
-        const { name, value } = e.target
-        console.log(name)
-        if (name === "otherSourceName") {           
-            setQuoteData((prevData) => ({
-                ...prevData,
-                source: value
-            }))
-        }
-        if (name == "quotes") {
-            setQuoteData((prevData) => ({
-                ...prevData,
-                quotes: [{"quote": value}]
-            }))
+  const handleSubmitQuote = async (e) => {
+    e.preventDefault()
+    setCdBtn(true)
+    setTimeout(() => {
+      setCdBtn(false)
+    }, 1000)
+
+    try {
+      let paragraph
+      let buttons = [{
+        text: "Vou inserir", action: ["handleClose()"]
+      },
+      {
+        text: "Deixa assim mesmo", action: [finalSubmitQuote]
+      }]
+
+      if (!(quoteData.date)) {
+        paragraph = "Você se esqueceu da data. Não se lembra nem do ano?"
+      }
+      else if (!(quoteData.author)) {
+        paragraph = "Você se esqueceu do autor."
+      }
+
+      if (paragraph) {
+        useModal({ title: "Faltam informações", paragraph: paragraph, buttons: buttons })
+      }
+      else {
+        if (tags.length === 0) {
+          useAlert("Insira pelo menos uma tag.")
+        } else if (!(isValidDate(quoteData.date))) {
+          useAlert("Insira pelo menos o ano ou mês/ano. Ex.: 2022 ou 05/2020.")
         } else {
-            setQuoteData((prevData) => ({
-                ...prevData,
-                [name]: value
-            }))
+          finalSubmitQuote()
         }
-        
-        console.log(quoteData)
+      }
+    } catch (error) {
+      console.log("caiu catch")
+      useAlert(error)
     }
-console.log(quoteData)
-    return (
-        <>
-            <Row className="justify-content-center">
-                <Col xs={12} sm={6} md={5} lg={4} xl={4}>
-                    <Form onSubmit={handleSubmitQuote}>
-                        <Row>
-                            <FormGroup>
-                                <FloatingLabel label="Quote">
-                                    <FormControl required name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes[0]?.quote}>
-                                    </FormControl>
-                                </FloatingLabel>
-                            </FormGroup>
+  }
 
-                            <Col>
-                                <FormGroup>
-                                    <FloatingLabel label="Autor">
-                                        <FormControl name="author" placeholder="Autor" maxLength={50} onChange={handleGenericChange} value={quoteData.author}>
-                                        </FormControl>
-                                    </FloatingLabel>
-                                </FormGroup>
-                            </Col>
+  const handleGenericChange = (e) => {
+    const { name, value } = e.target
+    console.log(name)
+    if (name === "otherSourceName") {
+      setQuoteData((prevData) => ({
+        ...prevData,
+        source: value
+      }))
+    }
+    if (name == "quotes") {
+      setQuoteData((prevData) => ({
+        ...prevData,
+        quotes: [{ "quote": value }]
+      }))
+    } else {
+      setQuoteData((prevData) => ({
+        ...prevData,
+        [name]: value
+      }))
+    }
 
-                            <Col>
-                                <FormGroup>
-                                    <FloatingLabel label="Data">
-                                        <Form.Control name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
-                                        </Form.Control>
-                                    </FloatingLabel>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <FormGroup>
-                                    <FloatingLabel label="Contexto (Opcional)">
-                                        <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange} value={quoteData.context}>
-                                        </Form.Control>
-                                    </FloatingLabel>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <Col>
+    console.log(quoteData)
+  }
+  console.log(quoteData)
+  return (
+    <>
+      <Row className="justify-content-center">
+        <Col xs={12} sm={6} md={5} lg={4} xl={4}>
+          {loading ? (
+            <l-ring color='white' />
+          ) : (
+            <>
+            <Form onSubmit={handleSubmitQuote}>
+            <Row>
+              <FormGroup>
+                <FloatingLabel label="Quote">
+                  <FormControl required name="quotes" placeholder="Quote" onChange={handleGenericChange} value={quoteData.quotes[0]?.quote}>
+                  </FormControl>
+                </FloatingLabel>
+              </FormGroup>
 
-                            <FormGroup>
-                                <DropdownButton drop="down-centered" align="end" title={Source.getLabel(quoteData.source) || "Source"}
-                                    onSelect={handleSourceSelect}>
-                                    {Source.sources.map((item) => (
-                                        <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
-                                    ))}
-                                    <Dropdown.Divider />
-                                    <div className="px-1 pb-2">
-                                        <FloatingLabel label="Digite outra source...">
-                                            <Form.Control name="otherSourceName" placeholder="Digite outra source..." onChange={handleGenericChange} value={
-                                                Source.getSource(quoteData.source) ? "" : quoteData.source}>
-                                            </Form.Control>
-                                        </FloatingLabel>
-                                    </div>
-                                </DropdownButton>
-                            </FormGroup>
-                        </Col>
+              <Col>
+                <FormGroup>
+                  <FloatingLabel label="Autor">
+                    <FormControl name="author" placeholder="Autor" maxLength={50} onChange={handleGenericChange} value={quoteData.author}>
+                    </FormControl>
+                  </FloatingLabel>
+                </FormGroup>
+              </Col>
 
-                        <FormGroup>
-                            <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
-                        </FormGroup>
-
-                        <Button type="submit" disabled={cdBtn}>{props.texts.submitButton}</Button>
-                    </Form>
-                </Col>
+              <Col>
+                <FormGroup>
+                  <FloatingLabel label="Data">
+                    <Form.Control name="date" placeholder="Data" onChange={handleGenericChange} value={quoteData.date}>
+                    </Form.Control>
+                  </FloatingLabel>
+                </FormGroup>
+              </Col>
             </Row>
+            <Row>
+              <Col>
+                <FormGroup>
+                  <FloatingLabel label="Contexto (Opcional)">
+                    <Form.Control name="context" placeholder="Contexto (Opcional)" onChange={handleGenericChange} value={quoteData.context}>
+                    </Form.Control>
+                  </FloatingLabel>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Col>
+
+              <FormGroup>
+                <DropdownButton drop="down-centered" align="end" title={Source.getLabel(quoteData.source) || "Source"}
+                  onSelect={handleSourceSelect}>
+                  {Source.sources.map((item) => (
+                    <Dropdown.Item key={item.value} eventKey={item.value}>{item.name}</Dropdown.Item>
+                  ))}
+                  <Dropdown.Divider />
+                  <div className="px-1 pb-2">
+                    <FloatingLabel label="Digite outra source...">
+                      <Form.Control name="otherSourceName" placeholder="Digite outra source..." onChange={handleGenericChange} value={
+                        Source.getSource(quoteData.source) ? "" : quoteData.source}>
+                      </Form.Control>
+                    </FloatingLabel>
+                  </div>
+                </DropdownButton>
+              </FormGroup>
+            </Col>
+
+            <FormGroup>
+              <TagSelectorComponent tags={quoteData.tags} setTags={setTags} />
+            </FormGroup>
+
+            <Button type="submit" disabled={cdBtn}>{props.texts.submitButton}</Button>
+          </Form>
+          </>
+      )}
+        </Col>
+        </Row>
         </>
-    )
+      )
 }

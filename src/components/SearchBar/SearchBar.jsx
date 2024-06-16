@@ -75,6 +75,7 @@ export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, q
     const { quotes, message, quotesQtd } = await quoteService.getQuotes(Object.fromEntries(searchParams))
     setQuotesResponse(quotes)
     setQuotesQtd(quotesQtd)
+    localStorage.setItem("userQuotesQtd", quotesQtd)
     console.log(quotes)
     console.log(message)
     setLoading(false)
