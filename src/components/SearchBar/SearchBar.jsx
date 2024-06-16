@@ -13,6 +13,7 @@ import { sizes } from "../../CommonStyles/screenSizes";
 import Sources from "../Quote/Sources";
 import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 import quoteEditingServices from "../../services/quoteServices";
+import 'ldrs/ring'
 const quoteService = new quoteEditingServices()
 
 export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, quotesQtd, setQuotesQtd }) {
@@ -72,6 +73,7 @@ export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, q
 
   //todo: quando nao ha quotes em myquotes, corrigir o loading eterno
   async function handleGetQuotes() {
+    setLoading(true)
     const { quotes, message, quotesQtd } = await quoteService.getQuotes(Object.fromEntries(searchParams))
     setQuotesResponse(quotes)
     setQuotesQtd(quotesQtd)
@@ -80,7 +82,6 @@ export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, q
     console.log(message)
     setLoading(false)
     navigate({ search: searchParams.toString() })
-
     message && useAlert(message)
   }
 
