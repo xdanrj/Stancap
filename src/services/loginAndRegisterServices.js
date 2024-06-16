@@ -20,6 +20,7 @@ export default class loginAndRegisterServices {
   }
 
   async checkCode(dados) {
+    console.log(dados)
     const response = await this.axios.post('/check_code', dados)
     if (response.data.response) {
       return { status: true, message: "Código verificado com sucesso" }

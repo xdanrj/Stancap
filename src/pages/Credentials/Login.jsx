@@ -76,7 +76,6 @@ export default function LoginForm() {
                   placeholder="Senha"
                   onChange={handleLoginChange}>
                 </Form.Control>
-
               </FloatingLabel>
               <Button onClick={changePasswordVisibility}><MDBIcon far icon={passwordVisible ? "eye-slash" : "eye"} /></Button>
             </InputGroup>

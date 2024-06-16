@@ -23,7 +23,7 @@ export default class quoteEditingServices {
             const response = await this.axios.post('/add_quote', data)
             return response.data
         } catch (error) {
-            return error.response.data
+            return error
         }
     }
 

@@ -1,11 +1,11 @@
 import { useState } from "react"
-import Button from "react-bootstrap/Button";
-import { Form, Col, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { FloatingLabel } from "../../CommonStyles/CommonStyles";
-import { passwordValidation, usernameValidation } from "../../Validations/RegisterValidations";
-import loginAndRegisterServices from "../../services/loginAndRegisterServices";
-import { useAlertMsg } from "../../components/Alert/AlertContext";
+import Button from "react-bootstrap/Button"
+import { Form, Col, Row, InputGroup } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
+import { FloatingLabel } from "../../CommonStyles/CommonStyles"
+import { passwordValidation, usernameValidation } from "../../Validations/RegisterValidations"
+import loginAndRegisterServices from "../../services/loginAndRegisterServices"
+import { useAlertMsg } from "../../components/Alert/AlertContext"
 import 'ldrs/ring'
 const loginAndRegisterService = new loginAndRegisterServices()
 
@@ -17,6 +17,7 @@ function RegisterForm() {
   const [code, setCode] = useState([])
   const [registerData, setRegisterData] = useState([])
   // visibilidade dos Forms
+  const [passwordVisible, setPasswordVisible] = useState(false)
   const [sendCodeForm, setSendCodeForm] = useState(true)
   const [checkCodeForm, setCheckCodeForm] = useState(false)
   const [registerForm, setRegisterForm] = useState(false)
@@ -26,100 +27,107 @@ function RegisterForm() {
 
   const handleSendCode = async (e) => {
     e.preventDefault()
-      setRetryState(60)
-      const timer = setInterval(() => {
-        setRetryState(prev => {
-          if (prev <= 1) {
-            clearInterval(timer)
-            return 0
-          }
-          return prev - 1
-        })
-      }, 1000)
-      try {
-        console.log("oba")
-        const response = await loginAndRegisterService.sendCode({ email })
-        console.log("oba2")
-        setLoading(true)
-        if (response === true) {
-          useAlert('Código enviado. Verifique seu e-mail')
-          setSendCodeForm(false)
-          setCheckCodeForm(true)
+    setRetryState(60)
+    const timer = setInterval(() => {
+      setRetryState(prev => {
+        if (prev <= 1) {
+          clearInterval(timer)
+          return 0
         }
-        else {
-          useAlert(response)
-        }
-        setLoading(false)
-      } catch (error) { alert(error.response.data.error) }
-    
+        return prev - 1
+      })
+    }, 1000)
+    try {
+      setLoading(true)
+      console.log("oba")
+      const response = await loginAndRegisterService.sendCode({ email })
+      console.log("oba2")
+      if (response === true) {
+        useAlert('Código enviado. Verifique seu e-mail')
+        setSendCodeForm(false)
+        setCheckCodeForm(true)
+      }
+      else {
+        useAlert(response)
+      }
+      setLoading(false)
+    } catch (error) { useAlert(error) }
+
   }
 
   const handleCheckCode = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     setCheckHasClicked(true)
-    if (retryState === 0) {
-      setRetryState(60)
-      const timer = setInterval(() => {
-        setRetryState(prev => {
-          if (prev <= 1) {
-            clearInterval(timer)
-            return 0
-          }
-          return prev - 1
-        })
-      }, 1000)
+    setRetryState(60)
+    const timer = setInterval(() => {
+      setRetryState(prev => {
+        if (prev <= 1) {
+          clearInterval(timer)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
 
-      try {
-        const response = await loginAndRegisterService.checkCode({
-          email, code
-        })
-        console.log(response)
-        if (response.status) {
-          alert(response.message)
-          setCheckCodeForm(false)
-          setRegisterForm(true)
-        }
-        else {
-          useAlert(response.message)
-        }
-      } catch (error) { useAlert(error) }
-    }
+    try {
+      setLoading(true)
+      const response = await loginAndRegisterService.checkCode({
+        email, code
+      })
+      console.log(response)
+      if (response.status) {
+        useAlert(response.message)
+        setCheckCodeForm(false)
+        setRegisterForm(true)
+      }
+      else {
+        useAlert(response.message)
+      }
+      setLoading(false)
+    } catch (error) { useAlert(error) }
+
   }
 
   const handleSubmitRegister = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
+      setLoading(true)
       const passwordResult = passwordValidation(registerData.password)
       const usernameResult = await usernameValidation(registerData.username)
       console.log(registerData)
-      if (!passwordResult.response || !usernameResult.response) {
-        const errorMessage = passwordResult.response ? usernameResult.message : passwordResult.message
-        console.log(errorMessage)
-        useAlert(errorMessage)
+      if (registerData.password !== registerData.password2) {
+        useAlert("As senhas não estão iguais. \n Digite novamente.")
       } else {
-        const loginData = {
-          email,
-          username: registerData.username,
-          password: registerData.password
-        }
-        const response = await loginAndRegisterService.register(loginData)
-        if (response === true) {
-          alert('Usuário cadastrado com sucesso')
-          const response = await loginAndRegisterService.login(loginData)
-          if (response.userToken) {
-            localStorage.setItem("userToken", response.userToken)
-            localStorage.setItem("userId", response.userId)
-            localStorage.setItem("username", response.username)
-            console.log("logou")
-          } else {
-            alert('Falha no auto-login. Faça login manualmente.')
-          }
-          navigate('/quotes')
+        if (!passwordResult.response || !usernameResult.response) {
+          const errorMessage = passwordResult.response ? usernameResult.message : passwordResult.message
+          console.log(errorMessage)
+          useAlert(errorMessage)
         } else {
-          console.log(response)
-          alert(response)
+          const loginData = {
+            email,
+            username: registerData.username,
+            password: registerData.password
+          }
+          const response = await loginAndRegisterService.register(loginData)
+          if (response === true) {
+            alert('Usuário cadastrado com sucesso')
+            const response = await loginAndRegisterService.login(loginData)
+            if (response.userToken) {
+              localStorage.setItem("userToken", response.userToken)
+              localStorage.setItem("userId", response.userId)
+              localStorage.setItem("username", response.username)
+              console.log("logou")
+            } else {
+              alert('Falha no auto-login. Faça login manualmente.')
+            }
+            navigate('/quotes')
+          } else {
+            console.log(response)
+            useAlert(response)
+          }
         }
       }
+      setLoading(false)
     } catch (error) {
       console.log(error)
       useAlert(error)
@@ -141,14 +149,19 @@ function RegisterForm() {
     console.log("registerData: ", registerData)
   }
 
+  const changePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible)
+  }
+
   return (
     <>
       <Row className="justify-content-center">
-        <Col xs={8} sm={6} md={4} lg={3} >
-          {loading ?
+        <Col xs={8} sm={6} md={4} lg={3}>
+          {loading ? (
             <l-ring color='white' />
-            : (
-              sendCodeForm && (
+          ) : (
+            <>
+              {sendCodeForm && (
                 <>
                   <h2 className="mb-4">Criação de conta</h2>
                   <h5>Use um e-mail válido</h5>
@@ -159,87 +172,100 @@ function RegisterForm() {
                         name="email"
                         type="email"
                         onChange={handleEmailChange}
-                        placeholder="E-mail" />
+                        placeholder="E-mail"
+                      />
                     </FloatingLabel>
                     <Button type="submit">Enviar código</Button>
                   </Form>
                 </>
-              )
-            )
-          }
+              )}
 
-          {checkCodeForm && (
-            <>
-              <h2 className="mb-4">Cheque seu e-mail</h2>
-              <Form onSubmit={handleCheckCode}
-              >
-                <div className="d-flex justify-content-center  align-items-center">
-                  <FloatingLabel label="Código" className="w-50"  >
-                    <Form.Control
-                      className="mb-3"
-                      name="code"
-                      type="text"
-                      required
-                      onChange={handleCodeChange}
-                      placeholder=""
-                    />
-                  </FloatingLabel>
-                </div>
+              {checkCodeForm && (
+                <>
+                  <h2 className="mb-4">Cheque seu e-mail</h2>
+                  <Form onSubmit={handleCheckCode}>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <FloatingLabel label="Código" className="w-50">
+                        <Form.Control
+                          className="mb-3"
+                          name="code"
+                          type="text"
+                          required
+                          onChange={handleCodeChange}
+                          placeholder=""
+                        />
+                      </FloatingLabel>
+                    </div>
+                    {checkHasClicked && (
+                      <Button className="mx-2" onClick={(e) => handleSendCode(e)} disabled={retryState > 0}>
+                        Reenviar {checkHasClicked && ` (${retryState})`}
+                      </Button>
+                    )}
+                    <Button className="" type="submit">Verificar</Button>
+                  </Form>
+                </>
+              )}
 
-                {checkHasClicked && (
-                  <Button className="mx-2" onClick={(e) => handleSendCode(e)}
-                    disabled={retryState > 0}
-                  >Reenviar
-                    {checkHasClicked && ` (${retryState})`}
-                  </Button>)}
+              {registerForm && (
+                <>
+                  <h5 className="mb-3">Você logará com seu e-mail</h5>
+                  <Form onSubmit={handleSubmitRegister}>
+                    <FloatingLabel label="E-mail" className="mb-8">
+                      <Form.Control
+                        style={{ color: 'grey' }}
+                        className="mb-3"
+                        name="email"
+                        type="email"
+                        value={email}
+                        disabled
+                      />
+                    </FloatingLabel>
+                    <h2 className="mb-3">Finalizando cadastro</h2>
+                    <FloatingLabel label="Username">
+                      <Form.Control
+                        className="mb-3"
+                        name="username"
+                        type="text"
+                        onChange={handleRegisterChange}
+                        placeholder=""
+                        required
+                      />
+                    </FloatingLabel>
 
-                <Button className="" type="submit">
-                  Verificar
-                </Button>
-              </Form>
-            </>
-          )}
-
-          {registerForm && (
-            <>
-              <h5 className="mb-3">Você logará com seu e-mail</h5>
-              <Form onSubmit={handleSubmitRegister}>
-                <FloatingLabel label="E-mail" className="mb-8">
-                  <Form.Control style={{ color: 'grey' }}
-                    className="mb-3"
-                    name="email"
-                    type="email"
-                    value={email}
-                    disabled
-                  />
-                </FloatingLabel>
-                <h2 className="mb-3">Finalizando cadastro</h2>
-                <FloatingLabel label="Username">
-                  <Form.Control
-                    className="mb-3"
-                    name="username"
-                    type="text"
-                    onChange={handleRegisterChange}
-                    placeholder=""
-                  />
-                </FloatingLabel>
-                <FloatingLabel label="Senha">
-                  <Form.Control
-                    className="mb-3"
-                    name="password"
-                    type="password"
-                    onChange={handleRegisterChange}
-                    placeholder=""
-                  />
-                </FloatingLabel>
-                <Button type="submit">Registrar</Button>
-              </Form>
+                    <InputGroup>
+                      <FloatingLabel label="Senha">
+                        <Form.Control
+                          className="mb-3"
+                          name="password"
+                          type={passwordVisible ? "text" : "password"}
+                          onChange={handleRegisterChange}
+                          placeholder=""
+                          required
+                        />
+                      </FloatingLabel>
+                      <Button onClick={changePasswordVisibility}><MDBIcon far icon={passwordVisible ? "eye-slash" : "eye"} /></Button>
+                    </InputGroup>
+                    <InputGroup>
+                      <FloatingLabel label="Senha (novamente)">
+                        <Form.Control
+                          className="mb-3"
+                          name="password2"
+                          type={passwordVisible ? "text" : "password"}
+                          onChange={handleRegisterChange}
+                          placeholder=""
+                          required
+                        />
+                      </FloatingLabel>
+                    </InputGroup>
+                    <Button type="submit">Registrar</Button>
+                  </Form>
+                </>
+              )}
             </>
           )}
         </Col>
       </Row>
     </>
-
   )
 }
 

@@ -182,29 +182,27 @@ export default function MultipleQuoteGenericForm(props) {
   const convertRawChatLog = () => {
     console.log("entrou func")
     const keyRegex = /]\s*([A-Za-zÀ-ÿ\s]*)\s*:/g
-    const valueRegex = /(?<=:[^:]*:).*/
-
+    const valueRegex = /(?<=:[^:]*: ).*$/
+    
     const lines = rawChatLog.trim().split('\n')
     const objs = []
     const tempMultipleQuotes = []
-    console.log(lines)
+    
     lines.forEach((line) => {
-      console.log(line.length)
-      const keyMatch = keyRegex.exec(line)
-      const valueMatch = valueRegex.exec(line)
-      console.log(keyMatch)
-      console.log(valueMatch)
-      if (line.length > 0) {
-        if (keyMatch && valueMatch) {
-          const key = keyMatch[1]
-          const value = valueMatch[1]
-          const obj = { [key]: value }
-          objs.push(obj)
+        const keyMatches = line.match(keyRegex)
+        const valueMatch = line.match(valueRegex)
+        
+        if (keyMatches && valueMatch) {
+            keyMatches.forEach((keyMatch, index) => {
+                const key = keyMatch.replace(/[\]\s:]/g, '')
+                const value = valueMatch[0]
+                const obj = { [key]: value }
+                objs.push(obj)
+            });
+        } else {
+            useAlert("Erro: verifique o formato.")
         }
-        //  else {
-        //   useAlert("Erro: verifique o formato.")
-        // }
-      }
+    
     })
     if (objs.length > 0) {
       objs.forEach((obj) => {
