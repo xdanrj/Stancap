@@ -5,6 +5,7 @@ import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph, ClickabeTextPar
 import quoteEditingServices from "../../../services/quoteServices";
 import userServices from "../../../services/userServices";
 import _ from "lodash";
+import 'ldrs/ring'
 import Sources from "../Sources";
 
 export default function QuoteInfo({ show, setShow, rawData }) {
@@ -14,14 +15,17 @@ export default function QuoteInfo({ show, setShow, rawData }) {
   const quoteService = new quoteEditingServices()
   const userService = new userServices()
   const [data, setData] = useState({})
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     console.log(rawData)
+    setLoading(true)
     async function formatData() {
       const updatedData = { ...rawData }
       updatedData.uploadByUser = await userService.getUsername(rawData.uploadByUser)
       updatedData.source = Source.getLabel(rawData.source)
       console.log(updatedData)
       setData(updatedData)
+      setLoading(false)
     }
     formatData()
   }, [rawData])
@@ -34,6 +38,10 @@ export default function QuoteInfo({ show, setShow, rawData }) {
         </Modal.Header>
 
         <ModalBody>
+        {loading ? (
+            <l-ring color='white' />
+          ) : (
+            <>
           <TextTitle>Source</TextTitle>
           <ClickabeTextParagraph onClick={() => {
             navigate(`?source=${rawData.source}`)
@@ -99,6 +107,8 @@ export default function QuoteInfo({ show, setShow, rawData }) {
               <TextParagraph>{
                 data.date || "Data não especificada"}</TextParagraph>
             </>
+          )}
+          </>
           )}
         </ModalBody>
       </Modal>

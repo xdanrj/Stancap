@@ -12,6 +12,7 @@ import { useAlertMsg } from "../../Alert/AlertContext";
 import dayjs from "dayjs"
 import { useSearchParams } from "react-router-dom";
 import quoteEditingServices from "../../../services/quoteServices"
+import 'ldrs/ring'
 const quoteEditingService = new quoteEditingServices()
 
 export default function SingleQuoteGenericForm(props) {
