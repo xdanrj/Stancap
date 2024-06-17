@@ -51,9 +51,8 @@ function RegisterForm() {
       else {
         useAlert(response)
       }
-      setLoading(false)
     } catch (error) { useAlert(error) }
-
+    setLoading(false)
   }
 
   const handleCheckCode = async (e) => {
@@ -84,9 +83,8 @@ function RegisterForm() {
       else {
         useAlert(response.message)
       }
-      setLoading(false)
     } catch (error) { useAlert(error) }
-
+    setLoading(false)
   }
 
   const handleSubmitRegister = async (e) => {
@@ -128,11 +126,11 @@ function RegisterForm() {
           }
         }
       }
-      setLoading(false)
     } catch (error) {
       console.log(error)
       useAlert(error)
     }
+    setLoading(false)
   }
   const handleEmailChange = (e) => {
     setEmail(e.target.value)

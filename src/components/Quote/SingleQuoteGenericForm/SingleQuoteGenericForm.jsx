@@ -96,10 +96,10 @@ export default function SingleQuoteGenericForm(props) {
         alert(props.texts.submitSuccess)
         window.location.reload()
       }
-      setLoading(false)
     } catch (error) {
       useAlert(error)
     }
+    setLoading(false)
   }
 
   const handleSubmitQuote = async (e) => {

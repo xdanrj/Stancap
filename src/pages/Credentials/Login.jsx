@@ -5,6 +5,7 @@ import { Form, Row, Col, Container, FormGroup, InputGroup } from "react-bootstra
 import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 import { useAlertMsg } from "../../components/Alert/AlertContext";
 import { MDBIcon } from "mdb-react-ui-kit";
+import 'ldrs/ring'
 import loginAndRegisterServices from "../../services/loginAndRegisterServices";
 
 export default function LoginForm() {
@@ -13,6 +14,7 @@ export default function LoginForm() {
   const navigate = useNavigate()
   const [loginData, setLoginData] = useState([])
   const [passwordVisible, setPasswordVisible] = useState(false)
+  const [loading, setLoading] = useState(false)
   const loginAndRegisterService = new loginAndRegisterServices()
 
   useEffect(() => {
@@ -26,6 +28,7 @@ export default function LoginForm() {
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault()
+    setLoading(true)
     try {
       const response = await loginAndRegisterService.login(loginData)
       console.log(response)
@@ -40,9 +43,11 @@ export default function LoginForm() {
       else {
         useAlert(response)
       }
+     
     } catch (error) {
       useAlert(error)
     }
+    setLoading(false)
   }
   const handleLoginChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value })
@@ -55,6 +60,8 @@ export default function LoginForm() {
   return (
     <>
       <h2 className="mb-4">Login</h2>
+      {loading ? (<><l-ring color='white'/></> 
+      ) : (
       <Form onSubmit={handleSubmitLogin}>
         <Row className="justify-content-center">
           <Col xs={5} sm={3} md={3} lg={2} xl={2}>
@@ -90,6 +97,7 @@ export default function LoginForm() {
           <Button href='/register' size="sm" className="">Criar conta</Button>
         </div>
       </Form>
+      )}
     </>
   )
 }

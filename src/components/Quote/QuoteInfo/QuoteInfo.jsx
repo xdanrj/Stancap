@@ -18,8 +18,8 @@ export default function QuoteInfo({ show, setShow, rawData }) {
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     console.log(rawData)
-    setLoading(true)
     async function formatData() {
+      setLoading(true)
       const updatedData = { ...rawData }
       updatedData.uploadByUser = await userService.getUsername(rawData.uploadByUser)
       updatedData.source = Source.getLabel(rawData.source)

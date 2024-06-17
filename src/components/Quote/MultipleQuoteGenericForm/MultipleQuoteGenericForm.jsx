@@ -103,10 +103,10 @@ export default function MultipleQuoteGenericForm(props) {
       } else {
         useAlert("Diálogos precisam de no mínimo 2 falas")
       }
-      setLoading(false)
     } catch (error) {
       useAlert(error)
     }
+    setLoading(false)
   }
 
   const handleSubmitQuote = async (e) => {
