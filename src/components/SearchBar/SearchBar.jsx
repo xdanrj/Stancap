@@ -39,16 +39,16 @@ export function SearchBar({ loading, setLoading, setQuotesResponse, quotesQtd, s
       searchParams.set("page", "1")
       navigate({ search: searchParams.toString() })
     }
-    
     const copySearchParams = Object.fromEntries(searchParams.entries())
     delete copySearchParams.page
     setPureSearchParams(copySearchParams)
 
     _.remove(searchTypes, obj => obj.value === "sort")
+    _.remove(searchTypes, obj => obj.value === "quoteType")
     if (location.pathname === "/my_quotes") {
       _.remove(searchTypes, obj => obj.value === "uploadByUsername"
       )
-      setSearchTypes(searchTypes)
+      //setSearchTypes(searchTypes)
       console.log(userId)
       handleGetQuotes({"uploadByUser": userId})
     }
@@ -56,21 +56,20 @@ export function SearchBar({ loading, setLoading, setQuotesResponse, quotesQtd, s
       if (!(searchTypes.find((obj) => obj.value === "uploadByUsername"))) {
         searchTypes.push({ label: "Upload por", value: "uploadByUsername" })
       }
-      setSearchTypes(searchTypes)
+      //setSearchTypes(searchTypes)
       handleGetQuotes()
     }
+    setSearchTypes(searchTypes)
     let propertyQuery = {}
     for (let [key, value] of searchParams) {
       if (!(key === "page" || key === "sort" || key === "quoteType")) {
         propertyQuery[key] = value
       }
     }
-    //todo: pegar apenas uma chave de propQuery
-    propertyQuery = propertyQuery
-    console.log(propertyQuery)
-    const foundType = QuoteProp.getType(propertyQuery)
-    console.log(foundType)
-    setSelectedSearchType(foundType)
+    //todo:
+    propertyQuery = Object.keys(propertyQuery)[0]
+    console.log(propertyQuery)    
+    setSelectedSearchType(propertyQuery)
     console.log(selectedSearchType)
   }, [location.search])
 
@@ -119,8 +118,6 @@ export function SearchBar({ loading, setLoading, setQuotesResponse, quotesQtd, s
   }
 
   const handleInputStringChange = (e) => {
-    console.log(selectedSearchType)
-    console.log(e.target.value)
     setInputString(e.target.value)
   }
 
