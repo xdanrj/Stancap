@@ -13,10 +13,11 @@ import { sizes } from "../../CommonStyles/screenSizes";
 import Sources from "../Quote/Sources";
 import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 import quoteEditingServices from "../../services/quoteServices";
-import 'ldrs/ring'
+import { ring } from "ldrs";
+ring.register()
 const quoteService = new quoteEditingServices()
 
-export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, quotesQtd, setQuotesQtd }) {
+export function SearchBar({ loading, setLoading, setQuotesResponse, quotesQtd, setQuotesQtd }) {
   const QuoteProp = new QuotesProps()
   const Source = new Sources()
   const location = useLocation()
@@ -29,7 +30,7 @@ export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, q
   const [inputColor, setInputColor] = useState(false)
   const [inputString, setInputString] = useState()
   const [searchTypes, setSearchTypes] = useState([...QuoteProp.quotesProps])
-
+  const [userId, setUserId] = useState([localStorage.getItem("userId")][0])
   const useAlert = useAlertMsg()
 
   useEffect(() => {
@@ -38,25 +39,25 @@ export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, q
       searchParams.set("page", "1")
       navigate({ search: searchParams.toString() })
     }
-    handleGetQuotes()
-
+    
     const copySearchParams = Object.fromEntries(searchParams.entries())
     delete copySearchParams.page
     setPureSearchParams(copySearchParams)
-  }, [location.search])
 
-  useEffect(() => {
     _.remove(searchTypes, obj => obj.value === "sort")
     if (location.pathname === "/my_quotes") {
       _.remove(searchTypes, obj => obj.value === "uploadByUsername"
       )
       setSearchTypes(searchTypes)
+      console.log(userId)
+      handleGetQuotes({"uploadByUser": userId})
     }
-    if (location.pathname === "/quotes") {
+    else if (location.pathname === "/quotes") {
       if (!(searchTypes.find((obj) => obj.value === "uploadByUsername"))) {
         searchTypes.push({ label: "Upload por", value: "uploadByUsername" })
       }
       setSearchTypes(searchTypes)
+      handleGetQuotes()
     }
     let propertyQuery = {}
     for (let [key, value] of searchParams) {
@@ -64,17 +65,30 @@ export function SearchBar({ loading, setLoading, getQuotes, setQuotesResponse, q
         propertyQuery[key] = value
       }
     }
+    //todo: pegar apenas uma chave de propQuery
+    propertyQuery = propertyQuery
     console.log(propertyQuery)
-    const foundType = searchTypes.find((type) => type.value === propertyQuery)
+    const foundType = QuoteProp.getType(propertyQuery)
     console.log(foundType)
     setSelectedSearchType(foundType)
     console.log(selectedSearchType)
-  }, [])
+  }, [location.search])
 
-  //todo: quando nao ha quotes em myquotes, corrigir o loading eterno
-  async function handleGetQuotes() {
+  async function handleGetQuotes(queryObj = null) {
     setLoading(true)
-    const { quotes, message, quotesQtd } = await quoteService.getQuotes(Object.fromEntries(searchParams))
+    console.log(queryObj)
+    console.log(Object.fromEntries(searchParams))
+    let finalQueryObj = {}
+    let searchParamsObj = Object.fromEntries(searchParams)
+    if (queryObj !== null) {
+      finalQueryObj = { ...queryObj, ...searchParamsObj }
+    } else {
+      finalQueryObj = searchParamsObj
+    }
+    console.log(finalQueryObj)
+    const { quotes, message, quotesQtd } = await quoteService.getQuotes(
+      finalQueryObj
+    )
     setQuotesResponse(quotes)
     setQuotesQtd(quotesQtd)
     localStorage.setItem("userQuotesQtd", quotesQtd)

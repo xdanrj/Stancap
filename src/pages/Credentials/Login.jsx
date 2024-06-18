@@ -5,7 +5,8 @@ import { Form, Row, Col, Container, FormGroup, InputGroup } from "react-bootstra
 import { FloatingLabel } from "../../CommonStyles/CommonStyles";
 import { useAlertMsg } from "../../components/Alert/AlertContext";
 import { MDBIcon } from "mdb-react-ui-kit";
-import 'ldrs/ring'
+import { ring } from "ldrs";
+ring.register()
 import loginAndRegisterServices from "../../services/loginAndRegisterServices";
 
 export default function LoginForm() {

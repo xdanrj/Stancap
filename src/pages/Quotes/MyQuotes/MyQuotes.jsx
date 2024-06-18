@@ -24,21 +24,6 @@ export default function MyQuotes() {
   const [quoteInfoData, setQuoteInfoData] = useState("")
   const [loading, setLoading] = useState(true)
 
-  //nao utilizado pois o fetch de quotes vem de searchbar
-  // async function getQuotes() {
-  //   try {
-  //     const searchParamsQuery = Object.fromEntries(searchParams)
-  //     const queryWithUserId = { ...searchParamsQuery, "uploadByUser": userId }
-  //     const { quotes, quotesQtd, message } = await quoteService.getQuotes(queryWithUserId)
-  //     console.log(quotes)
-  //     localStorage.setItem("userQuotesQtd", quotesQtd)
-  //     setQuotesQtd(quotesQtd)
-  //     setQuotesResponse(quotes)
-  //   } catch (error) {
-  //     (error.message && useAlert(error.message)) || useAlert(message)
-  //   }
-  // }
-
   const handleEditQuote = async (quoteId, quoteType) => {
     try {
       searchParams.set("type", quoteType)
@@ -119,7 +104,7 @@ export default function MyQuotes() {
               ))
             )) ||
             <>
-            <h3>Você não criou nenhuma quote</h3>
+            <h3>Nenhuma quote encontrada</h3>
             </>
           }
           {<QuoteInfo rawData={quoteInfoData} show={showQuoteInfo} setShow={setShowQuoteInfo} />}

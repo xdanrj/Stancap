@@ -7,7 +7,8 @@ import { passwordValidation, usernameValidation } from "../../Validations/Regist
 import loginAndRegisterServices from "../../services/loginAndRegisterServices"
 import { useAlertMsg } from "../../components/Alert/AlertContext"
 import { MDBIcon } from "mdb-react-ui-kit"
-import 'ldrs/ring'
+import { ring } from "ldrs";
+ring.register()
 const loginAndRegisterService = new loginAndRegisterServices()
 
 function RegisterForm() {

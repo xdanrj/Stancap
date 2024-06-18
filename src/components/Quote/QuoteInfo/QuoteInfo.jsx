@@ -5,7 +5,8 @@ import { Modal, ModalTitle, ModalBody, TextTitle, TextParagraph, ClickabeTextPar
 import quoteEditingServices from "../../../services/quoteServices";
 import userServices from "../../../services/userServices";
 import _ from "lodash";
-import 'ldrs/ring'
+import { ring } from "ldrs";
+ring.register()
 import Sources from "../Sources";
 
 export default function QuoteInfo({ show, setShow, rawData }) {
