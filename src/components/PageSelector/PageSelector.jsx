@@ -43,7 +43,7 @@ export default function PageSelector({ searchParams, quotesQtd }) {
                 <Button onClick={() => handlePageClick(1)}><MDBIcon fas icon="angle-double-left" /> </Button>
             )}
 
-            <ButtonGroup className="mx-2">
+            <ButtonGroup className="mx-1">
                 {itemsQtd.slice(0, 4).map((item) => (
                     <Button key={item} onClick={() => handlePageClick(item)}>
                         {item}
