@@ -23,7 +23,7 @@ export default function QuoteInfo({ show, setShow, rawData }) {
       setLoading(true)
       const updatedData = { ...rawData }
       updatedData.uploadByUser = await userService.getUsername(rawData.uploadByUser)
-      updatedData.source = Source.getLabel(rawData.source)
+      updatedData.source = Source.getLabel(rawData.source) || rawData.source
       console.log(updatedData)
       setData(updatedData)
       setLoading(false)
@@ -37,7 +37,6 @@ export default function QuoteInfo({ show, setShow, rawData }) {
         <Modal.Header closeButton>
           <ModalTitle>Detalhes da Quote</ModalTitle>
         </Modal.Header>
-
         <ModalBody>
         {loading ? (
             <l-ring color='white' />
@@ -48,7 +47,7 @@ export default function QuoteInfo({ show, setShow, rawData }) {
             navigate(`?source=${rawData.source}`)
             handleClose()
           }}>
-            {data.source || "Source não especificada" || "Loading"}
+            {data.source || "Source não especificada" }
           </ClickabeTextParagraph>
 
           <TextTitle>Data de upload</TextTitle>
