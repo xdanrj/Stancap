@@ -74,7 +74,7 @@ export default function PageSelector({ searchParams, quotesQtd }) {
           showInput && (
             <Button>  
             <input
-            type="text"
+            type="number"
             value={inputValue}
             onChange={handleInputChange}
             onBlur={handleInputSubmit}
@@ -83,7 +83,7 @@ export default function PageSelector({ searchParams, quotesQtd }) {
                 handleInputSubmit();
               }
             }}
-            style={{ width: "25px", textAlign: "center", backgroundColor: "var(--bs-primary)", color: "white" }}
+            style={{ width: "25px", textAlign: "center", backgroundColor: "var(--bs-primary)", color: "white", overflow: "hidden", whiteSpace: "nowrap"}}
             autoFocus
             />
             </Button>
