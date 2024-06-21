@@ -5,6 +5,9 @@ import { MDBIcon } from "mdb-react-ui-kit"
 import { MainDiv } from "./PageSelectorStyles"
 import { sizes } from "../../CommonStyles/screenSizes"
 import { Form } from "react-bootstrap"
+import { PageInput } from "./PageSelectorStyles"
+import { useAlertMsg } from "../Alert/AlertContext";
+import './PageSelector.css'
 
 //talvez tirar searchparams de prop e chamar searchparams normalmente aqui, assim como é em outro comps.
 export default function PageSelector({ searchParams, quotesQtd }) {
@@ -12,6 +15,7 @@ export default function PageSelector({ searchParams, quotesQtd }) {
   const [totalPages, setTotalPages] = useState()
   const [showInput, setShowInput] = useState(false)
   const [inputValue, setInputValue] = useState()
+  const useAlert = useAlertMsg()
   const navigate = useNavigate()
   const buttonSize = sizes.isMobile ? "sm" : false
   let actualPage = searchParams.get("page")
@@ -46,8 +50,11 @@ export default function PageSelector({ searchParams, quotesQtd }) {
 
   const handleInputSubmit = () => {
     const pageNum = parseInt(inputValue, 10);
+    console.log(pageNum)
     if (!isNaN(pageNum) && pageNum > 0 && pageNum <= totalPages) {
       handlePageClick(pageNum);
+    } else {
+      useAlert("Página digitada inválida", 1000)
     }
     setShowInput(false);
     setInputValue("");
@@ -73,7 +80,7 @@ export default function PageSelector({ searchParams, quotesQtd }) {
         ) : (
           showInput && (
             <Button>  
-            <input
+            <PageInput
             type="number"
             value={inputValue}
             onChange={handleInputChange}

@@ -65,7 +65,7 @@ export default function LoginForm() {
       ) : (
       <Form onSubmit={handleSubmitLogin}>
         <Row className="justify-content-center">
-          <Col xs={5} sm={3} md={3} lg={2} xl={2}>
+          <Col xs={6} sm={3} md={3} lg={2} xl={2}>
             <FloatingLabel label="E-mail">
               <Form.Control
                 name="email"

@@ -189,7 +189,7 @@ function RegisterForm() {
                         <Form.Control
                           className="mb-3"
                           name="code"
-                          type="text"
+                          type="number"
                           required
                           onChange={handleCodeChange}
                           placeholder=""
@@ -197,7 +197,7 @@ function RegisterForm() {
                       </FloatingLabel>
                     </div>
                     {checkHasClicked && (
-                      <Button className="mx-2" onClick={(e) => handleSendCode(e)} disabled={retryState > 0}>
+                      <Button className="m-2" onClick={(e) => handleSendCode(e)} disabled={retryState > 0}>
                         Reenviar {checkHasClicked && ` (${retryState})`}
                       </Button>
                     )}

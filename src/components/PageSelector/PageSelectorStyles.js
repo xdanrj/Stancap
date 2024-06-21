@@ -12,8 +12,12 @@ width: 100%;
 padding: 10px;
 `;
 
-export const InputButton = styled(originalButton).attrs((props) => ({
+export const PageInput = styled.input.attrs((props) => ({
   className: ``
 }))`
-
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 `
